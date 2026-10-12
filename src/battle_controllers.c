@@ -160,7 +160,7 @@ void SetUpBattleVarsAndBirchZigzagoon(void)
     BattleAI_SetupFlags();
 
     if (!IS_FRLG && gBattleTypeFlags & BATTLE_TYPE_FIRST_BATTLE)
-        CreateWildMon(SPECIES_ZIGZAGOON, 2);
+        CreateWildMon(SPECIES_MESODMA, 2); // Strata: TEMPORARY until the prologue is rebuilt
 }
 
 void InitBattleControllers(void)

@@ -4,6 +4,27 @@
 #undef POKEMON_NAME_LENGTH
 #define POKEMON_NAME_LENGTH 12
 
+// Strata disables the stock generations in the game build, but the expansion's
+// tests are written against stock species, so tests keep them all.
+#undef P_GEN_1_POKEMON
+#define P_GEN_1_POKEMON                  TRUE
+#undef P_GEN_2_POKEMON
+#define P_GEN_2_POKEMON                  TRUE
+#undef P_GEN_3_POKEMON
+#define P_GEN_3_POKEMON                  TRUE
+#undef P_GEN_4_POKEMON
+#define P_GEN_4_POKEMON                  TRUE
+#undef P_GEN_5_POKEMON
+#define P_GEN_5_POKEMON                  TRUE
+#undef P_GEN_6_POKEMON
+#define P_GEN_6_POKEMON                  TRUE
+#undef P_GEN_7_POKEMON
+#define P_GEN_7_POKEMON                  TRUE
+#undef P_GEN_8_POKEMON
+#define P_GEN_8_POKEMON                  TRUE
+#undef P_GEN_9_POKEMON
+#define P_GEN_9_POKEMON                  TRUE
+
 #undef P_MEGA_EVOLUTIONS
 #define P_MEGA_EVOLUTIONS                TRUE
 #undef P_PRIMAL_REVERSIONS

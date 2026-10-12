@@ -183,9 +183,42 @@ party and the PC boxes.
   can *see* deep time act on one place.
 
 ### 7.6 Types
-Keep the standard 18 types for compatibility, but assign them by ecology:
-e.g. grazers = Grass/Normal, bone-crushers = Dark/Steel, divers = Water.
+Keep the standard 18 types for compatibility, but assign them by ecology.
 (Could be revisited later in favour of a custom type chart.)
+
+| Type | Meaning | Examples |
+|---|---|---|
+| Normal | Generalists, small omnivores | *Mesodma*, *Canis* |
+| Fighting | Animals that fight with horns, domes, clubs or kicks | *Triceratops*, *Pachycephalosaurus* |
+| Rock | Heavy armour or shells | *Ankylosaurus*, snapping turtles |
+| Grass | Plant specialists | *Edmontosaurus*, *Thescelosaurus*, *Gastornis* |
+| Dark | Predators and ambushers | *Tyrannosaurus*, *Acheroraptor*, dog line |
+| Steel | Bone-crushers | *Didelphodon*, *Epicyon* |
+| Dragon | Large archosaur predators | *Tyrannosaurus*, *Borealosuchus* |
+| Water | Aquatic | gar, *Champsosaurus*, turtles |
+| Flying | Fliers | bird line |
+| Ground | Burrowers | *Mesodma* |
+| Ice / Fire | Cold- / heat-adapted (later eras) | — |
+| Electric | Electroreceptive fish (later) | — |
+
+### 7.7 Species data
+- The roster lives in `tools/strata/roster.py`. `tools/strata/gen_species.py`
+  generates the C data from it. Never hand-edit the generated files.
+- **Names** are at most 12 characters (the save format's nickname length). Use the
+  genus if it fits. Otherwise use the informal anglicized form (*Tyrannosaurus* →
+  Tyrannosaur). Otherwise cut the genus at a morpheme boundary (*Pachycephalosaurus* →
+  Pachycephalo). The Codex always shows the full scientific name.
+- **Stats come from body mass:** BST = 300 + 70·log10(mass in kg), clamped to 180–600.
+  Each species' anatomy then splits that total: bite/weapons → Attack,
+  armour → Defence, locomotion → Speed, senses → Sp. Atk, hardiness → Sp. Def.
+  Masses without a published estimate are flagged `mass_est` and shown as estimates.
+- **Placeholder art and cries** are copied from a similar stock Pokémon (`borrow`)
+  into `graphics/pokemon/strata/` and `sound/direct_sound_samples/cries/strata_*`.
+  Strata species therefore never depend on the stock Pokémon, which are disabled in
+  the game build. They stay enabled in the test build for the expansion's tests.
+- **Known limitation:** the weight field is 16-bit (max 6,553.5 kg), so the masses of
+  *Tyrannosaurus*, *Triceratops* and *Ankylosaurus* are clamped. Widen the field and
+  the Pokédex weight display before the Codex work.
 
 ## 8. Scientific integrity rules
 

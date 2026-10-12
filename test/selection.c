@@ -50,15 +50,15 @@ TEST("Habitat pressure from ticks steers the next descent")
 {
     u32 i;
     ZeroPlayerPartyMons();
-    VarSet(VAR_STRATA_ERA, ERA_BIGHORN_PETM);
-    CreateMon(&gParties[B_TRAINER_PLAYER][0], SPECIES_TORCHIC, 5, 0, OTID_STRUCT_PLAYER_ID);
+    VarSet(VAR_STRATA_ERA, ERA_CORRAL_BLUFFS);
+    CreateMon(&gParties[B_TRAINER_PLAYER][0], SPECIES_ASTERIORNIS, 5, 0, OTID_STRUCT_PLAYER_ID);
 
     for (i = 0; i < 5; i++)
         Selection_ApplyTick(PRESSURE_WATER, 0);
     Selection_ApplyTick(PRESSURE_OPEN, 0);
 
-    Lineage_AdvanceToEra(ERA_GREEN_RIVER);
-    EXPECT_EQ(GetMonData(&gParties[B_TRAINER_PLAYER][0], MON_DATA_SPECIES), SPECIES_DUCKLETT);
+    Lineage_AdvanceToEra(ERA_BIGHORN_PETM);
+    EXPECT_EQ(GetMonData(&gParties[B_TRAINER_PLAYER][0], MON_DATA_SPECIES), SPECIES_PRESBYORNIS);
 }
 
 WILD_BATTLE_TEST("Knocking out a foe with a move adds meat diet pressure")
