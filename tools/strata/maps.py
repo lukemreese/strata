@@ -145,8 +145,9 @@ MAPS = [
         mapsec="MAPSEC_STRATA_RIVER",
         connections=[connection("down", "MAP_STRATA_LEVEE"), connection("up", "MAP_STRATA_BACKSWAMP")],
         coords=[
-            # Both ways up onto the bluff where the tyrannosaur waits.
-            trigger(x, y, "VAR_STRATA_STORY", 2, "StrataRiver_EventScript_Tyrannosaur")
+            # Both ways up onto the bluff where the tyrannosaur waits. The bluff
+            # is elevation 4, and triggers only fire on a matching elevation.
+            trigger(x, y, "VAR_STRATA_STORY", 2, "StrataRiver_EventScript_Tyrannosaur", elevation=4)
             for x, y in ((30, 10), (31, 10), (35, 4), (36, 4))
         ],
         bgs=[

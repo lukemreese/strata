@@ -32,7 +32,7 @@
       "type": "trigger",
       "x": 30,
       "y": 10,
-      "elevation": 3,
+      "elevation": 4,
       "var": "VAR_STRATA_STORY",
       "var_value": "2",
       "script": "StrataRiver_EventScript_Tyrannosaur"
@@ -41,7 +41,7 @@
       "type": "trigger",
       "x": 31,
       "y": 10,
-      "elevation": 3,
+      "elevation": 4,
       "var": "VAR_STRATA_STORY",
       "var_value": "2",
       "script": "StrataRiver_EventScript_Tyrannosaur"
@@ -50,7 +50,7 @@
       "type": "trigger",
       "x": 35,
       "y": 4,
-      "elevation": 3,
+      "elevation": 4,
       "var": "VAR_STRATA_STORY",
       "var_value": "2",
       "script": "StrataRiver_EventScript_Tyrannosaur"
@@ -59,7 +59,7 @@
       "type": "trigger",
       "x": 36,
       "y": 4,
-      "elevation": 3,
+      "elevation": 4,
       "var": "VAR_STRATA_STORY",
       "var_value": "2",
       "script": "StrataRiver_EventScript_Tyrannosaur"
