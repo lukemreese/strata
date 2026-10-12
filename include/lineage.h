@@ -21,7 +21,6 @@ struct LineageDescent
 };
 
 enum Species Lineage_GetDescendant(enum Species ancestor, enum StrataEra era, const u8 *pressures);
-void Lineage_GetBoxMonPressures(struct BoxPokemon *boxMon, u8 *pressures);
 bool32 Lineage_DescendBoxMon(struct BoxPokemon *boxMon, enum StrataEra era);
 bool32 Lineage_DescendMon(struct Pokemon *mon, enum StrataEra era);
 u32 Lineage_AdvanceToEra(enum StrataEra targetEra);

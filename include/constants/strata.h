@@ -19,7 +19,7 @@ enum StrataEra
 };
 
 // Selection pressures. Each is a hidden per-mon counter stored in one of the
-// (otherwise unused) contest stats, see sPressureDataIds in src/lineage.c.
+// (otherwise unused) contest stats, see sPressureDataIds in src/selection.c.
 enum SelectionPressure
 {
     PRESSURE_FOREST,     // MON_DATA_COOL:   time spent in closed, wooded habitat

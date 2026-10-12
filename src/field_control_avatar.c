@@ -29,6 +29,7 @@
 #include "pokemon.h"
 #include "safari_zone.h"
 #include "script.h"
+#include "selection.h"
 #include "secret_base.h"
 #include "sound.h"
 #include "start_menu.h"
@@ -756,6 +757,7 @@ static bool8 TryStartStepCountScript(u16 metatileBehavior)
     UpdateFriendshipStepCounter();
     UpdateFarawayIslandStepCounter();
     UpdateFollowerStepCounter();
+    Selection_UpdateStepCounter(metatileBehavior);
 
     if (!(gPlayerAvatar.flags & PLAYER_AVATAR_FLAG_FORCED_MOVE) && !MetatileBehavior_IsForcedMovementTile(metatileBehavior))
     {

@@ -639,3 +639,4 @@ gSpecials::
 	def_special StickerManGetBragFlags
 	def_special CheckAddCoins
 	def_special Strata_AdvanceEra
+	def_special Strata_AddPressure

@@ -4,6 +4,7 @@
 #include "pokedex.h"
 #include "pokemon.h"
 #include "pokemon_storage_system.h"
+#include "selection.h"
 #include "string_util.h"
 #include "constants/vars.h"
 
@@ -11,17 +12,6 @@
 // mon in the party and PC is replaced by its descendant species for that era.
 
 #include "data/lineages.h"
-
-// Contest stats are unused in Strata, so they hold the selection pressure counters.
-static const u8 sPressureDataIds[PRESSURE_COUNT] =
-{
-    [PRESSURE_FOREST]     = MON_DATA_COOL,
-    [PRESSURE_OPEN]       = MON_DATA_BEAUTY,
-    [PRESSURE_WATER]      = MON_DATA_CUTE,
-    [PRESSURE_PLANT_DIET] = MON_DATA_SMART,
-    [PRESSURE_MEAT_DIET]  = MON_DATA_TOUGH,
-    [PRESSURE_HEAT]       = MON_DATA_SHEEN,
-};
 
 static const struct LineageDescent *FindDescent(enum Species ancestor, enum StrataEra era)
 {
@@ -57,21 +47,6 @@ enum Species Lineage_GetDescendant(enum Species ancestor, enum StrataEra era, co
         }
     }
     return best;
-}
-
-void Lineage_GetBoxMonPressures(struct BoxPokemon *boxMon, u8 *pressures)
-{
-    u32 i;
-    for (i = 0; i < PRESSURE_COUNT; i++)
-        pressures[i] = GetBoxMonData(boxMon, sPressureDataIds[i]);
-}
-
-static void ResetBoxMonPressures(struct BoxPokemon *boxMon)
-{
-    u32 i;
-    u8 zero = 0;
-    for (i = 0; i < PRESSURE_COUNT; i++)
-        SetBoxMonData(boxMon, sPressureDataIds[i], &zero);
 }
 
 // Box counterpart of EvolutionRenameMon: a mon still called by its species name
@@ -112,7 +87,7 @@ bool32 Lineage_DescendBoxMon(struct BoxPokemon *boxMon, enum StrataEra era)
         return FALSE;
 
     ancestor = GetBoxMonData(boxMon, MON_DATA_SPECIES);
-    Lineage_GetBoxMonPressures(boxMon, pressures);
+    Selection_GetBoxMonPressures(boxMon, pressures);
     descendant = Lineage_GetDescendant(ancestor, era, pressures);
     if (descendant == ancestor)
         return FALSE;
@@ -121,7 +96,7 @@ bool32 Lineage_DescendBoxMon(struct BoxPokemon *boxMon, enum StrataEra era)
     SetBoxMonData(boxMon, MON_DATA_SPECIES, &descendant);
     KeepBoxMonLevel(boxMon, level);
     RenameBoxMonIfDefault(boxMon, ancestor, descendant);
-    ResetBoxMonPressures(boxMon);
+    Selection_ResetBoxMonPressures(boxMon);
     GetSetPokedexFlag(SpeciesToNationalPokedexNum(descendant), FLAG_SET_SEEN);
     GetSetPokedexFlag(SpeciesToNationalPokedexNum(descendant), FLAG_SET_CAUGHT);
     return TRUE;

@@ -39,6 +39,7 @@
 #include "malloc.h"
 #include "berry.h"
 #include "pokedex.h"
+#include "selection.h"
 #include "mail.h"
 #include "field_weather.h"
 #include "constants/abilities.h"
@@ -11229,6 +11230,7 @@ void SetValuesOnFaint(enum BattlerId battler)
             gBattleResults.opponentFaintCounter++;
         gBattleResults.lastOpponentSpecies = GetMonData(GetBattlerMon(battler), MON_DATA_SPECIES);
         gSideTimers[B_SIDE_OPPONENT].retaliateTimer = 2;
+        Selection_OnFoeFainted(battler);
     }
 }
 
