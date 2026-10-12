@@ -9323,6 +9323,61 @@
       "border_filepath": "data/layouts/OneIsland_KindleRoad_EmberSpa_Frlg/border.bin",
       "blockdata_filepath": "data/layouts/OneIsland_KindleRoad_EmberSpa_Frlg/map.bin",
       "layout_version": "frlg"
+    },
+    {
+      "id": "LAYOUT_STRATA_FIELD_CAMP",
+      "name": "StrataFieldCamp_Layout",
+      "width": 40,
+      "height": 34,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Mauville",
+      "border_filepath": "data/layouts/StrataFieldCamp/border.bin",
+      "blockdata_filepath": "data/layouts/StrataFieldCamp/map.bin",
+      "layout_version": "emerald"
+    },
+    {
+      "id": "LAYOUT_STRATA_BADLANDS",
+      "name": "StrataBadlands_Layout",
+      "width": 40,
+      "height": 40,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Mauville",
+      "border_filepath": "data/layouts/StrataBadlands/border.bin",
+      "blockdata_filepath": "data/layouts/StrataBadlands/map.bin",
+      "layout_version": "emerald"
+    },
+    {
+      "id": "LAYOUT_STRATA_RIVER",
+      "name": "StrataRiver_Layout",
+      "width": 40,
+      "height": 21,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Fortree",
+      "border_filepath": "data/layouts/StrataRiver/border.bin",
+      "blockdata_filepath": "data/layouts/StrataRiver/map.bin",
+      "layout_version": "emerald"
+    },
+    {
+      "id": "LAYOUT_STRATA_LEVEE",
+      "name": "StrataLevee_Layout",
+      "width": 40,
+      "height": 33,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Fortree",
+      "border_filepath": "data/layouts/StrataLevee/border.bin",
+      "blockdata_filepath": "data/layouts/StrataLevee/map.bin",
+      "layout_version": "emerald"
+    },
+    {
+      "id": "LAYOUT_STRATA_BACKSWAMP",
+      "name": "StrataBackswamp_Layout",
+      "width": 40,
+      "height": 17,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Fortree",
+      "border_filepath": "data/layouts/StrataBackswamp/border.bin",
+      "blockdata_filepath": "data/layouts/StrataBackswamp/map.bin",
+      "layout_version": "emerald"
     }
   ]
 }

@@ -66,6 +66,20 @@ largest extinction in the epilogue is the one humans were present for.
 - Act 7: the ash cloud of a Yellowstone-hotspot eruption (Bruneau–Jarbidge, Idaho) buries Nebraska.
 - Act 8: glaciers sit to the north, and the land bridge to Asia opens and closes.
 
+**Maps built so far** (defined in `tools/strata/maps.py`, scripts in `data/maps/Strata*/`)
+
+| Map | Era | Layout source (placeholder) | Notes |
+|---|---|---|---|
+| Hell Creek Camp | present | Route 111 north | Hub; field station door at (26, 18) |
+| Field Station | present | Birch's lab | STRATA rig at (10–11, 7); mentor Dr. Halvorsen; respawn point |
+| Hell Creek Badlands | present | Route 111 desert | K-Pg boundary clay; no encounters |
+| Levee Forest | 66.04 Ma | Route 119 south | Arrival point; south edge returns to camp |
+| River Channel | 66.04 Ma | Route 119 middle | Tyrannosaur boss on the bluff |
+| Backswamp | 66.04 Ma | Route 120 marsh | Gar, champsosaurs, crocodylians |
+
+The present-day hub sits outside time: returning to camp does not change `VAR_STRATA_ERA`.
+Story progress is `VAR_STRATA_STORY` (0 new game, 1 starter, 2 in Hell Creek, 3 tyrannosaur met).
+
 ## 4. Starter lineages: three modes of evolution
 
 Each starter shows a different pattern seen in the fossil record.

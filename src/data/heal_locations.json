@@ -349,6 +349,14 @@
       "y": 12,
       "respawn_map": "MAP_SIX_ISLAND_POKEMON_CENTER_1F",
       "respawn_npc": "LOCALID_SIX_ISLAND_NURSE"
+    },
+    {
+      "id": "HEAL_LOCATION_STRATA_FIELD_CAMP",
+      "map": "MAP_STRATA_FIELD_CAMP",
+      "x": 26,
+      "y": 19,
+      "respawn_map": "MAP_STRATA_FIELD_STATION",
+      "respawn_npc": "LOCALID_STRATA_MENTOR"
     }
   ]
 }

@@ -1630,6 +1630,26 @@
       "y": 4,
       "width": 1,
       "height": 1
+    },
+    {
+      "id": "MAPSEC_STRATA_FIELD_CAMP",
+      "name": "HELL CREEK CAMP"
+    },
+    {
+      "id": "MAPSEC_STRATA_BADLANDS",
+      "name": "HELL CREEK BADLANDS"
+    },
+    {
+      "id": "MAPSEC_STRATA_LEVEE",
+      "name": "LEVEE FOREST"
+    },
+    {
+      "id": "MAPSEC_STRATA_RIVER",
+      "name": "RIVER CHANNEL"
+    },
+    {
+      "id": "MAPSEC_STRATA_BACKSWAMP",
+      "name": "BACKSWAMP"
     }
   ]
 }

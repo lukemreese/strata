@@ -40,6 +40,7 @@
 #include "constants/item.h"
 #include "constants/items.h"
 #include "constants/heal_locations.h"
+#include "constants/strata.h"
 #include "constants/layouts.h"
 #include "constants/lilycove_lady.h"
 #include "constants/map_scripts.h"
@@ -599,6 +600,14 @@ gStdScripts_End::
 	.include "data/maps/Route119_WeatherInstitute_2F/scripts.inc"
 	.include "data/maps/Route119_House/scripts.inc"
 	.include "data/maps/Route124_DivingTreasureHuntersHouse/scripts.inc"
+
+	@ Strata
+	.include "data/maps/StrataFieldCamp/scripts.inc"
+	.include "data/maps/StrataFieldStation/scripts.inc"
+	.include "data/maps/StrataBadlands/scripts.inc"
+	.include "data/maps/StrataLevee/scripts.inc"
+	.include "data/maps/StrataRiver/scripts.inc"
+	.include "data/maps/StrataBackswamp/scripts.inc"
 
 .if IS_FRLG
 
