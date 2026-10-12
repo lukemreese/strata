@@ -22,6 +22,7 @@
 #include "item.h"
 #include "item_icon.h"
 #include "item_use.h"
+#include "lineage.h"
 #include "list_menu.h"
 #include "m4a.h"
 #include "main.h"
@@ -314,6 +315,7 @@ static void DebugAction_Party_ClearPokerus(u8 taskId);
 static void DebugAction_Party_ClearParty(u8 taskId);
 static void DebugAction_Party_SetParty(u8 taskId);
 static void DebugAction_Party_BattleSingle(u8 taskId);
+static void DebugAction_Party_AdvanceEra(u8 taskId);
 
 static void DebugAction_Trainers_SwitchDoublesFlag(u8 taskId);
 static void DebugAction_Trainers_SetRematch(u8 taskId);
@@ -649,6 +651,7 @@ static const struct DebugMenuOption sDebugMenu_Actions_Party[] =
     { COMPOUND_STRING("Clear Party"),        DebugAction_Party_ClearParty },
     { COMPOUND_STRING("Set Party"),          DebugAction_Party_SetParty },
     { COMPOUND_STRING("Start Debug Battle"), DebugAction_Party_BattleSingle },
+    { COMPOUND_STRING("Advance Era"),        DebugAction_Party_AdvanceEra },
     { NULL }
 };
 
@@ -4796,6 +4799,14 @@ static void DebugAction_Party_ClearPokerus(u8 taskId)
 static void DebugAction_Party_ClearParty(u8 taskId)
 {
     ZeroPlayerPartyMons();
+    ScriptContext_Enable();
+    Debug_DestroyMenu_Full(taskId);
+}
+
+static void DebugAction_Party_AdvanceEra(u8 taskId)
+{
+    PlaySE(SE_EXP_MAX);
+    Lineage_AdvanceToEra(VarGet(VAR_STRATA_ERA) + 1);
     ScriptContext_Enable();
     Debug_DestroyMenu_Full(taskId);
 }
