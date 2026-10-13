@@ -1,5 +1,6 @@
 @ Field station at the Hell Creek camp: the STRATA reconstruction rig.
-@ VAR_STRATA_STORY: 0 new game, 1 starter chosen, 2 entered Hell Creek, 3 tyrannosaur met
+@ VAR_STRATA_STORY and the acts are described in include/strata_acts.h and
+@ src/strata_acts.c, which also holds Dr. Halvorsen's lines for each stage.
 
 StrataFieldStation_MapScripts::
 	map_script MAP_SCRIPT_ON_FRAME_TABLE, StrataFieldStation_OnFrame
@@ -30,84 +31,107 @@ StrataFieldStation_EventScript_Mentor::
 	faceplayer
 	msgbox StrataFieldStation_Text_Rest, MSGBOX_DEFAULT
 	special HealPlayerParty
-	goto_if_eq VAR_STRATA_STORY, 5, StrataFieldStation_EventScript_MentorAfterWinter
-	goto_if_eq VAR_STRATA_STORY, 4, StrataFieldStation_EventScript_MentorInWinter
-	goto_if_eq VAR_STRATA_STORY, 3, StrataFieldStation_EventScript_MentorAfterTyrannosaur
-	goto_if_eq VAR_STRATA_STORY, 2, StrataFieldStation_EventScript_MentorInHellCreek
-	msgbox StrataFieldStation_Text_RigReady, MSGBOX_DEFAULT
-	release
-	end
-
-StrataFieldStation_EventScript_MentorInHellCreek::
-	msgbox StrataFieldStation_Text_InHellCreek, MSGBOX_DEFAULT
-	release
-	end
-
-StrataFieldStation_EventScript_MentorAfterTyrannosaur::
-	msgbox StrataFieldStation_Text_AfterTyrannosaur, MSGBOX_DEFAULT
-	release
-	end
-
-StrataFieldStation_EventScript_MentorInWinter::
-	msgbox StrataFieldStation_Text_InWinter, MSGBOX_DEFAULT
-	release
-	end
-
-StrataFieldStation_EventScript_MentorAfterWinter::
-	msgbox StrataFieldStation_Text_AfterWinter, MSGBOX_DEFAULT
+	special Strata_BufferMentorText
+	msgbox gStringVar4, MSGBOX_DEFAULT
 	release
 	end
 
 @ The rig only ever loads the next layer up: time in Strata moves forward.
 StrataFieldStation_EventScript_Rig::
 	lockall
-	goto_if_eq VAR_STRATA_STORY, 0, StrataFieldStation_EventScript_RigIdle
-	goto_if_ge VAR_STRATA_STORY, 4, StrataFieldStation_EventScript_RigWinter
-	goto_if_eq VAR_STRATA_STORY, 3, StrataFieldStation_EventScript_RigImpact
-	msgbox StrataFieldStation_Text_EnterHellCreek, MSGBOX_YESNO
-	goto_if_eq VAR_RESULT, NO, StrataFieldStation_EventScript_RigCancel
-	call_if_eq VAR_STRATA_STORY, 1, StrataFieldStation_EventScript_FirstEntry
-	playse SE_WARP_IN
-	warp MAP_STRATA_LEVEE, 18, 30
-	waitstate
-	releaseall
-	end
-
-StrataFieldStation_EventScript_FirstEntry::
-	setvar VAR_0x8004, ERA_HELL_CREEK
-	special Strata_AdvanceEra
-	setvar VAR_STRATA_STORY, 2
-	return
-
-@ Moving up past the boundary clay. One-way, and the extinction filter applies.
-StrataFieldStation_EventScript_RigImpact::
-	msgbox StrataFieldStation_Text_ImpactWarning, MSGBOX_DEFAULT
-	msgbox StrataFieldStation_Text_EnterImpact, MSGBOX_YESNO
+	special Strata_RigQuery
+	goto_if_eq VAR_RESULT, RIG_IDLE, StrataFieldStation_EventScript_RigIdle
+	goto_if_eq VAR_RESULT, RIG_COMPLETE, StrataFieldStation_EventScript_RigComplete
+	goto_if_eq VAR_RESULT, RIG_REENTER, StrataFieldStation_EventScript_RigReenter
+	goto_if_eq VAR_RESULT, RIG_FIRST, StrataFieldStation_EventScript_RigFirst
+	@ RIG_NEXT: one-way, and the extinction filter applies.
+	msgbox StrataFieldStation_Text_NextWarning, MSGBOX_DEFAULT
+	msgbox StrataFieldStation_Text_LoadLayer, MSGBOX_YESNO
 	goto_if_eq VAR_RESULT, NO, StrataFieldStation_EventScript_RigCancel
 	playse SE_M_EXPLOSION
-	setvar VAR_0x8004, ERA_IMPACT_WINTER
-	special Strata_AdvanceEra
-	setvar VAR_STRATA_STORY, 4
+	special Strata_RigLoadNext
 	goto_if_eq VAR_0x8005, 0, StrataFieldStation_EventScript_NoLosses
 	goto_if_eq VAR_0x8005, 1, StrataFieldStation_EventScript_OneLoss
 	msgbox StrataFieldStation_Text_ManyLosses, MSGBOX_DEFAULT
-	goto StrataFieldStation_EventScript_EnterWinter
+	goto StrataFieldStation_EventScript_AfterLoad
 
 StrataFieldStation_EventScript_OneLoss::
 	msgbox StrataFieldStation_Text_OneLoss, MSGBOX_DEFAULT
-	goto StrataFieldStation_EventScript_EnterWinter
+	goto StrataFieldStation_EventScript_AfterLoad
 
 StrataFieldStation_EventScript_NoLosses::
 	msgbox StrataFieldStation_Text_NoLosses, MSGBOX_DEFAULT
-	goto StrataFieldStation_EventScript_EnterWinter
+StrataFieldStation_EventScript_AfterLoad::
+	@ The present has no reconstruction to step into: the epilogue happens here.
+	goto_if_eq VAR_0x8006, TRUE, StrataFieldStation_EventScript_ReachedToday
+	goto StrataFieldStation_EventScript_WarpToAct
 
-StrataFieldStation_EventScript_RigWinter::
-	msgbox StrataFieldStation_Text_EnterWinter, MSGBOX_YESNO
+StrataFieldStation_EventScript_RigFirst::
+	msgbox StrataFieldStation_Text_EnterLayer, MSGBOX_YESNO
 	goto_if_eq VAR_RESULT, NO, StrataFieldStation_EventScript_RigCancel
-StrataFieldStation_EventScript_EnterWinter::
+	special Strata_RigLoadNext
+	goto StrataFieldStation_EventScript_WarpToAct
+
+StrataFieldStation_EventScript_RigReenter::
+	msgbox StrataFieldStation_Text_EnterLayer, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, StrataFieldStation_EventScript_RigCancel
+StrataFieldStation_EventScript_WarpToAct::
 	playse SE_WARP_IN
+	special Strata_SpecialGetCurrentAct
+	switch VAR_RESULT
+	case ERA_HELL_CREEK, StrataFieldStation_EventScript_WarpHellCreek
+	case ERA_IMPACT_WINTER, StrataFieldStation_EventScript_WarpImpactWinter
+	case ERA_CORRAL_BLUFFS, StrataFieldStation_EventScript_WarpCorralBluffs
+	case ERA_BIGHORN_PETM, StrataFieldStation_EventScript_WarpBighorn
+	case ERA_GREEN_RIVER, StrataFieldStation_EventScript_WarpGreenRiver
+	case ERA_WHITE_RIVER, StrataFieldStation_EventScript_WarpWhiteRiver
+	case ERA_ASHFALL, StrataFieldStation_EventScript_WarpAshfall
+	case ERA_TRAP_CAVE, StrataFieldStation_EventScript_WarpTrapCave
+	releaseall
+	end
+
+StrataFieldStation_EventScript_WarpHellCreek::
+	warp MAP_STRATA_LEVEE, 18, 30
+	waitstate
+	end
+
+StrataFieldStation_EventScript_WarpImpactWinter::
 	warp MAP_STRATA_LEVEE_WINTER, 18, 30
 	waitstate
+	end
+
+StrataFieldStation_EventScript_WarpCorralBluffs::
+	warp MAP_STRATA_PALM_FOREST, STRATA_ARRIVAL_PALM_FOREST
+	waitstate
+	end
+
+StrataFieldStation_EventScript_WarpBighorn::
+	warp MAP_STRATA_RED_BEDS, STRATA_ARRIVAL_RED_BEDS
+	waitstate
+	end
+
+StrataFieldStation_EventScript_WarpGreenRiver::
+	warp MAP_STRATA_LAKE_FOREST, STRATA_ARRIVAL_LAKE_FOREST
+	waitstate
+	end
+
+StrataFieldStation_EventScript_WarpWhiteRiver::
+	warp MAP_STRATA_WHITE_RIVER, STRATA_ARRIVAL_WHITE_RIVER
+	waitstate
+	end
+
+StrataFieldStation_EventScript_WarpAshfall::
+	warp MAP_STRATA_GRASSLAND, STRATA_ARRIVAL_GRASSLAND
+	waitstate
+	end
+
+StrataFieldStation_EventScript_WarpTrapCave::
+	warp MAP_STRATA_STEPPE, STRATA_ARRIVAL_STEPPE
+	waitstate
+	end
+
+StrataFieldStation_EventScript_ReachedToday::
+	msgbox StrataFieldStation_Text_ReachedToday, MSGBOX_DEFAULT
 	releaseall
 	end
 
@@ -116,7 +140,23 @@ StrataFieldStation_EventScript_RigIdle::
 	releaseall
 	end
 
+StrataFieldStation_EventScript_RigComplete::
+	msgbox StrataFieldStation_Text_RigComplete, MSGBOX_DEFAULT
+	releaseall
+	end
+
 StrataFieldStation_EventScript_RigCancel::
+	releaseall
+	end
+
+@ Shared by every layer's arrival point: the edge of the reconstruction.
+StrataFieldStation_EventScript_Anchor::
+	lockall
+	msgbox StrataFieldStation_Text_Anchor, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, StrataFieldStation_EventScript_RigCancel
+	playse SE_WARP_OUT
+	warp MAP_STRATA_FIELD_STATION, 10, 8
+	waitstate
 	releaseall
 	end
 
@@ -156,82 +196,74 @@ StrataFieldStation_Text_Rest:
 	.string "DR. HALVORSEN: Let's patch up your\n"
 	.string "team first.$"
 
-StrataFieldStation_Text_RigReady:
-	.string "The rig is calibrated to the Hell\n"
-	.string "Creek layer, 66.04 million years ago.$"
-
-StrataFieldStation_Text_InHellCreek:
-	.string "You saw tyrannosaur tracks by the\n"
-	.string "river? Be careful up on that bluff.$"
-
-StrataFieldStation_Text_AfterTyrannosaur:
-	.string "You stood your ground against a\n"
-	.string "TYRANNOSAURUS! Remarkable.\p"
-	.string "The rig is ready for the next layer:\n"
-	.string "the rock just above the boundary\l"
-	.string "clay. About a year after the impact.$"
-
-StrataFieldStation_Text_InWinter:
-	.string "Dark, cold, and almost nothing\n"
-	.string "growing. Soot blocked the sun.\p"
-	.string "Big animals that needed lots of food\n"
-	.string "starved first.\p"
-	.string "Crocodiles and champsosaurs are cold-\n"
-	.string "blooded. They can go months without\l"
-	.string "a meal. That's part of why they\l"
-	.string "made it.$"
-
-StrataFieldStation_Text_AfterWinter:
-	.string "Ferns! Just above the boundary clay,\n"
-	.string "the rock is packed with fern spores.\p"
-	.string "We call it the fern spike. Ferns are\n"
-	.string "the first plants back after a\l"
-	.string "disaster, today as then.\p"
-	.string "The next layer is 300,000 years on,\n"
-	.string "at CORRAL BLUFFS in Colorado. We're\l"
-	.string "still calibrating the rig for it.$"
-
-StrataFieldStation_Text_ImpactWarning:
+StrataFieldStation_Text_NextWarning:
 	.string "DR. HALVORSEN: Before you go…\p"
 	.string "The rig only moves up. Once we load\n"
-	.string "this layer, Hell Creek's last days\l"
-	.string "are behind us for good.\p"
-	.string "And any lineage that couldn't survive\n"
-	.string "the impact won't come with you.$"
+	.string "the next layer, this one is behind\l"
+	.string "us for good.\p"
+	.string "And any lineage that can't survive\n"
+	.string "the change won't come with you.$"
 
-StrataFieldStation_Text_EnterImpact:
-	.string "STRATA RIG: Tullock Fm, 66.04 Ma\n"
-	.string "+1 year. Load the layer?$"
+StrataFieldStation_Text_LoadLayer:
+	.string "STRATA RIG: {STR_VAR_1}.\n"
+	.string "Load the layer?$"
 
-StrataFieldStation_Text_EnterWinter:
-	.string "STRATA RIG: Tullock Fm, 66.04 Ma\n"
-	.string "+1 year. Enter the reconstruction?$"
+StrataFieldStation_Text_EnterLayer:
+	.string "STRATA RIG: {STR_VAR_1}.\n"
+	.string "Enter the reconstruction?$"
 
 StrataFieldStation_Text_ManyLosses:
 	.string "The rig shudders as the new layer\n"
 	.string "loads…\p"
 	.string "{STR_VAR_1} and {STR_VAR_2} other\n"
-	.string "specimens could not survive the\l"
-	.string "impact. Their lineages end here.\p"
+	.string "specimens could not survive. Their\l"
+	.string "lineages end here.\p"
 	.string "That is what extinction means.$"
 
 StrataFieldStation_Text_OneLoss:
 	.string "The rig shudders as the new layer\n"
 	.string "loads…\p"
-	.string "{STR_VAR_1} could not survive the\n"
-	.string "impact. Its lineage ends here.\p"
+	.string "{STR_VAR_1} could not survive. Its\n"
+	.string "lineage ends here.\p"
 	.string "That is what extinction means.$"
 
 StrataFieldStation_Text_NoLosses:
 	.string "The rig shudders as the new layer\n"
 	.string "loads…\p"
 	.string "Every lineage you carry made it\n"
-	.string "through. Small, hardy survivors.$"
+	.string "through.$"
 
-StrataFieldStation_Text_EnterHellCreek:
-	.string "STRATA RIG: Hell Creek Fm, 66.04 Ma.\n"
-	.string "Enter the reconstruction?$"
+StrataFieldStation_Text_ReachedToday:
+	.string "The rig powers down. There is no\n"
+	.string "layer above this one.\p"
+	.string "Talk to DR. HALVORSEN.$"
 
 StrataFieldStation_Text_RigIdle:
 	.string "The rig hums quietly. DR. HALVORSEN\n"
 	.string "should explain it first.$"
+
+StrataFieldStation_Text_RigComplete:
+	.string "STRATA RIG: Today.\n"
+	.string "You're standing on the top layer.$"
+
+StrataFieldStation_Text_Anchor:
+	.string "The air shimmers at the edge of the\n"
+	.string "reconstruction. Return to camp?$"
+
+@ Run by the whiteout cutscene (src/field_screen_effect.c) after respawning here.
+StrataFieldStation_EventScript_AfterWhiteOut::
+	lockall
+	msgbox StrataFieldStation_Text_AfterWhiteOut, MSGBOX_DEFAULT
+	call Common_EventScript_OutOfCenterPartyHeal
+	msgbox StrataFieldStation_Text_AfterWhiteOutHealed, MSGBOX_DEFAULT
+	fadedefaultbgm
+	releaseall
+	end
+
+StrataFieldStation_Text_AfterWhiteOut:
+	.string "DR. HALVORSEN: There you are! Let's\n"
+	.string "get your team patched up.$"
+
+StrataFieldStation_Text_AfterWhiteOutHealed:
+	.string "Out there, nothing is tame. Pick\n"
+	.string "your fights.$"

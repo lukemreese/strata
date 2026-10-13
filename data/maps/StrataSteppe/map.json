@@ -1,0 +1,94 @@
+{
+  "id": "MAP_STRATA_STEPPE",
+  "name": "StrataSteppe",
+  "layout": "LAYOUT_STRATA_STEPPE",
+  "music": "MUS_ROUTE120",
+  "region": "REGION_HOENN",
+  "region_map_section": "MAPSEC_STRATA_ICE_AGE",
+  "requires_flash": false,
+  "weather": "WEATHER_SNOW",
+  "map_type": "MAP_TYPE_ROUTE",
+  "allow_cycling": true,
+  "allow_escaping": false,
+  "allow_running": true,
+  "show_map_name": true,
+  "battle_scene": "MAP_BATTLE_SCENE_NORMAL",
+  "connections": null,
+  "object_events": [],
+  "warp_events": [],
+  "coord_events": [
+    {
+      "type": "trigger",
+      "x": 65,
+      "y": 14,
+      "elevation": 3,
+      "var": "VAR_TEMP_1",
+      "var_value": "0",
+      "script": "StrataSteppe_EventScript_Sinkhole"
+    },
+    {
+      "type": "trigger",
+      "x": 66,
+      "y": 14,
+      "elevation": 3,
+      "var": "VAR_TEMP_1",
+      "var_value": "0",
+      "script": "StrataSteppe_EventScript_Sinkhole"
+    },
+    {
+      "type": "trigger",
+      "x": 67,
+      "y": 14,
+      "elevation": 3,
+      "var": "VAR_TEMP_1",
+      "var_value": "0",
+      "script": "StrataSteppe_EventScript_Sinkhole"
+    },
+    {
+      "type": "trigger",
+      "x": 68,
+      "y": 14,
+      "elevation": 3,
+      "var": "VAR_TEMP_1",
+      "var_value": "0",
+      "script": "StrataSteppe_EventScript_Sinkhole"
+    },
+    {
+      "type": "trigger",
+      "x": 69,
+      "y": 14,
+      "elevation": 3,
+      "var": "VAR_TEMP_1",
+      "var_value": "0",
+      "script": "StrataSteppe_EventScript_Sinkhole"
+    },
+    {
+      "type": "trigger",
+      "x": 70,
+      "y": 14,
+      "elevation": 3,
+      "var": "VAR_TEMP_1",
+      "var_value": "0",
+      "script": "StrataSteppe_EventScript_Sinkhole"
+    },
+    {
+      "type": "trigger",
+      "x": 71,
+      "y": 14,
+      "elevation": 3,
+      "var": "VAR_TEMP_1",
+      "var_value": "0",
+      "script": "StrataSteppe_EventScript_Sinkhole"
+    }
+  ],
+  "bg_events": [
+    {
+      "type": "sign",
+      "x": 56,
+      "y": 8,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
+      "script": "StrataFieldStation_EventScript_Anchor"
+    }
+  ]
+}

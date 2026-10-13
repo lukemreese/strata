@@ -1171,6 +1171,14 @@
     "StrataBackswamp",
     "StrataLeveeWinter",
     "StrataRiverWinter",
-    "StrataBackswampWinter"
+    "StrataBackswampWinter",
+    "StrataPalmForest",
+    "StrataRedBeds",
+    "StrataLakeForest",
+    "StrataWhiteRiver",
+    "StrataGrassland",
+    "StrataSteppe",
+    "StrataTrapCave",
+    "StrataPrairie"
   ]
 }

@@ -9411,6 +9411,94 @@
       "border_filepath": "data/layouts/StrataBackswampWinter/border.bin",
       "blockdata_filepath": "data/layouts/StrataBackswampWinter/map.bin",
       "layout_version": "emerald"
+    },
+    {
+      "id": "LAYOUT_STRATA_PALM_FOREST",
+      "name": "StrataPalmForest_Layout",
+      "width": 48,
+      "height": 44,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Rustboro",
+      "border_filepath": "data/layouts/StrataPalmForest/border.bin",
+      "blockdata_filepath": "data/layouts/StrataPalmForest/map.bin",
+      "layout_version": "emerald"
+    },
+    {
+      "id": "LAYOUT_STRATA_RED_BEDS",
+      "name": "StrataRedBeds_Layout",
+      "width": 40,
+      "height": 34,
+      "primary_tileset": "gTileset_GeneralPetm",
+      "secondary_tileset": "gTileset_FallarborPetm",
+      "border_filepath": "data/layouts/StrataRedBeds/border.bin",
+      "blockdata_filepath": "data/layouts/StrataRedBeds/map.bin",
+      "layout_version": "emerald"
+    },
+    {
+      "id": "LAYOUT_STRATA_LAKE_FOREST",
+      "name": "StrataLakeForest_Layout",
+      "width": 40,
+      "height": 80,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Rustboro",
+      "border_filepath": "data/layouts/StrataLakeForest/border.bin",
+      "blockdata_filepath": "data/layouts/StrataLakeForest/map.bin",
+      "layout_version": "emerald"
+    },
+    {
+      "id": "LAYOUT_STRATA_WHITE_RIVER",
+      "name": "StrataWhiteRiver_Layout",
+      "width": 40,
+      "height": 43,
+      "primary_tileset": "gTileset_GeneralOligocene",
+      "secondary_tileset": "gTileset_FallarborOligocene",
+      "border_filepath": "data/layouts/StrataWhiteRiver/border.bin",
+      "blockdata_filepath": "data/layouts/StrataWhiteRiver/map.bin",
+      "layout_version": "emerald"
+    },
+    {
+      "id": "LAYOUT_STRATA_GRASSLAND",
+      "name": "StrataGrassland_Layout",
+      "width": 85,
+      "height": 20,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Fallarbor",
+      "border_filepath": "data/layouts/StrataGrassland/border.bin",
+      "blockdata_filepath": "data/layouts/StrataGrassland/map.bin",
+      "layout_version": "emerald"
+    },
+    {
+      "id": "LAYOUT_STRATA_STEPPE",
+      "name": "StrataSteppe_Layout",
+      "width": 80,
+      "height": 20,
+      "primary_tileset": "gTileset_GeneralIceAge",
+      "secondary_tileset": "gTileset_MauvilleIceAge",
+      "border_filepath": "data/layouts/StrataSteppe/border.bin",
+      "blockdata_filepath": "data/layouts/StrataSteppe/map.bin",
+      "layout_version": "emerald"
+    },
+    {
+      "id": "LAYOUT_STRATA_TRAP_CAVE",
+      "name": "StrataTrapCave_Layout",
+      "width": 42,
+      "height": 15,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Cave",
+      "border_filepath": "data/layouts/StrataTrapCave/border.bin",
+      "blockdata_filepath": "data/layouts/StrataTrapCave/map.bin",
+      "layout_version": "emerald"
+    },
+    {
+      "id": "LAYOUT_STRATA_PRAIRIE",
+      "name": "StrataPrairie_Layout",
+      "width": 50,
+      "height": 20,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Petalburg",
+      "border_filepath": "data/layouts/StrataPrairie/border.bin",
+      "blockdata_filepath": "data/layouts/StrataPrairie/map.bin",
+      "layout_version": "emerald"
     }
   ]
 }

@@ -1703,3 +1703,2384 @@
         .levelUpLearnset = sLepisosteusLevelUpLearnset,
     },
 
+    // Purgatorius | Tullock Fm, MT | ~65.9 Ma | ~0.04 kg, 0.15 m | BST 202
+    [SPECIES_PURGATORIUS] =
+    {
+        .baseHP        = 30,
+        .baseAttack    = 22,
+        .baseDefense   = 22,
+        .baseSpeed     = 52,
+        .baseSpAttack  = 45,
+        .baseSpDefense = 30,
+        .types = MON_TYPES(TYPE_NORMAL, TYPE_PSYCHIC),
+        .catchRate = 200,
+        .expYield = 61,
+        .evYield_Speed = 1,
+        .genderRatio = PERCENT_FEMALE(50),
+        .eggCycles = 20,
+        .friendship = STANDARD_FRIENDSHIP,
+        .growthRate = GROWTH_MEDIUM_FAST,
+        .eggGroups = MON_EGG_GROUPS(EGG_GROUP_NO_EGGS_DISCOVERED),
+        .abilities = { ABILITY_RUN_AWAY, ABILITY_PICKUP, ABILITY_NONE },
+        .bodyColor = BODY_COLOR_BROWN,
+        .speciesName = _("Purgatorius"),
+        .cryId = CRY_PURGATORIUS,
+        .natDexNum = NATIONAL_DEX_PURGATORIUS,
+        .categoryName = _("Stem Primate"),
+        .height = 2,
+        .weight = 0,
+        .description = COMPOUND_STRING(
+            "A tiny tree climber with nimble\n"
+            "ankles, close to the ancestor of all\n"
+            "primates. It appeared within 140,000\n"
+            "years of the impact."),
+        .frontPic = gMonFrontPic_Purgatorius,
+        .backPic = gMonBackPic_Purgatorius,
+        .palette = gMonPalette_Purgatorius,
+        .shinyPalette = gMonShinyPalette_Purgatorius,
+        .iconSprite = gMonIcon_Purgatorius,
+        // Placeholder presentation borrowed from SPECIES_PACHIRISU
+        .pokemonScale = 491,
+        .pokemonOffset = 16,
+        .trainerScale = 256,
+        .trainerOffset = 0,
+        .frontPicSize = MON_COORDS_SIZE(48, 56),
+        .frontPicYOffset = 12,
+        .frontAnimFrames = ANIM_FRAMES(
+            ANIMCMD_FRAME(0, 5),
+            ANIMCMD_FRAME(1, 5),
+            ANIMCMD_FRAME(0, 5),
+            ANIMCMD_FRAME(1, 5),
+            ANIMCMD_FRAME(0, 50),
+            ANIMCMD_FRAME(1, 5),
+            ANIMCMD_FRAME(0, 5),
+            ANIMCMD_FRAME(1, 5),
+            ANIMCMD_FRAME(0, 1),
+        ),
+        .frontAnimId = ANIM_V_SQUISH_AND_BOUNCE,
+        .backPicSize = MON_COORDS_SIZE(64, 64),
+        .backPicYOffset = 3,
+        .backAnimId = BACK_ANIM_SHAKE_FLASH_YELLOW,
+        .iconPalIndex = 0,
+        SHADOW(-2, 1, SHADOW_SIZE_S)
+        FOOTPRINT(Purgatorius)
+        .levelUpLearnset = sPurgatoriusLevelUpLearnset,
+    },
+
+    // Loxolophus | Denver Fm, CO | ~65.7 Ma | ~3 kg, 0.5 m | BST 333
+    [SPECIES_LOXOLOPHUS] =
+    {
+        .baseHP        = 62,
+        .baseAttack    = 62,
+        .baseDefense   = 49,
+        .baseSpeed     = 62,
+        .baseSpAttack  = 49,
+        .baseSpDefense = 49,
+        .types = MON_TYPES(TYPE_NORMAL),
+        .catchRate = 190,
+        .expYield = 100,
+        .evYield_HP = 1,
+        .genderRatio = PERCENT_FEMALE(50),
+        .eggCycles = 20,
+        .friendship = STANDARD_FRIENDSHIP,
+        .growthRate = GROWTH_MEDIUM_FAST,
+        .eggGroups = MON_EGG_GROUPS(EGG_GROUP_NO_EGGS_DISCOVERED),
+        .abilities = { ABILITY_PICKUP, ABILITY_GLUTTONY, ABILITY_NONE },
+        .bodyColor = BODY_COLOR_BROWN,
+        .speciesName = _("Loxolophus"),
+        .cryId = CRY_LOXOLOPHUS,
+        .natDexNum = NATIONAL_DEX_LOXOLOPHUS,
+        .categoryName = _("Condylarth"),
+        .height = 5,
+        .weight = 30,
+        .description = COMPOUND_STRING(
+            "A raccoon-sized omnivore of the\n"
+            "recovering forests. It ate whatever\n"
+            "the new world offered: fruit, roots\n"
+            "and small animals."),
+        .frontPic = gMonFrontPic_Loxolophus,
+        .backPic = gMonBackPic_Loxolophus,
+        .palette = gMonPalette_Loxolophus,
+        .shinyPalette = gMonShinyPalette_Loxolophus,
+        .iconSprite = gMonIcon_Loxolophus,
+        // Placeholder presentation borrowed from SPECIES_ZIGZAGOON
+        .pokemonScale = 560,
+        .pokemonOffset = 22,
+        .trainerScale = 256,
+        .trainerOffset = 0,
+        .frontPicSize = P_GBA_STYLE_SPECIES_GFX ? MON_COORDS_SIZE(64, 40) : MON_COORDS_SIZE(56, 40),
+        .frontPicYOffset = P_GBA_STYLE_SPECIES_GFX ? 15 : 12,
+        .frontAnimFrames = ANIM_FRAMES(
+            ANIMCMD_FRAME(0, 27),
+            ANIMCMD_FRAME(1, 6),
+            ANIMCMD_FRAME(0, 6),
+            ANIMCMD_FRAME(1, 6),
+            ANIMCMD_FRAME(0, 1),
+        ),
+        .frontAnimId = ANIM_H_SLIDE,
+        .backPicSize = P_GBA_STYLE_SPECIES_GFX ? MON_COORDS_SIZE(56, 48) : MON_COORDS_SIZE(56, 56),
+        .backPicYOffset = P_GBA_STYLE_SPECIES_GFX ? 11 : 6,
+        .backAnimId = BACK_ANIM_TRIANGLE_DOWN,
+        .iconPalIndex = 2,
+        SHADOW(-4, 0, SHADOW_SIZE_M)
+        FOOTPRINT(Loxolophus)
+        .levelUpLearnset = sLoxolophusLevelUpLearnset,
+    },
+
+    // Carsioptychus | Denver Fm, CO | ~65.7 Ma | ~6 kg, 0.6 m | BST 354
+    [SPECIES_CARSIOPTYCH] =
+    {
+        .baseHP        = 76,
+        .baseAttack    = 63,
+        .baseDefense   = 63,
+        .baseSpeed     = 51,
+        .baseSpAttack  = 38,
+        .baseSpDefense = 63,
+        .types = MON_TYPES(TYPE_GRASS, TYPE_NORMAL),
+        .catchRate = 170,
+        .expYield = 106,
+        .evYield_HP = 2,
+        .genderRatio = PERCENT_FEMALE(50),
+        .eggCycles = 20,
+        .friendship = STANDARD_FRIENDSHIP,
+        .growthRate = GROWTH_MEDIUM_FAST,
+        .eggGroups = MON_EGG_GROUPS(EGG_GROUP_NO_EGGS_DISCOVERED),
+        .abilities = { ABILITY_THICK_FAT, ABILITY_GLUTTONY, ABILITY_NONE },
+        .bodyColor = BODY_COLOR_BROWN,
+        .speciesName = _("Carsioptych"),
+        .cryId = CRY_CARSIOPTYCH,
+        .natDexNum = NATIONAL_DEX_CARSIOPTYCH,
+        .categoryName = _("Periptychid"),
+        .height = 6,
+        .weight = 60,
+        .description = COMPOUND_STRING(
+            "A stout plant eater with swollen,\n"
+            "crushing cheek teeth. It cracked the\n"
+            "hard seeds and nuts of the first post-\n"
+            "impact forests."),
+        .frontPic = gMonFrontPic_Carsioptych,
+        .backPic = gMonBackPic_Carsioptych,
+        .palette = gMonPalette_Carsioptych,
+        .shinyPalette = gMonShinyPalette_Carsioptych,
+        .iconSprite = gMonIcon_Carsioptych,
+        // Placeholder presentation borrowed from SPECIES_LECHONK
+        .pokemonScale = 356,
+        .pokemonOffset = 17,
+        .trainerScale = 256,
+        .trainerOffset = 0,
+        .frontPicSize = MON_COORDS_SIZE(64, 64),
+        .frontPicYOffset = 12,
+        .frontAnimFrames = sAnims_SingleFramePlaceHolder,
+        .backPicSize = MON_COORDS_SIZE(64, 64),
+        .backPicYOffset = 11,
+        .iconPalIndex = 1,
+        SHADOW(0, 1, SHADOW_SIZE_S)
+        FOOTPRINT(Carsioptych)
+        .levelUpLearnset = sCarsioptychLevelUpLearnset,
+    },
+
+    // Taeniolabis taoensis | Denver Fm, CO | ~65.4 Ma | ~30 kg, 0.9 m | BST 403
+    [SPECIES_TAENIOLABIS] =
+    {
+        .baseHP        = 94,
+        .baseAttack    = 81,
+        .baseDefense   = 81,
+        .baseSpeed     = 40,
+        .baseSpAttack  = 40,
+        .baseSpDefense = 67,
+        .types = MON_TYPES(TYPE_NORMAL, TYPE_GROUND),
+        .catchRate = 120,
+        .expYield = 121,
+        .evYield_HP = 2,
+        .genderRatio = PERCENT_FEMALE(50),
+        .eggCycles = 20,
+        .friendship = STANDARD_FRIENDSHIP,
+        .growthRate = GROWTH_MEDIUM_FAST,
+        .eggGroups = MON_EGG_GROUPS(EGG_GROUP_NO_EGGS_DISCOVERED),
+        .abilities = { ABILITY_THICK_FAT, ABILITY_STRONG_JAW, ABILITY_NONE },
+        .bodyColor = BODY_COLOR_BROWN,
+        .speciesName = _("Taeniolabis"),
+        .cryId = CRY_TAENIOLABIS,
+        .natDexNum = NATIONAL_DEX_TAENIOLABIS,
+        .categoryName = _("Multituber"),
+        .height = 9,
+        .weight = 300,
+        .description = COMPOUND_STRING(
+            "A beaver-sized multituberculate, the\n"
+            "largest of its kind. It arrived as\n"
+            "legumes spread, and gnawed tough\n"
+            "plants with chisel teeth."),
+        .frontPic = gMonFrontPic_Taeniolabis,
+        .backPic = gMonBackPic_Taeniolabis,
+        .palette = gMonPalette_Taeniolabis,
+        .shinyPalette = gMonShinyPalette_Taeniolabis,
+        .iconSprite = gMonIcon_Taeniolabis,
+        // Placeholder presentation borrowed from SPECIES_BIDOOF
+        .pokemonScale = 432,
+        .pokemonOffset = 16,
+        .trainerScale = 256,
+        .trainerOffset = 0,
+        .frontPicSize = MON_COORDS_SIZE(40, 40),
+        .frontPicYOffset = 12,
+        .frontAnimFrames = ANIM_FRAMES(
+            ANIMCMD_FRAME(0, 5),
+            ANIMCMD_FRAME(1, 15),
+            ANIMCMD_FRAME(0, 15),
+            ANIMCMD_FRAME(1, 15),
+            ANIMCMD_FRAME(0, 15),
+            ANIMCMD_FRAME(1, 15),
+            ANIMCMD_FRAME(0, 5),
+        ),
+        .frontAnimId = ANIM_H_SLIDE_SLOW,
+        .backPicSize = MON_COORDS_SIZE(64, 40),
+        .backPicYOffset = 13,
+        .backAnimId = BACK_ANIM_V_SHAKE_H_SLIDE,
+        .iconPalIndex = 2,
+        SHADOW(1, 1, SHADOW_SIZE_M)
+        FOOTPRINT(Taeniolabis)
+        .levelUpLearnset = sTaeniolabisLevelUpLearnset,
+    },
+
+    // Eoconodon | Denver Fm, CO | ~65.4 Ma | ~30 kg, 1.2 m | BST 403
+    [SPECIES_EOCONODON] =
+    {
+        .baseHP        = 81,
+        .baseAttack    = 94,
+        .baseDefense   = 67,
+        .baseSpeed     = 67,
+        .baseSpAttack  = 40,
+        .baseSpDefense = 54,
+        .types = MON_TYPES(TYPE_DARK, TYPE_NORMAL),
+        .catchRate = 45,
+        .expYield = 121,
+        .evYield_Attack = 2,
+        .genderRatio = PERCENT_FEMALE(50),
+        .eggCycles = 20,
+        .friendship = STANDARD_FRIENDSHIP,
+        .growthRate = GROWTH_SLOW,
+        .eggGroups = MON_EGG_GROUPS(EGG_GROUP_NO_EGGS_DISCOVERED),
+        .abilities = { ABILITY_STRONG_JAW, ABILITY_INTIMIDATE, ABILITY_NONE },
+        .bodyColor = BODY_COLOR_BROWN,
+        .speciesName = _("Eoconodon"),
+        .cryId = CRY_EOCONODON,
+        .natDexNum = NATIONAL_DEX_EOCONODON,
+        .categoryName = _("Triisodont"),
+        .height = 12,
+        .weight = 300,
+        .description = COMPOUND_STRING(
+            "A wolf-sized meat eater with heavy\n"
+            "jaws. It was among the first large\n"
+            "predators to appear after the\n"
+            "dinosaurs were gone."),
+        .frontPic = gMonFrontPic_Eoconodon,
+        .backPic = gMonBackPic_Eoconodon,
+        .palette = gMonPalette_Eoconodon,
+        .shinyPalette = gMonShinyPalette_Eoconodon,
+        .iconSprite = gMonIcon_Eoconodon,
+        // Placeholder presentation borrowed from SPECIES_STOUTLAND
+        .pokemonScale = 282,
+        .pokemonOffset = 4,
+        .trainerScale = 256,
+        .trainerOffset = 0,
+        .frontPicSize = MON_COORDS_SIZE(64, 64),
+        .frontPicYOffset = 1,
+        .frontAnimFrames = ANIM_FRAMES(
+            ANIMCMD_FRAME(0, 27),
+            ANIMCMD_FRAME(1, 6),
+            ANIMCMD_FRAME(0, 6),
+            ANIMCMD_FRAME(1, 6),
+            ANIMCMD_FRAME(0, 1),
+        ),
+        .frontAnimId = ANIM_H_SLIDE,
+        .backPicSize = MON_COORDS_SIZE(64, 64),
+        .backPicYOffset = 2,
+        .backAnimId = BACK_ANIM_V_STRETCH,
+        .iconPalIndex = 2,
+        SHADOW(-4, 9, SHADOW_SIZE_L)
+        FOOTPRINT(Eoconodon)
+        .levelUpLearnset = sEoconodonLevelUpLearnset,
+    },
+
+    // Sifrhippus sandrae | Willwood Fm, WY | ~55.8 Ma | 4 kg, 0.5 m | BST 342
+    // Note: Dwarfing during the PETM: Secord et al. 2012.
+    [SPECIES_SIFRHIPPUS] =
+    {
+        .baseHP        = 51,
+        .baseAttack    = 51,
+        .baseDefense   = 51,
+        .baseSpeed     = 89,
+        .baseSpAttack  = 51,
+        .baseSpDefense = 51,
+        .types = MON_TYPES(TYPE_NORMAL, TYPE_GRASS),
+        .catchRate = 120,
+        .expYield = 103,
+        .evYield_Speed = 1,
+        .genderRatio = PERCENT_FEMALE(50),
+        .eggCycles = 20,
+        .friendship = STANDARD_FRIENDSHIP,
+        .growthRate = GROWTH_MEDIUM_SLOW,
+        .eggGroups = MON_EGG_GROUPS(EGG_GROUP_NO_EGGS_DISCOVERED),
+        .abilities = { ABILITY_RUN_AWAY, ABILITY_QUICK_FEET, ABILITY_NONE },
+        .bodyColor = BODY_COLOR_BROWN,
+        .speciesName = _("Sifrhippus"),
+        .cryId = CRY_SIFRHIPPUS,
+        .natDexNum = NATIONAL_DEX_SIFRHIPPUS,
+        .categoryName = _("Dawn Horse"),
+        .height = 5,
+        .weight = 40,
+        .description = COMPOUND_STRING(
+            "The earliest horse in North America,\n"
+            "about the size of a cat. It shrank by\n"
+            "a third as the PETM heat peaked, then\n"
+            "grew again."),
+        .frontPic = gMonFrontPic_Sifrhippus,
+        .backPic = gMonBackPic_Sifrhippus,
+        .palette = gMonPalette_Sifrhippus,
+        .shinyPalette = gMonShinyPalette_Sifrhippus,
+        .iconSprite = gMonIcon_Sifrhippus,
+        // Placeholder presentation borrowed from SPECIES_PONYTA
+        .pokemonScale = 283,
+        .pokemonOffset = 8,
+        .trainerScale = 256,
+        .trainerOffset = 0,
+        .frontPicSize = P_GBA_STYLE_SPECIES_GFX ? MON_COORDS_SIZE(48, 48) : MON_COORDS_SIZE(56, 56),
+        .frontPicYOffset = P_GBA_STYLE_SPECIES_GFX ? 8 : 6,
+        .frontAnimFrames = ANIM_FRAMES(
+            ANIMCMD_FRAME(1, 30),
+            ANIMCMD_FRAME(0, 5),
+        ),
+        .frontAnimId = P_GBA_STYLE_SPECIES_GFX ? ANIM_GLOW_ORANGE : ANIM_V_SHAKE,
+        .frontAnimDelay = P_GBA_STYLE_SPECIES_GFX ? 0 : 10,
+        .backPicSize = P_GBA_STYLE_SPECIES_GFX ? MON_COORDS_SIZE(48, 48) : MON_COORDS_SIZE(64, 56),
+        .backPicYOffset = P_GBA_STYLE_SPECIES_GFX ? 9 : 4,
+        .backAnimId = BACK_ANIM_SHAKE_GLOW_RED,
+        .iconPalIndex = P_GBA_STYLE_SPECIES_ICONS ? 0 : 3,
+        SHADOW(-1, 7, SHADOW_SIZE_M)
+        FOOTPRINT(Sifrhippus)
+        .levelUpLearnset = sSifrhippusLevelUpLearnset,
+    },
+
+    // Teilhardina brandti | Willwood Fm, WY | ~55.8 Ma | ~0.03 kg, 0.1 m | BST 193
+    [SPECIES_TEILHARDINA] =
+    {
+        .baseHP        = 28,
+        .baseAttack    = 21,
+        .baseDefense   = 21,
+        .baseSpeed     = 48,
+        .baseSpAttack  = 48,
+        .baseSpDefense = 28,
+        .types = MON_TYPES(TYPE_NORMAL, TYPE_PSYCHIC),
+        .catchRate = 150,
+        .expYield = 58,
+        .evYield_Speed = 1,
+        .genderRatio = PERCENT_FEMALE(50),
+        .eggCycles = 20,
+        .friendship = STANDARD_FRIENDSHIP,
+        .growthRate = GROWTH_MEDIUM_SLOW,
+        .eggGroups = MON_EGG_GROUPS(EGG_GROUP_NO_EGGS_DISCOVERED),
+        .abilities = { ABILITY_RUN_AWAY, ABILITY_INFILTRATOR, ABILITY_NONE },
+        .bodyColor = BODY_COLOR_BROWN,
+        .speciesName = _("Teilhardina"),
+        .cryId = CRY_TEILHARDINA,
+        .natDexNum = NATIONAL_DEX_TEILHARDINA,
+        .categoryName = _("True Primate"),
+        .height = 1,
+        .weight = 0,
+        .description = COMPOUND_STRING(
+            "One of the earliest true primates, a\n"
+            "mouse-sized tree dweller. Primates\n"
+            "spread across the northern continents\n"
+            "in the PETM heat."),
+        .frontPic = gMonFrontPic_Teilhardina,
+        .backPic = gMonBackPic_Teilhardina,
+        .palette = gMonPalette_Teilhardina,
+        .shinyPalette = gMonShinyPalette_Teilhardina,
+        .iconSprite = gMonIcon_Teilhardina,
+        // Placeholder presentation borrowed from SPECIES_AIPOM
+        .pokemonScale = 363,
+        .pokemonOffset = 6,
+        .trainerScale = 256,
+        .trainerOffset = 0,
+        .frontPicSize = P_GBA_STYLE_SPECIES_GFX ? MON_COORDS_SIZE(40, 64) : MON_COORDS_SIZE(32, 64),
+        .frontPicYOffset = P_GBA_STYLE_SPECIES_GFX ? 3 : 1,
+        .frontAnimFrames = ANIM_FRAMES(
+            ANIMCMD_FRAME(1, 35),
+            ANIMCMD_FRAME(0, 5),
+        ),
+        .frontAnimId = ANIM_H_JUMPS_V_STRETCH,
+        .backPicSize = P_GBA_STYLE_SPECIES_GFX ? MON_COORDS_SIZE(48, 48) : MON_COORDS_SIZE(64, 64),
+        .backPicYOffset = P_GBA_STYLE_SPECIES_GFX ? 9 : 3,
+        .backAnimId = BACK_ANIM_CONCAVE_ARC_LARGE,
+        .iconPalIndex = 2,
+        SHADOW(-1, 12, SHADOW_SIZE_S)
+        FOOTPRINT(Teilhardina)
+        .levelUpLearnset = sTeilhardinaLevelUpLearnset,
+    },
+
+    // Diacodexis ilicis | Willwood Fm, WY | ~55.8 Ma | ~2 kg, 0.5 m | BST 321
+    [SPECIES_DIACODEXIS] =
+    {
+        .baseHP        = 48,
+        .baseAttack    = 48,
+        .baseDefense   = 36,
+        .baseSpeed     = 95,
+        .baseSpAttack  = 48,
+        .baseSpDefense = 48,
+        .types = MON_TYPES(TYPE_NORMAL),
+        .catchRate = 150,
+        .expYield = 96,
+        .evYield_Speed = 1,
+        .genderRatio = PERCENT_FEMALE(50),
+        .eggCycles = 20,
+        .friendship = STANDARD_FRIENDSHIP,
+        .growthRate = GROWTH_MEDIUM_FAST,
+        .eggGroups = MON_EGG_GROUPS(EGG_GROUP_NO_EGGS_DISCOVERED),
+        .abilities = { ABILITY_RUN_AWAY, ABILITY_QUICK_FEET, ABILITY_NONE },
+        .bodyColor = BODY_COLOR_BROWN,
+        .speciesName = _("Diacodexis"),
+        .cryId = CRY_DIACODEXIS,
+        .natDexNum = NATIONAL_DEX_DIACODEXIS,
+        .categoryName = _("Artiodactyl"),
+        .height = 5,
+        .weight = 20,
+        .description = COMPOUND_STRING(
+            "A rabbit-sized, long-legged runner. It\n"
+            "is the oldest known even-toed hoofed\n"
+            "mammal: the group that includes pigs,\n"
+            "deer and whales."),
+        .frontPic = gMonFrontPic_Diacodexis,
+        .backPic = gMonBackPic_Diacodexis,
+        .palette = gMonPalette_Diacodexis,
+        .shinyPalette = gMonShinyPalette_Diacodexis,
+        .iconSprite = gMonIcon_Diacodexis,
+        // Placeholder presentation borrowed from SPECIES_SKIDDO
+        .pokemonScale = 338,
+        .pokemonOffset = 8,
+        .trainerScale = 256,
+        .trainerOffset = 0,
+        .frontPicSize = MON_COORDS_SIZE(48, 56),
+        .frontPicYOffset = 7,
+        .frontAnimFrames = ANIM_FRAMES(
+            ANIMCMD_FRAME(1, 15),
+            ANIMCMD_FRAME(0, 15),
+        ),
+        .frontAnimId = ANIM_V_SQUISH_AND_BOUNCE,
+        .backPicSize = MON_COORDS_SIZE(56, 48),
+        .backPicYOffset = 8,
+        .backAnimId = BACK_ANIM_CONCAVE_ARC_SMALL,
+        .iconPalIndex = 1,
+        SHADOW(2, 7, SHADOW_SIZE_M)
+        FOOTPRINT(Diacodexis)
+        .levelUpLearnset = sDiacodexisLevelUpLearnset,
+    },
+
+    // Hyopsodus | Willwood Fm, WY | ~55 Ma | ~1 kg, 0.35 m | BST 300
+    [SPECIES_HYOPSODUS] =
+    {
+        .baseHP        = 56,
+        .baseAttack    = 44,
+        .baseDefense   = 44,
+        .baseSpeed     = 56,
+        .baseSpAttack  = 44,
+        .baseSpDefense = 56,
+        .types = MON_TYPES(TYPE_NORMAL, TYPE_GROUND),
+        .catchRate = 200,
+        .expYield = 90,
+        .evYield_HP = 1,
+        .genderRatio = PERCENT_FEMALE(50),
+        .eggCycles = 20,
+        .friendship = STANDARD_FRIENDSHIP,
+        .growthRate = GROWTH_MEDIUM_FAST,
+        .eggGroups = MON_EGG_GROUPS(EGG_GROUP_NO_EGGS_DISCOVERED),
+        .abilities = { ABILITY_PICKUP, ABILITY_RUN_AWAY, ABILITY_NONE },
+        .bodyColor = BODY_COLOR_BROWN,
+        .speciesName = _("Hyopsodus"),
+        .cryId = CRY_HYOPSODUS,
+        .natDexNum = NATIONAL_DEX_HYOPSODUS,
+        .categoryName = _("Condylarth"),
+        .height = 4,
+        .weight = 10,
+        .description = COMPOUND_STRING(
+            "A small, long-bodied omnivore. It is\n"
+            "one of the most common fossils in the\n"
+            "Eocene rocks of Wyoming."),
+        .frontPic = gMonFrontPic_Hyopsodus,
+        .backPic = gMonBackPic_Hyopsodus,
+        .palette = gMonPalette_Hyopsodus,
+        .shinyPalette = gMonShinyPalette_Hyopsodus,
+        .iconSprite = gMonIcon_Hyopsodus,
+        // Placeholder presentation borrowed from SPECIES_FURRET
+        .pokemonScale = 346,
+        .pokemonOffset = 11,
+        .trainerScale = 256,
+        .trainerOffset = 0,
+        .frontPicSize = MON_COORDS_SIZE(48, 56),
+        .frontPicYOffset = P_GBA_STYLE_SPECIES_GFX ? 7 : 4,
+        .frontAnimFrames = ANIM_FRAMES(
+            ANIMCMD_FRAME(1, 35),
+            ANIMCMD_FRAME(0, 5),
+        ),
+        .frontAnimId = ANIM_H_JUMPS_V_STRETCH,
+        .backPicSize = P_GBA_STYLE_SPECIES_GFX ? MON_COORDS_SIZE(48, 48) : MON_COORDS_SIZE(64, 56),
+        .backPicYOffset = P_GBA_STYLE_SPECIES_GFX ? 8 : 6,
+        .backAnimId = BACK_ANIM_CONCAVE_ARC_LARGE,
+        .iconPalIndex = 2,
+        SHADOW(-1, 9, SHADOW_SIZE_M)
+        FOOTPRINT(Hyopsodus)
+        .levelUpLearnset = sHyopsodusLevelUpLearnset,
+    },
+
+    // Coryphodon | Willwood Fm, WY | ~55 Ma | ~500 kg, 2.3 m | BST 489
+    [SPECIES_CORYPHODON] =
+    {
+        .baseHP        = 126,
+        .baseAttack    = 95,
+        .baseDefense   = 110,
+        .baseSpeed     = 32,
+        .baseSpAttack  = 32,
+        .baseSpDefense = 95,
+        .types = MON_TYPES(TYPE_GROUND, TYPE_WATER),
+        .catchRate = 45,
+        .expYield = 147,
+        .evYield_HP = 2,
+        .genderRatio = PERCENT_FEMALE(50),
+        .eggCycles = 20,
+        .friendship = STANDARD_FRIENDSHIP,
+        .growthRate = GROWTH_SLOW,
+        .eggGroups = MON_EGG_GROUPS(EGG_GROUP_NO_EGGS_DISCOVERED),
+        .abilities = { ABILITY_THICK_FAT, ABILITY_STURDY, ABILITY_NONE },
+        .bodyColor = BODY_COLOR_GRAY,
+        .speciesName = _("Coryphodon"),
+        .cryId = CRY_CORYPHODON,
+        .natDexNum = NATIONAL_DEX_CORYPHODON,
+        .categoryName = _("Pantodont"),
+        .height = 23,
+        .weight = 5000,
+        .description = COMPOUND_STRING(
+            "A hippo-like giant with tusks and a\n"
+            "tiny brain. It wallowed in the warm\n"
+            "swamps and was the largest animal of\n"
+            "its world."),
+        .frontPic = gMonFrontPic_Coryphodon,
+        .backPic = gMonBackPic_Coryphodon,
+        .palette = gMonPalette_Coryphodon,
+        .shinyPalette = gMonShinyPalette_Coryphodon,
+        .iconSprite = gMonIcon_Coryphodon,
+        // Placeholder presentation borrowed from SPECIES_HIPPOWDON
+        .pokemonScale = 261,
+        .pokemonOffset = 2,
+        .trainerScale = 334,
+        .trainerOffset = 4,
+        .frontPicSize = MON_COORDS_SIZE(64, 56),
+        .frontPicYOffset = 6,
+        .frontAnimFrames = ANIM_FRAMES(
+            ANIMCMD_FRAME(1, 40),
+            ANIMCMD_FRAME(0, 5),
+        ),
+        .frontAnimId = ANIM_V_SHAKE_TWICE,
+        .backPicSize = MON_COORDS_SIZE(64, 56),
+        .backPicYOffset = 6,
+        .backAnimId = BACK_ANIM_V_SHAKE_LOW,
+        .iconPalIndex = 1,
+        FOOTPRINT(Coryphodon)
+        .levelUpLearnset = sCoryphodonLevelUpLearnset,
+    },
+
+    // Eohippus angustidens | Wind River Fm, WY | ~52 Ma | ~10 kg, 0.6 m | BST 370
+    // Note: Often lumped into 'Hyracotherium'; Eohippus is the North American genus.
+    [SPECIES_EOHIPPUS] =
+    {
+        .baseHP        = 64,
+        .baseAttack    = 64,
+        .baseDefense   = 51,
+        .baseSpeed     = 89,
+        .baseSpAttack  = 51,
+        .baseSpDefense = 51,
+        .types = MON_TYPES(TYPE_NORMAL, TYPE_GRASS),
+        .catchRate = 90,
+        .expYield = 111,
+        .evYield_Speed = 2,
+        .genderRatio = PERCENT_FEMALE(50),
+        .eggCycles = 20,
+        .friendship = STANDARD_FRIENDSHIP,
+        .growthRate = GROWTH_MEDIUM_SLOW,
+        .eggGroups = MON_EGG_GROUPS(EGG_GROUP_NO_EGGS_DISCOVERED),
+        .abilities = { ABILITY_RUN_AWAY, ABILITY_QUICK_FEET, ABILITY_NONE },
+        .bodyColor = BODY_COLOR_BROWN,
+        .speciesName = _("Eohippus"),
+        .cryId = CRY_EOHIPPUS,
+        .natDexNum = NATIONAL_DEX_EOHIPPUS,
+        .categoryName = _("Dawn Horse"),
+        .height = 6,
+        .weight = 100,
+        .description = COMPOUND_STRING(
+            "A fox-sized forest horse with four\n"
+            "toes on its front feet. It browsed\n"
+            "soft leaves; its low teeth could not\n"
+            "handle grass."),
+        .frontPic = gMonFrontPic_Eohippus,
+        .backPic = gMonBackPic_Eohippus,
+        .palette = gMonPalette_Eohippus,
+        .shinyPalette = gMonShinyPalette_Eohippus,
+        .iconSprite = gMonIcon_Eohippus,
+        // Placeholder presentation borrowed from SPECIES_BLITZLE
+        .pokemonScale = 366,
+        .pokemonOffset = 8,
+        .trainerScale = 257,
+        .trainerOffset = 0,
+        .frontPicSize = MON_COORDS_SIZE(40, 56),
+        .frontPicYOffset = 5,
+        .frontAnimFrames = ANIM_FRAMES(
+            ANIMCMD_FRAME(1, 8),
+            ANIMCMD_FRAME(0, 8),
+            ANIMCMD_FRAME(1, 8),
+            ANIMCMD_FRAME(0, 8),
+            ANIMCMD_FRAME(1, 40),
+            ANIMCMD_FRAME(0, 8),
+        ),
+        .frontAnimId = ANIM_V_STRETCH,
+        .backPicSize = MON_COORDS_SIZE(56, 56),
+        .backPicYOffset = 7,
+        .backAnimId = BACK_ANIM_DIP_RIGHT_SIDE,
+        .iconPalIndex = 2,
+        SHADOW(3, 9, SHADOW_SIZE_M)
+        FOOTPRINT(Eohippus)
+        .levelUpLearnset = sEohippusLevelUpLearnset,
+    },
+
+    // Onychonycteris finneyi | Green River Fm, WY | ~52.5 Ma | ~0.04 kg, 0.1 m | BST 202
+    [SPECIES_ONYCHONYCTER] =
+    {
+        .baseHP        = 30,
+        .baseAttack    = 30,
+        .baseDefense   = 22,
+        .baseSpeed     = 52,
+        .baseSpAttack  = 37,
+        .baseSpDefense = 30,
+        .types = MON_TYPES(TYPE_FLYING, TYPE_DARK),
+        .catchRate = 170,
+        .expYield = 61,
+        .evYield_Speed = 1,
+        .genderRatio = PERCENT_FEMALE(50),
+        .eggCycles = 20,
+        .friendship = STANDARD_FRIENDSHIP,
+        .growthRate = GROWTH_MEDIUM_FAST,
+        .eggGroups = MON_EGG_GROUPS(EGG_GROUP_NO_EGGS_DISCOVERED),
+        .abilities = { ABILITY_INFILTRATOR, ABILITY_KEEN_EYE, ABILITY_NONE },
+        .bodyColor = BODY_COLOR_BROWN,
+        .speciesName = _("Onychonycter"),
+        .cryId = CRY_ONYCHONYCTER,
+        .natDexNum = NATIONAL_DEX_ONYCHONYCTER,
+        .categoryName = _("Claw Bat"),
+        .height = 1,
+        .weight = 0,
+        .description = COMPOUND_STRING(
+            "One of the oldest bats. It still had\n"
+            "claws on every finger, and its ears\n"
+            "show it could fly but probably could\n"
+            "not echolocate."),
+        .frontPic = gMonFrontPic_Onychonycter,
+        .backPic = gMonBackPic_Onychonycter,
+        .palette = gMonPalette_Onychonycter,
+        .shinyPalette = gMonShinyPalette_Onychonycter,
+        .iconSprite = gMonIcon_Onychonycter,
+        // Placeholder presentation borrowed from SPECIES_ZUBAT
+        .pokemonScale = 362,
+        .pokemonOffset = -5,
+        .trainerScale = 256,
+        .trainerOffset = 0,
+        .frontPicSize = P_GBA_STYLE_SPECIES_GFX ? MON_COORDS_SIZE(48, 56) : MON_COORDS_SIZE(56, 48),
+        .frontPicYOffset = P_GBA_STYLE_SPECIES_GFX ? 6 : 16,
+        .frontAnimFrames = ANIM_FRAMES(
+            ANIMCMD_FRAME(0, 3),
+            ANIMCMD_FRAME(1, 3),
+            ANIMCMD_FRAME(0, 3),
+            ANIMCMD_FRAME(1, 3),
+            ANIMCMD_FRAME(0, 3),
+            ANIMCMD_FRAME(1, 3),
+            ANIMCMD_FRAME(0, 3),
+            ANIMCMD_FRAME(1, 3),
+            ANIMCMD_FRAME(0, 3),
+            ANIMCMD_FRAME(1, 3),
+            ANIMCMD_FRAME(0, 3),
+            ANIMCMD_FRAME(1, 3),
+            ANIMCMD_FRAME(0, 3),
+        ),
+        .frontAnimId = ANIM_V_SQUISH_AND_BOUNCE,
+        .enemyMonElevation = P_GBA_STYLE_SPECIES_GFX ? 8 : 16,
+        .backPicSize = P_GBA_STYLE_SPECIES_GFX ? MON_COORDS_SIZE(56, 48) : MON_COORDS_SIZE(56, 56),
+        .backPicYOffset = P_GBA_STYLE_SPECIES_GFX ? 11 : 7,
+        .backAnimId = BACK_ANIM_CONVEX_DOUBLE_ARC,
+        .iconPalIndex = 2,
+        SHADOW(-4, 11, SHADOW_SIZE_S)
+        FOOTPRINT(Onychonycter)
+        .levelUpLearnset = sOnychonycterLevelUpLearnset,
+    },
+
+    // Heliobatis radians | Green River Fm, WY | ~52 Ma | ~2 kg, 0.3 m | BST 321
+    [SPECIES_HELIOBATIS] =
+    {
+        .baseHP        = 54,
+        .baseAttack    = 43,
+        .baseDefense   = 54,
+        .baseSpeed     = 54,
+        .baseSpAttack  = 64,
+        .baseSpDefense = 54,
+        .types = MON_TYPES(TYPE_WATER, TYPE_ELECTRIC),
+        .catchRate = 150,
+        .expYield = 96,
+        .evYield_SpAttack = 1,
+        .genderRatio = PERCENT_FEMALE(50),
+        .eggCycles = 20,
+        .friendship = STANDARD_FRIENDSHIP,
+        .growthRate = GROWTH_MEDIUM_FAST,
+        .eggGroups = MON_EGG_GROUPS(EGG_GROUP_NO_EGGS_DISCOVERED),
+        .abilities = { ABILITY_POISON_POINT, ABILITY_SWIFT_SWIM, ABILITY_NONE },
+        .bodyColor = BODY_COLOR_BROWN,
+        .speciesName = _("Heliobatis"),
+        .cryId = CRY_HELIOBATIS,
+        .natDexNum = NATIONAL_DEX_HELIOBATIS,
+        .categoryName = _("Stingray"),
+        .height = 3,
+        .weight = 20,
+        .description = COMPOUND_STRING(
+            "A freshwater stingray with a venomous\n"
+            "tail spine. Like living rays it sensed\n"
+            "the weak electric fields of buried\n"
+            "prey."),
+        .frontPic = gMonFrontPic_Heliobatis,
+        .backPic = gMonBackPic_Heliobatis,
+        .palette = gMonPalette_Heliobatis,
+        .shinyPalette = gMonShinyPalette_Heliobatis,
+        .iconSprite = gMonIcon_Heliobatis,
+        // Placeholder presentation borrowed from SPECIES_MANTYKE
+        .pokemonScale = 305,
+        .pokemonOffset = 7,
+        .trainerScale = 257,
+        .trainerOffset = 0,
+        .frontPicSize = MON_COORDS_SIZE(48, 48),
+        .frontPicYOffset = 12,
+        .frontAnimFrames = ANIM_FRAMES(
+            ANIMCMD_FRAME(1, 5),
+            ANIMCMD_FRAME(0, 5),
+            ANIMCMD_FRAME(1, 45),
+            ANIMCMD_FRAME(0, 5),
+        ),
+        .frontAnimId = ANIM_TWIST_TWICE,
+        .backPicSize = MON_COORDS_SIZE(64, 56),
+        .backPicYOffset = 6,
+        .backAnimId = BACK_ANIM_CONVEX_DOUBLE_ARC,
+        .iconPalIndex = 0,
+        SHADOW(-1, 3, SHADOW_SIZE_S)
+        FOOTPRINT(Heliobatis)
+        .levelUpLearnset = sHeliobatisLevelUpLearnset,
+    },
+
+    // Knightia eocaena | Green River Fm, WY | ~51 Ma | 0.05 kg, 0.15 m | BST 209
+    [SPECIES_KNIGHTIA] =
+    {
+        .baseHP        = 31,
+        .baseAttack    = 31,
+        .baseDefense   = 31,
+        .baseSpeed     = 54,
+        .baseSpAttack  = 31,
+        .baseSpDefense = 31,
+        .types = MON_TYPES(TYPE_WATER),
+        .catchRate = 255,
+        .expYield = 63,
+        .evYield_Speed = 1,
+        .genderRatio = PERCENT_FEMALE(50),
+        .eggCycles = 20,
+        .friendship = STANDARD_FRIENDSHIP,
+        .growthRate = GROWTH_FAST,
+        .eggGroups = MON_EGG_GROUPS(EGG_GROUP_NO_EGGS_DISCOVERED),
+        .abilities = { ABILITY_SWIFT_SWIM, ABILITY_WATER_VEIL, ABILITY_NONE },
+        .bodyColor = BODY_COLOR_BLUE,
+        .speciesName = _("Knightia"),
+        .cryId = CRY_KNIGHTIA,
+        .natDexNum = NATIONAL_DEX_KNIGHTIA,
+        .categoryName = _("Herring"),
+        .height = 2,
+        .weight = 0,
+        .description = COMPOUND_STRING(
+            "A small herring that swam in vast\n"
+            "schools. Whole schools died at once\n"
+            "and were buried in the lake mud:\n"
+            "Wyoming's state fossil."),
+        .frontPic = gMonFrontPic_Knightia,
+        .backPic = gMonBackPic_Knightia,
+        .palette = gMonPalette_Knightia,
+        .shinyPalette = gMonShinyPalette_Knightia,
+        .iconSprite = gMonIcon_Knightia,
+        // Placeholder presentation borrowed from SPECIES_FINNEON
+        .pokemonScale = 491,
+        .pokemonOffset = 12,
+        .trainerScale = 256,
+        .trainerOffset = 0,
+        .frontPicSize = MON_COORDS_SIZE(32, 40),
+        .frontPicYOffset = 14,
+        .frontAnimFrames = ANIM_FRAMES(
+            ANIMCMD_FRAME(1, 12),
+            ANIMCMD_FRAME(0, 12),
+            ANIMCMD_FRAME(1, 12),
+            ANIMCMD_FRAME(0, 30),
+            ANIMCMD_FRAME(1, 12),
+            ANIMCMD_FRAME(0, 12),
+            ANIMCMD_FRAME(1, 12),
+            ANIMCMD_FRAME(0, 15),
+        ),
+        .frontAnimId = ANIM_V_SLIDE_WOBBLE_SMALL,
+        .backPicSize = MON_COORDS_SIZE(56, 40),
+        .backPicYOffset = 12,
+        .backAnimId = BACK_ANIM_CONVEX_DOUBLE_ARC,
+        .iconPalIndex = 0,
+        SHADOW(0, 1, SHADOW_SIZE_S)
+        FOOTPRINT(Knightia)
+        .levelUpLearnset = sKnightiaLevelUpLearnset,
+    },
+
+    // Notharctus tenebrosus | Bridger Fm, WY | ~50 Ma | ~4 kg, 0.9 m | BST 342
+    [SPECIES_NOTHARCTUS] =
+    {
+        .baseHP        = 55,
+        .baseAttack    = 44,
+        .baseDefense   = 44,
+        .baseSpeed     = 66,
+        .baseSpAttack  = 77,
+        .baseSpDefense = 55,
+        .types = MON_TYPES(TYPE_GRASS, TYPE_PSYCHIC),
+        .catchRate = 90,
+        .expYield = 103,
+        .evYield_SpAttack = 1,
+        .genderRatio = PERCENT_FEMALE(50),
+        .eggCycles = 20,
+        .friendship = STANDARD_FRIENDSHIP,
+        .growthRate = GROWTH_MEDIUM_SLOW,
+        .eggGroups = MON_EGG_GROUPS(EGG_GROUP_NO_EGGS_DISCOVERED),
+        .abilities = { ABILITY_INFILTRATOR, ABILITY_LEAF_GUARD, ABILITY_NONE },
+        .bodyColor = BODY_COLOR_BROWN,
+        .speciesName = _("Notharctus"),
+        .cryId = CRY_NOTHARCTUS,
+        .natDexNum = NATIONAL_DEX_NOTHARCTUS,
+        .categoryName = _("Adapiform"),
+        .height = 9,
+        .weight = 40,
+        .description = COMPOUND_STRING(
+            "A lemur-like primate that leapt\n"
+            "through the subtropical canopy, eating\n"
+            "leaves. Its grasping hands look much\n"
+            "like ours."),
+        .frontPic = gMonFrontPic_Notharctus,
+        .backPic = gMonBackPic_Notharctus,
+        .palette = gMonPalette_Notharctus,
+        .shinyPalette = gMonShinyPalette_Notharctus,
+        .iconSprite = gMonIcon_Notharctus,
+        // Placeholder presentation borrowed from SPECIES_PASSIMIAN
+        .pokemonScale = 261,
+        .pokemonOffset = 1,
+        .trainerScale = 334,
+        .trainerOffset = 4,
+        .frontPicSize = MON_COORDS_SIZE(57, 60),
+        .frontPicYOffset = 2,
+        .frontAnimFrames = ANIM_FRAMES(
+            ANIMCMD_FRAME(1, 30),
+            ANIMCMD_FRAME(0, 5),
+        ),
+        .frontAnimId = ANIM_H_SHAKE,
+        .backPicSize = MON_COORDS_SIZE(51, 52),
+        .backPicYOffset = 7,
+        .backAnimId = BACK_ANIM_H_SHAKE,
+        .iconPalIndex = 1,
+        SHADOW(-4, 12, SHADOW_SIZE_L)
+        FOOTPRINT(Notharctus)
+        .levelUpLearnset = sNotharctusLevelUpLearnset,
+    },
+
+    // Uintatherium anceps | Bridger Fm, WY | ~46 Ma | ~2000 kg, 4 m | BST 531
+    [SPECIES_UINTATHERIUM] =
+    {
+        .baseHP        = 116,
+        .baseAttack    = 116,
+        .baseDefense   = 116,
+        .baseSpeed     = 50,
+        .baseSpAttack  = 33,
+        .baseSpDefense = 100,
+        .types = MON_TYPES(TYPE_GROUND, TYPE_FIGHTING),
+        .catchRate = 25,
+        .expYield = 159,
+        .evYield_HP = 3,
+        .genderRatio = PERCENT_FEMALE(50),
+        .eggCycles = 20,
+        .friendship = STANDARD_FRIENDSHIP,
+        .growthRate = GROWTH_SLOW,
+        .eggGroups = MON_EGG_GROUPS(EGG_GROUP_NO_EGGS_DISCOVERED),
+        .abilities = { ABILITY_STURDY, ABILITY_INTIMIDATE, ABILITY_NONE },
+        .bodyColor = BODY_COLOR_GRAY,
+        .speciesName = _("Uintatherium"),
+        .cryId = CRY_UINTATHERIUM,
+        .natDexNum = NATIONAL_DEX_UINTATHERIUM,
+        .categoryName = _("Uintathere"),
+        .height = 40,
+        .weight = 20000,
+        .description = COMPOUND_STRING(
+            "A rhino-sized browser with six bony\n"
+            "knobs on its head and long, saber-like\n"
+            "upper canines. Its brain was\n"
+            "remarkably small."),
+        .frontPic = gMonFrontPic_Uintatherium,
+        .backPic = gMonBackPic_Uintatherium,
+        .palette = gMonPalette_Uintatherium,
+        .shinyPalette = gMonShinyPalette_Uintatherium,
+        .iconSprite = gMonIcon_Uintatherium,
+        // Placeholder presentation borrowed from SPECIES_RHYPERIOR
+        .pokemonScale = 256,
+        .pokemonOffset = 3,
+        .trainerScale = 369,
+        .trainerOffset = 7,
+        .frontPicSize = MON_COORDS_SIZE(64, 64),
+        .frontPicYOffset = 2,
+        .frontAnimFrames = ANIM_FRAMES(
+            ANIMCMD_FRAME(0, 50),
+            ANIMCMD_FRAME(1, 25),
+            ANIMCMD_FRAME(0, 20),
+            ANIMCMD_FRAME(1, 25),
+            ANIMCMD_FRAME(0, 1),
+        ),
+        .frontAnimId = ANIM_V_SHAKE_TWICE,
+        .backPicSize = MON_COORDS_SIZE(64, 64),
+        .backPicYOffset = 0,
+        .backAnimId = BACK_ANIM_V_SHAKE,
+        .iconPalIndex = 0,
+        SHADOW(2, 10, SHADOW_SIZE_XL_BATTLE_ONLY)
+        FOOTPRINT(Uintatherium)
+        .levelUpLearnset = sUintatheriumLevelUpLearnset,
+    },
+
+    // Mesohippus bairdi | Brule Fm, SD | ~32 Ma | ~40 kg, 1.2 m | BST 412
+    [SPECIES_MESOHIPPUS] =
+    {
+        .baseHP        = 71,
+        .baseAttack    = 71,
+        .baseDefense   = 57,
+        .baseSpeed     = 99,
+        .baseSpAttack  = 57,
+        .baseSpDefense = 57,
+        .types = MON_TYPES(TYPE_NORMAL, TYPE_GRASS),
+        .catchRate = 75,
+        .expYield = 124,
+        .evYield_Speed = 2,
+        .genderRatio = PERCENT_FEMALE(50),
+        .eggCycles = 20,
+        .friendship = STANDARD_FRIENDSHIP,
+        .growthRate = GROWTH_MEDIUM_SLOW,
+        .eggGroups = MON_EGG_GROUPS(EGG_GROUP_NO_EGGS_DISCOVERED),
+        .abilities = { ABILITY_RUN_AWAY, ABILITY_QUICK_FEET, ABILITY_NONE },
+        .bodyColor = BODY_COLOR_BROWN,
+        .speciesName = _("Mesohippus"),
+        .cryId = CRY_MESOHIPPUS,
+        .natDexNum = NATIONAL_DEX_MESOHIPPUS,
+        .categoryName = _("Three-toed"),
+        .height = 12,
+        .weight = 400,
+        .description = COMPOUND_STRING(
+            "A three-toed horse with longer legs\n"
+            "for running in more open country. It\n"
+            "still browsed leaves rather than\n"
+            "grass."),
+        .frontPic = gMonFrontPic_Mesohippus,
+        .backPic = gMonBackPic_Mesohippus,
+        .palette = gMonPalette_Mesohippus,
+        .shinyPalette = gMonShinyPalette_Mesohippus,
+        .iconSprite = gMonIcon_Mesohippus,
+        // Placeholder presentation borrowed from SPECIES_ZEBSTRIKA
+        .pokemonScale = 259,
+        .pokemonOffset = 1,
+        .trainerScale = 296,
+        .trainerOffset = 1,
+        .frontPicSize = MON_COORDS_SIZE(64, 64),
+        .frontPicYOffset = 0,
+        .frontAnimFrames = ANIM_FRAMES(
+            ANIMCMD_FRAME(0, 10),
+            ANIMCMD_FRAME(1, 25),
+            ANIMCMD_FRAME(0, 30),
+        ),
+        .frontAnimId = ANIM_BACK_AND_LUNGE,
+        .backPicSize = MON_COORDS_SIZE(64, 64),
+        .backPicYOffset = 7,
+        .backAnimId = BACK_ANIM_SHAKE_FLASH_YELLOW,
+        .iconPalIndex = 2,
+        SHADOW(-2, 13, SHADOW_SIZE_M)
+        FOOTPRINT(Mesohippus)
+        .levelUpLearnset = sMesohippusLevelUpLearnset,
+    },
+
+    // Archaeotherium | Brule Fm, SD | ~32 Ma | ~270 kg, 2 m | BST 470
+    // Note: Caching carcasses: interpretation of Brule Fm bone accumulations.
+    [SPECIES_ARCHAEOTHERE] =
+    {
+        .baseHP        = 106,
+        .baseAttack    = 106,
+        .baseDefense   = 91,
+        .baseSpeed     = 61,
+        .baseSpAttack  = 30,
+        .baseSpDefense = 76,
+        .types = MON_TYPES(TYPE_DARK, TYPE_GROUND),
+        .catchRate = 45,
+        .expYield = 141,
+        .evYield_HP = 2,
+        .genderRatio = PERCENT_FEMALE(50),
+        .eggCycles = 20,
+        .friendship = STANDARD_FRIENDSHIP,
+        .growthRate = GROWTH_SLOW,
+        .eggGroups = MON_EGG_GROUPS(EGG_GROUP_NO_EGGS_DISCOVERED),
+        .abilities = { ABILITY_STRONG_JAW, ABILITY_GLUTTONY, ABILITY_NONE },
+        .bodyColor = BODY_COLOR_BROWN,
+        .speciesName = _("Archaeothere"),
+        .cryId = CRY_ARCHAEOTHERE,
+        .natDexNum = NATIONAL_DEX_ARCHAEOTHERE,
+        .categoryName = _("Entelodont"),
+        .height = 20,
+        .weight = 2700,
+        .description = COMPOUND_STRING(
+            "Nicknamed the hell pig: a huge-headed\n"
+            "omnivore with bony cheek flanges. Bite\n"
+            "marks show it cached carcasses to eat\n"
+            "later."),
+        .frontPic = gMonFrontPic_Archaeothere,
+        .backPic = gMonBackPic_Archaeothere,
+        .palette = gMonPalette_Archaeothere,
+        .shinyPalette = gMonShinyPalette_Archaeothere,
+        .iconSprite = gMonIcon_Archaeothere,
+        // Placeholder presentation borrowed from SPECIES_PIGNITE
+        .pokemonScale = 305,
+        .pokemonOffset = 8,
+        .trainerScale = 257,
+        .trainerOffset = 0,
+        .frontPicSize = MON_COORDS_SIZE(56, 56),
+        .frontPicYOffset = 8,
+        .frontAnimFrames = ANIM_FRAMES(
+            ANIMCMD_FRAME(0, 1),
+            ANIMCMD_FRAME(1, 36),
+            ANIMCMD_FRAME(0, 10),
+        ),
+        .frontAnimId = ANIM_V_STRETCH,
+        .backPicSize = MON_COORDS_SIZE(64, 64),
+        .backPicYOffset = 9,
+        .backAnimId = BACK_ANIM_GROW_STUTTER,
+        .iconPalIndex = 0,
+        SHADOW(0, 6, SHADOW_SIZE_M)
+        FOOTPRINT(Archaeothere)
+        .levelUpLearnset = sArchaeothereLevelUpLearnset,
+    },
+
+    // Hoplophoneus | Brule Fm, SD | ~32 Ma | ~50 kg, 1.4 m | BST 419
+    [SPECIES_HOPLOPHONEUS] =
+    {
+        .baseHP        = 70,
+        .baseAttack    = 112,
+        .baseDefense   = 56,
+        .baseSpeed     = 84,
+        .baseSpAttack  = 42,
+        .baseSpDefense = 56,
+        .types = MON_TYPES(TYPE_DARK),
+        .catchRate = 45,
+        .expYield = 126,
+        .evYield_Attack = 2,
+        .genderRatio = PERCENT_FEMALE(50),
+        .eggCycles = 20,
+        .friendship = STANDARD_FRIENDSHIP,
+        .growthRate = GROWTH_SLOW,
+        .eggGroups = MON_EGG_GROUPS(EGG_GROUP_NO_EGGS_DISCOVERED),
+        .abilities = { ABILITY_SUPER_LUCK, ABILITY_INTIMIDATE, ABILITY_NONE },
+        .bodyColor = BODY_COLOR_BROWN,
+        .speciesName = _("Hoplophoneus"),
+        .cryId = CRY_HOPLOPHONEUS,
+        .natDexNum = NATIONAL_DEX_HOPLOPHONEUS,
+        .categoryName = _("Nimravid"),
+        .height = 14,
+        .weight = 500,
+        .description = COMPOUND_STRING(
+            "A saber-toothed false cat. Nimravids\n"
+            "evolved long sabers separately from\n"
+            "true cats: a striking case of\n"
+            "convergent evolution."),
+        .frontPic = gMonFrontPic_Hoplophoneus,
+        .backPic = gMonBackPic_Hoplophoneus,
+        .palette = gMonPalette_Hoplophoneus,
+        .shinyPalette = gMonShinyPalette_Hoplophoneus,
+        .iconSprite = gMonIcon_Hoplophoneus,
+        // Placeholder presentation borrowed from SPECIES_LIEPARD
+        .pokemonScale = 320,
+        .pokemonOffset = 7,
+        .trainerScale = 256,
+        .trainerOffset = 0,
+        .frontPicSize = MON_COORDS_SIZE(64, 64),
+        .frontPicYOffset = 4,
+        .frontAnimFrames = ANIM_FRAMES(
+            ANIMCMD_FRAME(0, 12),
+            ANIMCMD_FRAME(1, 45),
+            ANIMCMD_FRAME(0, 15),
+        ),
+        .frontAnimId = ANIM_GROW_VIBRATE,
+        .backPicSize = MON_COORDS_SIZE(56, 48),
+        .backPicYOffset = 9,
+        .backAnimId = BACK_ANIM_H_STRETCH,
+        .iconPalIndex = 0,
+        SHADOW(-1, 11, SHADOW_SIZE_M)
+        FOOTPRINT(Hoplophoneus)
+        .levelUpLearnset = sHoplophoneusLevelUpLearnset,
+    },
+
+    // Merycoidodon | Brule Fm, SD | ~32 Ma | ~100 kg, 1.4 m | BST 440
+    [SPECIES_MERYCOIDODON] =
+    {
+        .baseHP        = 106,
+        .baseAttack    = 76,
+        .baseDefense   = 76,
+        .baseSpeed     = 61,
+        .baseSpAttack  = 46,
+        .baseSpDefense = 76,
+        .types = MON_TYPES(TYPE_NORMAL, TYPE_GRASS),
+        .catchRate = 150,
+        .expYield = 132,
+        .evYield_HP = 2,
+        .genderRatio = PERCENT_FEMALE(50),
+        .eggCycles = 20,
+        .friendship = STANDARD_FRIENDSHIP,
+        .growthRate = GROWTH_MEDIUM_FAST,
+        .eggGroups = MON_EGG_GROUPS(EGG_GROUP_NO_EGGS_DISCOVERED),
+        .abilities = { ABILITY_THICK_FAT, ABILITY_SAP_SIPPER, ABILITY_NONE },
+        .bodyColor = BODY_COLOR_BROWN,
+        .speciesName = _("Merycoidodon"),
+        .cryId = CRY_MERYCOIDODON,
+        .natDexNum = NATIONAL_DEX_MERYCOIDODON,
+        .categoryName = _("Oreodont"),
+        .height = 14,
+        .weight = 1000,
+        .description = COMPOUND_STRING(
+            "A sheep-sized plant eater that lived\n"
+            "in herds. Oreodonts are among the most\n"
+            "common fossils in the White River\n"
+            "badlands."),
+        .frontPic = gMonFrontPic_Merycoidodon,
+        .backPic = gMonBackPic_Merycoidodon,
+        .palette = gMonPalette_Merycoidodon,
+        .shinyPalette = gMonShinyPalette_Merycoidodon,
+        .iconSprite = gMonIcon_Merycoidodon,
+        // Placeholder presentation borrowed from SPECIES_MUDBRAY
+        .pokemonScale = 305,
+        .pokemonOffset = 7,
+        .trainerScale = 257,
+        .trainerOffset = 0,
+        .frontPicSize = MON_COORDS_SIZE(48, 56),
+        .frontPicYOffset = 7,
+        .frontAnimFrames = ANIM_FRAMES(
+            ANIMCMD_FRAME(1, 47),
+            ANIMCMD_FRAME(0, 1),
+        ),
+        .frontAnimId = ANIM_V_STRETCH,
+        .backPicSize = MON_COORDS_SIZE(64, 56),
+        .backPicYOffset = 8,
+        .iconPalIndex = 2,
+        SHADOW(2, 6, SHADOW_SIZE_M)
+        FOOTPRINT(Merycoidodon)
+        .levelUpLearnset = sMerycoidodonLevelUpLearnset,
+    },
+
+    // Subhyracodon | Brule Fm, SD | ~32 Ma | ~500 kg, 2.5 m | BST 489
+    [SPECIES_SUBHYRACODON] =
+    {
+        .baseHP        = 107,
+        .baseAttack    = 92,
+        .baseDefense   = 107,
+        .baseSpeed     = 61,
+        .baseSpAttack  = 31,
+        .baseSpDefense = 92,
+        .types = MON_TYPES(TYPE_GROUND, TYPE_NORMAL),
+        .catchRate = 60,
+        .expYield = 147,
+        .evYield_HP = 2,
+        .genderRatio = PERCENT_FEMALE(50),
+        .eggCycles = 20,
+        .friendship = STANDARD_FRIENDSHIP,
+        .growthRate = GROWTH_SLOW,
+        .eggGroups = MON_EGG_GROUPS(EGG_GROUP_NO_EGGS_DISCOVERED),
+        .abilities = { ABILITY_STURDY, ABILITY_THICK_FAT, ABILITY_NONE },
+        .bodyColor = BODY_COLOR_GRAY,
+        .speciesName = _("Subhyracodon"),
+        .cryId = CRY_SUBHYRACODON,
+        .natDexNum = NATIONAL_DEX_SUBHYRACODON,
+        .categoryName = _("Rhinoceros"),
+        .height = 25,
+        .weight = 5000,
+        .description = COMPOUND_STRING(
+            "A hornless rhino the size of a cow.\n"
+            "Rhinos were once common across North\n"
+            "America, where they lived for over 30\n"
+            "million years."),
+        .frontPic = gMonFrontPic_Subhyracodon,
+        .backPic = gMonBackPic_Subhyracodon,
+        .palette = gMonPalette_Subhyracodon,
+        .shinyPalette = gMonShinyPalette_Subhyracodon,
+        .iconSprite = gMonIcon_Subhyracodon,
+        // Placeholder presentation borrowed from SPECIES_BOUFFALANT
+        .pokemonScale = 259,
+        .pokemonOffset = 1,
+        .trainerScale = 296,
+        .trainerOffset = 1,
+        .frontPicSize = MON_COORDS_SIZE(64, 56),
+        .frontPicYOffset = 4,
+        .frontAnimFrames = ANIM_FRAMES(
+            ANIMCMD_FRAME(0, 28),
+            ANIMCMD_FRAME(1, 32),
+            ANIMCMD_FRAME(0, 15),
+        ),
+        .frontAnimId = ANIM_V_SQUISH_AND_BOUNCE_SLOW,
+        .backPicSize = MON_COORDS_SIZE(64, 56),
+        .backPicYOffset = 7,
+        .backAnimId = BACK_ANIM_V_SHAKE_LOW,
+        .iconPalIndex = 2,
+        SHADOW(8, 7, SHADOW_SIZE_M)
+        FOOTPRINT(Subhyracodon)
+        .levelUpLearnset = sSubhyracodonLevelUpLearnset,
+    },
+
+    // Poebrotherium | Brule Fm, SD | ~32 Ma | ~30 kg, 1.2 m | BST 403
+    [SPECIES_POEBROTHERE] =
+    {
+        .baseHP        = 69,
+        .baseAttack    = 56,
+        .baseDefense   = 56,
+        .baseSpeed     = 97,
+        .baseSpAttack  = 56,
+        .baseSpDefense = 69,
+        .types = MON_TYPES(TYPE_NORMAL),
+        .catchRate = 90,
+        .expYield = 121,
+        .evYield_Speed = 2,
+        .genderRatio = PERCENT_FEMALE(50),
+        .eggCycles = 20,
+        .friendship = STANDARD_FRIENDSHIP,
+        .growthRate = GROWTH_MEDIUM_SLOW,
+        .eggGroups = MON_EGG_GROUPS(EGG_GROUP_NO_EGGS_DISCOVERED),
+        .abilities = { ABILITY_RUN_AWAY, ABILITY_OBLIVIOUS, ABILITY_NONE },
+        .bodyColor = BODY_COLOR_BROWN,
+        .speciesName = _("Poebrothere"),
+        .cryId = CRY_POEBROTHERE,
+        .natDexNum = NATIONAL_DEX_POEBROTHERE,
+        .categoryName = _("Early Camel"),
+        .height = 12,
+        .weight = 300,
+        .description = COMPOUND_STRING(
+            "A goat-sized early camel with long,\n"
+            "slender legs. Camels evolved in North\n"
+            "America and only later spread to Asia."),
+        .frontPic = gMonFrontPic_Poebrothere,
+        .backPic = gMonBackPic_Poebrothere,
+        .palette = gMonPalette_Poebrothere,
+        .shinyPalette = gMonShinyPalette_Poebrothere,
+        .iconSprite = gMonIcon_Poebrothere,
+        // Placeholder presentation borrowed from SPECIES_NUMEL
+        .pokemonScale = 342,
+        .pokemonOffset = 17,
+        .trainerScale = 256,
+        .trainerOffset = 0,
+        .frontPicSize = P_GBA_STYLE_SPECIES_GFX ? MON_COORDS_SIZE(48, 40) : MON_COORDS_SIZE(40, 48),
+        .frontPicYOffset = P_GBA_STYLE_SPECIES_GFX ? 15 : 9,
+        .frontAnimFrames = ANIM_FRAMES(
+            ANIMCMD_FRAME(0, 15),
+            ANIMCMD_FRAME(1, 15),
+            ANIMCMD_FRAME(0, 20),
+            ANIMCMD_FRAME(1, 15),
+            ANIMCMD_FRAME(0, 40),
+        ),
+        .frontAnimId = ANIM_V_SLIDE,
+        .backPicSize = P_GBA_STYLE_SPECIES_GFX ? MON_COORDS_SIZE(64, 48) : MON_COORDS_SIZE(56, 56),
+        .backPicYOffset = P_GBA_STYLE_SPECIES_GFX ? 11 : 6,
+        .backAnimId = BACK_ANIM_V_SHAKE_LOW,
+        .iconPalIndex = 1,
+        SHADOW(4, 2, SHADOW_SIZE_S)
+        FOOTPRINT(Poebrothere)
+        .levelUpLearnset = sPoebrothereLevelUpLearnset,
+    },
+
+    // Leptomeryx | Brule Fm, SD | ~32 Ma | ~5 kg, 0.6 m | BST 349
+    [SPECIES_LEPTOMERYX] =
+    {
+        .baseHP        = 50,
+        .baseAttack    = 50,
+        .baseDefense   = 37,
+        .baseSpeed     = 100,
+        .baseSpAttack  = 62,
+        .baseSpDefense = 50,
+        .types = MON_TYPES(TYPE_NORMAL, TYPE_GRASS),
+        .catchRate = 170,
+        .expYield = 105,
+        .evYield_Speed = 1,
+        .genderRatio = PERCENT_FEMALE(50),
+        .eggCycles = 20,
+        .friendship = STANDARD_FRIENDSHIP,
+        .growthRate = GROWTH_MEDIUM_FAST,
+        .eggGroups = MON_EGG_GROUPS(EGG_GROUP_NO_EGGS_DISCOVERED),
+        .abilities = { ABILITY_RUN_AWAY, ABILITY_QUICK_FEET, ABILITY_NONE },
+        .bodyColor = BODY_COLOR_BROWN,
+        .speciesName = _("Leptomeryx"),
+        .cryId = CRY_LEPTOMERYX,
+        .natDexNum = NATIONAL_DEX_LEPTOMERYX,
+        .categoryName = _("Ruminant"),
+        .height = 6,
+        .weight = 50,
+        .description = COMPOUND_STRING(
+            "A tiny, hornless deer-like ruminant\n"
+            "that browsed the woodland floor. It is\n"
+            "one of the most abundant White River\n"
+            "fossils."),
+        .frontPic = gMonFrontPic_Leptomeryx,
+        .backPic = gMonBackPic_Leptomeryx,
+        .palette = gMonPalette_Leptomeryx,
+        .shinyPalette = gMonShinyPalette_Leptomeryx,
+        .iconSprite = gMonIcon_Leptomeryx,
+        // Placeholder presentation borrowed from SPECIES_STANTLER
+        .pokemonScale = 256,
+        .pokemonOffset = 0,
+        .trainerScale = 256,
+        .trainerOffset = 0,
+        .frontPicSize = P_GBA_STYLE_SPECIES_GFX ? MON_COORDS_SIZE(64, 64) : MON_COORDS_SIZE(48, 64),
+        .frontPicYOffset = 0,
+        .frontAnimFrames = ANIM_FRAMES(
+            ANIMCMD_FRAME(1, 15),
+            ANIMCMD_FRAME(0, 15),
+        ),
+        .frontAnimId = ANIM_V_SQUISH_AND_BOUNCE,
+        .backPicSize = P_GBA_STYLE_SPECIES_GFX ? MON_COORDS_SIZE(56, 64) : MON_COORDS_SIZE(64, 64),
+        .backPicYOffset = P_GBA_STYLE_SPECIES_GFX ? 3 : 1,
+        .backAnimId = BACK_ANIM_DIP_RIGHT_SIDE,
+        .iconPalIndex = 2,
+        SHADOW(3, 13, SHADOW_SIZE_M)
+        FOOTPRINT(Leptomeryx)
+        .levelUpLearnset = sLeptomeryxLevelUpLearnset,
+    },
+
+    // Stylemys nebrascensis | Brule Fm, SD | ~32 Ma | ~15 kg, 0.5 m | BST 382
+    [SPECIES_STYLEMYS] =
+    {
+        .baseHP        = 66,
+        .baseAttack    = 53,
+        .baseDefense   = 105,
+        .baseSpeed     = 26,
+        .baseSpAttack  = 40,
+        .baseSpDefense = 92,
+        .types = MON_TYPES(TYPE_GRASS, TYPE_ROCK),
+        .catchRate = 170,
+        .expYield = 115,
+        .evYield_Defense = 2,
+        .genderRatio = PERCENT_FEMALE(50),
+        .eggCycles = 20,
+        .friendship = STANDARD_FRIENDSHIP,
+        .growthRate = GROWTH_MEDIUM_FAST,
+        .eggGroups = MON_EGG_GROUPS(EGG_GROUP_NO_EGGS_DISCOVERED),
+        .abilities = { ABILITY_SHELL_ARMOR, ABILITY_STURDY, ABILITY_NONE },
+        .bodyColor = BODY_COLOR_BROWN,
+        .speciesName = _("Stylemys"),
+        .cryId = CRY_STYLEMYS,
+        .natDexNum = NATIONAL_DEX_STYLEMYS,
+        .categoryName = _("Tortoise"),
+        .height = 5,
+        .weight = 150,
+        .description = COMPOUND_STRING(
+            "A land tortoise. Thousands of its\n"
+            "shells weather out of the badlands,\n"
+            "often the first fossil a visitor\n"
+            "finds."),
+        .frontPic = gMonFrontPic_Stylemys,
+        .backPic = gMonBackPic_Stylemys,
+        .palette = gMonPalette_Stylemys,
+        .shinyPalette = gMonShinyPalette_Stylemys,
+        .iconSprite = gMonIcon_Stylemys,
+        // Placeholder presentation borrowed from SPECIES_TURTWIG
+        .pokemonScale = 491,
+        .pokemonOffset = 20,
+        .trainerScale = 256,
+        .trainerOffset = 0,
+        .frontPicSize = MON_COORDS_SIZE(40, 48),
+        .frontPicYOffset = 11,
+        .frontAnimFrames = ANIM_FRAMES(
+            ANIMCMD_FRAME(0, 15),
+            ANIMCMD_FRAME(1, 15),
+            ANIMCMD_FRAME(0, 10),
+        ),
+        .frontAnimId = ANIM_V_SQUISH_AND_BOUNCE,
+        .backPicSize = MON_COORDS_SIZE(48, 56),
+        .backPicYOffset = 6,
+        .backAnimId = BACK_ANIM_H_SLIDE,
+        .iconPalIndex = 1,
+        SHADOW(1, 2, SHADOW_SIZE_S)
+        FOOTPRINT(Stylemys)
+        .levelUpLearnset = sStylemysLevelUpLearnset,
+    },
+
+    // Ischyromys | Brule Fm, SD | ~32 Ma | ~0.8 kg, 0.4 m | BST 293
+    [SPECIES_ISCHYROMYS] =
+    {
+        .baseHP        = 42,
+        .baseAttack    = 52,
+        .baseDefense   = 42,
+        .baseSpeed     = 73,
+        .baseSpAttack  = 42,
+        .baseSpDefense = 42,
+        .types = MON_TYPES(TYPE_NORMAL),
+        .catchRate = 255,
+        .expYield = 88,
+        .evYield_Speed = 1,
+        .genderRatio = PERCENT_FEMALE(50),
+        .eggCycles = 20,
+        .friendship = STANDARD_FRIENDSHIP,
+        .growthRate = GROWTH_MEDIUM_FAST,
+        .eggGroups = MON_EGG_GROUPS(EGG_GROUP_NO_EGGS_DISCOVERED),
+        .abilities = { ABILITY_RUN_AWAY, ABILITY_PICKUP, ABILITY_NONE },
+        .bodyColor = BODY_COLOR_BROWN,
+        .speciesName = _("Ischyromys"),
+        .cryId = CRY_ISCHYROMYS,
+        .natDexNum = NATIONAL_DEX_ISCHYROMYS,
+        .categoryName = _("Rodent"),
+        .height = 4,
+        .weight = 8,
+        .description = COMPOUND_STRING(
+            "A squirrel-like early rodent. Rodents\n"
+            "spread just as the last\n"
+            "multituberculates vanished, and may\n"
+            "have outcompeted them."),
+        .frontPic = gMonFrontPic_Ischyromys,
+        .backPic = gMonBackPic_Ischyromys,
+        .palette = gMonPalette_Ischyromys,
+        .shinyPalette = gMonShinyPalette_Ischyromys,
+        .iconSprite = gMonIcon_Ischyromys,
+        // Placeholder presentation borrowed from SPECIES_SKWOVET
+        .pokemonScale = 530,
+        .pokemonOffset = 13,
+        .trainerScale = 256,
+        .trainerOffset = 0,
+        .frontPicSize = MON_COORDS_SIZE(40, 48),
+        .frontPicYOffset = 9,
+        .frontAnimFrames = ANIM_FRAMES(
+            ANIMCMD_FRAME(1, 30),
+            ANIMCMD_FRAME(0, 1),
+        ),
+        .frontAnimId = ANIM_V_SHAKE,
+        .backPicSize = MON_COORDS_SIZE(64, 56),
+        .backPicYOffset = 7,
+        .iconPalIndex = 2,
+        SHADOW(-7, 5, SHADOW_SIZE_S)
+        FOOTPRINT(Ischyromys)
+        .levelUpLearnset = sIschyromysLevelUpLearnset,
+    },
+
+    // Protohippus simus | Ashfall, NE | ~11.9 Ma | ~100 kg, 1.6 m | BST 440
+    // Note: High-crowned (hypsodont) teeth as a response to grass and grit.
+    [SPECIES_PROTOHIPPUS] =
+    {
+        .baseHP        = 85,
+        .baseAttack    = 71,
+        .baseDefense   = 57,
+        .baseSpeed     = 114,
+        .baseSpAttack  = 57,
+        .baseSpDefense = 57,
+        .types = MON_TYPES(TYPE_NORMAL, TYPE_GRASS),
+        .catchRate = 60,
+        .expYield = 132,
+        .evYield_Speed = 2,
+        .genderRatio = PERCENT_FEMALE(50),
+        .eggCycles = 20,
+        .friendship = STANDARD_FRIENDSHIP,
+        .growthRate = GROWTH_MEDIUM_SLOW,
+        .eggGroups = MON_EGG_GROUPS(EGG_GROUP_NO_EGGS_DISCOVERED),
+        .abilities = { ABILITY_RUN_AWAY, ABILITY_QUICK_FEET, ABILITY_NONE },
+        .bodyColor = BODY_COLOR_BROWN,
+        .speciesName = _("Protohippus"),
+        .cryId = CRY_PROTOHIPPUS,
+        .natDexNum = NATIONAL_DEX_PROTOHIPPUS,
+        .categoryName = _("Grazer"),
+        .height = 16,
+        .weight = 1000,
+        .description = COMPOUND_STRING(
+            "A pony-sized three-toed grazer with\n"
+            "tall, grinding teeth. As grasslands\n"
+            "spread, horses evolved to eat grass."),
+        .frontPic = gMonFrontPic_Protohippus,
+        .backPic = gMonBackPic_Protohippus,
+        .palette = gMonPalette_Protohippus,
+        .shinyPalette = gMonShinyPalette_Protohippus,
+        .iconSprite = gMonIcon_Protohippus,
+        // Placeholder presentation borrowed from SPECIES_RAPIDASH
+        .pokemonScale = 256,
+        .pokemonOffset = 0,
+        .trainerScale = 289,
+        .trainerOffset = 1,
+        .frontPicSize = MON_COORDS_SIZE(64, 64),
+        .frontPicYOffset = P_GBA_STYLE_SPECIES_GFX ? 1 : 0,
+        .frontAnimFrames = ANIM_FRAMES(
+            ANIMCMD_FRAME(0, 10),
+            ANIMCMD_FRAME(1, 40),
+            ANIMCMD_FRAME(0, 10),
+        ),
+        .frontAnimId = P_GBA_STYLE_SPECIES_GFX ? ANIM_CIRCULAR_VIBRATE : ANIM_H_SHAKE,
+        .backPicSize = P_GBA_STYLE_SPECIES_GFX ? MON_COORDS_SIZE(64, 56) : MON_COORDS_SIZE(64, 64),
+        .backPicYOffset = P_GBA_STYLE_SPECIES_GFX ? 5 : 0,
+        .backAnimId = BACK_ANIM_JOLT_RIGHT,
+        .iconPalIndex = P_GBA_STYLE_SPECIES_ICONS ? 0 : 3,
+        SHADOW(-1, 12, SHADOW_SIZE_XL_BATTLE_ONLY)
+        FOOTPRINT(Protohippus)
+        .levelUpLearnset = sProtohippusLevelUpLearnset,
+    },
+
+    // Teleoceras major | Ashfall, NE | ~11.9 Ma | ~1800 kg, 4 m | BST 528
+    [SPECIES_TELEOCERAS] =
+    {
+        .baseHP        = 136,
+        .baseAttack    = 102,
+        .baseDefense   = 119,
+        .baseSpeed     = 34,
+        .baseSpAttack  = 34,
+        .baseSpDefense = 102,
+        .types = MON_TYPES(TYPE_GROUND, TYPE_WATER),
+        .catchRate = 45,
+        .expYield = 158,
+        .evYield_HP = 3,
+        .genderRatio = PERCENT_FEMALE(50),
+        .eggCycles = 20,
+        .friendship = STANDARD_FRIENDSHIP,
+        .growthRate = GROWTH_SLOW,
+        .eggGroups = MON_EGG_GROUPS(EGG_GROUP_NO_EGGS_DISCOVERED),
+        .abilities = { ABILITY_THICK_FAT, ABILITY_STURDY, ABILITY_NONE },
+        .bodyColor = BODY_COLOR_GRAY,
+        .speciesName = _("Teleoceras"),
+        .cryId = CRY_TELEOCERAS,
+        .natDexNum = NATIONAL_DEX_TELEOCERAS,
+        .categoryName = _("Rhinoceros"),
+        .height = 40,
+        .weight = 18000,
+        .description = COMPOUND_STRING(
+            "A barrel-bodied, short-legged rhino\n"
+            "that grazed near water. Whole herds\n"
+            "lie in the ash at Ashfall, calves\n"
+            "beside their mothers."),
+        .frontPic = gMonFrontPic_Teleoceras,
+        .backPic = gMonBackPic_Teleoceras,
+        .palette = gMonPalette_Teleoceras,
+        .shinyPalette = gMonShinyPalette_Teleoceras,
+        .iconSprite = gMonIcon_Teleoceras,
+        // Placeholder presentation borrowed from SPECIES_RHYDON
+        .pokemonScale = 256,
+        .pokemonOffset = 1,
+        .trainerScale = 299,
+        .trainerOffset = 2,
+        .frontPicSize = P_GBA_STYLE_SPECIES_GFX ? MON_COORDS_SIZE(64, 64) : MON_COORDS_SIZE(64, 56),
+        .frontPicYOffset = P_GBA_STYLE_SPECIES_GFX ? 2 : 3,
+        .frontAnimFrames = ANIM_FRAMES(
+            ANIMCMD_FRAME(1, 16),
+            ANIMCMD_FRAME(0, 15),
+        ),
+        .frontAnimId = P_GBA_STYLE_SPECIES_GFX ? ANIM_SHRINK_GROW : ANIM_V_STRETCH,
+        .backPicSize = P_GBA_STYLE_SPECIES_GFX ? MON_COORDS_SIZE(64, 64) : MON_COORDS_SIZE(64, 56),
+        .backPicYOffset = P_GBA_STYLE_SPECIES_GFX ? 3 : 5,
+        .backAnimId = BACK_ANIM_V_SHAKE_LOW,
+        .iconPalIndex = 1,
+        SHADOW(3, 9, SHADOW_SIZE_XL_BATTLE_ONLY)
+        FOOTPRINT(Teleoceras)
+        .levelUpLearnset = sTeleocerasLevelUpLearnset,
+    },
+
+    // Procamelus grandis | Ashfall, NE | ~11.9 Ma | ~300 kg, 2.5 m | BST 473
+    [SPECIES_PROCAMELUS] =
+    {
+        .baseHP        = 92,
+        .baseAttack    = 76,
+        .baseDefense   = 76,
+        .baseSpeed     = 92,
+        .baseSpAttack  = 61,
+        .baseSpDefense = 76,
+        .types = MON_TYPES(TYPE_NORMAL, TYPE_GROUND),
+        .catchRate = 60,
+        .expYield = 142,
+        .evYield_HP = 2,
+        .genderRatio = PERCENT_FEMALE(50),
+        .eggCycles = 20,
+        .friendship = STANDARD_FRIENDSHIP,
+        .growthRate = GROWTH_MEDIUM_SLOW,
+        .eggGroups = MON_EGG_GROUPS(EGG_GROUP_NO_EGGS_DISCOVERED),
+        .abilities = { ABILITY_OBLIVIOUS, ABILITY_STURDY, ABILITY_NONE },
+        .bodyColor = BODY_COLOR_BROWN,
+        .speciesName = _("Procamelus"),
+        .cryId = CRY_PROCAMELUS,
+        .natDexNum = NATIONAL_DEX_PROCAMELUS,
+        .categoryName = _("Camel"),
+        .height = 25,
+        .weight = 3000,
+        .description = COMPOUND_STRING(
+            "A llama-like camel of the Miocene\n"
+            "grasslands. It walked on padded feet,\n"
+            "an early step toward the camels of\n"
+            "today."),
+        .frontPic = gMonFrontPic_Procamelus,
+        .backPic = gMonBackPic_Procamelus,
+        .palette = gMonPalette_Procamelus,
+        .shinyPalette = gMonShinyPalette_Procamelus,
+        .iconSprite = gMonIcon_Procamelus,
+        // Placeholder presentation borrowed from SPECIES_CAMERUPT
+        .pokemonScale = 256,
+        .pokemonOffset = 7,
+        .trainerScale = 345,
+        .trainerOffset = 6,
+        .frontPicSize = MON_COORDS_SIZE(64, 56),
+        .frontPicYOffset = P_GBA_STYLE_SPECIES_GFX ? 9 : 6,
+        .frontAnimFrames = ANIM_FRAMES(
+            ANIMCMD_FRAME(0, 15),
+            ANIMCMD_FRAME(1, 15),
+            ANIMCMD_FRAME(0, 15),
+            ANIMCMD_FRAME(1, 15),
+            ANIMCMD_FRAME(0, 15),
+            ANIMCMD_FRAME(1, 15),
+            ANIMCMD_FRAME(0, 15),
+        ),
+        .frontAnimId = ANIM_V_SHAKE,
+        .backPicSize = P_GBA_STYLE_SPECIES_GFX ? MON_COORDS_SIZE(64, 32) : MON_COORDS_SIZE(64, 40),
+        .backPicYOffset = P_GBA_STYLE_SPECIES_GFX ? 19 : 13,
+        .backAnimId = BACK_ANIM_SHAKE_GLOW_RED,
+        .iconPalIndex = 0,
+        SHADOW(2, 4, SHADOW_SIZE_L)
+        FOOTPRINT(Procamelus)
+        .levelUpLearnset = sProcamelusLevelUpLearnset,
+    },
+
+    // Balearica exigua | Ashfall, NE | ~11.9 Ma | ~3.5 kg, 1 m | BST 338
+    [SPECIES_BALEARICA] =
+    {
+        .baseHP        = 56,
+        .baseAttack    = 56,
+        .baseDefense   = 45,
+        .baseSpeed     = 68,
+        .baseSpAttack  = 56,
+        .baseSpDefense = 56,
+        .types = MON_TYPES(TYPE_FLYING, TYPE_GRASS),
+        .catchRate = 90,
+        .expYield = 101,
+        .evYield_Speed = 1,
+        .genderRatio = PERCENT_FEMALE(50),
+        .eggCycles = 20,
+        .friendship = STANDARD_FRIENDSHIP,
+        .growthRate = GROWTH_MEDIUM_FAST,
+        .eggGroups = MON_EGG_GROUPS(EGG_GROUP_NO_EGGS_DISCOVERED),
+        .abilities = { ABILITY_KEEN_EYE, ABILITY_BIG_PECKS, ABILITY_NONE },
+        .bodyColor = BODY_COLOR_GRAY,
+        .speciesName = _("Balearica"),
+        .cryId = CRY_BALEARICA,
+        .natDexNum = NATIONAL_DEX_BALEARICA,
+        .categoryName = _("Crane"),
+        .height = 10,
+        .weight = 35,
+        .description = COMPOUND_STRING(
+            "A crowned crane that waded at the\n"
+            "waterhole. Its living relatives are\n"
+            "found only in Africa today."),
+        .frontPic = gMonFrontPic_Balearica,
+        .backPic = gMonBackPic_Balearica,
+        .palette = gMonPalette_Balearica,
+        .shinyPalette = gMonShinyPalette_Balearica,
+        .iconSprite = gMonIcon_Balearica,
+        // Placeholder presentation borrowed from SPECIES_FLAMIGO
+        .pokemonScale = 356,
+        .pokemonOffset = 17,
+        .trainerScale = 256,
+        .trainerOffset = 0,
+        .frontPicSize = MON_COORDS_SIZE(64, 64),
+        .frontPicYOffset = 2,
+        .frontAnimFrames = sAnims_SingleFramePlaceHolder,
+        .backPicSize = MON_COORDS_SIZE(64, 64),
+        .backPicYOffset = 3,
+        .iconPalIndex = 1,
+        SHADOW(0, 12, SHADOW_SIZE_S)
+        FOOTPRINT(Balearica)
+        .levelUpLearnset = sBalearicaLevelUpLearnset,
+    },
+
+    // Anchigyps voorhiesi | Ashfall, NE | ~11.9 Ma | ~5 kg, 0.8 m | BST 349
+    [SPECIES_ANCHIGYPS] =
+    {
+        .baseHP        = 58,
+        .baseAttack    = 70,
+        .baseDefense   = 47,
+        .baseSpeed     = 70,
+        .baseSpAttack  = 47,
+        .baseSpDefense = 58,
+        .types = MON_TYPES(TYPE_FLYING, TYPE_DARK),
+        .catchRate = 60,
+        .expYield = 105,
+        .evYield_Attack = 1,
+        .genderRatio = PERCENT_FEMALE(50),
+        .eggCycles = 20,
+        .friendship = STANDARD_FRIENDSHIP,
+        .growthRate = GROWTH_MEDIUM_SLOW,
+        .eggGroups = MON_EGG_GROUPS(EGG_GROUP_NO_EGGS_DISCOVERED),
+        .abilities = { ABILITY_KEEN_EYE, ABILITY_BIG_PECKS, ABILITY_NONE },
+        .bodyColor = BODY_COLOR_BROWN,
+        .speciesName = _("Anchigyps"),
+        .cryId = CRY_ANCHIGYPS,
+        .natDexNum = NATIONAL_DEX_ANCHIGYPS,
+        .categoryName = _("Scavenger"),
+        .height = 8,
+        .weight = 50,
+        .description = COMPOUND_STRING(
+            "An eagle-like bird of prey that also\n"
+            "scavenged. It may have fed on the\n"
+            "animals dying at the ash-choked\n"
+            "waterhole."),
+        .frontPic = gMonFrontPic_Anchigyps,
+        .backPic = gMonBackPic_Anchigyps,
+        .palette = gMonPalette_Anchigyps,
+        .shinyPalette = gMonShinyPalette_Anchigyps,
+        .iconSprite = gMonIcon_Anchigyps,
+        // Placeholder presentation borrowed from SPECIES_MANDIBUZZ
+        .pokemonScale = 282,
+        .pokemonOffset = 4,
+        .trainerScale = 256,
+        .trainerOffset = 0,
+        .frontPicSize = MON_COORDS_SIZE(48, 64),
+        .frontPicYOffset = 1,
+        .frontAnimFrames = ANIM_FRAMES(
+            ANIMCMD_FRAME(0, 1),
+            ANIMCMD_FRAME(1, 36),
+            ANIMCMD_FRAME(0, 10),
+        ),
+        .frontAnimId = ANIM_V_STRETCH,
+        .backPicSize = MON_COORDS_SIZE(64, 48),
+        .backPicYOffset = 10,
+        .backAnimId = BACK_ANIM_JOLT_RIGHT,
+        .iconPalIndex = 1,
+        SHADOW(1, 12, SHADOW_SIZE_M)
+        FOOTPRINT(Anchigyps)
+        .levelUpLearnset = sAnchigypsLevelUpLearnset,
+    },
+
+    // Equus | Natural Trap Cave, WY | ~20 ka | ~300 kg, 2.2 m | BST 473
+    // Note: Several Ice Age horse forms at the site, including a small stilt-legged horse.
+    [SPECIES_EQUUS] =
+    {
+        .baseHP        = 83,
+        .baseAttack    = 83,
+        .baseDefense   = 70,
+        .baseSpeed     = 111,
+        .baseSpAttack  = 56,
+        .baseSpDefense = 70,
+        .types = MON_TYPES(TYPE_NORMAL, TYPE_GRASS),
+        .catchRate = 45,
+        .expYield = 142,
+        .evYield_Speed = 2,
+        .genderRatio = PERCENT_FEMALE(50),
+        .eggCycles = 20,
+        .friendship = STANDARD_FRIENDSHIP,
+        .growthRate = GROWTH_MEDIUM_SLOW,
+        .eggGroups = MON_EGG_GROUPS(EGG_GROUP_NO_EGGS_DISCOVERED),
+        .abilities = { ABILITY_RUN_AWAY, ABILITY_QUICK_FEET, ABILITY_NONE },
+        .bodyColor = BODY_COLOR_BROWN,
+        .speciesName = _("Equus"),
+        .cryId = CRY_EQUUS,
+        .natDexNum = NATIONAL_DEX_EQUUS,
+        .categoryName = _("Horse"),
+        .height = 22,
+        .weight = 3000,
+        .description = COMPOUND_STRING(
+            "A one-toed Ice Age horse. Horses died\n"
+            "out in North America about 11,000\n"
+            "years ago, then returned with the\n"
+            "Spanish in the 1500s."),
+        .frontPic = gMonFrontPic_Equus,
+        .backPic = gMonBackPic_Equus,
+        .palette = gMonPalette_Equus,
+        .shinyPalette = gMonShinyPalette_Equus,
+        .iconSprite = gMonIcon_Equus,
+        // Placeholder presentation borrowed from SPECIES_MUDSDALE
+        .pokemonScale = 257,
+        .pokemonOffset = 10,
+        .trainerScale = 423,
+        .trainerOffset = 8,
+        .frontPicSize = MON_COORDS_SIZE(64, 64),
+        .frontPicYOffset = 0,
+        .frontAnimFrames = ANIM_FRAMES(
+            ANIMCMD_FRAME(1, 15),
+            ANIMCMD_FRAME(0, 15),
+            ANIMCMD_FRAME(1, 30),
+            ANIMCMD_FRAME(0, 1),
+        ),
+        .frontAnimId = ANIM_V_SHAKE_TWICE,
+        .backPicSize = MON_COORDS_SIZE(64, 56),
+        .backPicYOffset = 5,
+        .iconPalIndex = 0,
+        SHADOW(4, 13, SHADOW_SIZE_L)
+        FOOTPRINT(Equus)
+        .levelUpLearnset = sEquusLevelUpLearnset,
+    },
+
+    // Arctodus simus | Natural Trap Cave, WY | ~20 ka | ~900 kg, 3 m | BST 507
+    [SPECIES_ARCTODUS] =
+    {
+        .baseHP        = 116,
+        .baseAttack    = 116,
+        .baseDefense   = 87,
+        .baseSpeed     = 72,
+        .baseSpAttack  = 43,
+        .baseSpDefense = 72,
+        .types = MON_TYPES(TYPE_DARK, TYPE_NORMAL),
+        .catchRate = 10,
+        .expYield = 152,
+        .evYield_HP = 3,
+        .genderRatio = PERCENT_FEMALE(50),
+        .eggCycles = 20,
+        .friendship = STANDARD_FRIENDSHIP,
+        .growthRate = GROWTH_SLOW,
+        .eggGroups = MON_EGG_GROUPS(EGG_GROUP_NO_EGGS_DISCOVERED),
+        .abilities = { ABILITY_INTIMIDATE, ABILITY_THICK_FAT, ABILITY_NONE },
+        .bodyColor = BODY_COLOR_BROWN,
+        .speciesName = _("Arctodus"),
+        .cryId = CRY_ARCTODUS,
+        .natDexNum = NATIONAL_DEX_ARCTODUS,
+        .categoryName = _("Short-faced"),
+        .height = 30,
+        .weight = 9000,
+        .description = COMPOUND_STRING(
+            "The giant short-faced bear: one of the\n"
+            "largest land carnivores of the Ice\n"
+            "Age. Standing up, it reached over\n"
+            "three metres."),
+        .frontPic = gMonFrontPic_Arctodus,
+        .backPic = gMonBackPic_Arctodus,
+        .palette = gMonPalette_Arctodus,
+        .shinyPalette = gMonShinyPalette_Arctodus,
+        .iconSprite = gMonIcon_Arctodus,
+        // Placeholder presentation borrowed from SPECIES_URSARING
+        .pokemonScale = 256,
+        .pokemonOffset = 0,
+        .trainerScale = 256,
+        .trainerOffset = 0,
+        .frontPicSize = P_GBA_STYLE_SPECIES_GFX ? MON_COORDS_SIZE(56, 64) : MON_COORDS_SIZE(64, 64),
+        .frontPicYOffset = P_GBA_STYLE_SPECIES_GFX ? 1 : 0,
+        .frontAnimFrames = ANIM_FRAMES(
+            ANIMCMD_FRAME(1, 40),
+            ANIMCMD_FRAME(0, 20),
+        ),
+        .frontAnimId = P_GBA_STYLE_SPECIES_GFX ? ANIM_V_SHAKE : ANIM_H_SHAKE,
+        .backPicSize = P_GBA_STYLE_SPECIES_GFX ? MON_COORDS_SIZE(64, 64) : MON_COORDS_SIZE(56, 64),
+        .backPicYOffset = P_GBA_STYLE_SPECIES_GFX ? 3 : 2,
+        .backAnimId = BACK_ANIM_V_SHAKE,
+        .iconPalIndex = 2,
+        SHADOW(1, 14, SHADOW_SIZE_L)
+        FOOTPRINT(Arctodus)
+        .levelUpLearnset = sArctodusLevelUpLearnset,
+    },
+
+    // Miracinonyx trumani | Natural Trap Cave, WY | ~20 ka | ~70 kg, 1.6 m | BST 429
+    // Note: Cheetah-like build evolved convergently; closest relative is the puma.
+    [SPECIES_MIRACINONYX] =
+    {
+        .baseHP        = 67,
+        .baseAttack    = 94,
+        .baseDefense   = 54,
+        .baseSpeed     = 121,
+        .baseSpAttack  = 40,
+        .baseSpDefense = 54,
+        .types = MON_TYPES(TYPE_DARK),
+        .catchRate = 45,
+        .expYield = 129,
+        .evYield_Speed = 2,
+        .genderRatio = PERCENT_FEMALE(50),
+        .eggCycles = 20,
+        .friendship = STANDARD_FRIENDSHIP,
+        .growthRate = GROWTH_SLOW,
+        .eggGroups = MON_EGG_GROUPS(EGG_GROUP_NO_EGGS_DISCOVERED),
+        .abilities = { ABILITY_SPEED_BOOST, ABILITY_INFILTRATOR, ABILITY_NONE },
+        .bodyColor = BODY_COLOR_YELLOW,
+        .speciesName = _("Miracinonyx"),
+        .cryId = CRY_MIRACINONYX,
+        .natDexNum = NATIONAL_DEX_MIRACINONYX,
+        .categoryName = _("Cheetah"),
+        .height = 16,
+        .weight = 700,
+        .description = COMPOUND_STRING(
+            "The American cheetah, a fast cat built\n"
+            "much like the African cheetah. It\n"
+            "chased pronghorn across the open\n"
+            "steppe."),
+        .frontPic = gMonFrontPic_Miracinonyx,
+        .backPic = gMonBackPic_Miracinonyx,
+        .palette = gMonPalette_Miracinonyx,
+        .shinyPalette = gMonShinyPalette_Miracinonyx,
+        .iconSprite = gMonIcon_Miracinonyx,
+        // Placeholder presentation borrowed from SPECIES_PERSIAN
+        .pokemonScale = 320,
+        .pokemonOffset = 10,
+        .trainerScale = 256,
+        .trainerOffset = 0,
+        .frontPicSize = P_GBA_STYLE_SPECIES_GFX ? MON_COORDS_SIZE(56, 56) : MON_COORDS_SIZE(64, 56),
+        .frontPicYOffset = P_GBA_STYLE_SPECIES_GFX ? 7 : 4,
+        .frontAnimFrames = ANIM_FRAMES(
+            ANIMCMD_FRAME(1, 50),
+            ANIMCMD_FRAME(0, 20),
+        ),
+        .frontAnimId = ANIM_V_STRETCH,
+        .frontAnimDelay = 20,
+        .backPicSize = MON_COORDS_SIZE(64, 56),
+        .backPicYOffset = 7,
+        .backAnimId = BACK_ANIM_TRIANGLE_DOWN,
+        .iconPalIndex = 1,
+        SHADOW(-2, 8, SHADOW_SIZE_XL_BATTLE_ONLY)
+        FOOTPRINT(Miracinonyx)
+        .levelUpLearnset = sMiracinonyxLevelUpLearnset,
+    },
+
+    // Panthera atrox | Natural Trap Cave, WY | ~20 ka | ~350 kg, 2.5 m | BST 478
+    [SPECIES_PANTHERA] =
+    {
+        .baseHP        = 87,
+        .baseAttack    = 116,
+        .baseDefense   = 72,
+        .baseSpeed     = 87,
+        .baseSpAttack  = 43,
+        .baseSpDefense = 72,
+        .types = MON_TYPES(TYPE_DARK, TYPE_FIGHTING),
+        .catchRate = 25,
+        .expYield = 143,
+        .evYield_Attack = 2,
+        .genderRatio = PERCENT_FEMALE(50),
+        .eggCycles = 20,
+        .friendship = STANDARD_FRIENDSHIP,
+        .growthRate = GROWTH_SLOW,
+        .eggGroups = MON_EGG_GROUPS(EGG_GROUP_NO_EGGS_DISCOVERED),
+        .abilities = { ABILITY_INTIMIDATE, ABILITY_MOXIE, ABILITY_NONE },
+        .bodyColor = BODY_COLOR_YELLOW,
+        .speciesName = _("Panthera"),
+        .cryId = CRY_PANTHERA,
+        .natDexNum = NATIONAL_DEX_PANTHERA,
+        .categoryName = _("Lion"),
+        .height = 25,
+        .weight = 3500,
+        .description = COMPOUND_STRING(
+            "The American lion, larger than any\n"
+            "living lion. It hunted horses and\n"
+            "bison across Ice Age North America."),
+        .frontPic = gMonFrontPic_Panthera,
+        .backPic = gMonBackPic_Panthera,
+        .palette = gMonPalette_Panthera,
+        .shinyPalette = gMonShinyPalette_Panthera,
+        .iconSprite = gMonIcon_Panthera,
+        // Placeholder presentation borrowed from SPECIES_PYROAR
+        .pokemonScale = 268,
+        .pokemonOffset = 2,
+        .trainerScale = 271,
+        .trainerOffset = 0,
+        .frontPicSize = MON_COORDS_SIZE(64, 64),
+        .frontPicYOffset = 0,
+        .frontAnimFrames = ANIM_FRAMES(
+            ANIMCMD_FRAME(1, 45),
+            ANIMCMD_FRAME(0, 5),
+        ),
+        .frontAnimId = ANIM_V_SHAKE,
+        .backPicSize = MON_COORDS_SIZE(64, 64),
+        .backPicYOffset = 3,
+        .backAnimId = BACK_ANIM_H_STRETCH,
+        .iconPalIndex = 2,
+        SHADOW(-2, 11, SHADOW_SIZE_XL_BATTLE_ONLY)
+        FOOTPRINT(Panthera)
+        .levelUpLearnset = sPantheraLevelUpLearnset,
+    },
+
+    // Mammuthus columbi | Natural Trap Cave, WY | ~20 ka | ~9000 kg, 4.5 m | BST 577
+    [SPECIES_MAMMUTHUS] =
+    {
+        .baseHP        = 140,
+        .baseAttack    = 122,
+        .baseDefense   = 105,
+        .baseSpeed     = 52,
+        .baseSpAttack  = 52,
+        .baseSpDefense = 105,
+        .types = MON_TYPES(TYPE_ICE, TYPE_GROUND),
+        .catchRate = 25,
+        .expYield = 173,
+        .evYield_HP = 3,
+        .genderRatio = PERCENT_FEMALE(50),
+        .eggCycles = 20,
+        .friendship = STANDARD_FRIENDSHIP,
+        .growthRate = GROWTH_SLOW,
+        .eggGroups = MON_EGG_GROUPS(EGG_GROUP_NO_EGGS_DISCOVERED),
+        .abilities = { ABILITY_THICK_FAT, ABILITY_STURDY, ABILITY_NONE },
+        .bodyColor = BODY_COLOR_BROWN,
+        .speciesName = _("Mammuthus"),
+        .cryId = CRY_MAMMUTHUS,
+        .natDexNum = NATIONAL_DEX_MAMMUTHUS,
+        .categoryName = _("Mammoth"),
+        .height = 45,
+        .weight = 65535, // TODO: real mass 9000 kg exceeds the u16 weight field
+        .description = COMPOUND_STRING(
+            "The Columbian mammoth, taller than an\n"
+            "African elephant. It grazed the\n"
+            "grasslands south of the ice sheets."),
+        .frontPic = gMonFrontPic_Mammuthus,
+        .backPic = gMonBackPic_Mammuthus,
+        .palette = gMonPalette_Mammuthus,
+        .shinyPalette = gMonShinyPalette_Mammuthus,
+        .iconSprite = gMonIcon_Mammuthus,
+        // Placeholder presentation borrowed from SPECIES_MAMOSWINE
+        .pokemonScale = 257,
+        .pokemonOffset = 6,
+        .trainerScale = 423,
+        .trainerOffset = 8,
+        .frontPicSize = MON_COORDS_SIZE(64, 56),
+        .frontPicYOffset = 4,
+        .frontAnimFrames = ANIM_FRAMES(
+            ANIMCMD_FRAME(0, 10),
+            ANIMCMD_FRAME(1, 25),
+            ANIMCMD_FRAME(0, 30),
+        ),
+        .frontAnimId = ANIM_BACK_AND_LUNGE,
+        .backPicSize = MON_COORDS_SIZE(64, 56),
+        .backPicYOffset = 6,
+        .backAnimId = BACK_ANIM_V_SHAKE_LOW,
+        .iconPalIndex = 2,
+        SHADOW(7, 7, SHADOW_SIZE_L)
+        FOOTPRINT(Mammuthus)
+        .levelUpLearnset = sMammuthusLevelUpLearnset,
+    },
+
+    // Camelops | Wyoming | ~20 ka | ~800 kg, 3 m | BST 503
+    [SPECIES_CAMELOPS] =
+    {
+        .baseHP        = 110,
+        .baseAttack    = 94,
+        .baseDefense   = 79,
+        .baseSpeed     = 79,
+        .baseSpAttack  = 47,
+        .baseSpDefense = 94,
+        .types = MON_TYPES(TYPE_NORMAL, TYPE_GROUND),
+        .catchRate = 45,
+        .expYield = 151,
+        .evYield_HP = 3,
+        .genderRatio = PERCENT_FEMALE(50),
+        .eggCycles = 20,
+        .friendship = STANDARD_FRIENDSHIP,
+        .growthRate = GROWTH_MEDIUM_SLOW,
+        .eggGroups = MON_EGG_GROUPS(EGG_GROUP_NO_EGGS_DISCOVERED),
+        .abilities = { ABILITY_OBLIVIOUS, ABILITY_THICK_FAT, ABILITY_NONE },
+        .bodyColor = BODY_COLOR_BROWN,
+        .speciesName = _("Camelops"),
+        .cryId = CRY_CAMELOPS,
+        .natDexNum = NATIONAL_DEX_CAMELOPS,
+        .categoryName = _("Camel"),
+        .height = 30,
+        .weight = 8000,
+        .description = COMPOUND_STRING(
+            "The western camel, the last of the\n"
+            "camels' long North American story. It\n"
+            "vanished with the other Ice Age\n"
+            "giants."),
+        .frontPic = gMonFrontPic_Camelops,
+        .backPic = gMonBackPic_Camelops,
+        .palette = gMonPalette_Camelops,
+        .shinyPalette = gMonShinyPalette_Camelops,
+        .iconSprite = gMonIcon_Camelops,
+        // Placeholder presentation borrowed from SPECIES_TAUROS
+        .pokemonScale = 256,
+        .pokemonOffset = 0,
+        .trainerScale = 256,
+        .trainerOffset = 0,
+        .frontPicSize = P_GBA_STYLE_SPECIES_GFX ? MON_COORDS_SIZE(56, 64) : MON_COORDS_SIZE(64, 64),
+        .frontPicYOffset = P_GBA_STYLE_SPECIES_GFX ? 0 : 5,
+        .frontAnimFrames = ANIM_FRAMES(
+            ANIMCMD_FRAME(1, 10),
+            ANIMCMD_FRAME(0, 20),
+            ANIMCMD_FRAME(1, 25),
+            ANIMCMD_FRAME(0, 20),
+        ),
+        .frontAnimId = ANIM_V_SHAKE_TWICE,
+        .frontAnimDelay = 10,
+        .backPicSize = P_GBA_STYLE_SPECIES_GFX ? MON_COORDS_SIZE(64, 40) : MON_COORDS_SIZE(64, 48),
+        .backPicYOffset = 13,
+        .backAnimId = BACK_ANIM_V_SHAKE_LOW,
+        .iconPalIndex = 2,
+        SHADOW(1, 7, SHADOW_SIZE_L)
+        FOOTPRINT(Camelops)
+        .levelUpLearnset = sCamelopsLevelUpLearnset,
+    },
+
+    // Ovibos moschatus | Natural Trap Cave, WY | ~20 ka | 300 kg, 2.2 m | BST 473
+    [SPECIES_OVIBOS] =
+    {
+        .baseHP        = 111,
+        .baseAttack    = 83,
+        .baseDefense   = 97,
+        .baseSpeed     = 42,
+        .baseSpAttack  = 42,
+        .baseSpDefense = 97,
+        .types = MON_TYPES(TYPE_ICE, TYPE_NORMAL),
+        .catchRate = 45,
+        .expYield = 142,
+        .evYield_HP = 2,
+        .genderRatio = PERCENT_FEMALE(50),
+        .eggCycles = 20,
+        .friendship = STANDARD_FRIENDSHIP,
+        .growthRate = GROWTH_SLOW,
+        .eggGroups = MON_EGG_GROUPS(EGG_GROUP_NO_EGGS_DISCOVERED),
+        .abilities = { ABILITY_THICK_FAT, ABILITY_SNOW_CLOAK, ABILITY_NONE },
+        .bodyColor = BODY_COLOR_BROWN,
+        .speciesName = _("Ovibos"),
+        .cryId = CRY_OVIBOS,
+        .natDexNum = NATIONAL_DEX_OVIBOS,
+        .categoryName = _("Musk Ox"),
+        .height = 22,
+        .weight = 3000,
+        .description = COMPOUND_STRING(
+            "A shaggy, cold-adapted ox. It survives\n"
+            "today in the Arctic, far north of\n"
+            "where its Ice Age herds once grazed."),
+        .frontPic = gMonFrontPic_Ovibos,
+        .backPic = gMonBackPic_Ovibos,
+        .palette = gMonPalette_Ovibos,
+        .shinyPalette = gMonShinyPalette_Ovibos,
+        .iconSprite = gMonIcon_Ovibos,
+        // Placeholder presentation borrowed from SPECIES_DUBWOOL
+        .pokemonScale = 272,
+        .pokemonOffset = 3,
+        .trainerScale = 256,
+        .trainerOffset = 0,
+        .frontPicSize = MON_COORDS_SIZE(48, 56),
+        .frontPicYOffset = 5,
+        .frontAnimFrames = sAnims_SingleFramePlaceHolder,
+        .backPicSize = MON_COORDS_SIZE(64, 40),
+        .backPicYOffset = 13,
+        .iconPalIndex = 2,
+        SHADOW(2, 8, SHADOW_SIZE_M)
+        FOOTPRINT(Ovibos)
+        .levelUpLearnset = sOvibosLevelUpLearnset,
+    },
+
+    // Ovis canadensis | Natural Trap Cave, WY | ~20 ka | 100 kg, 1.6 m | BST 440
+    [SPECIES_OVIS] =
+    {
+        .baseHP        = 82,
+        .baseAttack    = 82,
+        .baseDefense   = 82,
+        .baseSpeed     = 82,
+        .baseSpAttack  = 41,
+        .baseSpDefense = 69,
+        .types = MON_TYPES(TYPE_ROCK, TYPE_FIGHTING),
+        .catchRate = 60,
+        .expYield = 132,
+        .evYield_HP = 2,
+        .genderRatio = PERCENT_FEMALE(50),
+        .eggCycles = 20,
+        .friendship = STANDARD_FRIENDSHIP,
+        .growthRate = GROWTH_MEDIUM_SLOW,
+        .eggGroups = MON_EGG_GROUPS(EGG_GROUP_NO_EGGS_DISCOVERED),
+        .abilities = { ABILITY_ROCK_HEAD, ABILITY_STURDY, ABILITY_NONE },
+        .bodyColor = BODY_COLOR_BROWN,
+        .speciesName = _("Ovis"),
+        .cryId = CRY_OVIS,
+        .natDexNum = NATIONAL_DEX_OVIS,
+        .categoryName = _("Bighorn"),
+        .height = 16,
+        .weight = 1000,
+        .description = COMPOUND_STRING(
+            "The bighorn sheep. Rams clash their\n"
+            "curled horns in contests that echo\n"
+            "across the cliffs. It still lives in\n"
+            "Wyoming today."),
+        .frontPic = gMonFrontPic_Ovis,
+        .backPic = gMonBackPic_Ovis,
+        .palette = gMonPalette_Ovis,
+        .shinyPalette = gMonShinyPalette_Ovis,
+        .iconSprite = gMonIcon_Ovis,
+        // Placeholder presentation borrowed from SPECIES_GOGOAT
+        .pokemonScale = 259,
+        .pokemonOffset = 0,
+        .trainerScale = 290,
+        .trainerOffset = 1,
+        .frontPicSize = MON_COORDS_SIZE(56, 64),
+        .frontPicYOffset = 2,
+        .frontAnimFrames = ANIM_FRAMES(
+            ANIMCMD_FRAME(0, 1),
+            ANIMCMD_FRAME(1, 36),
+            ANIMCMD_FRAME(0, 10),
+        ),
+        .frontAnimId = ANIM_V_STRETCH,
+        .backPicSize = MON_COORDS_SIZE(64, 56),
+        .backPicYOffset = 9,
+        .backAnimId = BACK_ANIM_DIP_RIGHT_SIDE,
+        .iconPalIndex = 1,
+        SHADOW(2, 9, SHADOW_SIZE_XL_BATTLE_ONLY)
+        FOOTPRINT(Ovis)
+        .levelUpLearnset = sOvisLevelUpLearnset,
+    },
+
+    // Antilocapra americana | Living; MT | today | 50 kg, 1.4 m | BST 419
+    // Note: 'Ghosts of predators past' hypothesis (Byers 1997).
+    [SPECIES_ANTILOCAPRA] =
+    {
+        .baseHP        = 65,
+        .baseAttack    = 65,
+        .baseDefense   = 52,
+        .baseSpeed     = 131,
+        .baseSpAttack  = 52,
+        .baseSpDefense = 52,
+        .types = MON_TYPES(TYPE_NORMAL),
+        .catchRate = 60,
+        .expYield = 126,
+        .evYield_Speed = 2,
+        .genderRatio = PERCENT_FEMALE(50),
+        .eggCycles = 20,
+        .friendship = STANDARD_FRIENDSHIP,
+        .growthRate = GROWTH_MEDIUM_SLOW,
+        .eggGroups = MON_EGG_GROUPS(EGG_GROUP_NO_EGGS_DISCOVERED),
+        .abilities = { ABILITY_SPEED_BOOST, ABILITY_RUN_AWAY, ABILITY_NONE },
+        .bodyColor = BODY_COLOR_BROWN,
+        .speciesName = _("Antilocapra"),
+        .cryId = CRY_ANTILOCAPRA,
+        .natDexNum = NATIONAL_DEX_ANTILOCAPRA,
+        .categoryName = _("Pronghorn"),
+        .height = 14,
+        .weight = 500,
+        .description = COMPOUND_STRING(
+            "The pronghorn, faster than any\n"
+            "predator now alive in North America.\n"
+            "Its speed may be a ghost of the\n"
+            "extinct American cheetah."),
+        .frontPic = gMonFrontPic_Antilocapra,
+        .backPic = gMonBackPic_Antilocapra,
+        .palette = gMonPalette_Antilocapra,
+        .shinyPalette = gMonShinyPalette_Antilocapra,
+        .iconSprite = gMonIcon_Antilocapra,
+        // Placeholder presentation borrowed from SPECIES_WYRDEER
+        .pokemonScale = 267,
+        .pokemonOffset = 2,
+        .trainerScale = 286,
+        .trainerOffset = 1,
+        .frontPicSize = MON_COORDS_SIZE(64, 64),
+        .frontPicYOffset = 0,
+        .frontAnimFrames = sAnims_SingleFramePlaceHolder,
+        .backPicSize = MON_COORDS_SIZE(64, 64),
+        .backPicYOffset = 0,
+        .iconPalIndex = 2,
+        SHADOW(-1, 13, SHADOW_SIZE_M)
+        FOOTPRINT(Antilocapra)
+        .levelUpLearnset = sAntilocapraLevelUpLearnset,
+    },
+
+    // Bison bison | Living; MT | today | 700 kg, 3 m | BST 499
+    [SPECIES_BISON] =
+    {
+        .baseHP        = 117,
+        .baseAttack    = 103,
+        .baseDefense   = 88,
+        .baseSpeed     = 59,
+        .baseSpAttack  = 44,
+        .baseSpDefense = 88,
+        .types = MON_TYPES(TYPE_NORMAL, TYPE_GROUND),
+        .catchRate = 45,
+        .expYield = 150,
+        .evYield_HP = 2,
+        .genderRatio = PERCENT_FEMALE(50),
+        .eggCycles = 20,
+        .friendship = STANDARD_FRIENDSHIP,
+        .growthRate = GROWTH_SLOW,
+        .eggGroups = MON_EGG_GROUPS(EGG_GROUP_NO_EGGS_DISCOVERED),
+        .abilities = { ABILITY_THICK_FAT, ABILITY_RECKLESS, ABILITY_NONE },
+        .bodyColor = BODY_COLOR_BROWN,
+        .speciesName = _("Bison"),
+        .cryId = CRY_BISON,
+        .natDexNum = NATIONAL_DEX_BISON,
+        .categoryName = _("Bison"),
+        .height = 30,
+        .weight = 7000,
+        .description = COMPOUND_STRING(
+            "The American bison, the largest land\n"
+            "animal in North America today. It\n"
+            "survived the Ice Age, and later near-\n"
+            "extinction."),
+        .frontPic = gMonFrontPic_Bison,
+        .backPic = gMonBackPic_Bison,
+        .palette = gMonPalette_Bison,
+        .shinyPalette = gMonShinyPalette_Bison,
+        .iconSprite = gMonIcon_Bison,
+        // Placeholder presentation borrowed from SPECIES_BOUFFALANT
+        .pokemonScale = 259,
+        .pokemonOffset = 1,
+        .trainerScale = 296,
+        .trainerOffset = 1,
+        .frontPicSize = MON_COORDS_SIZE(64, 56),
+        .frontPicYOffset = 4,
+        .frontAnimFrames = ANIM_FRAMES(
+            ANIMCMD_FRAME(0, 28),
+            ANIMCMD_FRAME(1, 32),
+            ANIMCMD_FRAME(0, 15),
+        ),
+        .frontAnimId = ANIM_V_SQUISH_AND_BOUNCE_SLOW,
+        .backPicSize = MON_COORDS_SIZE(64, 56),
+        .backPicYOffset = 7,
+        .backAnimId = BACK_ANIM_V_SHAKE_LOW,
+        .iconPalIndex = 2,
+        SHADOW(8, 7, SHADOW_SIZE_M)
+        FOOTPRINT(Bison)
+        .levelUpLearnset = sBisonLevelUpLearnset,
+    },
+
+    // Cynomys ludovicianus | Living; MT | today | 1 kg, 0.4 m | BST 300
+    [SPECIES_CYNOMYS] =
+    {
+        .baseHP        = 52,
+        .baseAttack    = 41,
+        .baseDefense   = 41,
+        .baseSpeed     = 62,
+        .baseSpAttack  = 52,
+        .baseSpDefense = 52,
+        .types = MON_TYPES(TYPE_NORMAL, TYPE_GROUND),
+        .catchRate = 255,
+        .expYield = 90,
+        .evYield_Speed = 1,
+        .genderRatio = PERCENT_FEMALE(50),
+        .eggCycles = 20,
+        .friendship = STANDARD_FRIENDSHIP,
+        .growthRate = GROWTH_MEDIUM_FAST,
+        .eggGroups = MON_EGG_GROUPS(EGG_GROUP_NO_EGGS_DISCOVERED),
+        .abilities = { ABILITY_RUN_AWAY, ABILITY_PICKUP, ABILITY_NONE },
+        .bodyColor = BODY_COLOR_BROWN,
+        .speciesName = _("Cynomys"),
+        .cryId = CRY_CYNOMYS,
+        .natDexNum = NATIONAL_DEX_CYNOMYS,
+        .categoryName = _("Prairie Dog"),
+        .height = 4,
+        .weight = 10,
+        .description = COMPOUND_STRING(
+            "A burrowing ground squirrel that lives\n"
+            "in huge towns. Its alarm calls even\n"
+            "say what kind of predator is coming."),
+        .frontPic = gMonFrontPic_Cynomys,
+        .backPic = gMonBackPic_Cynomys,
+        .palette = gMonPalette_Cynomys,
+        .shinyPalette = gMonShinyPalette_Cynomys,
+        .iconSprite = gMonIcon_Cynomys,
+        // Placeholder presentation borrowed from SPECIES_SKWOVET
+        .pokemonScale = 530,
+        .pokemonOffset = 13,
+        .trainerScale = 256,
+        .trainerOffset = 0,
+        .frontPicSize = MON_COORDS_SIZE(40, 48),
+        .frontPicYOffset = 9,
+        .frontAnimFrames = ANIM_FRAMES(
+            ANIMCMD_FRAME(1, 30),
+            ANIMCMD_FRAME(0, 1),
+        ),
+        .frontAnimId = ANIM_V_SHAKE,
+        .backPicSize = MON_COORDS_SIZE(64, 56),
+        .backPicYOffset = 7,
+        .iconPalIndex = 2,
+        SHADOW(-7, 5, SHADOW_SIZE_S)
+        FOOTPRINT(Cynomys)
+        .levelUpLearnset = sCynomysLevelUpLearnset,
+    },
+

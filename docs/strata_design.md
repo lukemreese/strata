@@ -77,11 +77,26 @@ largest extinction in the epilogue is the one humans were present for.
 | River Channel | 66.04 Ma | Route 119 middle | Tyrannosaur boss on the bluff |
 | Backswamp | 66.04 Ma | Route 120 marsh | Gar, champsosaurs, crocodylians |
 | Ashen Levee / River / Swamp | 66.04 Ma + ~1 yr | Same layouts, `*_winter` palettes | Impact winter: survivors only; survival gauntlet in the swamp |
+| Palm Forest | ~65.7 Ma | Petalburg Woods | Act 3; *Eoconodon* boss (Lv 22) on the north path |
+| Red Beds | ~56 Ma | Route 114 north, `*_petm` palettes, drought | Act 4; *Coryphodon* boss (Lv 28) on the land bridge |
+| Lake Gosiute shore | ~50 Ma | Route 104 | Act 5; *Uintatherium* boss (Lv 34) across the south shore |
+| White River badlands | ~33 Ma | Route 114 south, `*_oligocene` palettes | Act 6; *Archaeotherium* boss (Lv 40) at the bone stash |
+| Ashfall grassland | ~11.9 Ma | Route 113, volcanic ash | Act 7; *Teleoceras* bull (Lv 46) at the waterhole |
+| Ice Age Steppe | ~20 ka | Route 118, `*_ice_age` palettes, snow | Act 8; the sinkhole drops into the trap cave |
+| Natural Trap Cave | ~20 ka | Granite Cave 1F | Act 8; *Arctodus* boss (Lv 52); a rope climbs back out |
+| Montana Prairie | today | Route 102 | Epilogue; open once the present layer is loaded, via the camp's west road |
 
 The present-day hub sits outside time: returning to camp does not change `VAR_STRATA_ERA`.
 The rig only moves up: once a layer is loaded, earlier layers are closed.
-Story progress is `VAR_STRATA_STORY`: 0 new game, 1 starter, 2 in Hell Creek,
-3 tyrannosaur met, 4 in the impact winter, 5 gauntlet survived (fern spike).
+Story progress is `VAR_STRATA_STORY`: 0 new game, 1 starter chosen, then for act N
+`2N` while in the act and `2N + 1` once its boss is done (`STORY_IN_ACT`,
+`STORY_ACT_DONE` in `include/constants/strata.h`); 18 is the epilogue. The rig
+(`src/strata_acts.c`) loads the next layer only after the act is done; Dr.
+Halvorsen has a line for every story value. Each deep-time map has an anchor sign
+that returns to the field station.
+
+`python3 tools/strata/mapcheck.py` walks every Strata map from its arrival point and
+connected edges and reports any trigger, sign or edge the player can't reach on foot.
 
 **Era variants of a map** reuse its layout with palette-only variants of its tilesets
 (`tools/strata/gen_tilesets.py`), so the place is recognizably the same while the era
@@ -157,12 +172,15 @@ It is the "hard mode / safe mode" starter.
 |---|---|---|
 | 1 | *Tyrannosaurus rex* | Apex of Hell Creek |
 | 2 | **The impact winter** (survival gauntlet) | The "boss" is the environment |
-| 3 | *Taeniolabis* herd / crocodyliform | First large mammals after the impact |
-| 4 | *Gastornis* | Giant bird during the PETM |
+| 3 | *Eoconodon* | First big mammal predator after the impact |
+| 4 | *Coryphodon* | Largest animal of the PETM hothouse |
 | 5 | *Uintatherium* | Six-horned Bridger giant |
-| 6 | *Archaeotherium* ("hell pig") or *Hoplophoneus* | White River apex |
-| 7 | **The ashfall** + *Epicyon* | The eruption ends the act |
-| 8 | *Arctodus simus* (short-faced bear) / *Smilodon* | Ice Age apex |
+| 6 | *Archaeotherium* ("hell pig") | White River apex |
+| 7 | **The ashfall** + *Teleoceras* bull | The eruption ends the act |
+| 8 | *Arctodus simus* (short-faced bear) | Ice Age apex, trapped in Natural Trap Cave |
+
+Each boss is a one-off wild battle on a line of triggers. Running away leaves it in
+place; winning or catching it finishes the act.
 
 ## 7. Systems
 
@@ -293,9 +311,12 @@ Keep the standard 18 types for compatibility, but assign them by ecology.
 
 1. **Vertical slice:** Act 0 + Act 1 + the era jump to Act 2. That covers 3 starters,
    ~10 Hell Creek species, the descent + extinction systems working end-to-end.
-2. Acts 3–4 (proves selection pressures, e.g. *Sifrhippus* dwarfing).
-3. Acts 5–8 content.
-4. Epilogue, Codex polish, scientific fact-check pass.
+2. Acts 3–4 (proves selection pressures, e.g. *Sifrhippus* dwarfing). **Built.**
+3. Acts 5–8 content. **Built** (one map per act, plus the trap cave).
+4. Epilogue (**prairie built**), Codex polish, scientific fact-check pass.
+5. Next: balance (small species have low BST at high levels; a player who skips
+   ahead can be left with one low-level survivor), real map art for the sinkhole and
+   rope, more maps per act, trainers/NPCs in the present-day hub.
 
 ## 11. Open questions
 

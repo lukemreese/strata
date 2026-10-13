@@ -640,3 +640,7 @@ gSpecials::
 	def_special CheckAddCoins
 	def_special Strata_AdvanceEra
 	def_special Strata_AddPressure
+	def_special Strata_RigQuery
+	def_special Strata_RigLoadNext
+	def_special Strata_SpecialGetCurrentAct
+	def_special Strata_BufferMentorText

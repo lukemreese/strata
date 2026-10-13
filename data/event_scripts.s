@@ -41,6 +41,7 @@
 #include "constants/items.h"
 #include "constants/heal_locations.h"
 #include "constants/strata.h"
+#include "constants/strata_maps.h"
 #include "constants/layouts.h"
 #include "constants/lilycove_lady.h"
 #include "constants/map_scripts.h"
@@ -611,6 +612,14 @@ gStdScripts_End::
 	.include "data/maps/StrataLeveeWinter/scripts.inc"
 	.include "data/maps/StrataRiverWinter/scripts.inc"
 	.include "data/maps/StrataBackswampWinter/scripts.inc"
+	.include "data/maps/StrataPrairie/scripts.inc"
+	.include "data/maps/StrataTrapCave/scripts.inc"
+	.include "data/maps/StrataSteppe/scripts.inc"
+	.include "data/maps/StrataGrassland/scripts.inc"
+	.include "data/maps/StrataWhiteRiver/scripts.inc"
+	.include "data/maps/StrataLakeForest/scripts.inc"
+	.include "data/maps/StrataRedBeds/scripts.inc"
+	.include "data/maps/StrataPalmForest/scripts.inc"
 
 .if IS_FRLG
 

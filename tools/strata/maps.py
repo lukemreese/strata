@@ -19,6 +19,14 @@ MAP_SECTIONS = [
     ("MAPSEC_STRATA_ASHEN_LEVEE", "ASHEN LEVEE"),
     ("MAPSEC_STRATA_ASHEN_RIVER", "ASHEN RIVER"),
     ("MAPSEC_STRATA_ASHEN_SWAMP", "ASHEN SWAMP"),
+    ("MAPSEC_STRATA_CORRAL_BLUFFS", "CORRAL BLUFFS"),
+    ("MAPSEC_STRATA_BIGHORN", "BIGHORN BASIN"),
+    ("MAPSEC_STRATA_GREEN_RIVER", "LAKE GOSIUTE"),
+    ("MAPSEC_STRATA_WHITE_RIVER", "WHITE RIVER"),
+    ("MAPSEC_STRATA_ASHFALL", "ASHFALL"),
+    ("MAPSEC_STRATA_ICE_AGE", "ICE AGE STEPPE"),
+    ("MAPSEC_STRATA_TRAP_CAVE", "NATURAL TRAP CAVE"),
+    ("MAPSEC_STRATA_PRAIRIE", "MONTANA PRAIRIE"),
 ]
 
 HEAL_LOCATIONS = [
@@ -76,6 +84,25 @@ def return_edge():
     return [trigger(x, 32, "VAR_TEMP_1", 0, "StrataLevee_EventScript_ReconstructionEdge") for x in (17, 18, 19)]
 
 
+def anchor(x, y):
+    """The edge of a reconstruction: a marker that offers a return to camp."""
+    return sign(x, y, "StrataFieldStation_EventScript_Anchor")
+
+
+# enum StrataEra order (include/constants/strata.h). An act's number is its era.
+ERAS = ["ERA_PRESENT_DIG", "ERA_HELL_CREEK", "ERA_IMPACT_WINTER", "ERA_CORRAL_BLUFFS", "ERA_BIGHORN_PETM",
+        "ERA_GREEN_RIVER", "ERA_WHITE_RIVER", "ERA_ASHFALL", "ERA_TRAP_CAVE", "ERA_EPILOGUE"]
+
+
+def story_in_act(era):
+    """VAR_STRATA_STORY while the player is in an act (STORY_IN_ACT in C)."""
+    return ERAS.index(era) * 2
+
+
+def boss_triggers(era, script, tiles):
+    return [trigger(x, y, "VAR_STRATA_STORY", story_in_act(era), script) for x, y in tiles]
+
+
 def mons(*entries):
     """(species, min_level, max_level) per encounter slot."""
     return [{"min_level": lo, "max_level": hi, "species": "SPECIES_" + s} for s, lo, hi in entries]
@@ -92,6 +119,10 @@ MAPS = [
         mapsec="MAPSEC_STRATA_FIELD_CAMP",
         connections=[connection("down", "MAP_STRATA_BADLANDS")],
         warps=[warp(26, 18, "MAP_STRATA_FIELD_STATION", 0)],
+        coords=[
+            # The ranch road west to the prairie, open once the present is loaded.
+            trigger(1, y, "VAR_TEMP_1", 0, "StrataFieldCamp_EventScript_PrairieRoad") for y in range(7, 11)
+        ],
         objects=[
             obj("LOCALID_STRATA_CAMP_CREW", "OBJ_EVENT_GFX_HIKER", 18, 9,
                 "StrataFieldCamp_EventScript_Crew", "MOVEMENT_TYPE_WANDER_AROUND"),
@@ -140,7 +171,7 @@ MAPS = [
     # Hell Creek, 66.04 Ma (Act 1)
     # ------------------------------------------------------------------
     dict(
-        id="MAP_STRATA_LEVEE", name="StrataLevee",
+        id="MAP_STRATA_LEVEE", name="StrataLevee", era="ERA_HELL_CREEK",
         crop=LEVEE_CROP, patches=LEVEE_PATCHES,
         music="MUS_ROUTE119", map_type="MAP_TYPE_ROUTE",
         mapsec="MAPSEC_STRATA_LEVEE",
@@ -155,7 +186,7 @@ MAPS = [
         ),
     ),
     dict(
-        id="MAP_STRATA_RIVER", name="StrataRiver",
+        id="MAP_STRATA_RIVER", name="StrataRiver", era="ERA_HELL_CREEK",
         crop=RIVER_CROP, patches=RIVER_PATCHES,
         music="MUS_ROUTE119", map_type="MAP_TYPE_ROUTE",
         mapsec="MAPSEC_STRATA_RIVER",
@@ -180,7 +211,7 @@ MAPS = [
         ),
     ),
     dict(
-        id="MAP_STRATA_BACKSWAMP", name="StrataBackswamp",
+        id="MAP_STRATA_BACKSWAMP", name="StrataBackswamp", era="ERA_HELL_CREEK",
         crop=BACKSWAMP_CROP,
         music="MUS_ROUTE120", map_type="MAP_TYPE_ROUTE",
         mapsec="MAPSEC_STRATA_BACKSWAMP",
@@ -202,7 +233,7 @@ MAPS = [
     # place, soot-darkened and ash-covered. Only the survivors remain.
     # ------------------------------------------------------------------
     dict(
-        id="MAP_STRATA_LEVEE_WINTER", name="StrataLeveeWinter",
+        id="MAP_STRATA_LEVEE_WINTER", name="StrataLeveeWinter", era="ERA_IMPACT_WINTER",
         crop=winter(LEVEE_CROP), patches=LEVEE_PATCHES,
         music="MUS_ABANDONED_SHIP", weather="WEATHER_VOLCANIC_ASH", map_type="MAP_TYPE_ROUTE",
         mapsec="MAPSEC_STRATA_ASHEN_LEVEE",
@@ -217,7 +248,7 @@ MAPS = [
         ),
     ),
     dict(
-        id="MAP_STRATA_RIVER_WINTER", name="StrataRiverWinter",
+        id="MAP_STRATA_RIVER_WINTER", name="StrataRiverWinter", era="ERA_IMPACT_WINTER",
         crop=winter(RIVER_CROP), patches=RIVER_PATCHES,
         music="MUS_ABANDONED_SHIP", weather="WEATHER_VOLCANIC_ASH", map_type="MAP_TYPE_ROUTE",
         mapsec="MAPSEC_STRATA_ASHEN_RIVER",
@@ -237,7 +268,7 @@ MAPS = [
         ),
     ),
     dict(
-        id="MAP_STRATA_BACKSWAMP_WINTER", name="StrataBackswampWinter",
+        id="MAP_STRATA_BACKSWAMP_WINTER", name="StrataBackswampWinter", era="ERA_IMPACT_WINTER",
         crop=winter(BACKSWAMP_CROP),
         music="MUS_ABANDONED_SHIP", weather="WEATHER_VOLCANIC_ASH", map_type="MAP_TYPE_ROUTE",
         mapsec="MAPSEC_STRATA_ASHEN_SWAMP",
@@ -256,6 +287,176 @@ MAPS = [
             fishing_mons=mons(("LEPISOSTEUS", 11, 13), ("LEPISOSTEUS", 11, 13), ("LEPISOSTEUS", 12, 14), ("CHAMPSOSAUR", 12, 14),
                               ("LEPISOSTEUS", 12, 14), ("CHAMPSOSAUR", 13, 15), ("EMARGINACHEL", 13, 15), ("BOREALOSUCH", 13, 15),
                               ("BOREALOSUCH", 14, 16), ("BOREALOSUCH", 14, 16)),
+        ),
+    ),
+
+    # ------------------------------------------------------------------
+    # Act 3: Corral Bluffs, CO (~65.7 Ma): recovering palm and legume forest
+    # ------------------------------------------------------------------
+    dict(
+        id="MAP_STRATA_PALM_FOREST", name="StrataPalmForest", era="ERA_CORRAL_BLUFFS",
+        crop=dict(**{"from": "LAYOUT_PETALBURG_WOODS"}, rect=(0, 0, 48, 44)),
+        music="MUS_PETALBURG_WOODS", map_type="MAP_TYPE_ROUTE", mapsec="MAPSEC_STRATA_CORRAL_BLUFFS",
+        arrival=(15, 33),
+        bgs=[anchor(14, 32)],
+        coords=boss_triggers("ERA_CORRAL_BLUFFS", "StrataPalmForest_EventScript_Eoconodon",
+                             [(x, 7) for x in range(31, 37)] + [(x, 7) for x in range(41, 46)]),
+        encounters=dict(
+            land_mons=mons(("LOXOLOPHUS", 15, 17), ("CARSIOPTYCH", 15, 17), ("MESODMA", 15, 16), ("PURGATORIUS", 15, 17),
+                           ("LOXOLOPHUS", 16, 18), ("CARSIOPTYCH", 16, 18), ("PROTICTIS", 16, 18), ("ASTERIORNIS", 16, 18),
+                           ("TAENIOLABIS", 17, 19), ("PROTOCHELYD", 17, 19), ("TAENIOLABIS", 18, 20), ("EOCONODON", 18, 20)),
+        ),
+    ),
+
+    # ------------------------------------------------------------------
+    # Act 4: Bighorn Basin, WY (~56 Ma): PETM hothouse, red floodplain soils
+    # ------------------------------------------------------------------
+    dict(
+        id="MAP_STRATA_RED_BEDS", name="StrataRedBeds", era="ERA_BIGHORN_PETM",
+        crop=dict(**{"from": "LAYOUT_ROUTE114"}, rect=(0, 0, 40, 34), tilesets=("gTileset_GeneralPetm", "gTileset_FallarborPetm")),
+        patches=[
+            dict(rect=(26, 0, 7, 6), like=(32, 9)),     # house -> ground
+            dict(rect=(32, 5, 8, 9), like=(31, 10)),    # farm plots -> ground
+            dict(rect=(19, 20, 4, 14), like=(26, 19)),  # wooden bridge -> natural land bridge
+            dict(rect=(24, 33, 9, 1), like=(26, 19)),   # roof at the bottom edge -> ground
+        ],
+        music="MUS_ROUTE110", weather="WEATHER_DROUGHT", map_type="MAP_TYPE_ROUTE", mapsec="MAPSEC_STRATA_BIGHORN",
+        arrival=(31, 8),
+        bgs=[anchor(31, 7)],
+        coords=boss_triggers("ERA_BIGHORN_PETM", "StrataRedBeds_EventScript_Coryphodon", [(x, 26) for x in range(19, 23)]),
+        encounters=dict(
+            land_mons=mons(("SIFRHIPPUS", 22, 24), ("HYOPSODUS", 22, 24), ("DIACODEXIS", 22, 24), ("TEILHARDINA", 22, 24),
+                           ("SIFRHIPPUS", 23, 25), ("HYOPSODUS", 23, 25), ("PROTICTIS", 23, 25), ("MESODMA", 23, 25),
+                           ("DIACODEXIS", 24, 26), ("GASTORNIS", 24, 26), ("PROTOCHELYD", 24, 26), ("CORYPHODON", 25, 27)),
+            water_mons=mons(("LEPISOSTEUS", 22, 26), ("CHAMPSOSAUR", 22, 26), ("LEPISOSTEUS", 23, 27),
+                            ("BOREALOSUCH", 24, 27), ("CORYPHODON", 25, 28)),
+            fishing_mons=mons(("LEPISOSTEUS", 20, 23), ("LEPISOSTEUS", 20, 23), ("LEPISOSTEUS", 21, 24), ("CHAMPSOSAUR", 21, 24),
+                              ("LEPISOSTEUS", 22, 25), ("CHAMPSOSAUR", 22, 25), ("PROTOCHELYD", 23, 26), ("CHAMPSOSAUR", 23, 26),
+                              ("BOREALOSUCH", 24, 27), ("BOREALOSUCH", 25, 28)),
+        ),
+    ),
+
+    # ------------------------------------------------------------------
+    # Act 5: Green River lakes, WY (~52-46 Ma): subtropical lake and forest
+    # ------------------------------------------------------------------
+    dict(
+        id="MAP_STRATA_LAKE_FOREST", name="StrataLakeForest", era="ERA_GREEN_RIVER",
+        crop=dict(**{"from": "LAYOUT_ROUTE104"}, rect=(0, 0, 40, 80)),
+        patches=[
+            dict(rect=(3, 14, 7, 5), like=(5, 21)),     # house -> grass
+            dict(rect=(24, 9, 2, 8), like=(22, 12)),    # piers -> lake
+            dict(rect=(26, 15, 6, 2), like=(22, 12)),
+            dict(rect=(30, 17, 2, 5), like=(22, 12)),
+            dict(rect=(10, 31, 2, 7), like=(10, 29)),   # path through the forest band
+            dict(rect=(14, 46, 6, 5), like=(22, 49)),   # cottage -> grass
+            dict(rect=(11, 51, 5, 2), like=(9, 52)),    # dock -> lake
+        ],
+        music="MUS_ROUTE104", map_type="MAP_TYPE_ROUTE", mapsec="MAPSEC_STRATA_GREEN_RIVER",
+        arrival=(5, 17),
+        bgs=[anchor(5, 16)],
+        coords=boss_triggers("ERA_GREEN_RIVER", "StrataLakeForest_EventScript_Uintatherium", [(x, 61) for x in range(14, 40) if x != 21]),
+        encounters=dict(
+            land_mons=mons(("EOHIPPUS", 28, 30), ("NOTHARCTUS", 28, 30), ("ONYCHONYCTER", 28, 30), ("HYOPSODUS", 28, 30),
+                           ("EOHIPPUS", 29, 31), ("MIACIS", 29, 31), ("GALLINULOID", 29, 31), ("DIACODEXIS", 29, 31),
+                           ("NOTHARCTUS", 30, 32), ("PRESBYORNIS", 30, 32), ("CORYPHODON", 31, 33), ("UINTATHERIUM", 32, 33)),
+            water_mons=mons(("KNIGHTIA", 28, 32), ("HELIOBATIS", 28, 32), ("PRESBYORNIS", 29, 33),
+                            ("BOREALOSUCH", 30, 33), ("CHAMPSOSAUR", 30, 34)),
+            fishing_mons=mons(("KNIGHTIA", 26, 29), ("KNIGHTIA", 26, 29), ("KNIGHTIA", 27, 30), ("LEPISOSTEUS", 27, 30),
+                              ("HELIOBATIS", 28, 31), ("LEPISOSTEUS", 28, 31), ("HELIOBATIS", 29, 32), ("LEPISOSTEUS", 29, 32),
+                              ("HELIOBATIS", 30, 33), ("BOREALOSUCH", 31, 34)),
+        ),
+    ),
+
+    # ------------------------------------------------------------------
+    # Act 6: White River badlands, SD/NE (~33 Ma): cooler, drier open woodland
+    # ------------------------------------------------------------------
+    dict(
+        id="MAP_STRATA_WHITE_RIVER", name="StrataWhiteRiver", era="ERA_WHITE_RIVER",
+        crop=dict(**{"from": "LAYOUT_ROUTE114"}, rect=(0, 37, 40, 43), tilesets=("gTileset_GeneralOligocene", "gTileset_FallarborOligocene")),
+        music="MUS_ROUTE110", map_type="MAP_TYPE_ROUTE", mapsec="MAPSEC_STRATA_WHITE_RIVER",
+        arrival=(17, 3),
+        bgs=[anchor(17, 4)],
+        coords=boss_triggers("ERA_WHITE_RIVER", "StrataWhiteRiver_EventScript_Archaeotherium",
+                             [(13, 32), (14, 32), (24, 34), (25, 34)]),
+        encounters=dict(
+            land_mons=mons(("MESOHIPPUS", 34, 36), ("MERYCOIDODON", 34, 36), ("LEPTOMERYX", 34, 36), ("ISCHYROMYS", 34, 36),
+                           ("MERYCOIDODON", 35, 37), ("STYLEMYS", 35, 37), ("POEBROTHERE", 35, 37), ("HESPEROCYON", 35, 37),
+                           ("MESOHIPPUS", 36, 38), ("SUBHYRACODON", 36, 38), ("HOPLOPHONEUS", 37, 39), ("ARCHAEOTHERE", 38, 39)),
+        ),
+    ),
+
+    # ------------------------------------------------------------------
+    # Act 7: Ashfall, NE (~11.9 Ma): a grassland waterhole under volcanic ash
+    # ------------------------------------------------------------------
+    dict(
+        id="MAP_STRATA_GRASSLAND", name="StrataGrassland", era="ERA_ASHFALL",
+        crop=dict(**{"from": "LAYOUT_ROUTE113"}, rect=(15, 0, 85, 20)),
+        patches=[
+            dict(rect=(16, 1, 6, 5), like=(37, 6)),     # house -> ash plain
+        ],
+        music="MUS_ROUTE113", weather="WEATHER_VOLCANIC_ASH", map_type="MAP_TYPE_ROUTE", mapsec="MAPSEC_STRATA_ASHFALL",
+        arrival=(5, 11),
+        bgs=[anchor(5, 12)],
+        coords=boss_triggers("ERA_ASHFALL", "StrataGrassland_EventScript_Teleoceras", [(70, y) for y in range(7, 12)]),
+        encounters=dict(
+            land_mons=mons(("PROTOHIPPUS", 40, 42), ("PROCAMELUS", 40, 42), ("LEPTOCYON", 40, 42), ("BALEARICA", 40, 42),
+                           ("PROTOHIPPUS", 41, 43), ("GALLINULOID", 41, 43), ("PROCAMELUS", 41, 43), ("ANCHIGYPS", 41, 43),
+                           ("TELEOCERAS", 42, 44), ("CHELYDRA", 42, 44), ("EPICYON", 43, 45), ("TELEOCERAS", 43, 45)),
+        ),
+    ),
+
+    # ------------------------------------------------------------------
+    # Act 8: Ice Age Wyoming (~20 ka): cold steppe, and Natural Trap Cave
+    # ------------------------------------------------------------------
+    dict(
+        id="MAP_STRATA_STEPPE", name="StrataSteppe", era="ERA_TRAP_CAVE",
+        crop=dict(**{"from": "LAYOUT_ROUTE118"}, rect=(0, 0, 80, 20), tilesets=("gTileset_GeneralIceAge", "gTileset_MauvilleIceAge")),
+        patches=[
+            dict(rect=(0, 13, 5, 5), like=(2, 8)),      # house -> steppe
+        ],
+        music="MUS_ROUTE120", weather="WEATHER_SNOW", map_type="MAP_TYPE_ROUTE", mapsec="MAPSEC_STRATA_ICE_AGE",
+        arrival=(56, 9),
+        bgs=[anchor(56, 8)],
+        coords=[
+            # The mouth of Natural Trap Cave: a sinkhole hidden in the snow.
+            trigger(x, 14, "VAR_TEMP_1", 0, "StrataSteppe_EventScript_Sinkhole") for x in range(65, 72)
+        ],
+        encounters=dict(
+            land_mons=mons(("EQUUS", 46, 48), ("OVIS", 46, 48), ("CANIS", 46, 48), ("ANTILOCAPRA", 46, 48),
+                           ("EQUUS", 47, 49), ("CAMELOPS", 47, 49), ("MELEAGRIS", 47, 49), ("OVIBOS", 47, 49),
+                           ("AENOCYON", 48, 50), ("MIRACINONYX", 48, 50), ("PANTHERA", 49, 51), ("MAMMUTHUS", 50, 51)),
+            water_mons=mons(("CHELYDRA", 46, 50), ("CHELYDRA", 46, 50), ("CHELYDRA", 47, 50),
+                            ("CHELYDRA", 48, 51), ("CHELYDRA", 49, 51)),
+        ),
+    ),
+    dict(
+        id="MAP_STRATA_TRAP_CAVE", name="StrataTrapCave", era="ERA_TRAP_CAVE",
+        crop=dict(**{"from": "LAYOUT_GRANITE_CAVE_1F"}, rect=(0, 0, 42, 15)),
+        music="MUS_CAVE_OF_ORIGIN", map_type="MAP_TYPE_UNDERGROUND", mapsec="MAPSEC_STRATA_TRAP_CAVE",
+        arrival=(14, 3),
+        bgs=[sign(14, 2, "StrataTrapCave_EventScript_Rope")],
+        coords=boss_triggers("ERA_TRAP_CAVE", "StrataTrapCave_EventScript_Arctodus",
+                             [(x, 7) for x in range(17, 35)] + [(x, 6) for x in range(5, 10)]),
+    ),
+
+    # ------------------------------------------------------------------
+    # Epilogue: the Montana prairie today, open only once the present is loaded
+    # ------------------------------------------------------------------
+    dict(
+        id="MAP_STRATA_PRAIRIE", name="StrataPrairie", era="ERA_EPILOGUE",
+        crop=dict(**{"from": "LAYOUT_ROUTE102"}, rect=(0, 0, 50, 20)),
+        music="MUS_ROUTE101", weather="WEATHER_SUNNY", map_type="MAP_TYPE_ROUTE", mapsec="MAPSEC_STRATA_PRAIRIE",
+        arrival=(2, 9),
+        bgs=[sign(2, 10, "StrataPrairie_EventScript_TrailToCamp")],
+        encounters=dict(
+            land_mons=mons(("CYNOMYS", 48, 50), ("ANTILOCAPRA", 48, 50), ("CYNOMYS", 48, 50), ("CANIS", 48, 50),
+                           ("MELEAGRIS", 49, 51), ("ANTILOCAPRA", 49, 51), ("BISON", 49, 51), ("OVIS", 49, 51),
+                           ("CANIS", 50, 52), ("BISON", 50, 52), ("EQUUS", 50, 52), ("OVIBOS", 50, 52)),
+            water_mons=mons(("CHELYDRA", 48, 52), ("LEPISOSTEUS", 48, 52), ("CHELYDRA", 49, 52),
+                            ("LEPISOSTEUS", 50, 53), ("CHELYDRA", 51, 53)),
+            fishing_mons=mons(("LEPISOSTEUS", 46, 49), ("LEPISOSTEUS", 46, 49), ("LEPISOSTEUS", 47, 50), ("CHELYDRA", 47, 50),
+                              ("LEPISOSTEUS", 48, 51), ("CHELYDRA", 48, 51), ("LEPISOSTEUS", 49, 52), ("CHELYDRA", 49, 52),
+                              ("CHELYDRA", 50, 53), ("CHELYDRA", 51, 54)),
         ),
     ),
 ]

@@ -1,0 +1,67 @@
+{
+  "id": "MAP_STRATA_RED_BEDS",
+  "name": "StrataRedBeds",
+  "layout": "LAYOUT_STRATA_RED_BEDS",
+  "music": "MUS_ROUTE110",
+  "region": "REGION_HOENN",
+  "region_map_section": "MAPSEC_STRATA_BIGHORN",
+  "requires_flash": false,
+  "weather": "WEATHER_DROUGHT",
+  "map_type": "MAP_TYPE_ROUTE",
+  "allow_cycling": true,
+  "allow_escaping": false,
+  "allow_running": true,
+  "show_map_name": true,
+  "battle_scene": "MAP_BATTLE_SCENE_NORMAL",
+  "connections": null,
+  "object_events": [],
+  "warp_events": [],
+  "coord_events": [
+    {
+      "type": "trigger",
+      "x": 19,
+      "y": 26,
+      "elevation": 3,
+      "var": "VAR_STRATA_STORY",
+      "var_value": "8",
+      "script": "StrataRedBeds_EventScript_Coryphodon"
+    },
+    {
+      "type": "trigger",
+      "x": 20,
+      "y": 26,
+      "elevation": 3,
+      "var": "VAR_STRATA_STORY",
+      "var_value": "8",
+      "script": "StrataRedBeds_EventScript_Coryphodon"
+    },
+    {
+      "type": "trigger",
+      "x": 21,
+      "y": 26,
+      "elevation": 3,
+      "var": "VAR_STRATA_STORY",
+      "var_value": "8",
+      "script": "StrataRedBeds_EventScript_Coryphodon"
+    },
+    {
+      "type": "trigger",
+      "x": 22,
+      "y": 26,
+      "elevation": 3,
+      "var": "VAR_STRATA_STORY",
+      "var_value": "8",
+      "script": "StrataRedBeds_EventScript_Coryphodon"
+    }
+  ],
+  "bg_events": [
+    {
+      "type": "sign",
+      "x": 31,
+      "y": 7,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
+      "script": "StrataFieldStation_EventScript_Anchor"
+    }
+  ]
+}

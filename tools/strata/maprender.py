@@ -103,7 +103,7 @@ def tileset_dir(name):
 
 
 def tileset_dir_from_symbol(symbol):
-    # gTileset_FallarborFrlg -> fallarbor_frlg, gTileset_General -> general
+    # gTileset_FallarborFrlg -> fallarbor_frlg, gTileset_GeneralIceAge -> general_ice_age
     name = re.sub(r"(?<!^)(?=[A-Z])", "_", symbol.replace("gTileset_", "")).lower()
     return tileset_dir(name)
 

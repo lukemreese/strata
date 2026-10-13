@@ -1,6 +1,30 @@
 StrataFieldCamp_MapScripts::
 	.byte 0
 
+@ The ranch road west to the prairie opens once the present layer is loaded.
+StrataFieldCamp_EventScript_PrairieRoad::
+	lockall
+	goto_if_lt VAR_STRATA_STORY, STORY_IN_ACT(ERA_EPILOGUE), StrataFieldCamp_EventScript_RoadClosed
+	warp MAP_STRATA_PRAIRIE, STRATA_ARRIVAL_PRAIRIE
+	waitstate
+	releaseall
+	end
+
+StrataFieldCamp_EventScript_RoadClosed::
+	msgbox StrataFieldCamp_Text_RoadClosed, MSGBOX_DEFAULT
+	applymovement OBJ_EVENT_ID_PLAYER, StrataFieldCamp_Movement_StepBack
+	waitmovement 0
+	releaseall
+	end
+
+StrataFieldCamp_Movement_StepBack:
+	walk_right
+	step_end
+
+StrataFieldCamp_Text_RoadClosed:
+	.string "The ranch road west is fenced off\n"
+	.string "during the dig season.$"
+
 StrataFieldCamp_EventScript_Crew::
 	msgbox StrataFieldCamp_Text_Crew, MSGBOX_NPC
 	end

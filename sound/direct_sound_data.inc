@@ -9218,4 +9218,250 @@ Cry_StrataLepisosteus::
 	.incbin "sound/direct_sound_samples/cries/strata_lepisosteus.bin"
 .endif
 
+	.align 2
+Cry_StrataPurgatorius::
+.if TESTING == FALSE
+	.incbin "sound/direct_sound_samples/cries/strata_purgatorius.bin"
+.endif
+
+	.align 2
+Cry_StrataLoxolophus::
+.if TESTING == FALSE
+	.incbin "sound/direct_sound_samples/cries/strata_loxolophus.bin"
+.endif
+
+	.align 2
+Cry_StrataCarsioptych::
+.if TESTING == FALSE
+	.incbin "sound/direct_sound_samples/cries/strata_carsioptych.bin"
+.endif
+
+	.align 2
+Cry_StrataTaeniolabis::
+.if TESTING == FALSE
+	.incbin "sound/direct_sound_samples/cries/strata_taeniolabis.bin"
+.endif
+
+	.align 2
+Cry_StrataEoconodon::
+.if TESTING == FALSE
+	.incbin "sound/direct_sound_samples/cries/strata_eoconodon.bin"
+.endif
+
+	.align 2
+Cry_StrataSifrhippus::
+.if TESTING == FALSE
+	.incbin "sound/direct_sound_samples/cries/strata_sifrhippus.bin"
+.endif
+
+	.align 2
+Cry_StrataTeilhardina::
+.if TESTING == FALSE
+	.incbin "sound/direct_sound_samples/cries/strata_teilhardina.bin"
+.endif
+
+	.align 2
+Cry_StrataDiacodexis::
+.if TESTING == FALSE
+	.incbin "sound/direct_sound_samples/cries/strata_diacodexis.bin"
+.endif
+
+	.align 2
+Cry_StrataHyopsodus::
+.if TESTING == FALSE
+	.incbin "sound/direct_sound_samples/cries/strata_hyopsodus.bin"
+.endif
+
+	.align 2
+Cry_StrataCoryphodon::
+.if TESTING == FALSE
+	.incbin "sound/direct_sound_samples/cries/strata_coryphodon.bin"
+.endif
+
+	.align 2
+Cry_StrataEohippus::
+.if TESTING == FALSE
+	.incbin "sound/direct_sound_samples/cries/strata_eohippus.bin"
+.endif
+
+	.align 2
+Cry_StrataOnychonycter::
+.if TESTING == FALSE
+	.incbin "sound/direct_sound_samples/cries/strata_onychonycter.bin"
+.endif
+
+	.align 2
+Cry_StrataHeliobatis::
+.if TESTING == FALSE
+	.incbin "sound/direct_sound_samples/cries/strata_heliobatis.bin"
+.endif
+
+	.align 2
+Cry_StrataKnightia::
+.if TESTING == FALSE
+	.incbin "sound/direct_sound_samples/cries/strata_knightia.bin"
+.endif
+
+	.align 2
+Cry_StrataNotharctus::
+.if TESTING == FALSE
+	.incbin "sound/direct_sound_samples/cries/strata_notharctus.bin"
+.endif
+
+	.align 2
+Cry_StrataUintatherium::
+.if TESTING == FALSE
+	.incbin "sound/direct_sound_samples/cries/strata_uintatherium.bin"
+.endif
+
+	.align 2
+Cry_StrataMesohippus::
+.if TESTING == FALSE
+	.incbin "sound/direct_sound_samples/cries/strata_mesohippus.bin"
+.endif
+
+	.align 2
+Cry_StrataArchaeothere::
+.if TESTING == FALSE
+	.incbin "sound/direct_sound_samples/cries/strata_archaeothere.bin"
+.endif
+
+	.align 2
+Cry_StrataHoplophoneus::
+.if TESTING == FALSE
+	.incbin "sound/direct_sound_samples/cries/strata_hoplophoneus.bin"
+.endif
+
+	.align 2
+Cry_StrataMerycoidodon::
+.if TESTING == FALSE
+	.incbin "sound/direct_sound_samples/cries/strata_merycoidodon.bin"
+.endif
+
+	.align 2
+Cry_StrataSubhyracodon::
+.if TESTING == FALSE
+	.incbin "sound/direct_sound_samples/cries/strata_subhyracodon.bin"
+.endif
+
+	.align 2
+Cry_StrataPoebrothere::
+.if TESTING == FALSE
+	.incbin "sound/direct_sound_samples/cries/strata_poebrothere.bin"
+.endif
+
+	.align 2
+Cry_StrataLeptomeryx::
+.if TESTING == FALSE
+	.incbin "sound/direct_sound_samples/cries/strata_leptomeryx.bin"
+.endif
+
+	.align 2
+Cry_StrataStylemys::
+.if TESTING == FALSE
+	.incbin "sound/direct_sound_samples/cries/strata_stylemys.bin"
+.endif
+
+	.align 2
+Cry_StrataIschyromys::
+.if TESTING == FALSE
+	.incbin "sound/direct_sound_samples/cries/strata_ischyromys.bin"
+.endif
+
+	.align 2
+Cry_StrataProtohippus::
+.if TESTING == FALSE
+	.incbin "sound/direct_sound_samples/cries/strata_protohippus.bin"
+.endif
+
+	.align 2
+Cry_StrataTeleoceras::
+.if TESTING == FALSE
+	.incbin "sound/direct_sound_samples/cries/strata_teleoceras.bin"
+.endif
+
+	.align 2
+Cry_StrataProcamelus::
+.if TESTING == FALSE
+	.incbin "sound/direct_sound_samples/cries/strata_procamelus.bin"
+.endif
+
+	.align 2
+Cry_StrataBalearica::
+.if TESTING == FALSE
+	.incbin "sound/direct_sound_samples/cries/strata_balearica.bin"
+.endif
+
+	.align 2
+Cry_StrataAnchigyps::
+.if TESTING == FALSE
+	.incbin "sound/direct_sound_samples/cries/strata_anchigyps.bin"
+.endif
+
+	.align 2
+Cry_StrataEquus::
+.if TESTING == FALSE
+	.incbin "sound/direct_sound_samples/cries/strata_equus.bin"
+.endif
+
+	.align 2
+Cry_StrataArctodus::
+.if TESTING == FALSE
+	.incbin "sound/direct_sound_samples/cries/strata_arctodus.bin"
+.endif
+
+	.align 2
+Cry_StrataMiracinonyx::
+.if TESTING == FALSE
+	.incbin "sound/direct_sound_samples/cries/strata_miracinonyx.bin"
+.endif
+
+	.align 2
+Cry_StrataPanthera::
+.if TESTING == FALSE
+	.incbin "sound/direct_sound_samples/cries/strata_panthera.bin"
+.endif
+
+	.align 2
+Cry_StrataMammuthus::
+.if TESTING == FALSE
+	.incbin "sound/direct_sound_samples/cries/strata_mammuthus.bin"
+.endif
+
+	.align 2
+Cry_StrataCamelops::
+.if TESTING == FALSE
+	.incbin "sound/direct_sound_samples/cries/strata_camelops.bin"
+.endif
+
+	.align 2
+Cry_StrataOvibos::
+.if TESTING == FALSE
+	.incbin "sound/direct_sound_samples/cries/strata_ovibos.bin"
+.endif
+
+	.align 2
+Cry_StrataOvis::
+.if TESTING == FALSE
+	.incbin "sound/direct_sound_samples/cries/strata_ovis.bin"
+.endif
+
+	.align 2
+Cry_StrataAntilocapra::
+.if TESTING == FALSE
+	.incbin "sound/direct_sound_samples/cries/strata_antilocapra.bin"
+.endif
+
+	.align 2
+Cry_StrataBison::
+.if TESTING == FALSE
+	.incbin "sound/direct_sound_samples/cries/strata_bison.bin"
+.endif
+
+	.align 2
+Cry_StrataCynomys::
+.if TESTING == FALSE
+	.incbin "sound/direct_sound_samples/cries/strata_cynomys.bin"
+.endif
+
 @ END STRATA CRY_SAMPLES

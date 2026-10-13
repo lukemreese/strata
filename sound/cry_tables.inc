@@ -2583,6 +2583,47 @@ gCryTable::
 	cry Cry_StrataChampsosaur
 	cry Cry_StrataBorealosuch
 	cry Cry_StrataLepisosteus
+	cry Cry_StrataPurgatorius
+	cry Cry_StrataLoxolophus
+	cry Cry_StrataCarsioptych
+	cry Cry_StrataTaeniolabis
+	cry Cry_StrataEoconodon
+	cry Cry_StrataSifrhippus
+	cry Cry_StrataTeilhardina
+	cry Cry_StrataDiacodexis
+	cry Cry_StrataHyopsodus
+	cry Cry_StrataCoryphodon
+	cry Cry_StrataEohippus
+	cry Cry_StrataOnychonycter
+	cry Cry_StrataHeliobatis
+	cry Cry_StrataKnightia
+	cry Cry_StrataNotharctus
+	cry Cry_StrataUintatherium
+	cry Cry_StrataMesohippus
+	cry Cry_StrataArchaeothere
+	cry Cry_StrataHoplophoneus
+	cry Cry_StrataMerycoidodon
+	cry Cry_StrataSubhyracodon
+	cry Cry_StrataPoebrothere
+	cry Cry_StrataLeptomeryx
+	cry Cry_StrataStylemys
+	cry Cry_StrataIschyromys
+	cry Cry_StrataProtohippus
+	cry Cry_StrataTeleoceras
+	cry Cry_StrataProcamelus
+	cry Cry_StrataBalearica
+	cry Cry_StrataAnchigyps
+	cry Cry_StrataEquus
+	cry Cry_StrataArctodus
+	cry Cry_StrataMiracinonyx
+	cry Cry_StrataPanthera
+	cry Cry_StrataMammuthus
+	cry Cry_StrataCamelops
+	cry Cry_StrataOvibos
+	cry Cry_StrataOvis
+	cry Cry_StrataAntilocapra
+	cry Cry_StrataBison
+	cry Cry_StrataCynomys
 @ END STRATA CRY_TABLE
 .endif @ P_CRIES_ENABLED
 
@@ -5171,5 +5212,46 @@ gCryTable_Reverse::
 	cry_reverse Cry_StrataChampsosaur
 	cry_reverse Cry_StrataBorealosuch
 	cry_reverse Cry_StrataLepisosteus
+	cry_reverse Cry_StrataPurgatorius
+	cry_reverse Cry_StrataLoxolophus
+	cry_reverse Cry_StrataCarsioptych
+	cry_reverse Cry_StrataTaeniolabis
+	cry_reverse Cry_StrataEoconodon
+	cry_reverse Cry_StrataSifrhippus
+	cry_reverse Cry_StrataTeilhardina
+	cry_reverse Cry_StrataDiacodexis
+	cry_reverse Cry_StrataHyopsodus
+	cry_reverse Cry_StrataCoryphodon
+	cry_reverse Cry_StrataEohippus
+	cry_reverse Cry_StrataOnychonycter
+	cry_reverse Cry_StrataHeliobatis
+	cry_reverse Cry_StrataKnightia
+	cry_reverse Cry_StrataNotharctus
+	cry_reverse Cry_StrataUintatherium
+	cry_reverse Cry_StrataMesohippus
+	cry_reverse Cry_StrataArchaeothere
+	cry_reverse Cry_StrataHoplophoneus
+	cry_reverse Cry_StrataMerycoidodon
+	cry_reverse Cry_StrataSubhyracodon
+	cry_reverse Cry_StrataPoebrothere
+	cry_reverse Cry_StrataLeptomeryx
+	cry_reverse Cry_StrataStylemys
+	cry_reverse Cry_StrataIschyromys
+	cry_reverse Cry_StrataProtohippus
+	cry_reverse Cry_StrataTeleoceras
+	cry_reverse Cry_StrataProcamelus
+	cry_reverse Cry_StrataBalearica
+	cry_reverse Cry_StrataAnchigyps
+	cry_reverse Cry_StrataEquus
+	cry_reverse Cry_StrataArctodus
+	cry_reverse Cry_StrataMiracinonyx
+	cry_reverse Cry_StrataPanthera
+	cry_reverse Cry_StrataMammuthus
+	cry_reverse Cry_StrataCamelops
+	cry_reverse Cry_StrataOvibos
+	cry_reverse Cry_StrataOvis
+	cry_reverse Cry_StrataAntilocapra
+	cry_reverse Cry_StrataBison
+	cry_reverse Cry_StrataCynomys
 @ END STRATA CRY_TABLE_REVERSE
 .endif @ P_CRIES_ENABLED

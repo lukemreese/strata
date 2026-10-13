@@ -1662,6 +1662,38 @@
     {
       "id": "MAPSEC_STRATA_ASHEN_SWAMP",
       "name": "ASHEN SWAMP"
+    },
+    {
+      "id": "MAPSEC_STRATA_CORRAL_BLUFFS",
+      "name": "CORRAL BLUFFS"
+    },
+    {
+      "id": "MAPSEC_STRATA_BIGHORN",
+      "name": "BIGHORN BASIN"
+    },
+    {
+      "id": "MAPSEC_STRATA_GREEN_RIVER",
+      "name": "LAKE GOSIUTE"
+    },
+    {
+      "id": "MAPSEC_STRATA_WHITE_RIVER",
+      "name": "WHITE RIVER"
+    },
+    {
+      "id": "MAPSEC_STRATA_ASHFALL",
+      "name": "ASHFALL"
+    },
+    {
+      "id": "MAPSEC_STRATA_ICE_AGE",
+      "name": "ICE AGE STEPPE"
+    },
+    {
+      "id": "MAPSEC_STRATA_TRAP_CAVE",
+      "name": "NATURAL TRAP CAVE"
+    },
+    {
+      "id": "MAPSEC_STRATA_PRAIRIE",
+      "name": "MONTANA PRAIRIE"
     }
   ]
 }

@@ -365,3 +365,7 @@ SPECIES = [
         dex="A gar, armoured in thick, enamel-coated scales. Gars were old even in Hell Creek, and still live in North American rivers.",
     ),
 ]
+
+# Part 2 (Acts 3-8 and the present day), appended so species IDs never shift.
+from roster_cenozoic import CENOZOIC  # noqa: E402
+SPECIES += CENOZOIC
