@@ -9378,6 +9378,39 @@
       "border_filepath": "data/layouts/StrataBackswamp/border.bin",
       "blockdata_filepath": "data/layouts/StrataBackswamp/map.bin",
       "layout_version": "emerald"
+    },
+    {
+      "id": "LAYOUT_STRATA_LEVEE_WINTER",
+      "name": "StrataLeveeWinter_Layout",
+      "width": 40,
+      "height": 33,
+      "primary_tileset": "gTileset_GeneralWinter",
+      "secondary_tileset": "gTileset_FortreeWinter",
+      "border_filepath": "data/layouts/StrataLeveeWinter/border.bin",
+      "blockdata_filepath": "data/layouts/StrataLeveeWinter/map.bin",
+      "layout_version": "emerald"
+    },
+    {
+      "id": "LAYOUT_STRATA_RIVER_WINTER",
+      "name": "StrataRiverWinter_Layout",
+      "width": 40,
+      "height": 21,
+      "primary_tileset": "gTileset_GeneralWinter",
+      "secondary_tileset": "gTileset_FortreeWinter",
+      "border_filepath": "data/layouts/StrataRiverWinter/border.bin",
+      "blockdata_filepath": "data/layouts/StrataRiverWinter/map.bin",
+      "layout_version": "emerald"
+    },
+    {
+      "id": "LAYOUT_STRATA_BACKSWAMP_WINTER",
+      "name": "StrataBackswampWinter_Layout",
+      "width": 40,
+      "height": 17,
+      "primary_tileset": "gTileset_GeneralWinter",
+      "secondary_tileset": "gTileset_FortreeWinter",
+      "border_filepath": "data/layouts/StrataBackswampWinter/border.bin",
+      "blockdata_filepath": "data/layouts/StrataBackswampWinter/map.bin",
+      "layout_version": "emerald"
     }
   ]
 }

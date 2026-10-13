@@ -16,6 +16,9 @@ MAP_SECTIONS = [
     ("MAPSEC_STRATA_LEVEE", "LEVEE FOREST"),
     ("MAPSEC_STRATA_RIVER", "RIVER CHANNEL"),
     ("MAPSEC_STRATA_BACKSWAMP", "BACKSWAMP"),
+    ("MAPSEC_STRATA_ASHEN_LEVEE", "ASHEN LEVEE"),
+    ("MAPSEC_STRATA_ASHEN_RIVER", "ASHEN RIVER"),
+    ("MAPSEC_STRATA_ASHEN_SWAMP", "ASHEN SWAMP"),
 ]
 
 HEAL_LOCATIONS = [
@@ -41,13 +44,36 @@ def sign(x, y, script, facing="BG_EVENT_PLAYER_FACING_ANY"):
     return {"type": "sign", "x": x, "y": y, "elevation": 0, "player_facing_dir": facing, "script": script}
 
 
-def trigger(x, y, var, value, script, elevation=3):
+def trigger(x, y, var, value, script, elevation=None):
+    """elevation None takes the elevation of the tile, see gen_maps.py."""
     return {"type": "trigger", "x": x, "y": y, "elevation": elevation, "var": var,
             "var_value": str(value), "script": script}
 
 
 def connection(direction, dest, offset=0):
     return {"map": dest, "offset": offset, "direction": direction}
+
+
+# Hell Creek's footprint, shared by every era built on it. Same layout, different
+# tilesets: the place stays put while time moves on.
+LEVEE_CROP = dict(**{"from": "LAYOUT_ROUTE119"}, rect=(0, 107, 40, 33))
+LEVEE_PATCHES = [dict(rect=(31, 0, 6, 3), like=(36, 111))]   # house -> grass
+RIVER_CROP = dict(**{"from": "LAYOUT_ROUTE119"}, rect=(0, 86, 40, 21))
+RIVER_PATCHES = [
+    dict(rect=(17, 4, 9, 6), like=(20, 100)),                 # wooden docks -> river
+    dict(rect=(31, 18, 6, 3), like=(36, 111)),                # house -> grass
+]
+BACKSWAMP_CROP = dict(**{"from": "LAYOUT_ROUTE120"}, rect=(0, 25, 40, 17))
+IMPACT_WINTER_TILESETS = ("gTileset_GeneralWinter", "gTileset_FortreeWinter")
+
+
+def winter(crop):
+    return dict(**crop, tilesets=IMPACT_WINTER_TILESETS)
+
+
+def return_edge():
+    """The south edge of the Levee, where the player arrives from camp."""
+    return [trigger(x, 32, "VAR_TEMP_1", 0, "StrataLevee_EventScript_ReconstructionEdge") for x in (17, 18, 19)]
 
 
 def mons(*entries):
@@ -115,17 +141,11 @@ MAPS = [
     # ------------------------------------------------------------------
     dict(
         id="MAP_STRATA_LEVEE", name="StrataLevee",
-        crop=dict(**{"from": "LAYOUT_ROUTE119"}, rect=(0, 107, 40, 33)),
-        patches=[
-            dict(rect=(31, 0, 6, 3), like=(36, 111)),  # house -> grass
-        ],
+        crop=LEVEE_CROP, patches=LEVEE_PATCHES,
         music="MUS_ROUTE119", map_type="MAP_TYPE_ROUTE",
         mapsec="MAPSEC_STRATA_LEVEE",
         connections=[connection("up", "MAP_STRATA_RIVER")],
-        coords=[
-            # The edge of the reconstruction, where the player arrived.
-            trigger(x, 32, "VAR_TEMP_1", 0, "StrataLevee_EventScript_ReconstructionEdge") for x in (17, 18, 19)
-        ],
+        coords=return_edge(),
         encounters=dict(
             land_mons=mons(("MESODMA", 3, 4), ("MESODMA", 3, 5), ("DIDELPHODON", 3, 5), ("THESCELOSAUR", 4, 5),
                            ("MESODMA", 4, 5), ("DIDELPHODON", 4, 6), ("THESCELOSAUR", 4, 6), ("ACHERORAPTOR", 5, 6),
@@ -136,18 +156,13 @@ MAPS = [
     ),
     dict(
         id="MAP_STRATA_RIVER", name="StrataRiver",
-        crop=dict(**{"from": "LAYOUT_ROUTE119"}, rect=(0, 86, 40, 21)),
-        patches=[
-            dict(rect=(17, 4, 9, 6), like=(20, 100)),  # wooden docks -> river
-            dict(rect=(31, 18, 6, 3), like=(36, 111)), # house -> grass
-        ],
+        crop=RIVER_CROP, patches=RIVER_PATCHES,
         music="MUS_ROUTE119", map_type="MAP_TYPE_ROUTE",
         mapsec="MAPSEC_STRATA_RIVER",
         connections=[connection("down", "MAP_STRATA_LEVEE"), connection("up", "MAP_STRATA_BACKSWAMP")],
         coords=[
-            # Both ways up onto the bluff where the tyrannosaur waits. The bluff
-            # is elevation 4, and triggers only fire on a matching elevation.
-            trigger(x, y, "VAR_STRATA_STORY", 2, "StrataRiver_EventScript_Tyrannosaur", elevation=4)
+            # Both ways up onto the bluff where the tyrannosaur waits.
+            trigger(x, y, "VAR_STRATA_STORY", 2, "StrataRiver_EventScript_Tyrannosaur")
             for x, y in ((30, 10), (31, 10), (35, 4), (36, 4))
         ],
         bgs=[
@@ -166,7 +181,7 @@ MAPS = [
     ),
     dict(
         id="MAP_STRATA_BACKSWAMP", name="StrataBackswamp",
-        crop=dict(**{"from": "LAYOUT_ROUTE120"}, rect=(0, 25, 40, 17)),
+        crop=BACKSWAMP_CROP,
         music="MUS_ROUTE120", map_type="MAP_TYPE_ROUTE",
         mapsec="MAPSEC_STRATA_BACKSWAMP",
         connections=[connection("down", "MAP_STRATA_RIVER")],
@@ -179,6 +194,68 @@ MAPS = [
             fishing_mons=mons(("LEPISOSTEUS", 6, 8), ("LEPISOSTEUS", 6, 8), ("LEPISOSTEUS", 7, 9), ("CHAMPSOSAUR", 7, 9),
                               ("LEPISOSTEUS", 7, 9), ("CHAMPSOSAUR", 8, 10), ("BOREALOSUCH", 8, 10), ("CHAMPSOSAUR", 8, 10),
                               ("BOREALOSUCH", 9, 11), ("BOREALOSUCH", 9, 11)),
+        ),
+    ),
+
+    # ------------------------------------------------------------------
+    # Hell Creek, ~1 year after the Chicxulub impact (Act 2): the same
+    # place, soot-darkened and ash-covered. Only the survivors remain.
+    # ------------------------------------------------------------------
+    dict(
+        id="MAP_STRATA_LEVEE_WINTER", name="StrataLeveeWinter",
+        crop=winter(LEVEE_CROP), patches=LEVEE_PATCHES,
+        music="MUS_ABANDONED_SHIP", weather="WEATHER_VOLCANIC_ASH", map_type="MAP_TYPE_ROUTE",
+        mapsec="MAPSEC_STRATA_ASHEN_LEVEE",
+        connections=[connection("up", "MAP_STRATA_RIVER_WINTER")],
+        coords=return_edge(),
+        encounters=dict(
+            land_mons=mons(("MESODMA", 10, 11), ("MESODMA", 10, 12), ("MESODMA", 11, 12), ("CIMOLESTES", 10, 12),
+                           ("MESODMA", 11, 13), ("CHAMPSOSAUR", 11, 13), ("ASTERIORNIS", 11, 13), ("CIMOLESTES", 12, 13),
+                           ("EMARGINACHEL", 12, 13), ("ASTERIORNIS", 12, 14), ("CHAMPSOSAUR", 12, 14), ("BOREALOSUCH", 13, 14)),
+            water_mons=mons(("LEPISOSTEUS", 10, 13), ("LEPISOSTEUS", 10, 13), ("CHAMPSOSAUR", 11, 13),
+                            ("EMARGINACHEL", 11, 13), ("BOREALOSUCH", 12, 14)),
+        ),
+    ),
+    dict(
+        id="MAP_STRATA_RIVER_WINTER", name="StrataRiverWinter",
+        crop=winter(RIVER_CROP), patches=RIVER_PATCHES,
+        music="MUS_ABANDONED_SHIP", weather="WEATHER_VOLCANIC_ASH", map_type="MAP_TYPE_ROUTE",
+        mapsec="MAPSEC_STRATA_ASHEN_RIVER",
+        connections=[connection("down", "MAP_STRATA_LEVEE_WINTER"), connection("up", "MAP_STRATA_BACKSWAMP_WINTER")],
+        bgs=[
+            sign(29, 12, "StrataRiverWinter_EventScript_Bluff"),
+        ],
+        encounters=dict(
+            land_mons=mons(("MESODMA", 11, 12), ("MESODMA", 11, 13), ("CIMOLESTES", 11, 13), ("CHAMPSOSAUR", 12, 13),
+                           ("MESODMA", 12, 13), ("ASTERIORNIS", 12, 14), ("CHAMPSOSAUR", 12, 14), ("EMARGINACHEL", 12, 14),
+                           ("CIMOLESTES", 13, 14), ("ASTERIORNIS", 13, 14), ("BOREALOSUCH", 13, 15), ("BOREALOSUCH", 14, 15)),
+            water_mons=mons(("LEPISOSTEUS", 11, 14), ("CHAMPSOSAUR", 11, 14), ("LEPISOSTEUS", 12, 14),
+                            ("EMARGINACHEL", 12, 15), ("BOREALOSUCH", 13, 15)),
+            fishing_mons=mons(("LEPISOSTEUS", 10, 12), ("LEPISOSTEUS", 10, 12), ("LEPISOSTEUS", 11, 13), ("CHAMPSOSAUR", 11, 13),
+                              ("LEPISOSTEUS", 11, 13), ("CHAMPSOSAUR", 12, 14), ("EMARGINACHEL", 12, 14), ("LEPISOSTEUS", 12, 14),
+                              ("BOREALOSUCH", 13, 15), ("BOREALOSUCH", 13, 15)),
+        ),
+    ),
+    dict(
+        id="MAP_STRATA_BACKSWAMP_WINTER", name="StrataBackswampWinter",
+        crop=winter(BACKSWAMP_CROP),
+        music="MUS_ABANDONED_SHIP", weather="WEATHER_VOLCANIC_ASH", map_type="MAP_TYPE_ROUTE",
+        mapsec="MAPSEC_STRATA_ASHEN_SWAMP",
+        connections=[connection("down", "MAP_STRATA_RIVER_WINTER")],
+        coords=[
+            # The starving season: the survivors guard the last open water.
+            trigger(x, 13, "VAR_STRATA_STORY", 4, "StrataBackswampWinter_EventScript_Gauntlet")
+            for x in range(23, 38)
+        ],
+        encounters=dict(
+            land_mons=mons(("MESODMA", 12, 13), ("CHAMPSOSAUR", 12, 14), ("MESODMA", 12, 14), ("CIMOLESTES", 12, 14),
+                           ("CHAMPSOSAUR", 13, 14), ("EMARGINACHEL", 13, 14), ("ASTERIORNIS", 13, 15), ("BOREALOSUCH", 13, 15),
+                           ("MESODMA", 13, 15), ("CHAMPSOSAUR", 14, 15), ("BOREALOSUCH", 14, 16), ("BOREALOSUCH", 15, 16)),
+            water_mons=mons(("LEPISOSTEUS", 12, 15), ("CHAMPSOSAUR", 12, 15), ("BOREALOSUCH", 13, 15),
+                            ("EMARGINACHEL", 13, 16), ("BOREALOSUCH", 14, 16)),
+            fishing_mons=mons(("LEPISOSTEUS", 11, 13), ("LEPISOSTEUS", 11, 13), ("LEPISOSTEUS", 12, 14), ("CHAMPSOSAUR", 12, 14),
+                              ("LEPISOSTEUS", 12, 14), ("CHAMPSOSAUR", 13, 15), ("EMARGINACHEL", 13, 15), ("BOREALOSUCH", 13, 15),
+                              ("BOREALOSUCH", 14, 16), ("BOREALOSUCH", 14, 16)),
         ),
     ),
 ]

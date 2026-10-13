@@ -34,7 +34,8 @@ StrataRiver_Text_AfterTyrannosaur:
 	.string "into the forest.\p"
 	.string "Far to the south, the sky flickers\n"
 	.string "strangely.\p"
-	.string "(To be continued: the impact.)$"
+	.string "Better report back to DR. HALVORSEN\n"
+	.string "at camp.$"
 
 StrataRiver_Text_RanFromTyrannosaur:
 	.string "You slipped away. The tyrannosaur\n"

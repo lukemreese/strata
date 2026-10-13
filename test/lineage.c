@@ -4,6 +4,7 @@
 #include "pokemon.h"
 #include "pokemon_storage_system.h"
 #include "string_util.h"
+#include "test/overworld_script.h"
 #include "test/test.h"
 #include "constants/vars.h"
 
@@ -11,8 +12,14 @@
 
 static void ResetStrata(void)
 {
+    u32 boxId, boxPos;
     VarSet(VAR_STRATA_ERA, ERA_PRESENT_DIG);
     ZeroPlayerPartyMons();
+    for (boxId = 0; boxId < TOTAL_BOXES_COUNT; boxId++)
+    {
+        for (boxPos = 0; boxPos < IN_BOX_COUNT; boxPos++)
+            ZeroBoxMonData(GetBoxedMonPtr(boxId, boxPos));
+    }
 }
 
 TEST("Lineage_GetDescendant leaves species without a descent unchanged")
@@ -114,10 +121,95 @@ TEST("Lineage_AdvanceToEra also descends mons stored in the PC")
 {
     struct BoxPokemon *boxMon = GetBoxedMonPtr(TOTAL_BOXES_COUNT - 1, IN_BOX_COUNT - 1);
     ResetStrata();
-    ZeroBoxMonData(boxMon);
+    // A party mon, so the PC turtle isn't brought out to fill an empty party.
+    CreateMon(&gParties[B_TRAINER_PLAYER][0], SPECIES_CIMOLESTES, 10, 0, OTID_STRUCT_PLAYER_ID);
     CreateBoxMon(boxMon, SPECIES_EMARGINACHEL, 10, 0, OTID_STRUCT_PLAYER_ID);
 
     Lineage_AdvanceToEra(ERA_CORRAL_BLUFFS);
     EXPECT_EQ(GetBoxMonData(boxMon, MON_DATA_SPECIES), SPECIES_PROTOCHELYD);
     ZeroBoxMonData(boxMon);
+}
+
+TEST("The impact wipes out dinosaur lineages in the party and PC")
+{
+    ResetStrata();
+    VarSet(VAR_STRATA_ERA, ERA_HELL_CREEK);
+    CreateMon(&gParties[B_TRAINER_PLAYER][0], SPECIES_TYRANNOSAUR, 12, 0, OTID_STRUCT_PLAYER_ID);
+    CreateMon(&gParties[B_TRAINER_PLAYER][1], SPECIES_CIMOLESTES, 10, 0, OTID_STRUCT_PLAYER_ID);
+    CreateMon(&gParties[B_TRAINER_PLAYER][2], SPECIES_TRICERATOPS, 10, 0, OTID_STRUCT_PLAYER_ID);
+    CreateBoxMon(GetBoxedMonPtr(0, 0), SPECIES_ANKYLOSAURUS, 10, 0, OTID_STRUCT_PLAYER_ID);
+    CreateBoxMon(GetBoxedMonPtr(0, 1), SPECIES_CHAMPSOSAUR, 10, 0, OTID_STRUCT_PLAYER_ID);
+
+    Lineage_AdvanceToEra(ERA_IMPACT_WINTER);
+
+    EXPECT_EQ(Lineage_GetExtinctionCount(), 3);
+    EXPECT_EQ(Lineage_GetFirstExtinctSpecies(), SPECIES_TYRANNOSAUR);
+    EXPECT_EQ(CalculatePlayerPartyCount(), 1);
+    EXPECT_EQ(GetMonData(&gParties[B_TRAINER_PLAYER][0], MON_DATA_SPECIES), SPECIES_CIMOLESTES);
+    EXPECT_EQ(GetBoxMonData(GetBoxedMonPtr(0, 0), MON_DATA_SPECIES), SPECIES_NONE);
+    EXPECT_EQ(GetBoxMonData(GetBoxedMonPtr(0, 1), MON_DATA_SPECIES), SPECIES_CHAMPSOSAUR);
+}
+
+TEST("An extinction brings a survivor from the PC rather than leave the party empty")
+{
+    ResetStrata();
+    VarSet(VAR_STRATA_ERA, ERA_HELL_CREEK);
+    CreateMon(&gParties[B_TRAINER_PLAYER][0], SPECIES_TYRANNOSAUR, 12, 0, OTID_STRUCT_PLAYER_ID);
+    CreateBoxMon(GetBoxedMonPtr(3, 5), SPECIES_LEPISOSTEUS, 8, 0, OTID_STRUCT_PLAYER_ID);
+
+    Lineage_AdvanceToEra(ERA_IMPACT_WINTER);
+
+    EXPECT_EQ(CalculatePlayerPartyCount(), 1);
+    EXPECT_EQ(GetMonData(&gParties[B_TRAINER_PLAYER][0], MON_DATA_SPECIES), SPECIES_LEPISOSTEUS);
+    EXPECT_EQ(GetMonData(&gParties[B_TRAINER_PLAYER][0], MON_DATA_LEVEL), 8);
+    EXPECT_EQ(GetBoxMonData(GetBoxedMonPtr(3, 5), MON_DATA_SPECIES), SPECIES_NONE);
+}
+
+TEST("An extinction with no survivors anywhere gives the player a survivor")
+{
+    ResetStrata();
+    VarSet(VAR_STRATA_ERA, ERA_HELL_CREEK);
+    CreateMon(&gParties[B_TRAINER_PLAYER][0], SPECIES_TYRANNOSAUR, 12, 0, OTID_STRUCT_PLAYER_ID);
+
+    Lineage_AdvanceToEra(ERA_IMPACT_WINTER);
+
+    EXPECT_EQ(CalculatePlayerPartyCount(), 1);
+    EXPECT_EQ(GetMonData(&gParties[B_TRAINER_PLAYER][0], MON_DATA_SPECIES), SPECIES_MESODMA);
+}
+
+TEST("A lineage that descends into a survivor escapes the extinction")
+{
+    u8 pressure = 100;
+    ResetStrata();
+    VarSet(VAR_STRATA_ERA, ERA_ASHFALL);
+    // Epicyon has no descendant and dies out; Leptocyon becomes the coyote.
+    CreateMon(&gParties[B_TRAINER_PLAYER][0], SPECIES_EPICYON, 40, 0, OTID_STRUCT_PLAYER_ID);
+    CreateMon(&gParties[B_TRAINER_PLAYER][1], SPECIES_LEPTOCYON, 40, 0, OTID_STRUCT_PLAYER_ID);
+    SetMonData(&gParties[B_TRAINER_PLAYER][1], MON_DATA_TOUGH, &pressure); // meat diet -> dire wolf
+
+    Lineage_AdvanceToEra(ERA_TRAP_CAVE);
+    EXPECT_EQ(CalculatePlayerPartyCount(), 1);
+    EXPECT_EQ(GetMonData(&gParties[B_TRAINER_PLAYER][0], MON_DATA_SPECIES), SPECIES_AENOCYON);
+
+    // ...and the dire wolf in turn dies out at the end of the Ice Age.
+    CreateMon(&gParties[B_TRAINER_PLAYER][1], SPECIES_CANIS, 40, 0, OTID_STRUCT_PLAYER_ID);
+    Lineage_AdvanceToEra(ERA_EPILOGUE);
+    EXPECT_EQ(CalculatePlayerPartyCount(), 1);
+    EXPECT_EQ(GetMonData(&gParties[B_TRAINER_PLAYER][0], MON_DATA_SPECIES), SPECIES_CANIS);
+}
+
+TEST("special Strata_AdvanceEra reports extinctions for the message")
+{
+    ResetStrata();
+    VarSet(VAR_STRATA_ERA, ERA_HELL_CREEK);
+    CreateMon(&gParties[B_TRAINER_PLAYER][0], SPECIES_CIMOLESTES, 10, 0, OTID_STRUCT_PLAYER_ID);
+    CreateMon(&gParties[B_TRAINER_PLAYER][1], SPECIES_ANZU, 10, 0, OTID_STRUCT_PLAYER_ID);
+    CreateMon(&gParties[B_TRAINER_PLAYER][2], SPECIES_DIDELPHODON, 10, 0, OTID_STRUCT_PLAYER_ID);
+
+    VarSet(VAR_0x8004, ERA_IMPACT_WINTER);
+    RUN_OVERWORLD_SCRIPT(
+        special Strata_AdvanceEra;
+    );
+    EXPECT_EQ(VarGet(VAR_0x8005), 2);
+    EXPECT_EQ(StringCompare(gStringVar1, GetSpeciesName(SPECIES_ANZU)), 0);
 }

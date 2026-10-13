@@ -1650,6 +1650,18 @@
     {
       "id": "MAPSEC_STRATA_BACKSWAMP",
       "name": "BACKSWAMP"
+    },
+    {
+      "id": "MAPSEC_STRATA_ASHEN_LEVEE",
+      "name": "ASHEN LEVEE"
+    },
+    {
+      "id": "MAPSEC_STRATA_ASHEN_RIVER",
+      "name": "ASHEN RIVER"
+    },
+    {
+      "id": "MAPSEC_STRATA_ASHEN_SWAMP",
+      "name": "ASHEN SWAMP"
     }
   ]
 }

@@ -75,18 +75,20 @@ def build_layout(m, layouts_by_id):
         border = f.read()
     with open(path("data/layouts", name, "border.bin"), "wb") as f:
         f.write(border)
+    # Era variants reuse a crop with palette-variant tilesets (gen_tilesets.py).
+    primary, secondary = m["crop"].get("tilesets", (src["primary_tileset"], src["secondary_tileset"]))
     entry = {
         "id": layout_id(m),
         "name": f"{name}_Layout",
         "width": w,
         "height": h,
-        "primary_tileset": src["primary_tileset"],
-        "secondary_tileset": src["secondary_tileset"],
+        "primary_tileset": primary,
+        "secondary_tileset": secondary,
         "border_filepath": f"data/layouts/{name}/border.bin",
         "blockdata_filepath": f"data/layouts/{name}/map.bin",
         "layout_version": "emerald",
     }
-    return entry
+    return entry, out
 
 
 def layout_id(m):
@@ -95,6 +97,14 @@ def layout_id(m):
 
 def map_const(m):
     return m["id"]
+
+
+def resolve_elevations(m, rows):
+    """Coord triggers only fire when their elevation matches the tile's, so a
+    trigger with elevation None takes the elevation of the block under it."""
+    for event in m.get("coords", []):
+        if event["elevation"] is None:
+            event["elevation"] = rows[event["y"]][event["x"]] >> 12
 
 
 def build_header(m):
@@ -155,7 +165,8 @@ def main():
     for m in MAPS:
         if "crop" not in m:
             continue
-        entry = build_layout(m, by_id)
+        entry, rows = build_layout(m, by_id)
+        resolve_elevations(m, rows)
         if entry["id"] in by_id:
             idx = layouts["layouts"].index(by_id[entry["id"]])
             layouts["layouts"][idx] = entry

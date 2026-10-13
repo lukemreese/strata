@@ -76,9 +76,20 @@ largest extinction in the epilogue is the one humans were present for.
 | Levee Forest | 66.04 Ma | Route 119 south | Arrival point; south edge returns to camp |
 | River Channel | 66.04 Ma | Route 119 middle | Tyrannosaur boss on the bluff |
 | Backswamp | 66.04 Ma | Route 120 marsh | Gar, champsosaurs, crocodylians |
+| Ashen Levee / River / Swamp | 66.04 Ma + ~1 yr | Same layouts, `*_winter` palettes | Impact winter: survivors only; survival gauntlet in the swamp |
 
 The present-day hub sits outside time: returning to camp does not change `VAR_STRATA_ERA`.
-Story progress is `VAR_STRATA_STORY` (0 new game, 1 starter, 2 in Hell Creek, 3 tyrannosaur met).
+The rig only moves up: once a layer is loaded, earlier layers are closed.
+Story progress is `VAR_STRATA_STORY`: 0 new game, 1 starter, 2 in Hell Creek,
+3 tyrannosaur met, 4 in the impact winter, 5 gauntlet survived (fern spike).
+
+**Era variants of a map** reuse its layout with palette-only variants of its tilesets
+(`tools/strata/gen_tilesets.py`), so the place is recognizably the same while the era
+changes. Known gaps: battle backgrounds and the tall-grass overlay sprite keep
+their stock colours.
+
+**No gym badges**, so `B_OBEDIENCE_MECHANICS` is GEN_7: the player's own Pokémon
+always obey (Gen 8+ rules would make anything caught above Lv 10 disobey forever).
 
 ## 4. Starter lineages: three modes of evolution
 
@@ -182,7 +193,11 @@ party and the PC boxes.
 ### 7.3 Extinction
 - Each era has **filters**: e.g. the impact kills all non-avian dinosaurs and anything
   above ~25 kg, and the Eocene–Oligocene cooling hits warmth-dependent lineages.
-- A lineage that fails its filter is lost. It becomes a **fossil item** for the Codex.
+- A lineage that fails its filter is lost from the party and PC (implemented in
+  `src/lineage.c`, filters in `src/data/lineages.h`). Filters run after that era's
+  descents, so a lineage that descends into a survivor escapes. If the party would
+  be left empty, a PC survivor is brought out, or a small survivor joins.
+- Planned: the lost lineage becomes a **fossil item** for the Codex.
 - Difficulty option: "Gentle Deep Time" (extinct lineages respawn as a related survivor).
 
 ### 7.4 Clock

@@ -110,13 +110,20 @@ def tileset_dir_from_symbol(symbol):
 
 class Tileset:
     def __init__(self, path):
+        palettes_path = path
+        # Palette-only variants (tools/strata/gen_tilesets.py) borrow their base's
+        # tiles and metatiles.
+        from gen_tilesets import variant_base
+        base = variant_base(os.path.basename(path))
+        if base is not None:
+            path = os.path.join(ROOT, "data/tilesets", *base)
         _, _, rows = read_png(os.path.join(path, "tiles.png"))
         width = len(rows[0])
         self.tiles = []
         for ty in range(len(rows) // 8):
             for tx in range(width // 8):
                 self.tiles.append([rows[ty * 8 + y][tx * 8:tx * 8 + 8] for y in range(8)])
-        self.palettes = [read_pal(os.path.join(path, "palettes", f"{i:02}.pal")) for i in range(16)]
+        self.palettes = [read_pal(os.path.join(palettes_path, "palettes", f"{i:02}.pal")) for i in range(16)]
         mt = open(os.path.join(path, "metatiles.bin"), "rb").read()
         self.metatiles = [struct.unpack("<8H", mt[i:i + 16]) for i in range(0, len(mt), 16)]
         at = open(os.path.join(path, "metatile_attributes.bin"), "rb").read()

@@ -1168,6 +1168,9 @@
     "StrataBadlands",
     "StrataLevee",
     "StrataRiver",
-    "StrataBackswamp"
+    "StrataBackswamp",
+    "StrataLeveeWinter",
+    "StrataRiverWinter",
+    "StrataBackswampWinter"
   ]
 }

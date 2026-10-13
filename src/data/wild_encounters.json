@@ -36984,6 +36984,413 @@
               }
             ]
           }
+        },
+        {
+          "map": "MAP_STRATA_LEVEE_WINTER",
+          "base_label": "gStrataLeveeWinter",
+          "land_mons": {
+            "encounter_rate": 20,
+            "mons": [
+              {
+                "min_level": 10,
+                "max_level": 11,
+                "species": "SPECIES_MESODMA"
+              },
+              {
+                "min_level": 10,
+                "max_level": 12,
+                "species": "SPECIES_MESODMA"
+              },
+              {
+                "min_level": 11,
+                "max_level": 12,
+                "species": "SPECIES_MESODMA"
+              },
+              {
+                "min_level": 10,
+                "max_level": 12,
+                "species": "SPECIES_CIMOLESTES"
+              },
+              {
+                "min_level": 11,
+                "max_level": 13,
+                "species": "SPECIES_MESODMA"
+              },
+              {
+                "min_level": 11,
+                "max_level": 13,
+                "species": "SPECIES_CHAMPSOSAUR"
+              },
+              {
+                "min_level": 11,
+                "max_level": 13,
+                "species": "SPECIES_ASTERIORNIS"
+              },
+              {
+                "min_level": 12,
+                "max_level": 13,
+                "species": "SPECIES_CIMOLESTES"
+              },
+              {
+                "min_level": 12,
+                "max_level": 13,
+                "species": "SPECIES_EMARGINACHEL"
+              },
+              {
+                "min_level": 12,
+                "max_level": 14,
+                "species": "SPECIES_ASTERIORNIS"
+              },
+              {
+                "min_level": 12,
+                "max_level": 14,
+                "species": "SPECIES_CHAMPSOSAUR"
+              },
+              {
+                "min_level": 13,
+                "max_level": 14,
+                "species": "SPECIES_BOREALOSUCH"
+              }
+            ]
+          },
+          "water_mons": {
+            "encounter_rate": 4,
+            "mons": [
+              {
+                "min_level": 10,
+                "max_level": 13,
+                "species": "SPECIES_LEPISOSTEUS"
+              },
+              {
+                "min_level": 10,
+                "max_level": 13,
+                "species": "SPECIES_LEPISOSTEUS"
+              },
+              {
+                "min_level": 11,
+                "max_level": 13,
+                "species": "SPECIES_CHAMPSOSAUR"
+              },
+              {
+                "min_level": 11,
+                "max_level": 13,
+                "species": "SPECIES_EMARGINACHEL"
+              },
+              {
+                "min_level": 12,
+                "max_level": 14,
+                "species": "SPECIES_BOREALOSUCH"
+              }
+            ]
+          }
+        },
+        {
+          "map": "MAP_STRATA_RIVER_WINTER",
+          "base_label": "gStrataRiverWinter",
+          "land_mons": {
+            "encounter_rate": 20,
+            "mons": [
+              {
+                "min_level": 11,
+                "max_level": 12,
+                "species": "SPECIES_MESODMA"
+              },
+              {
+                "min_level": 11,
+                "max_level": 13,
+                "species": "SPECIES_MESODMA"
+              },
+              {
+                "min_level": 11,
+                "max_level": 13,
+                "species": "SPECIES_CIMOLESTES"
+              },
+              {
+                "min_level": 12,
+                "max_level": 13,
+                "species": "SPECIES_CHAMPSOSAUR"
+              },
+              {
+                "min_level": 12,
+                "max_level": 13,
+                "species": "SPECIES_MESODMA"
+              },
+              {
+                "min_level": 12,
+                "max_level": 14,
+                "species": "SPECIES_ASTERIORNIS"
+              },
+              {
+                "min_level": 12,
+                "max_level": 14,
+                "species": "SPECIES_CHAMPSOSAUR"
+              },
+              {
+                "min_level": 12,
+                "max_level": 14,
+                "species": "SPECIES_EMARGINACHEL"
+              },
+              {
+                "min_level": 13,
+                "max_level": 14,
+                "species": "SPECIES_CIMOLESTES"
+              },
+              {
+                "min_level": 13,
+                "max_level": 14,
+                "species": "SPECIES_ASTERIORNIS"
+              },
+              {
+                "min_level": 13,
+                "max_level": 15,
+                "species": "SPECIES_BOREALOSUCH"
+              },
+              {
+                "min_level": 14,
+                "max_level": 15,
+                "species": "SPECIES_BOREALOSUCH"
+              }
+            ]
+          },
+          "water_mons": {
+            "encounter_rate": 4,
+            "mons": [
+              {
+                "min_level": 11,
+                "max_level": 14,
+                "species": "SPECIES_LEPISOSTEUS"
+              },
+              {
+                "min_level": 11,
+                "max_level": 14,
+                "species": "SPECIES_CHAMPSOSAUR"
+              },
+              {
+                "min_level": 12,
+                "max_level": 14,
+                "species": "SPECIES_LEPISOSTEUS"
+              },
+              {
+                "min_level": 12,
+                "max_level": 15,
+                "species": "SPECIES_EMARGINACHEL"
+              },
+              {
+                "min_level": 13,
+                "max_level": 15,
+                "species": "SPECIES_BOREALOSUCH"
+              }
+            ]
+          },
+          "fishing_mons": {
+            "encounter_rate": 30,
+            "mons": [
+              {
+                "min_level": 10,
+                "max_level": 12,
+                "species": "SPECIES_LEPISOSTEUS"
+              },
+              {
+                "min_level": 10,
+                "max_level": 12,
+                "species": "SPECIES_LEPISOSTEUS"
+              },
+              {
+                "min_level": 11,
+                "max_level": 13,
+                "species": "SPECIES_LEPISOSTEUS"
+              },
+              {
+                "min_level": 11,
+                "max_level": 13,
+                "species": "SPECIES_CHAMPSOSAUR"
+              },
+              {
+                "min_level": 11,
+                "max_level": 13,
+                "species": "SPECIES_LEPISOSTEUS"
+              },
+              {
+                "min_level": 12,
+                "max_level": 14,
+                "species": "SPECIES_CHAMPSOSAUR"
+              },
+              {
+                "min_level": 12,
+                "max_level": 14,
+                "species": "SPECIES_EMARGINACHEL"
+              },
+              {
+                "min_level": 12,
+                "max_level": 14,
+                "species": "SPECIES_LEPISOSTEUS"
+              },
+              {
+                "min_level": 13,
+                "max_level": 15,
+                "species": "SPECIES_BOREALOSUCH"
+              },
+              {
+                "min_level": 13,
+                "max_level": 15,
+                "species": "SPECIES_BOREALOSUCH"
+              }
+            ]
+          }
+        },
+        {
+          "map": "MAP_STRATA_BACKSWAMP_WINTER",
+          "base_label": "gStrataBackswampWinter",
+          "land_mons": {
+            "encounter_rate": 20,
+            "mons": [
+              {
+                "min_level": 12,
+                "max_level": 13,
+                "species": "SPECIES_MESODMA"
+              },
+              {
+                "min_level": 12,
+                "max_level": 14,
+                "species": "SPECIES_CHAMPSOSAUR"
+              },
+              {
+                "min_level": 12,
+                "max_level": 14,
+                "species": "SPECIES_MESODMA"
+              },
+              {
+                "min_level": 12,
+                "max_level": 14,
+                "species": "SPECIES_CIMOLESTES"
+              },
+              {
+                "min_level": 13,
+                "max_level": 14,
+                "species": "SPECIES_CHAMPSOSAUR"
+              },
+              {
+                "min_level": 13,
+                "max_level": 14,
+                "species": "SPECIES_EMARGINACHEL"
+              },
+              {
+                "min_level": 13,
+                "max_level": 15,
+                "species": "SPECIES_ASTERIORNIS"
+              },
+              {
+                "min_level": 13,
+                "max_level": 15,
+                "species": "SPECIES_BOREALOSUCH"
+              },
+              {
+                "min_level": 13,
+                "max_level": 15,
+                "species": "SPECIES_MESODMA"
+              },
+              {
+                "min_level": 14,
+                "max_level": 15,
+                "species": "SPECIES_CHAMPSOSAUR"
+              },
+              {
+                "min_level": 14,
+                "max_level": 16,
+                "species": "SPECIES_BOREALOSUCH"
+              },
+              {
+                "min_level": 15,
+                "max_level": 16,
+                "species": "SPECIES_BOREALOSUCH"
+              }
+            ]
+          },
+          "water_mons": {
+            "encounter_rate": 4,
+            "mons": [
+              {
+                "min_level": 12,
+                "max_level": 15,
+                "species": "SPECIES_LEPISOSTEUS"
+              },
+              {
+                "min_level": 12,
+                "max_level": 15,
+                "species": "SPECIES_CHAMPSOSAUR"
+              },
+              {
+                "min_level": 13,
+                "max_level": 15,
+                "species": "SPECIES_BOREALOSUCH"
+              },
+              {
+                "min_level": 13,
+                "max_level": 16,
+                "species": "SPECIES_EMARGINACHEL"
+              },
+              {
+                "min_level": 14,
+                "max_level": 16,
+                "species": "SPECIES_BOREALOSUCH"
+              }
+            ]
+          },
+          "fishing_mons": {
+            "encounter_rate": 30,
+            "mons": [
+              {
+                "min_level": 11,
+                "max_level": 13,
+                "species": "SPECIES_LEPISOSTEUS"
+              },
+              {
+                "min_level": 11,
+                "max_level": 13,
+                "species": "SPECIES_LEPISOSTEUS"
+              },
+              {
+                "min_level": 12,
+                "max_level": 14,
+                "species": "SPECIES_LEPISOSTEUS"
+              },
+              {
+                "min_level": 12,
+                "max_level": 14,
+                "species": "SPECIES_CHAMPSOSAUR"
+              },
+              {
+                "min_level": 12,
+                "max_level": 14,
+                "species": "SPECIES_LEPISOSTEUS"
+              },
+              {
+                "min_level": 13,
+                "max_level": 15,
+                "species": "SPECIES_CHAMPSOSAUR"
+              },
+              {
+                "min_level": 13,
+                "max_level": 15,
+                "species": "SPECIES_EMARGINACHEL"
+              },
+              {
+                "min_level": 13,
+                "max_level": 15,
+                "species": "SPECIES_BOREALOSUCH"
+              },
+              {
+                "min_level": 14,
+                "max_level": 16,
+                "species": "SPECIES_BOREALOSUCH"
+              },
+              {
+                "min_level": 14,
+                "max_level": 16,
+                "species": "SPECIES_BOREALOSUCH"
+              }
+            ]
+          }
         }
       ]
     },

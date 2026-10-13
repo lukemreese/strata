@@ -1,7 +1,10 @@
 #include "global.h"
 #include "event_data.h"
+#include "lineage.h"
 #include "overworld.h"
+#include "wild_encounter.h"
 #include "test/overworld_script.h"
+#include "test/battle.h"
 #include "test/test.h"
 #include "constants/map_groups.h"
 #include "constants/strata.h"
@@ -19,6 +22,9 @@ static const u16 sStrataMaps[] =
     MAP_STRATA_LEVEE,
     MAP_STRATA_RIVER,
     MAP_STRATA_BACKSWAMP,
+    MAP_STRATA_LEVEE_WINTER,
+    MAP_STRATA_RIVER_WINTER,
+    MAP_STRATA_BACKSWAMP_WINTER,
 };
 
 static u32 OppositeDirection(u32 direction)
@@ -71,5 +77,52 @@ TEST("Strata map connections lead back the way they came")
                 found = TRUE;
         }
         EXPECT(found);
+    }
+}
+
+static void ExpectSurvivors(const struct WildPokemonInfo *info, u32 count)
+{
+    u32 i;
+    if (info == NULL)
+        return;
+    for (i = 0; i < count; i++)
+        EXPECT(!Lineage_IsExtinctInEra(info->wildPokemon[i].species, ERA_IMPACT_WINTER));
+}
+
+TEST("Only impact survivors live in the impact winter maps")
+{
+    u32 i, j;
+    u16 map = 0;
+    static const u16 sWinterMaps[] = { MAP_STRATA_LEVEE_WINTER, MAP_STRATA_RIVER_WINTER, MAP_STRATA_BACKSWAMP_WINTER };
+    for (i = 0; i < ARRAY_COUNT(sWinterMaps); i++)
+    {
+        PARAMETRIZE { map = sWinterMaps[i]; }
+    }
+
+    for (i = 0; gWildMonHeaders[i].mapGroup != MAP_GROUP(MAP_UNDEFINED); i++)
+    {
+        if (gWildMonHeaders[i].mapGroup != MAP_GROUP(map) || gWildMonHeaders[i].mapNum != MAP_NUM(map))
+            continue;
+        for (j = 0; j < TIMES_OF_DAY_COUNT; j++)
+        {
+            const struct WildEncounterTypes *types = &gWildMonHeaders[i].encounterTypes[j];
+            ExpectSurvivors(types->landMonsInfo, 12);   // slot counts from wild_encounters.json fields
+            ExpectSurvivors(types->waterMonsInfo, 5);
+            ExpectSurvivors(types->fishingMonsInfo, 10);
+        }
+    }
+}
+
+// Strata has no gym badges, so the badge-based obedience cap must never apply to
+// the player's own Pokémon (B_OBEDIENCE_MECHANICS < GEN_8).
+WILD_BATTLE_TEST("The player's own high-level Pokemon obey without any badges")
+{
+    GIVEN {
+        PLAYER(SPECIES_BOREALOSUCH) { Level(31); }
+        OPPONENT(SPECIES_CHAMPSOSAUR) { Level(13); }
+    } WHEN {
+        TURN { MOVE(player, MOVE_CRUNCH); }
+    } SCENE {
+        ANIMATION(ANIM_TYPE_MOVE, MOVE_CRUNCH, player);
     }
 }

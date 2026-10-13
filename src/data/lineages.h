@@ -1,9 +1,7 @@
 // Lineage descent table: what each species becomes when the game enters an era.
-// See docs/strata_design.md §4-5 and §7.1, and tools/strata/roster.py for the species.
+// See docs/strata_design.md §4-5 and §7.1-7.3, and tools/strata/roster.py for the species.
 // Lineages without an entry for an era are in stasis.
-//
-// TODO: extinction. Epicyon, Aenocyon and Gastornis lines end in extinction, and
-// will be handled by the extinction filters rather than this table.
+// Extinctions are at the end of this file.
 
 // Dog line: Canidae originated in North America.
 static const struct DescentOption sDescent_Cimolestes[] =
@@ -77,4 +75,59 @@ static const struct LineageDescent sLineageDescents[] =
     { SPECIES_GALLINULOID,  ERA_TRAP_CAVE,     sDescent_Gallinuloid },
     { SPECIES_EMARGINACHEL, ERA_CORRAL_BLUFFS, sDescent_Emarginachel },
     { SPECIES_PROTOCHELYD,  ERA_ASHFALL,       sDescent_Protochelyd },
+};
+
+// Extinction filters: species that do not survive into an era. Applied after that
+// era's descents, so a lineage that descends into a survivor lives on.
+
+// K-Pg mass extinction: all non-avian dinosaurs. Didelphodon's group of
+// metatherians was also lost in North America. Small, burrowing, freshwater and
+// detritus-feeding animals (multituberculates, champsosaurs, crocodylians, gars,
+// turtles, ground birds) are the survivors in the Hell Creek-to-Tullock record.
+static const u16 sExtinctions_ImpactWinter[] =
+{
+    SPECIES_TYRANNOSAUR,
+    SPECIES_TRICERATOPS,
+    SPECIES_EDMONTOSAUR,
+    SPECIES_ANKYLOSAURUS,
+    SPECIES_PACHYCEPHALO,
+    SPECIES_THESCELOSAUR,
+    SPECIES_ACHERORAPTOR,
+    SPECIES_ANZU,
+    SPECIES_DIDELPHODON,
+    SPECIES_NONE,
+};
+
+// By the Eocene-Oligocene transition (~34 Ma): Gastornis (gone in North America
+// by the mid-Eocene), champsosaurs, Borealosuchus and Mesodma.
+// TODO: fact-check the last appearances against the Paleobiology Database.
+static const u16 sExtinctions_WhiteRiver[] =
+{
+    SPECIES_GASTORNIS,
+    SPECIES_CHAMPSOSAUR,
+    SPECIES_BOREALOSUCH,
+    SPECIES_MESODMA,
+    SPECIES_NONE,
+};
+
+// Epicyon and the other borophagine bone-crushers were gone by ~2 Ma.
+static const u16 sExtinctions_TrapCave[] =
+{
+    SPECIES_EPICYON,
+    SPECIES_NONE,
+};
+
+// The end-Pleistocene megafauna extinction, ~13-11 ka.
+static const u16 sExtinctions_Epilogue[] =
+{
+    SPECIES_AENOCYON,
+    SPECIES_NONE,
+};
+
+static const u16 *const sEraExtinctions[ERA_COUNT] =
+{
+    [ERA_IMPACT_WINTER] = sExtinctions_ImpactWinter,
+    [ERA_WHITE_RIVER]   = sExtinctions_WhiteRiver,
+    [ERA_TRAP_CAVE]     = sExtinctions_TrapCave,
+    [ERA_EPILOGUE]      = sExtinctions_Epilogue,
 };

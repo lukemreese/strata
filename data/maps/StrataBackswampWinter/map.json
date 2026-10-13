@@ -1,0 +1,163 @@
+{
+  "id": "MAP_STRATA_BACKSWAMP_WINTER",
+  "name": "StrataBackswampWinter",
+  "layout": "LAYOUT_STRATA_BACKSWAMP_WINTER",
+  "music": "MUS_ABANDONED_SHIP",
+  "region": "REGION_HOENN",
+  "region_map_section": "MAPSEC_STRATA_ASHEN_SWAMP",
+  "requires_flash": false,
+  "weather": "WEATHER_VOLCANIC_ASH",
+  "map_type": "MAP_TYPE_ROUTE",
+  "allow_cycling": true,
+  "allow_escaping": false,
+  "allow_running": true,
+  "show_map_name": true,
+  "battle_scene": "MAP_BATTLE_SCENE_NORMAL",
+  "connections": [
+    {
+      "map": "MAP_STRATA_RIVER_WINTER",
+      "offset": 0,
+      "direction": "down"
+    }
+  ],
+  "object_events": [],
+  "warp_events": [],
+  "coord_events": [
+    {
+      "type": "trigger",
+      "x": 23,
+      "y": 13,
+      "elevation": 3,
+      "var": "VAR_STRATA_STORY",
+      "var_value": "4",
+      "script": "StrataBackswampWinter_EventScript_Gauntlet"
+    },
+    {
+      "type": "trigger",
+      "x": 24,
+      "y": 13,
+      "elevation": 3,
+      "var": "VAR_STRATA_STORY",
+      "var_value": "4",
+      "script": "StrataBackswampWinter_EventScript_Gauntlet"
+    },
+    {
+      "type": "trigger",
+      "x": 25,
+      "y": 13,
+      "elevation": 3,
+      "var": "VAR_STRATA_STORY",
+      "var_value": "4",
+      "script": "StrataBackswampWinter_EventScript_Gauntlet"
+    },
+    {
+      "type": "trigger",
+      "x": 26,
+      "y": 13,
+      "elevation": 3,
+      "var": "VAR_STRATA_STORY",
+      "var_value": "4",
+      "script": "StrataBackswampWinter_EventScript_Gauntlet"
+    },
+    {
+      "type": "trigger",
+      "x": 27,
+      "y": 13,
+      "elevation": 3,
+      "var": "VAR_STRATA_STORY",
+      "var_value": "4",
+      "script": "StrataBackswampWinter_EventScript_Gauntlet"
+    },
+    {
+      "type": "trigger",
+      "x": 28,
+      "y": 13,
+      "elevation": 3,
+      "var": "VAR_STRATA_STORY",
+      "var_value": "4",
+      "script": "StrataBackswampWinter_EventScript_Gauntlet"
+    },
+    {
+      "type": "trigger",
+      "x": 29,
+      "y": 13,
+      "elevation": 3,
+      "var": "VAR_STRATA_STORY",
+      "var_value": "4",
+      "script": "StrataBackswampWinter_EventScript_Gauntlet"
+    },
+    {
+      "type": "trigger",
+      "x": 30,
+      "y": 13,
+      "elevation": 3,
+      "var": "VAR_STRATA_STORY",
+      "var_value": "4",
+      "script": "StrataBackswampWinter_EventScript_Gauntlet"
+    },
+    {
+      "type": "trigger",
+      "x": 31,
+      "y": 13,
+      "elevation": 3,
+      "var": "VAR_STRATA_STORY",
+      "var_value": "4",
+      "script": "StrataBackswampWinter_EventScript_Gauntlet"
+    },
+    {
+      "type": "trigger",
+      "x": 32,
+      "y": 13,
+      "elevation": 3,
+      "var": "VAR_STRATA_STORY",
+      "var_value": "4",
+      "script": "StrataBackswampWinter_EventScript_Gauntlet"
+    },
+    {
+      "type": "trigger",
+      "x": 33,
+      "y": 13,
+      "elevation": 3,
+      "var": "VAR_STRATA_STORY",
+      "var_value": "4",
+      "script": "StrataBackswampWinter_EventScript_Gauntlet"
+    },
+    {
+      "type": "trigger",
+      "x": 34,
+      "y": 13,
+      "elevation": 3,
+      "var": "VAR_STRATA_STORY",
+      "var_value": "4",
+      "script": "StrataBackswampWinter_EventScript_Gauntlet"
+    },
+    {
+      "type": "trigger",
+      "x": 35,
+      "y": 13,
+      "elevation": 0,
+      "var": "VAR_STRATA_STORY",
+      "var_value": "4",
+      "script": "StrataBackswampWinter_EventScript_Gauntlet"
+    },
+    {
+      "type": "trigger",
+      "x": 36,
+      "y": 13,
+      "elevation": 0,
+      "var": "VAR_STRATA_STORY",
+      "var_value": "4",
+      "script": "StrataBackswampWinter_EventScript_Gauntlet"
+    },
+    {
+      "type": "trigger",
+      "x": 37,
+      "y": 13,
+      "elevation": 0,
+      "var": "VAR_STRATA_STORY",
+      "var_value": "4",
+      "script": "StrataBackswampWinter_EventScript_Gauntlet"
+    }
+  ],
+  "bg_events": []
+}

@@ -608,6 +608,9 @@ gStdScripts_End::
 	.include "data/maps/StrataLevee/scripts.inc"
 	.include "data/maps/StrataRiver/scripts.inc"
 	.include "data/maps/StrataBackswamp/scripts.inc"
+	.include "data/maps/StrataLeveeWinter/scripts.inc"
+	.include "data/maps/StrataRiverWinter/scripts.inc"
+	.include "data/maps/StrataBackswampWinter/scripts.inc"
 
 .if IS_FRLG
 
