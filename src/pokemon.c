@@ -1747,6 +1747,34 @@ void DeleteFirstMoveAndGiveMoveToMon(struct Pokemon *mon, enum Move move)
     SetMonData(mon, MON_DATA_PP_BONUSES, &ppBonuses);
 }
 
+// Strata: declared in pokemon.h but never defined upstream. Used by src/lineage.c.
+void DeleteFirstMoveAndGiveMoveToBoxMon(struct BoxPokemon *boxMon, enum Move move)
+{
+    s32 i;
+    enum Move moves[MAX_MON_MOVES];
+    u8 pp[MAX_MON_MOVES];
+    u8 ppBonuses;
+
+    for (i = 0; i < MAX_MON_MOVES - 1; i++)
+    {
+        moves[i] = GetBoxMonData(boxMon, MON_DATA_MOVE2 + i);
+        pp[i] = GetBoxMonData(boxMon, MON_DATA_PP2 + i);
+    }
+
+    ppBonuses = GetBoxMonData(boxMon, MON_DATA_PP_BONUSES);
+    ppBonuses >>= 2;
+    moves[MAX_MON_MOVES - 1] = move;
+    pp[MAX_MON_MOVES - 1] = GetMovePP(move);
+
+    for (i = 0; i < MAX_MON_MOVES; i++)
+    {
+        SetBoxMonData(boxMon, MON_DATA_MOVE1 + i, &moves[i]);
+        SetBoxMonData(boxMon, MON_DATA_PP1 + i, &pp[i]);
+    }
+
+    SetBoxMonData(boxMon, MON_DATA_PP_BONUSES, &ppBonuses);
+}
+
 u32 CountAliveMonsInBattle(u8 caseId, enum BattlerId battler)
 {
     enum BattlerId i;

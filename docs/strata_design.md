@@ -218,6 +218,37 @@ party and the PC boxes.
 - Planned: the lost lineage becomes a **fossil item** for the Codex.
 - Difficulty option: "Gentle Deep Time" (extinct lineages respawn as a related survivor).
 
+#### Era level floor
+A descendant arrives as a mature adult of its era. After each era's descents and
+extinctions, every party and PC mon below that era's floor is raised to it
+(`sEraLevelFloor` in `src/data/lineages.h`), so a lineage left in the PC since Hell
+Creek is still usable later. A multi-era jump raises it era by era, so it ends at
+the last era's floor. Raised mons:
+- get the EXP of the start of the floor level and, in the party, recalculated stats;
+- keep the HP they had lost, as on a normal level-up (a fainted mon stays fainted;
+  a PC mon's lost HP is all a box mon stores anyway);
+- learn the level-up moves they passed, in order, forgetting the oldest move when
+  all four slots are full and skipping moves they already know.
+
+Mons at or above the floor and eggs are untouched. The survivor that joins an
+empty party joins at the floor (at least level 10), as Mesodma until it dies out
+at White River, then as the gar.
+
+Floor = the era's lowest land encounter level (`tools/strata/maps.py`) − 3. Fishing
+runs lower on purpose and doesn't count.
+
+| Era | Wild (land and surf) | Floor |
+|---|---|---|
+| Present dig, Hell Creek | — / 3–11 | none |
+| Impact winter | 10–16 | 7 |
+| Corral Bluffs | 15–20 | 12 |
+| Bighorn PETM | 22–28 | 19 |
+| Green River | 28–34 | 25 |
+| White River | 34–39 | 31 |
+| Ashfall | 40–45 | 37 |
+| Trap Cave (Ice Age) | 46–51 | 43 |
+| Epilogue | 48–53 | 45 |
+
 ### 7.4 Clock
 - pokeemerald-expansion has a fake RTC (`OW_USE_FAKE_RTC`, `OW_ALTERED_TIME_RATIO`
   in `include/config/overworld.h`) that runs on play time. Extend it so the ratio

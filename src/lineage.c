@@ -126,6 +126,80 @@ bool32 Lineage_IsExtinctInEra(enum Species species, enum StrataEra era)
     return FALSE;
 }
 
+// TRUE if `species` died out in `era` or any era before it.
+static bool32 IsExtinctByEra(enum Species species, enum StrataEra era)
+{
+    u32 i;
+    for (i = 0; i <= era; i++)
+    {
+        if (Lineage_IsExtinctInEra(species, i))
+            return TRUE;
+    }
+    return FALSE;
+}
+
+u32 Lineage_GetEraLevelFloor(enum StrataEra era)
+{
+    if (era >= ERA_COUNT)
+        return 0;
+    return sEraLevelFloor[era];
+}
+
+// Raises a stored mon to `level` as if it had levelled up there: EXP moves to the
+// start of that level, and it learns the level-up moves it passed on the way, in
+// order, forgetting its oldest move when all four slots are full. Box mons keep
+// no stats; their HP lost is unchanged, so a party mon gains as much HP as its
+// max HP rises, as on a normal level-up. Returns TRUE if the mon was raised.
+bool32 Lineage_RaiseBoxMonToLevel(struct BoxPokemon *boxMon, u32 level)
+{
+    const struct LevelUpMove *learnset;
+    enum Species species;
+    u32 i, oldLevel, exp;
+
+    if (!GetBoxMonData(boxMon, MON_DATA_SANITY_HAS_SPECIES) || GetBoxMonData(boxMon, MON_DATA_IS_EGG))
+        return FALSE;
+    oldLevel = GetLevelFromBoxMonExp(boxMon);
+    if (oldLevel >= level)
+        return FALSE;
+
+    species = GetBoxMonData(boxMon, MON_DATA_SPECIES);
+    exp = gExperienceTables[gSpeciesInfo[species].growthRate][level];
+    SetBoxMonData(boxMon, MON_DATA_EXP, &exp);
+
+    learnset = GetSpeciesLevelUpLearnset(species);
+    for (i = 0; learnset[i].move != LEVEL_UP_MOVE_END; i++)
+    {
+        if (learnset[i].level <= oldLevel || learnset[i].level > level)
+            continue;
+        if (GiveMoveToBoxMon(boxMon, learnset[i].move) == MON_HAS_MAX_MOVES)
+            DeleteFirstMoveAndGiveMoveToBoxMon(boxMon, learnset[i].move);
+    }
+    return TRUE;
+}
+
+bool32 Lineage_RaiseMonToLevel(struct Pokemon *mon, u32 level)
+{
+    if (!Lineage_RaiseBoxMonToLevel(&mon->box, level))
+        return FALSE;
+    CalculateMonStats(mon);
+    return TRUE;
+}
+
+static void ApplyLevelFloor(enum StrataEra era)
+{
+    u32 i, boxId, boxPos, floor = Lineage_GetEraLevelFloor(era);
+
+    if (floor == 0)
+        return;
+    for (i = 0; i < PARTY_SIZE; i++)
+        Lineage_RaiseMonToLevel(&gParties[B_TRAINER_PLAYER][i], floor);
+    for (boxId = 0; boxId < TOTAL_BOXES_COUNT; boxId++)
+    {
+        for (boxPos = 0; boxPos < IN_BOX_COUNT; boxPos++)
+            Lineage_RaiseBoxMonToLevel(GetBoxedMonPtr(boxId, boxPos), floor);
+    }
+}
+
 static EWRAM_DATA u16 sExtinctionCount = 0;
 static EWRAM_DATA u16 sFirstExtinctSpecies = SPECIES_NONE;
 
@@ -146,7 +220,12 @@ static bool32 IsBoxMonExtinct(struct BoxPokemon *boxMon, enum StrataEra era)
 }
 
 // An extinction can't leave the player with no party: bring a survivor from the
-// PC, or failing that, a small survivor joins.
+// PC, or failing that, a small survivor joins at the era's level floor (but no
+// lower than the level it always had). Mesodma until the multituberculates die
+// out, then the gar, which lives to the present. It joins with its moves for that
+// level and full HP.
+#define SURVIVOR_GIFT_LEVEL 10
+
 static void EnsurePartyNotEmpty(enum StrataEra era)
 {
     u32 boxId, boxPos;
@@ -168,8 +247,9 @@ static void EnsurePartyNotEmpty(enum StrataEra era)
             }
         }
     }
-    survivor = Lineage_IsExtinctInEra(SPECIES_MESODMA, era) ? SPECIES_LEPISOSTEUS : SPECIES_MESODMA;
-    CreateMon(&gParties[B_TRAINER_PLAYER][0], survivor, 10, Random32(), OTID_STRUCT_PLAYER_ID);
+    survivor = IsExtinctByEra(SPECIES_MESODMA, era) ? SPECIES_LEPISOSTEUS : SPECIES_MESODMA;
+    // CreateMon alone leaves the mon with no moves or stats.
+    CreateRandomMon(&gParties[B_TRAINER_PLAYER][0], survivor, max(SURVIVOR_GIFT_LEVEL, Lineage_GetEraLevelFloor(era)));
     CalculatePlayerPartyCount();
 }
 
@@ -198,9 +278,10 @@ static void ApplyExtinctions(enum StrataEra era)
 }
 
 // Advances the world one era at a time up to `targetEra`, so a lineage passes
-// through every intermediate descent and extinction filter. Box mons get their
-// stats recalculated when withdrawn. Returns the number of descents that
-// happened; see Lineage_GetExtinctionCount for the losses.
+// through every intermediate descent and extinction filter, then is raised to
+// that era's level floor (learning its moves level by level, era by era). Box
+// mons get their stats recalculated when withdrawn. Returns the number of
+// descents that happened; see Lineage_GetExtinctionCount for the losses.
 u32 Lineage_AdvanceToEra(enum StrataEra targetEra)
 {
     u32 era, i, boxId, boxPos, count = 0;
@@ -221,6 +302,7 @@ u32 Lineage_AdvanceToEra(enum StrataEra targetEra)
                 count += Lineage_DescendBoxMon(GetBoxedMonPtr(boxId, boxPos), era);
         }
         ApplyExtinctions(era);
+        ApplyLevelFloor(era);
         VarSet(VAR_STRATA_ERA, era);
     }
     return count;

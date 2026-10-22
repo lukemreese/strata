@@ -24,6 +24,9 @@ enum Species Lineage_GetDescendant(enum Species ancestor, enum StrataEra era, co
 bool32 Lineage_DescendBoxMon(struct BoxPokemon *boxMon, enum StrataEra era);
 bool32 Lineage_DescendMon(struct Pokemon *mon, enum StrataEra era);
 bool32 Lineage_IsExtinctInEra(enum Species species, enum StrataEra era);
+u32 Lineage_GetEraLevelFloor(enum StrataEra era);
+bool32 Lineage_RaiseBoxMonToLevel(struct BoxPokemon *boxMon, u32 level);
+bool32 Lineage_RaiseMonToLevel(struct Pokemon *mon, u32 level);
 u32 Lineage_AdvanceToEra(enum StrataEra targetEra);
 u32 Lineage_GetExtinctionCount(void);
 enum Species Lineage_GetFirstExtinctSpecies(void);
