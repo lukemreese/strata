@@ -686,17 +686,17 @@ static const u8 sText_UnkHeight[] = _("{CLEAR_TO 12}??'??”");
 static const u8 sText_UnkHeightMetric[] = _("???.? m");
 static const u8 sText_UnkWeight[] = _("????.? lbs.");
 static const u8 sText_UnkWeightMetric[] = _("???.? kg.");
-static const u8 sText_PokedexRegistration[] = _("POKéDEX registration completed.");
+static const u8 sText_PokedexRegistration[] = _("CODEX registration completed.");
 static const u8 sText_HTHeight[] = _("HT");
 static const u8 sText_WTWeight[] = _("WT");
 static const u8 sText_SearchingPleaseWait[] = _("Searching…\nPlease wait.");
 static const u8 sText_SearchCompleted[] = _("Search completed.");
 static const u8 sText_NoMatchingPkmnWereFound[] = _("No matching POKéMON were found.");
 static const u8 sText_SearchForPkmnBasedOnParameters[] = _("Search for POKéMON based on\nselected parameters.");
-static const u8 sText_SwitchPokedexListings[] = _("Switch POKéDEX listings.");
-static const u8 sText_ReturnToPokedex[] = _("Return to the POKéDEX.");
-static const u8 sText_SelectPokedexMode[] = _("Select the POKéDEX mode.");
-static const u8 sText_SelectPokedexListingMode[] = _("Select the POKéDEX listing mode.");
+static const u8 sText_SwitchPokedexListings[] = _("Switch CODEX listings.");
+static const u8 sText_ReturnToPokedex[] = _("Return to the CODEX.");
+static const u8 sText_SelectPokedexMode[] = _("Select the CODEX mode.");
+static const u8 sText_SelectPokedexListingMode[] = _("Select the CODEX listing mode.");
 static const u8 sText_ListByFirstLetter[] = _("List by the first letter in the name.\nSpotted POKéMON only.");
 static const u8 sText_ListByBodyColor[] = _("List by body color.\nSpotted POKéMON only.");
 static const u8 sText_ListByType[] = _("List by type.\nOwned POKéMON only.");
@@ -1181,8 +1181,8 @@ static const u8 sSearchMovementMap_ShiftHoennDex[SEARCH_COUNT][4] =
 
 static const struct SearchOptionText sDexModeOptions[] =
 {
-    [DEX_MODE_HOENN]    = {COMPOUND_STRING("HOENN region's POKéDEX"),   COMPOUND_STRING("HOENN DEX")},
-    [DEX_MODE_NATIONAL] = {COMPOUND_STRING("National edition POKéDEX"), COMPOUND_STRING("NATIONAL DEX")},
+    [DEX_MODE_HOENN]    = {COMPOUND_STRING("WESTERN region's CODEX"),  COMPOUND_STRING("WEST CODEX")},
+    [DEX_MODE_NATIONAL] = {COMPOUND_STRING("Complete edition CODEX"), COMPOUND_STRING("FULL CODEX")},
     {},
 };
 

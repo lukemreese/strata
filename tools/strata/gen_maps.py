@@ -25,10 +25,11 @@ import sys
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
 sys.path.insert(0, os.path.dirname(__file__))
-from maps import HEAL_LOCATIONS, MAPS, MAP_SECTIONS  # noqa: E402
+from maps import HEAL_LOCATIONS, MAPS, MAP_SECTIONS, SECRET_BASE_SWAPS  # noqa: E402
 import maprender  # noqa: E402
 
 GROUP = "gMapGroup_Strata"
+SIGNPOST_METATILES = (0x003, 0x01B)   # General: the blue route sign and the wooden signpost
 
 
 def path(*parts):
@@ -59,14 +60,65 @@ def build_layout(m, layouts_by_id):
     x0, y0, w, h = m["crop"]["rect"]
     out = [row[x0:x0 + w] for row in rows[y0:y0 + h]]
     for patch in m.get("patches", []):
-        # Fill a rect (in the new map's coordinates) with a block taken from the
-        # source map at `like`, so no metatile IDs are hard-coded.
-        sx, sy = patch["like"]
-        block = rows[sy][sx]
+        # Fill a rect (in the new map's coordinates) with a block. Where it comes from:
+        #   like=(sx, sy)      the block of the SOURCE layout at (sx, sy): metatile,
+        #                      collision and elevation (no metatile IDs hard-coded);
+        #   same_as=(x, y)     the block of the map being built, at (x, y), as patched so
+        #                      far (nicer than `like` when the source has a good tile nearby);
+        #   metatile=0x2A3     a raw metatile ID, with `collision` (default 0, passable) and
+        #                      `elevation` (default: keep each target block's elevation).
+        #   tiles=[[a, b], [c, d]] with at=(x, y) instead of rect: a grid of raw metatiles
+        #                      (same `collision` and `elevation` options).
+        if "tiles" in patch:
+            px, py = patch["at"]
+            for dy, trow in enumerate(patch["tiles"]):
+                for dx, tile in enumerate(trow):
+                    elev = patch["elevation"] if "elevation" in patch else out[py + dy][px + dx] >> 12
+                    out[py + dy][px + dx] = tile | (patch.get("collision", 0) << 10) | (elev << 12)
+            continue
         px, py, pw, ph = patch["rect"]
+        if "like" in patch:
+            sx, sy = patch["like"]
+            block = rows[sy][sx]
+        elif "same_as" in patch:
+            sx, sy = patch["same_as"]
+            block = out[sy][sx]
+        else:
+            block = None
         for y in range(py, py + ph):
             for x in range(px, px + pw):
-                out[y][x] = block
+                if block is not None:
+                    out[y][x] = block
+                else:
+                    elev = patch["elevation"] if "elevation" in patch else out[y][x] >> 12
+                    out[y][x] = patch["metatile"] | (patch.get("collision", 0) << 10) | (elev << 12)
+    # Metatile swaps: every block showing metatile `old` shows `new` instead, keeping its
+    # collision and elevation; a (new, collision) tuple sets the collision too. The global
+    # table removes Hoenn secret-base entrances, which are interactive.
+    swaps = dict(SECRET_BASE_SWAPS)
+    swaps.update(m.get("swap", {}))
+    if swaps:
+        for row in out:
+            for x, block in enumerate(row):
+                new = swaps.get(block & 0x3FF)
+                if new is None:
+                    continue
+                collision = (block >> 10) & 3
+                if isinstance(new, tuple):
+                    new, collision = new
+                row[x] = new | (collision << 10) | (block & 0xF000)
+    # Stock signposts that carry no sign event are dead props: draw the ground instead,
+    # copied from the first walkable neighbour.
+    signs = {(e["x"], e["y"]) for e in m.get("bgs", [])}
+    for y, row in enumerate(out):
+        for x, block in enumerate(row):
+            if (block & 0x3FF) not in SIGNPOST_METATILES or (x, y) in signs:
+                continue
+            around = [out[ny][nx] for ny in range(y - 1, y + 2) for nx in range(x - 1, x + 2)
+                      if 0 <= ny < len(out) and 0 <= nx < len(row) and (nx, ny) != (x, y)]
+            ground = [b for b in around if not (b >> 10) & 3 and (b & 0x3FF) not in SIGNPOST_METATILES]
+            if ground:
+                row[x] = max(ground, key=ground.count)
     name = m["name"]
     os.makedirs(path("data/layouts", name), exist_ok=True)
     with open(path("data/layouts", name, "map.bin"), "wb") as f:

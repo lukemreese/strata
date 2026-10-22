@@ -32,6 +32,7 @@
 #include "scanline_effect.h"
 #include "sound.h"
 #include "sprite.h"
+#include "strata_acts.h"
 #include "strings.h"
 #include "string_util.h"
 #include "task.h"
@@ -273,8 +274,8 @@ static const u8 gText_MysteryEventsCantUse[] = _("MYSTERY EVENTS can't be used w
 
 static const u8 gText_ContinueMenuPlayer[] = _("PLAYER");
 static const u8 gText_ContinueMenuTime[] = _("TIME");
-static const u8 gText_ContinueMenuPokedex[] = _("POKéDEX");
-static const u8 gText_ContinueMenuBadges[] = _("BADGES");
+static const u8 gText_ContinueMenuPokedex[] = _("CODEX");
+static const u8 gText_ContinueMenuBadges[] = _("ACT"); // Strata: the act, not badges
 
 #define MENU_LEFT 2
 #define MENU_TOP_WIN0 1
@@ -2207,14 +2208,8 @@ static void MainMenu_FormatSavegamePokedex(void)
 static void MainMenu_FormatSavegameBadges(void)
 {
     u8 str[0x20];
-    u8 badgeCount = 0;
-    u32 i;
+    u8 badgeCount = Strata_GetCurrentAct(); // Strata: no badges, so this shows the act
 
-    for (i = FLAG_BADGE01_GET; i < FLAG_BADGE01_GET + NUM_BADGES; i++)
-    {
-        if (FlagGet(i))
-            badgeCount++;
-    }
     StringExpandPlaceholders(gStringVar4, gText_ContinueMenuBadges);
     AddTextPrinterParameterized3(2, FONT_NORMAL, 0x6C, 33, sTextColor_MenuInfo, TEXT_SKIP_DRAW, gStringVar4);
     ConvertIntToDecimalStringN(str, badgeCount, STR_CONV_MODE_LEADING_ZEROS, 1);

@@ -5,10 +5,20 @@ Run tools/strata/gen_maps.py after editing. See docs/strata_design.md §3.
 Map scripts live by hand in data/maps/<Name>/scripts.inc.
 
 Layouts are cut (`crop`) from stock maps with matching terrain, then `patches`
-fill rects with a block copied from the source map at `like` (source coords) to
-remove man-made features. Crops taken from adjacent rows of one stock map join
-seamlessly, so they can be connected with offset 0.
+fill rects to remove man-made features, with a block copied from the source map
+at `like` (source coords), from the new map at `same_as` (new-map coords), or a
+raw `metatile` (+ `collision`, `elevation`). `swap` maps one metatile ID to
+another everywhere in the map (see gen_maps.py). Crops taken from adjacent rows
+of one stock map join seamlessly, so they can be connected with offset 0.
 """
+
+# Hoenn secret-base entrances in the General primary tileset. They are interactive
+# ("make a SECRET BASE here?"), so every Strata map swaps them for the plain rock or
+# tree they imitate: rock-mound cave mouths, and the hollow tree trunks.
+SECRET_BASE_SWAPS = {0x1A0: 0x079, 0x1A8: 0x071, 0x026: 0x016, 0x027: 0x017}
+
+# Fences, arrow-warp tiles, signposts, doors and the like become plain ground.
+GROUND = lambda tile: (tile, 0)  # noqa: E731
 
 MAP_SECTIONS = [
     ("MAPSEC_STRATA_FIELD_CAMP", "HELL CREEK CAMP"),
@@ -70,7 +80,9 @@ RIVER_CROP = dict(**{"from": "LAYOUT_ROUTE119"}, rect=(0, 86, 40, 21))
 RIVER_PATCHES = [
     dict(rect=(17, 4, 9, 6), like=(20, 100)),                 # wooden docks -> river
     dict(rect=(31, 18, 6, 3), like=(36, 111)),                # house -> grass
+    dict(rect=(28, 3, 4, 2), metatile=0x001, elevation=3),    # berry-soil plot -> grass
 ]
+RIVER_SWAP = {0x271: 0x270}                                   # secret-base shrub -> plain shrub
 BACKSWAMP_CROP = dict(**{"from": "LAYOUT_ROUTE120"}, rect=(0, 25, 40, 17))
 IMPACT_WINTER_TILESETS = ("gTileset_GeneralWinter", "gTileset_FortreeWinter")
 
@@ -115,6 +127,10 @@ MAPS = [
     dict(
         id="MAP_STRATA_FIELD_CAMP", name="StrataFieldCamp",
         crop=dict(**{"from": "LAYOUT_ROUTE111"}, rect=(0, 0, 40, 34)),
+        patches=[
+            dict(rect=(17, 5, 8, 2), metatile=0x001, elevation=3),    # two berry-soil plots -> grass
+            dict(rect=(29, 16, 3, 3), metatile=0x001, elevation=3),   # the house's pale lawn -> grass
+        ],
         music="MUS_ROUTE113", weather="WEATHER_SUNNY", map_type="MAP_TYPE_ROUTE",
         mapsec="MAPSEC_STRATA_FIELD_CAMP",
         connections=[connection("down", "MAP_STRATA_BADLANDS")],
@@ -187,7 +203,7 @@ MAPS = [
     ),
     dict(
         id="MAP_STRATA_RIVER", name="StrataRiver", era="ERA_HELL_CREEK",
-        crop=RIVER_CROP, patches=RIVER_PATCHES,
+        crop=RIVER_CROP, patches=RIVER_PATCHES, swap=RIVER_SWAP,
         music="MUS_ROUTE119", map_type="MAP_TYPE_ROUTE",
         mapsec="MAPSEC_STRATA_RIVER",
         connections=[connection("down", "MAP_STRATA_LEVEE"), connection("up", "MAP_STRATA_BACKSWAMP")],
@@ -249,7 +265,7 @@ MAPS = [
     ),
     dict(
         id="MAP_STRATA_RIVER_WINTER", name="StrataRiverWinter", era="ERA_IMPACT_WINTER",
-        crop=winter(RIVER_CROP), patches=RIVER_PATCHES,
+        crop=winter(RIVER_CROP), patches=RIVER_PATCHES, swap=RIVER_SWAP,
         music="MUS_ABANDONED_SHIP", weather="WEATHER_VOLCANIC_ASH", map_type="MAP_TYPE_ROUTE",
         mapsec="MAPSEC_STRATA_ASHEN_RIVER",
         connections=[connection("down", "MAP_STRATA_LEVEE_WINTER"), connection("up", "MAP_STRATA_BACKSWAMP_WINTER")],
@@ -296,6 +312,9 @@ MAPS = [
     dict(
         id="MAP_STRATA_PALM_FOREST", name="StrataPalmForest", era="ERA_CORRAL_BLUFFS",
         crop=dict(**{"from": "LAYOUT_PETALBURG_WOODS"}, rect=(0, 0, 48, 44)),
+        # Petalburg Woods' wooden fences, arrow-warp mats and ledge logs -> plain ground
+        swap={0x149: GROUND(0x001), 0x203: GROUND(0x001), 0x204: GROUND(0x001),
+              0x087: GROUND(0x001), 0x0D5: GROUND(0x001), 0x0D6: GROUND(0x001)},
         music="MUS_PETALBURG_WOODS", map_type="MAP_TYPE_ROUTE", mapsec="MAPSEC_STRATA_CORRAL_BLUFFS",
         arrival=(15, 33),
         bgs=[anchor(14, 32)],
@@ -319,7 +338,13 @@ MAPS = [
             dict(rect=(32, 5, 8, 9), like=(31, 10)),    # farm plots -> ground
             dict(rect=(19, 20, 4, 14), like=(26, 19)),  # wooden bridge -> natural land bridge
             dict(rect=(24, 33, 9, 1), like=(26, 19)),   # roof at the bottom edge -> ground
+            dict(rect=(32, 14, 8, 1), metatile=0x279, elevation=3),   # bottom edge of the farm
+            dict(rect=(24, 7, 4, 3), metatile=0x279, elevation=3),    # square ponds -> ground
+            dict(rect=(17, 13, 3, 3), metatile=0x279, elevation=3),
+            dict(rect=(23, 14, 5, 5), metatile=0x279, elevation=3),
+            dict(rect=(9, 25, 6, 5), metatile=0x170, elevation=1),    # garden island -> lake
         ],
+        swap={0x2F4: 0x279},   # the ground with a pond's edge line, also the striped 'bridge'
         music="MUS_ROUTE110", weather="WEATHER_DROUGHT", map_type="MAP_TYPE_ROUTE", mapsec="MAPSEC_STRATA_BIGHORN",
         arrival=(31, 8),
         bgs=[anchor(31, 7)],
@@ -348,9 +373,15 @@ MAPS = [
             dict(rect=(26, 15, 6, 2), like=(22, 12)),
             dict(rect=(30, 17, 2, 5), like=(22, 12)),
             dict(rect=(10, 31, 2, 7), like=(10, 29)),   # path through the forest band
-            dict(rect=(14, 46, 6, 5), like=(22, 49)),   # cottage -> grass
+            dict(rect=(14, 46, 6, 5), metatile=0x001, elevation=3),   # cottage -> grass
             dict(rect=(11, 51, 5, 2), like=(9, 52)),    # dock -> lake
+            dict(rect=(11, 53, 4, 1), metatile=0x170, elevation=1),
+            dict(rect=(2, 22, 3, 5), metatile=0x001, elevation=3),    # berry-soil plots -> grass
+            dict(rect=(33, 6, 5, 2), metatile=0x001, elevation=3),
+            dict(rect=(21, 41, 5, 2), metatile=0x001, elevation=3),
         ],
+        # fences, and the green mats at the ends of the path through the forest band
+        swap={0x149: GROUND(0x001), 0x30E: 0x306, 0x30F: 0x306, 0x317: 0x306, 0x307: 0x306},
         music="MUS_ROUTE104", map_type="MAP_TYPE_ROUTE", mapsec="MAPSEC_STRATA_GREEN_RIVER",
         arrival=(5, 17),
         bgs=[anchor(5, 16)],
@@ -373,6 +404,11 @@ MAPS = [
     dict(
         id="MAP_STRATA_WHITE_RIVER", name="StrataWhiteRiver", era="ERA_WHITE_RIVER",
         crop=dict(**{"from": "LAYOUT_ROUTE114"}, rect=(0, 37, 40, 43), tilesets=("gTileset_GeneralOligocene", "gTileset_FallarborOligocene")),
+        patches=[
+            dict(rect=(31, 5, 2, 5), metatile=0x001, elevation=3),    # berry-soil plot -> grass
+        ],
+        # secret-base rock spots and a cave door -> plain rock
+        swap={0x208: 0x241, 0x259: 0x265, 0x261: (0x265, 1)},
         music="MUS_ROUTE110", map_type="MAP_TYPE_ROUTE", mapsec="MAPSEC_STRATA_WHITE_RIVER",
         arrival=(17, 3),
         bgs=[anchor(17, 4)],
@@ -413,6 +449,11 @@ MAPS = [
         crop=dict(**{"from": "LAYOUT_ROUTE118"}, rect=(0, 0, 80, 20), tilesets=("gTileset_GeneralIceAge", "gTileset_MauvilleIceAge")),
         patches=[
             dict(rect=(0, 13, 5, 5), like=(2, 8)),      # house -> steppe
+            dict(rect=(34, 5, 5, 2), metatile=0x001, elevation=3),    # berry-soil plot -> steppe
+            # The sinkhole's mouth, south of its trigger row (65..71, 14): a rock lip
+            # (the stock rock mound) around a black opening, replacing the tree belt.
+            dict(at=(67, 15), collision=1, elevation=0,
+                 tiles=[[0x080, 0x081, 0x082], [0x088, 0x071, 0x08A], [0x090, 0x1A2, 0x092]]),
         ],
         music="MUS_ROUTE120", weather="WEATHER_SNOW", map_type="MAP_TYPE_ROUTE", mapsec="MAPSEC_STRATA_ICE_AGE",
         arrival=(56, 9),
@@ -432,6 +473,13 @@ MAPS = [
     dict(
         id="MAP_STRATA_TRAP_CAVE", name="StrataTrapCave", era="ERA_TRAP_CAVE",
         crop=dict(**{"from": "LAYOUT_GRANITE_CAVE_1F"}, rect=(0, 0, 42, 15)),
+        patches=[
+            # The rope down from the surface, over the arrival point (14, 3).
+            dict(at=(14, 1), tiles=[[0x217], [0x216]], collision=1, elevation=0),
+        ],
+        # Granite Cave's ladders and exit glows lead nowhere here -> plain floor
+        swap={0x23F: 0x211, 0x207: 0x211, 0x23C: 0x211,
+              0x258: 0x209, 0x259: 0x209, 0x25A: 0x209},   # (the last three: lit cave-mouth slabs)
         music="MUS_CAVE_OF_ORIGIN", map_type="MAP_TYPE_UNDERGROUND", mapsec="MAPSEC_STRATA_TRAP_CAVE",
         arrival=(14, 3),
         bgs=[sign(14, 2, "StrataTrapCave_EventScript_Rope")],
@@ -445,6 +493,9 @@ MAPS = [
     dict(
         id="MAP_STRATA_PRAIRIE", name="StrataPrairie", era="ERA_EPILOGUE",
         crop=dict(**{"from": "LAYOUT_ROUTE102"}, rect=(0, 0, 50, 20)),
+        patches=[
+            dict(rect=(23, 2, 4, 2), metatile=0x001, elevation=3),    # berry-soil plot -> grass
+        ],
         music="MUS_ROUTE101", weather="WEATHER_SUNNY", map_type="MAP_TYPE_ROUTE", mapsec="MAPSEC_STRATA_PRAIRIE",
         arrival=(2, 9),
         bgs=[sign(2, 10, "StrataPrairie_EventScript_TrailToCamp")],
