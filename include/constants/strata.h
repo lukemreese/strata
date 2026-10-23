@@ -77,4 +77,6 @@ enum StrataDiet
 #define RIG_NEXT      3 // Load the next layer: one-way, extinctions apply
 #define RIG_COMPLETE  4 // The present is loaded; nothing above it
 
+#include "constants/strata_act_flags.h"
+
 #endif // GUARD_CONSTANTS_STRATA_H

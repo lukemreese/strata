@@ -17,33 +17,6 @@
 
 // Checks for the Strata region (tools/strata/maps.py, data/maps/Strata*).
 
-static const u16 sStrataMaps[] =
-{
-    MAP_STRATA_FIELD_CAMP,
-    MAP_STRATA_FIELD_STATION,
-    MAP_STRATA_BADLANDS,
-    MAP_STRATA_JORDAN,
-    MAP_STRATA_JORDAN_STORE,
-    MAP_STRATA_JORDAN_CAFE,
-    MAP_STRATA_BLM_OFFICE,
-    MAP_STRATA_LINDQVIST_RANCH,
-    MAP_STRATA_SAND_ARROYO,
-    MAP_STRATA_LEVEE,
-    MAP_STRATA_RIVER,
-    MAP_STRATA_BACKSWAMP,
-    MAP_STRATA_LEVEE_WINTER,
-    MAP_STRATA_RIVER_WINTER,
-    MAP_STRATA_BACKSWAMP_WINTER,
-    MAP_STRATA_PALM_FOREST,
-    MAP_STRATA_RED_BEDS,
-    MAP_STRATA_LAKE_FOREST,
-    MAP_STRATA_WHITE_RIVER,
-    MAP_STRATA_GRASSLAND,
-    MAP_STRATA_STEPPE,
-    MAP_STRATA_TRAP_CAVE,
-    MAP_STRATA_PRAIRIE,
-};
-
 static u32 OppositeDirection(u32 direction)
 {
     switch (direction)
@@ -117,9 +90,10 @@ TEST("Strata map connections lead back the way they came")
 {
     u32 i, j, k;
     u16 map = 0;
-    for (i = 0; i < ARRAY_COUNT(sStrataMaps); i++)
+    // Every Strata map is in the generated map table (tools/strata/gen_maps.py).
+    for (i = 0; i < ARRAY_COUNT(sStrataMapInfo); i++)
     {
-        PARAMETRIZE { map = sStrataMaps[i]; }
+        PARAMETRIZE { map = sStrataMapInfo[i].map; }
     }
 
     const struct MapHeader *header = Overworld_GetMapHeaderByGroupAndId(MAP_GROUP(map), MAP_NUM(map));
@@ -173,10 +147,12 @@ TEST("Wild Pokemon in each era's maps have appeared and are alive in that era")
     u8 era = 0;
     for (i = 0; i < ARRAY_COUNT(sStrataMapInfo); i++)
     {
-        if (sStrataMapInfo[i].era == ERA_COUNT)
-            continue; // Present-day hub: no era
         PARAMETRIZE { map = sStrataMapInfo[i].map; era = sStrataMapInfo[i].era; }
     }
+    // Present-day hub maps have no era. Skip them here rather than before
+    // PARAMETRIZE, which needs every loop pass to reach it.
+    if (era == ERA_COUNT)
+        return;
 
     for (i = 0; gWildMonHeaders[i].mapGroup != MAP_GROUP(MAP_UNDEFINED); i++)
     {
