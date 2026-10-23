@@ -11,6 +11,7 @@ SPECIES = [
     # ------------------------------------------------------------------
     dict(
         name="Equus", genus="Equus", site="Natural Trap Cave, WY", age="~20 ka",
+        first_era="TRAP_CAVE",
         mass=300.0, length=2.2, mass_est=True,
         weights=dict(hp=6, atk=6, defn=5, spa=4, spd=5, spe=8),
         types=("NORMAL", "GRASS"), abilities=("RUN_AWAY", "QUICK_FEET"),
@@ -23,6 +24,7 @@ SPECIES = [
     ),
     dict(
         name="Arctodus", genus="Arctodus simus", site="Natural Trap Cave, WY", age="~20 ka",
+        first_era="TRAP_CAVE", diet="CARNIVORE",  # carnivore-scavenger (debated)
         mass=900.0, length=3.0, mass_est=True,
         weights=dict(hp=8, atk=8, defn=6, spa=3, spd=5, spe=5),
         types=("DARK", "NORMAL"), abilities=("INTIMIDATE", "THICK_FAT"),
@@ -34,6 +36,7 @@ SPECIES = [
     ),
     dict(
         name="Miracinonyx", genus="Miracinonyx trumani", site="Natural Trap Cave, WY", age="~20 ka",
+        first_era="TRAP_CAVE", diet="CARNIVORE",
         mass=70.0, length=1.6, mass_est=True,
         weights=dict(hp=5, atk=7, defn=4, spa=3, spd=4, spe=9),
         types=("DARK",), abilities=("SPEED_BOOST", "INFILTRATOR"),
@@ -46,6 +49,7 @@ SPECIES = [
     ),
     dict(
         name="Panthera", genus="Panthera atrox", site="Natural Trap Cave, WY", age="~20 ka",
+        first_era="TRAP_CAVE", diet="CARNIVORE",
         mass=350.0, length=2.5, mass_est=True,
         weights=dict(hp=6, atk=8, defn=5, spa=3, spd=5, spe=6),
         types=("DARK", "FIGHTING"), abilities=("INTIMIDATE", "MOXIE"),
@@ -57,6 +61,7 @@ SPECIES = [
     ),
     dict(
         name="Mammuthus", genus="Mammuthus columbi", site="Natural Trap Cave, WY", age="~20 ka",
+        first_era="TRAP_CAVE",
         mass=9000.0, length=4.5, mass_est=True,
         weights=dict(hp=8, atk=7, defn=6, spa=3, spd=6, spe=3),
         types=("ICE", "GROUND"), abilities=("THICK_FAT", "STURDY"),
@@ -68,6 +73,7 @@ SPECIES = [
     ),
     dict(
         name="Camelops", genus="Camelops", site="Wyoming", age="~20 ka",
+        first_era="TRAP_CAVE",
         mass=800.0, length=3.0, mass_est=True,
         weights=dict(hp=7, atk=6, defn=5, spa=3, spd=6, spe=5),
         types=("NORMAL", "GROUND"), abilities=("OBLIVIOUS", "THICK_FAT"),
@@ -78,6 +84,7 @@ SPECIES = [
     ),
     dict(
         name="Ovibos", genus="Ovibos moschatus", site="Natural Trap Cave, WY", age="~20 ka",
+        first_era="TRAP_CAVE",
         mass=300.0, length=2.2,
         weights=dict(hp=8, atk=6, defn=7, spa=3, spd=7, spe=3),
         types=("ICE", "NORMAL"), abilities=("THICK_FAT", "SNOW_CLOAK"),
@@ -89,6 +96,7 @@ SPECIES = [
     ),
     dict(
         name="Ovis", genus="Ovis canadensis", site="Natural Trap Cave, WY", age="~20 ka",
+        first_era="TRAP_CAVE",
         mass=100.0, length=1.6,
         weights=dict(hp=6, atk=6, defn=6, spa=3, spd=5, spe=6),
         types=("ROCK", "FIGHTING"), abilities=("ROCK_HEAD", "STURDY"),

@@ -10,6 +10,7 @@ SPECIES = [
     # ------------------------------------------------------------------
     dict(
         name="Antilocapra", genus="Antilocapra americana", site="Living; MT", age="today",
+        first_era="TRAP_CAVE",
         mass=50.0, length=1.4,
         weights=dict(hp=5, atk=5, defn=4, spa=4, spd=4, spe=10),
         types=("NORMAL",), abilities=("SPEED_BOOST", "RUN_AWAY"),
@@ -21,6 +22,7 @@ SPECIES = [
     ),
     dict(
         name="Bison", genus="Bison bison", site="Living; MT", age="today",
+        first_era="EPILOGUE",
         mass=700.0, length=3.0,
         weights=dict(hp=8, atk=7, defn=6, spa=3, spd=6, spe=4),
         types=("NORMAL", "GROUND"), abilities=("THICK_FAT", "RECKLESS"),
@@ -31,6 +33,7 @@ SPECIES = [
     ),
     dict(
         name="Cynomys", genus="Cynomys ludovicianus", site="Living; MT", age="today",
+        first_era="TRAP_CAVE",
         mass=1.0, length=0.4,
         weights=dict(hp=5, atk=4, defn=4, spa=5, spd=5, spe=6),
         types=("NORMAL", "GROUND"), abilities=("RUN_AWAY", "PICKUP"),

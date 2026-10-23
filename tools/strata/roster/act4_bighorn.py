@@ -11,6 +11,7 @@ SPECIES = [
     # ------------------------------------------------------------------
     dict(
         name="Sifrhippus", genus="Sifrhippus sandrae", site="Willwood Fm, WY", age="~55.8 Ma",
+        first_era="BIGHORN_PETM",
         mass=4.0, length=0.5,
         weights=dict(hp=4, atk=4, defn=4, spa=4, spd=4, spe=7),
         types=("NORMAL", "GRASS"), abilities=("RUN_AWAY", "QUICK_FEET"),
@@ -23,6 +24,7 @@ SPECIES = [
     ),
     dict(
         name="Teilhardina", genus="Teilhardina brandti", site="Willwood Fm, WY", age="~55.8 Ma",
+        first_era="BIGHORN_PETM", diet="OMNIVORE",  # insects and fruit
         mass=0.03, length=0.1, mass_est=True,
         weights=dict(hp=4, atk=3, defn=3, spa=7, spd=4, spe=7),
         types=("NORMAL", "PSYCHIC"), abilities=("RUN_AWAY", "INFILTRATOR"),
@@ -34,6 +36,7 @@ SPECIES = [
     ),
     dict(
         name="Diacodexis", genus="Diacodexis ilicis", site="Willwood Fm, WY", age="~55.8 Ma",
+        first_era="BIGHORN_PETM",
         mass=2.0, length=0.5, mass_est=True,
         weights=dict(hp=4, atk=4, defn=3, spa=4, spd=4, spe=8),
         types=("NORMAL",), abilities=("RUN_AWAY", "QUICK_FEET"),
@@ -45,6 +48,7 @@ SPECIES = [
     ),
     dict(
         name="Hyopsodus", genus="Hyopsodus", site="Willwood Fm, WY", age="~55 Ma",
+        first_era="BIGHORN_PETM", diet="OMNIVORE",
         mass=1.0, length=0.35, mass_est=True,
         weights=dict(hp=5, atk=4, defn=4, spa=4, spd=5, spe=5),
         types=("NORMAL", "GROUND"), abilities=("PICKUP", "RUN_AWAY"),
@@ -56,6 +60,7 @@ SPECIES = [
     ),
     dict(
         name="Coryphodon", genus="Coryphodon", site="Willwood Fm, WY", age="~55 Ma",
+        first_era="BIGHORN_PETM",
         mass=500.0, length=2.3, mass_est=True,
         weights=dict(hp=8, atk=6, defn=7, spa=2, spd=6, spe=2),
         types=("GROUND", "WATER"), abilities=("THICK_FAT", "STURDY"),

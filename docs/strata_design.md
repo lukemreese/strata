@@ -127,6 +127,7 @@ The whole dog family (Canidae) **originated in North America**.
 | 5b | 7 | *Leptocyon* | Small fox-like generalist |
 | 6a | 8 | *Aenocyon dirus* (dire wolf) | Megafauna specialist → **extinct** |
 | 6b | 8 | *Canis latrans* (coyote) | Generalist → **survives to today** |
+| 6c | 8 | *Vulpes velox* (swift fox) | Open-grassland branch (OPEN ≥ 96 in Act 7) → survives; nearly lost in the 20th century |
 
 Lesson: the specialist branches are stronger in their own era but die out later.
 
@@ -140,6 +141,7 @@ Ground-dwelling birds survived the impact. Tree-dwelling birds mostly did not.
 | 2b | 5 | *Presbyornis* | Long-legged lake duck, Green River |
 | 2c | 5 | *Gallinuloides* | Early galliform, Green River |
 | 3 | 6–8 | (galliform chain) → *Meleagris* | Turkey, endemic to North America |
+| 3b | 8 | *Centrocercus* (greater sage-grouse) | Open-grassland branch (OPEN ≥ 96 over Acts 4–7); a present-day conservation story |
 
 Lesson: one survivor radiates into many body plans. Big and flightless is a dead end here.
 
@@ -151,6 +153,7 @@ Snapping turtles have lived in Montana from the Cretaceous to today with very li
 | 1 | 1–3 | *Emarginachelys cretacea* | Hell Creek chelydrid |
 | 2 | 4–6 | *Protochelydra zangerli* | Paleocene, North Dakota |
 | 3 | 7–E | *Chelydra serpentina* | Common snapping turtle |
+| 3b | 7–E | *Macrochelys* (alligator snapper) | Heat branch (HEAT ≥ 160 over Acts 3–6, i.e. carried through the PETM); Miocene fossils in Nebraska, today only in the warm Southeast |
 
 Lesson: if a body plan works, **stabilising selection** keeps it. This line
 changes form rarely, but gets big stat boosts from surviving every extinction filter.
@@ -162,11 +165,19 @@ It is the "hard mode / safe mode" starter.
   *Eohippus*/*Protorohippus* → *Orohippus* → *Mesohippus* → *Merychippus* →
   *Cormohipparion* / *Pliohippus* → *Equus*. Horses **die out in North America ~11 ka**
   and return with the Spanish in the 1500s, which is part of the epilogue.
+  In the game: *Sifrhippus* → *Eohippus* → *Mesohippus* → *Protohippus* (default) → *Equus*,
+  or the forest browser *Hypohippus* (FOREST ≥ 64 in Act 6; dies by the Ice Age).
 - **Camel line** (also North American in origin): *Poebrotherium* → *Procamelus* → *Aepycamelus* → *Camelops*.
 - **Multituberculates**: *Mesodma* → *Taeniolabis* → *Ptilodus* → extinct by ~34 Ma.
   They were the most long-lived mammal order of all time. Their dying out is a midgame story beat.
-- **Rhinos**: *Subhyracodon* → *Teleoceras* (hippo-like, preserved at Ashfall) → extinct in NA.
-- **Pronghorn**: *Antilocapra* runs much faster than any living predator needs. That speed is a
+- **Rhinos**: *Hyrachyus* (Bridger) → *Subhyracodon* → *Teleoceras* (barrel-bodied, preserved
+  at Ashfall) or the open-country *Aphelops* (OPEN ≥ 64 in Act 6) → both extinct in NA.
+  Grades, not ancestors: the Miocene rhinos were immigrants.
+- **Primates**: *Teilhardina* → *Omomys* (both omomyiforms; extinct by White River).
+  *Notharctus* is an adapiform, a different branch, and only a wild species.
+- **Rodents and squirrels**: *Paramys* → *Ischyromys* (dies by Ashfall); *Douglassciurus*,
+  the oldest squirrel, → *Cynomys* (stand-in).
+- **Pronghorn**: *Cosoryx* → *Antilocapra* (stand-in: a merycodontine side branch). *Antilocapra* runs much faster than any living predator needs. That speed is a
   "ghost" of the extinct American cheetah (*Miracinonyx*) in Act 8.
 
 ## 6. Bosses (one apex per layer)
@@ -258,7 +269,7 @@ party and the PC boxes.
 | OPEN (`beauty`) | Tall grass, or a map tagged open | +1 per 32 steps | Same (R4) |
 | WATER (`cute`) | Surfing/wading; **standing next to surfable water** (shore); hooking a fish | +1 per 32 steps; +2 per fish hooked (whole party) | n/a |
 | PLANT (`smart`) | No source yet (`special Strata_AddPressure` only) | n/a | Plant forage items, +12 each (R3) |
-| ANIMAL (`tough`, `PRESSURE_MEAT_DIET`) | Knocking out a foe with a move, **only for carnivores/omnivores** (`src/data/strata_diets.h`) | +1 per KO; KOs stop at 24 | Carrion/larvae forage, +12 each (R3) |
+| ANIMAL (`tough`, `PRESSURE_MEAT_DIET`) | Knocking out a foe with a move, **only for carnivores/omnivores** (roster `diet`, generated into `src/data/strata_diets.h`) | +1 per KO; KOs stop at 24 | Carrion/larvae forage, +12 each (R3) |
 | HEAT (`sheen`) | Era climate (`sEraHeat`) | 0–2 per tick | n/a |
 
 - **Thresholds:** a branch only competes once its counter reaches its `minScore`
@@ -354,6 +365,12 @@ Keep the standard 18 types for compatibility, but assign them by ecology.
   new species are *always appended at the end*, even when they belong to an early act.
   Never insert, remove or reorder species in the act modules. Then run
   `python3 tools/strata/gen_species.py`. The fields are documented in `roster/__init__.py`.
+  Every species needs a `first_era` (the first era it exists, wild or as a descendant);
+  stand-ins whose lineage outlives the genus get a `last_era` for wild appearances; animal
+  eaters get a `diet`. They generate `src/data/strata_species_eras.h` and
+  `src/data/strata_diets.h`, and the tests check every encounter table and descent
+  against them. If the species joins a lineage, add its descent and extinction to
+  `src/data/lineages.h`.
 - **How to add a map:** append a dict to `MAPS` in the act's module under
   `tools/strata/maps/` (`act0_present.py` ... `act8_ice_age.py`, `epilogue.py`), with its
   MAPSEC in the same module's `MAP_SECTIONS`, write `data/maps/<Name>/scripts.inc`, and run
@@ -374,13 +391,14 @@ Keep the standard 18 types for compatibility, but assign them by ecology.
   Small species keep speed-heavy weights, so they are fast rather than bulky.
   Masses without a published estimate are flagged `mass_est` and shown as estimates.
 - **Focal bonus (a game concession, not biology):** species with `focal=True` in the
-  roster, the 16 species of the three starter lines, get a flat +40 BST (capped at 600).
+  roster, the 19 species of the three starter lines, get a flat +40 BST (capped at 600).
   The player carries these lineages through every act, and a 0.3 kg ground bird would
   otherwise sit far below the wilds of Acts 6–8. Examples: *Cimolestes* 365,
   *Gallinuloides* 354, *Leptocyon* 395, *Canis* 436, *Emarginachelys* 425; for comparison,
   non-focal *Mesodma* 275, *Teilhardina* 264, *Tyrannosaurus* 535, *Mammuthus* 538.
-  When a new species joins a starter line (e.g. *Vulpes*, *Centrocercus*, *Macrochelys*),
-  give it `focal=True` too.
+  When a new species joins a starter line (as *Vulpes*, *Centrocercus* and *Macrochelys*
+  did), give it `focal=True` too: `test/lineage.c` checks that the focal species are
+  exactly those a starter can become.
 - **Balance report:** `python3 tools/strata/balance.py` prints, per act, the wild species
   and levels, the boss fights, the era level floor and the expected starter-line party,
   with stat totals at level, and flags gaps (`--strict` exits 1 on any flag). Run it after

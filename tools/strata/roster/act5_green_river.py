@@ -11,6 +11,7 @@ SPECIES = [
     # ------------------------------------------------------------------
     dict(
         name="Eohippus", genus="Eohippus angustidens", site="Wind River Fm, WY", age="~52 Ma",
+        first_era="GREEN_RIVER",
         mass=10.0, length=0.6, mass_est=True,
         weights=dict(hp=5, atk=5, defn=4, spa=4, spd=4, spe=7),
         types=("NORMAL", "GRASS"), abilities=("RUN_AWAY", "QUICK_FEET"),
@@ -23,6 +24,7 @@ SPECIES = [
     ),
     dict(
         name="Onychonycter", genus="Onychonycteris finneyi", site="Green River Fm, WY", age="~52.5 Ma",
+        first_era="GREEN_RIVER", diet="CARNIVORE",  # insects
         mass=0.04, length=0.1, mass_est=True,
         weights=dict(hp=4, atk=4, defn=3, spa=5, spd=4, spe=7),
         types=("FLYING", "DARK"), abilities=("INFILTRATOR", "KEEN_EYE"),
@@ -34,6 +36,7 @@ SPECIES = [
     ),
     dict(
         name="Heliobatis", genus="Heliobatis radians", site="Green River Fm, WY", age="~52 Ma",
+        first_era="GREEN_RIVER", diet="CARNIVORE",  # buried invertebrates
         mass=2.0, length=0.3, mass_est=True,
         weights=dict(hp=5, atk=4, defn=5, spa=6, spd=5, spe=5),
         types=("WATER", "ELECTRIC"), abilities=("POISON_POINT", "SWIFT_SWIM"),
@@ -45,6 +48,7 @@ SPECIES = [
     ),
     dict(
         name="Knightia", genus="Knightia eocaena", site="Green River Fm, WY", age="~51 Ma",
+        first_era="GREEN_RIVER", diet="OMNIVORE",  # plankton and small insects
         mass=0.05, length=0.15,
         weights=dict(hp=4, atk=4, defn=4, spa=4, spd=4, spe=7),
         types=("WATER",), abilities=("SWIFT_SWIM", "WATER_VEIL"),
@@ -56,6 +60,7 @@ SPECIES = [
     ),
     dict(
         name="Notharctus", genus="Notharctus tenebrosus", site="Bridger Fm, WY", age="~50 Ma",
+        first_era="GREEN_RIVER",
         mass=4.0, length=0.9, mass_est=True,
         weights=dict(hp=5, atk=4, defn=4, spa=7, spd=5, spe=6),
         types=("GRASS", "PSYCHIC"), abilities=("INFILTRATOR", "LEAF_GUARD"),
@@ -67,6 +72,7 @@ SPECIES = [
     ),
     dict(
         name="Uintatherium", genus="Uintatherium anceps", site="Bridger Fm, WY", age="~46 Ma",
+        first_era="GREEN_RIVER",
         mass=2000.0, length=4.0, mass_est=True,
         weights=dict(hp=7, atk=7, defn=7, spa=2, spd=6, spe=3),
         types=("GROUND", "FIGHTING"), abilities=("STURDY", "INTIMIDATE"),

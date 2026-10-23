@@ -11,6 +11,7 @@ SPECIES = [
     # ------------------------------------------------------------------
     dict(
         name="Mesohippus", genus="Mesohippus bairdi", site="Brule Fm, SD", age="~32 Ma",
+        first_era="WHITE_RIVER",
         mass=40.0, length=1.2, mass_est=True,
         weights=dict(hp=5, atk=5, defn=4, spa=4, spd=4, spe=7),
         types=("NORMAL", "GRASS"), abilities=("RUN_AWAY", "QUICK_FEET"),
@@ -22,6 +23,7 @@ SPECIES = [
     ),
     dict(
         name="Archaeothere", genus="Archaeotherium", site="Brule Fm, SD", age="~32 Ma",
+        first_era="WHITE_RIVER", diet="OMNIVORE",  # "hell pig", cached carcasses
         mass=270.0, length=2.0, mass_est=True,
         weights=dict(hp=7, atk=7, defn=6, spa=2, spd=5, spe=4),
         types=("DARK", "GROUND"), abilities=("STRONG_JAW", "GLUTTONY"),
@@ -34,6 +36,7 @@ SPECIES = [
     ),
     dict(
         name="Hoplophoneus", genus="Hoplophoneus", site="Brule Fm, SD", age="~32 Ma",
+        first_era="WHITE_RIVER", diet="CARNIVORE",
         mass=50.0, length=1.4, mass_est=True,
         weights=dict(hp=5, atk=8, defn=4, spa=3, spd=4, spe=6),
         types=("DARK",), abilities=("SUPER_LUCK", "INTIMIDATE"),
@@ -45,6 +48,7 @@ SPECIES = [
     ),
     dict(
         name="Merycoidodon", genus="Merycoidodon", site="Brule Fm, SD", age="~32 Ma",
+        first_era="WHITE_RIVER",
         mass=100.0, length=1.4, mass_est=True,
         weights=dict(hp=7, atk=5, defn=5, spa=3, spd=5, spe=4),
         types=("NORMAL", "GRASS"), abilities=("THICK_FAT", "SAP_SIPPER"),
@@ -56,6 +60,7 @@ SPECIES = [
     ),
     dict(
         name="Subhyracodon", genus="Subhyracodon", site="Brule Fm, SD", age="~32 Ma",
+        first_era="WHITE_RIVER",
         mass=500.0, length=2.5, mass_est=True,
         weights=dict(hp=7, atk=6, defn=7, spa=2, spd=6, spe=4),
         types=("GROUND", "NORMAL"), abilities=("STURDY", "THICK_FAT"),
@@ -67,6 +72,7 @@ SPECIES = [
     ),
     dict(
         name="Poebrothere", genus="Poebrotherium", site="Brule Fm, SD", age="~32 Ma",
+        first_era="WHITE_RIVER",
         mass=30.0, length=1.2, mass_est=True,
         weights=dict(hp=5, atk=4, defn=4, spa=4, spd=5, spe=7),
         types=("NORMAL",), abilities=("RUN_AWAY", "OBLIVIOUS"),
@@ -78,6 +84,7 @@ SPECIES = [
     ),
     dict(
         name="Leptomeryx", genus="Leptomeryx", site="Brule Fm, SD", age="~32 Ma",
+        first_era="WHITE_RIVER",
         mass=5.0, length=0.6, mass_est=True,
         weights=dict(hp=4, atk=4, defn=3, spa=5, spd=4, spe=8),
         types=("NORMAL", "GRASS"), abilities=("RUN_AWAY", "QUICK_FEET"),
@@ -89,6 +96,7 @@ SPECIES = [
     ),
     dict(
         name="Stylemys", genus="Stylemys nebrascensis", site="Brule Fm, SD", age="~32 Ma",
+        first_era="WHITE_RIVER",
         mass=15.0, length=0.5, mass_est=True,
         weights=dict(hp=5, atk=4, defn=8, spa=3, spd=7, spe=2),
         types=("GRASS", "ROCK"), abilities=("SHELL_ARMOR", "STURDY"),
@@ -100,6 +108,7 @@ SPECIES = [
     ),
     dict(
         name="Ischyromys", genus="Ischyromys", site="Brule Fm, SD", age="~32 Ma",
+        first_era="WHITE_RIVER",
         mass=0.8, length=0.4, mass_est=True,
         weights=dict(hp=4, atk=5, defn=4, spa=4, spd=4, spe=7),
         types=("NORMAL",), abilities=("RUN_AWAY", "PICKUP"),
@@ -107,6 +116,6 @@ SPECIES = [
         borrow="skwovet",
         moves=[(1, "TACKLE"), (1, "TAIL_WHIP"), (30, "HYPER_FANG"), (34, "BULLET_SEED"), (38, "DIG"),
                (42, "SUPER_FANG")],
-        dex="A squirrel-like rodent of the White River woodlands. Rodents reached North America about 56 million years ago, in the PETM heat.",
+        dex="A squirrel-like rodent of the White River woodlands. Rodents reached North America about 57 million years ago, just before the PETM.",
     ),
 ]

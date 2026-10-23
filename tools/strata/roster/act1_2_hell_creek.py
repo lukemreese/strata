@@ -10,6 +10,7 @@ SPECIES = [
     # ------------------------------------------------------------------
     dict(
         name="Tyrannosaur", genus="Tyrannosaurus rex", site="Hell Creek Fm, MT", age="66.1 Ma",
+        first_era="HELL_CREEK", diet="CARNIVORE",
         mass=8000.0, length=12.3,
         weights=dict(hp=6, atk=9, defn=5, spa=4, spd=5, spe=3),
         types=("DARK", "DRAGON"), abilities=("STRONG_JAW", "INTIMIDATE"),
@@ -21,6 +22,7 @@ SPECIES = [
     ),
     dict(
         name="Triceratops", genus="Triceratops horridus", site="Hell Creek Fm, MT", age="66.1 Ma",
+        first_era="HELL_CREEK",
         mass=9000.0, length=8.5,
         weights=dict(hp=7, atk=7, defn=7, spa=3, spd=5, spe=3),
         types=("FIGHTING", "ROCK"), abilities=("STURDY", "ROCK_HEAD"),
@@ -32,6 +34,7 @@ SPECIES = [
     ),
     dict(
         name="Edmontosaur", genus="Edmontosaurus annectens", site="Hell Creek Fm, MT", age="66.1 Ma",
+        first_era="HELL_CREEK",
         mass=4000.0, length=12.0,
         weights=dict(hp=8, atk=4, defn=5, spa=4, spd=5, spe=5),
         types=("GRASS", "NORMAL"), abilities=("SAP_SIPPER", "RUN_AWAY"),
@@ -43,6 +46,7 @@ SPECIES = [
     ),
     dict(
         name="Ankylosaurus", genus="Ankylosaurus magniventris", site="Hell Creek Fm, MT", age="66.1 Ma",
+        first_era="HELL_CREEK",
         mass=5000.0, length=7.0,
         weights=dict(hp=6, atk=6, defn=10, spa=2, spd=7, spe=1),
         types=("ROCK", "FIGHTING"), abilities=("BATTLE_ARMOR", "STURDY"),
@@ -54,6 +58,7 @@ SPECIES = [
     ),
     dict(
         name="Pachycephalo", genus="Pachycephalosaurus", site="Hell Creek Fm, MT", age="66.1 Ma",
+        first_era="HELL_CREEK",
         mass=400.0, length=4.5,
         weights=dict(hp=5, atk=6, defn=7, spa=3, spd=4, spe=5),
         types=("FIGHTING",), abilities=("ROCK_HEAD", "RECKLESS"),
@@ -65,6 +70,7 @@ SPECIES = [
     ),
     dict(
         name="Thescelosaur", genus="Thescelosaurus neglectus", site="Hell Creek Fm, MT", age="66.1 Ma",
+        first_era="HELL_CREEK",
         mass=300.0, length=3.5,
         weights=dict(hp=5, atk=4, defn=4, spa=4, spd=4, spe=7),
         types=("GRASS",), abilities=("RUN_AWAY", "QUICK_FEET"),
@@ -76,6 +82,7 @@ SPECIES = [
     ),
     dict(
         name="Acheroraptor", genus="Acheroraptor temertyorum", site="Hell Creek Fm, MT", age="66.1 Ma",
+        first_era="HELL_CREEK", diet="CARNIVORE",
         mass=40.0, length=3.0,
         weights=dict(hp=4, atk=7, defn=3, spa=5, spd=3, spe=8),
         types=("DARK",), abilities=("HUSTLE", "SPEED_BOOST"),
@@ -88,6 +95,7 @@ SPECIES = [
     ),
     dict(
         name="Anzu", genus="Anzu wyliei", site="Hell Creek Fm, ND/SD", age="66.1 Ma",
+        first_era="HELL_CREEK", diet="OMNIVORE",  # diet debated: plants and small animals
         mass=250.0, length=3.5,
         weights=dict(hp=5, atk=6, defn=4, spa=5, spd=4, spe=6),
         types=("NORMAL", "FIGHTING"), abilities=("KEEN_EYE", "GLUTTONY"),
@@ -99,6 +107,7 @@ SPECIES = [
     ),
     dict(
         name="Didelphodon", genus="Didelphodon vorax", site="Hell Creek Fm, MT", age="66.1 Ma",
+        first_era="HELL_CREEK", diet="CARNIVORE",  # shell- and bone-cracking
         mass=5.0, length=0.6,
         weights=dict(hp=5, atk=7, defn=4, spa=3, spd=4, spe=4),
         types=("DARK", "STEEL"), abilities=("STRONG_JAW", "STAKEOUT"),
@@ -110,6 +119,7 @@ SPECIES = [
     ),
     dict(
         name="Mesodma", genus="Mesodma", site="Hell Creek Fm, MT", age="66.1 Ma",
+        first_era="HELL_CREEK",
         mass=0.05, length=0.1, mass_est=True,
         weights=dict(hp=4, atk=4, defn=3, spa=4, spd=5, spe=7),
         types=("NORMAL", "GROUND"), abilities=("RUN_AWAY", "PICKUP"),
@@ -121,6 +131,7 @@ SPECIES = [
     ),
     dict(
         name="Champsosaur", genus="Champsosaurus", site="Hell Creek Fm, MT", age="66.1 Ma",
+        first_era="HELL_CREEK", diet="CARNIVORE",  # fish
         mass=20.0, length=1.5, mass_est=True,
         weights=dict(hp=5, atk=6, defn=4, spa=4, spd=4, spe=5),
         types=("WATER",), abilities=("SWIFT_SWIM", "STRONG_JAW"),
@@ -132,6 +143,7 @@ SPECIES = [
     ),
     dict(
         name="Borealosuch", genus="Borealosuchus", site="Hell Creek Fm, MT", age="66.1 Ma",
+        first_era="HELL_CREEK", diet="CARNIVORE",
         mass=150.0, length=3.5, mass_est=True,
         weights=dict(hp=6, atk=7, defn=6, spa=3, spd=5, spe=3),
         types=("WATER", "DRAGON"), abilities=("STRONG_JAW", "SWIFT_SWIM"),
@@ -143,6 +155,7 @@ SPECIES = [
     ),
     dict(
         name="Lepisosteus", genus="Lepisosteus", site="Hell Creek Fm, MT", age="66.1 Ma",
+        first_era="HELL_CREEK", diet="CARNIVORE",  # fish
         mass=5.0, length=1.0, mass_est=True,
         weights=dict(hp=5, atk=6, defn=6, spa=3, spd=4, spe=6),
         types=("WATER",), abilities=("SWIFT_SWIM", "BATTLE_ARMOR"),

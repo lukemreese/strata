@@ -19,6 +19,18 @@ Every species is a real, fossil-documented (or living) animal. Fields:
   weights   Relative stat split {hp, atk, def, spa, spd, spe}, from anatomy:
             atk = bite/weapon, def = armour/shell, spe = locomotion,
             spa = senses/brain, spd = hardiness, hp = bulk.
+  first_era Required. The first era (ERA_* name without the prefix, e.g.
+            "WHITE_RIVER") in which the species exists in the game: as a wild
+            species, or as the descendant a lineage turns into at that era's load.
+            test/strata_region.c fails if a map of an earlier era has it wild, and
+            test/lineage.c fails if a descent produces it before this era.
+  last_era  Optional. The last era in which it may appear WILD, for stand-ins
+            whose lineage lives on (in stasis) past the genus' real range, e.g.
+            Gallinuloides (~52 Ma) carried to the Ice Age. Default: no limit
+            beyond its extinction (src/data/lineages.h).
+  diet      "HERBIVORE" (default), "OMNIVORE" or "CARNIVORE" (vertebrate prey,
+            fish or insects make up most of the diet). Only animal eaters gain
+            ANIMAL pressure from knockouts. Generated into src/data/strata_diets.h.
   types     Ecological types; see docs/strata_design.md §7.6.
   borrow    Stock Pokémon whose sprites/cry are used as placeholders.
   notes     Caveats for the Codex: stand-ins, debated placements.

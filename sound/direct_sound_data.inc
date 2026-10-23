@@ -9464,4 +9464,106 @@ Cry_StrataCynomys::
 	.incbin "sound/direct_sound_samples/cries/strata_cynomys.bin"
 .endif
 
+	.align 2
+Cry_StrataAvisaurus::
+.if TESTING == FALSE
+	.incbin "sound/direct_sound_samples/cries/strata_avisaurus.bin"
+.endif
+
+	.align 2
+Cry_StrataParamys::
+.if TESTING == FALSE
+	.incbin "sound/direct_sound_samples/cries/strata_paramys.bin"
+.endif
+
+	.align 2
+Cry_StrataOxyaena::
+.if TESTING == FALSE
+	.incbin "sound/direct_sound_samples/cries/strata_oxyaena.bin"
+.endif
+
+	.align 2
+Cry_StrataOmomys::
+.if TESTING == FALSE
+	.incbin "sound/direct_sound_samples/cries/strata_omomys.bin"
+.endif
+
+	.align 2
+Cry_StrataHyrachyus::
+.if TESTING == FALSE
+	.incbin "sound/direct_sound_samples/cries/strata_hyrachyus.bin"
+.endif
+
+	.align 2
+Cry_StrataPatriofelis::
+.if TESTING == FALSE
+	.incbin "sound/direct_sound_samples/cries/strata_patriofelis.bin"
+.endif
+
+	.align 2
+Cry_StrataHyaenodon::
+.if TESTING == FALSE
+	.incbin "sound/direct_sound_samples/cries/strata_hyaenodon.bin"
+.endif
+
+	.align 2
+Cry_StrataPalaeolagus::
+.if TESTING == FALSE
+	.incbin "sound/direct_sound_samples/cries/strata_palaeolagus.bin"
+.endif
+
+	.align 2
+Cry_StrataDouglassciur::
+.if TESTING == FALSE
+	.incbin "sound/direct_sound_samples/cries/strata_douglassciur.bin"
+.endif
+
+	.align 2
+Cry_StrataHypohippus::
+.if TESTING == FALSE
+	.incbin "sound/direct_sound_samples/cries/strata_hypohippus.bin"
+.endif
+
+	.align 2
+Cry_StrataAphelops::
+.if TESTING == FALSE
+	.incbin "sound/direct_sound_samples/cries/strata_aphelops.bin"
+.endif
+
+	.align 2
+Cry_StrataCormohippari::
+.if TESTING == FALSE
+	.incbin "sound/direct_sound_samples/cries/strata_cormohippari.bin"
+.endif
+
+	.align 2
+Cry_StrataCosoryx::
+.if TESTING == FALSE
+	.incbin "sound/direct_sound_samples/cries/strata_cosoryx.bin"
+.endif
+
+	.align 2
+Cry_StrataMacrochelys::
+.if TESTING == FALSE
+	.incbin "sound/direct_sound_samples/cries/strata_macrochelys.bin"
+.endif
+
+	.align 2
+Cry_StrataVulpes::
+.if TESTING == FALSE
+	.incbin "sound/direct_sound_samples/cries/strata_vulpes.bin"
+.endif
+
+	.align 2
+Cry_StrataCentrocercus::
+.if TESTING == FALSE
+	.incbin "sound/direct_sound_samples/cries/strata_centrocercus.bin"
+.endif
+
+	.align 2
+Cry_StrataMustela::
+.if TESTING == FALSE
+	.incbin "sound/direct_sound_samples/cries/strata_mustela.bin"
+.endif
+
 @ END STRATA CRY_SAMPLES

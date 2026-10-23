@@ -8,8 +8,12 @@
 #include "test/overworld_script.h"
 #include "test/test.h"
 #include "constants/vars.h"
+#include "../src/data/strata_species_eras.h"
 
 // These tests use the lineages in src/data/lineages.h.
+
+#define FIRST_STRATA_SPECIES (SPECIES_CUSTOM_START + 1)
+#define STRATA_SPECIES_COUNT (SPECIES_CUSTOM_END - FIRST_STRATA_SPECIES)
 
 static void ResetStrata(void)
 {
@@ -127,6 +131,143 @@ TEST("Lineage_GetDescendant ignores pressures no option selects for")
     u8 pressures[PRESSURE_COUNT] = {0};
     pressures[PRESSURE_HEAT] = 255;
     EXPECT_EQ(Lineage_GetDescendant(SPECIES_ASTERIORNIS, ERA_BIGHORN_PETM, pressures), SPECIES_GALLINULOID);
+}
+
+// Every branch of docs/strata_outline.md §2.11, at its threshold and one below.
+TEST("Each lineage branch needs its pressure to reach its threshold")
+{
+    u32 i;
+    static const struct
+    {
+        u16 ancestor;
+        u8 era;
+        u8 pressure;
+        u8 minScore;
+        u16 byDefault;
+        u16 branch;
+    } sBranches[] =
+    {
+        { SPECIES_HESPEROCYON,  ERA_ASHFALL,      PRESSURE_MEAT_DIET,  64, SPECIES_LEPTOCYON,   SPECIES_EPICYON },
+        { SPECIES_LEPTOCYON,    ERA_TRAP_CAVE,    PRESSURE_MEAT_DIET,  64, SPECIES_CANIS,       SPECIES_AENOCYON },
+        { SPECIES_LEPTOCYON,    ERA_TRAP_CAVE,    PRESSURE_OPEN,       96, SPECIES_CANIS,       SPECIES_VULPES },
+        { SPECIES_ASTERIORNIS,  ERA_BIGHORN_PETM, PRESSURE_WATER,      64, SPECIES_GALLINULOID, SPECIES_PRESBYORNIS },
+        { SPECIES_ASTERIORNIS,  ERA_BIGHORN_PETM, PRESSURE_PLANT_DIET, 64, SPECIES_GALLINULOID, SPECIES_GASTORNIS },
+        { SPECIES_GALLINULOID,  ERA_TRAP_CAVE,    PRESSURE_OPEN,       96, SPECIES_MELEAGRIS,   SPECIES_CENTROCERCUS },
+        { SPECIES_PROTOCHELYD,  ERA_ASHFALL,      PRESSURE_HEAT,      160, SPECIES_CHELYDRA,    SPECIES_MACROCHELYS },
+        { SPECIES_MESOHIPPUS,   ERA_ASHFALL,      PRESSURE_FOREST,     64, SPECIES_PROTOHIPPUS, SPECIES_HYPOHIPPUS },
+        { SPECIES_SUBHYRACODON, ERA_ASHFALL,      PRESSURE_OPEN,       64, SPECIES_TELEOCERAS,  SPECIES_APHELOPS },
+    };
+
+    for (i = 0; i < ARRAY_COUNT(sBranches); i++)
+    {
+        u8 pressures[PRESSURE_COUNT] = {0};
+        pressures[sBranches[i].pressure] = sBranches[i].minScore - 1;
+        EXPECT_EQ(Lineage_GetDescendant(sBranches[i].ancestor, sBranches[i].era, pressures), sBranches[i].byDefault);
+        pressures[sBranches[i].pressure] = sBranches[i].minScore;
+        EXPECT_EQ(Lineage_GetDescendant(sBranches[i].ancestor, sBranches[i].era, pressures), sBranches[i].branch);
+    }
+}
+
+TEST("A dog lineage steered both ways takes the branch with the higher counter")
+{
+    u8 pressures[PRESSURE_COUNT] = {0};
+    pressures[PRESSURE_MEAT_DIET] = 100;
+    pressures[PRESSURE_OPEN] = 96;
+    EXPECT_EQ(Lineage_GetDescendant(SPECIES_LEPTOCYON, ERA_TRAP_CAVE, pressures), SPECIES_AENOCYON);
+    pressures[PRESSURE_OPEN] = 120;
+    EXPECT_EQ(Lineage_GetDescendant(SPECIES_LEPTOCYON, ERA_TRAP_CAVE, pressures), SPECIES_VULPES);
+}
+
+TEST("Single-path lineages descend by default")
+{
+    u8 pressures[PRESSURE_COUNT] = {0};
+    // Teilhardina's line stays within the omomyiform primates (outline §5 H4).
+    EXPECT_EQ(Lineage_GetDescendant(SPECIES_TEILHARDINA, ERA_GREEN_RIVER, pressures), SPECIES_OMOMYS);
+    EXPECT_EQ(Lineage_GetDescendant(SPECIES_HYRACHYUS, ERA_WHITE_RIVER, pressures), SPECIES_SUBHYRACODON);
+    EXPECT_EQ(Lineage_GetDescendant(SPECIES_PARAMYS, ERA_WHITE_RIVER, pressures), SPECIES_ISCHYROMYS);
+    EXPECT_EQ(Lineage_GetDescendant(SPECIES_DOUGLASSCIUR, ERA_TRAP_CAVE, pressures), SPECIES_CYNOMYS);
+    EXPECT_EQ(Lineage_GetDescendant(SPECIES_COSORYX, ERA_TRAP_CAVE, pressures), SPECIES_ANTILOCAPRA);
+}
+
+TEST("A rhino lineage from the Bridger Basin dies out by the Ice Age on either branch")
+{
+    u8 pressure = DESCENT_MIN_SCORE;
+    struct Pokemon *mon = &gParties[B_TRAINER_PLAYER][0];
+
+    ResetStrata();
+    VarSet(VAR_STRATA_ERA, ERA_GREEN_RIVER);
+    CreateMon(mon, SPECIES_HYRACHYUS, 30, 0, OTID_STRUCT_PLAYER_ID);
+    CreateMon(&gParties[B_TRAINER_PLAYER][1], SPECIES_CHELYDRA, 30, 0, OTID_STRUCT_PLAYER_ID);
+    Lineage_AdvanceToEra(ERA_WHITE_RIVER);
+    EXPECT_EQ(GetMonData(mon, MON_DATA_SPECIES), SPECIES_SUBHYRACODON);
+    SetMonData(mon, MON_DATA_BEAUTY, &pressure); // PRESSURE_OPEN: the White River flats
+    Lineage_AdvanceToEra(ERA_ASHFALL);
+    EXPECT_EQ(GetMonData(mon, MON_DATA_SPECIES), SPECIES_APHELOPS);
+    Lineage_AdvanceToEra(ERA_TRAP_CAVE);
+    EXPECT_EQ(Lineage_GetFirstExtinctSpecies(), SPECIES_APHELOPS);
+    EXPECT_EQ(CalculatePlayerPartyCount(), 1);
+    EXPECT_EQ(GetMonData(&gParties[B_TRAINER_PLAYER][0], MON_DATA_SPECIES), SPECIES_CHELYDRA);
+}
+
+// Roster `first_era` (src/data/strata_species_eras.h) and the descent table agree:
+// a lineage can't turn into a species before that species exists, and the
+// ancestor must exist before the era it descends in.
+TEST("Every descent happens after its ancestor's first era, into a species that exists by then")
+{
+    u32 species, era;
+    const struct DescentOption *option;
+
+    for (species = FIRST_STRATA_SPECIES; species < SPECIES_CUSTOM_END; species++)
+    {
+        for (era = 0; era < ERA_COUNT; era++)
+        {
+            option = Lineage_GetDescentOptions(species, era);
+            if (option == NULL)
+                continue;
+            EXPECT_LT(sStrataSpeciesEras[species].firstEra, era);
+            for (; option->species != SPECIES_NONE; option++)
+                EXPECT_LE(sStrataSpeciesEras[option->species].firstEra, era);
+        }
+    }
+}
+
+// The focal bonus (+40 BST, tools/strata/gen_species.py) is for the three starter
+// lines: every species a starter can become, and nothing else.
+TEST("Exactly the species a starter can become are focal")
+{
+    static const u16 sStarters[] = { SPECIES_CIMOLESTES, SPECIES_ASTERIORNIS, SPECIES_EMARGINACHEL };
+    bool8 reachable[STRATA_SPECIES_COUNT] = {0};
+    bool8 next[STRATA_SPECIES_COUNT];
+    u8 pressures[PRESSURE_COUNT];
+    u32 i, era, p;
+
+    for (i = 0; i < ARRAY_COUNT(sStarters); i++)
+        reachable[sStarters[i] - FIRST_STRATA_SPECIES] = TRUE;
+    for (era = ERA_HELL_CREEK; era < ERA_COUNT; era++)
+    {
+        memcpy(next, reachable, sizeof(next));
+        for (i = 0; i < STRATA_SPECIES_COUNT; i++)
+        {
+            if (!reachable[i])
+                continue;
+            // Every branch is steered by a single pressure, so trying each one
+            // alone (and none) reaches every option.
+            for (p = 0; p <= PRESSURE_COUNT; p++)
+            {
+                u16 descendant;
+                memset(pressures, 0, sizeof(pressures));
+                if (p < PRESSURE_COUNT)
+                    pressures[p] = 255;
+                descendant = Lineage_GetDescendant(i + FIRST_STRATA_SPECIES, era, pressures);
+                EXPECT(descendant >= FIRST_STRATA_SPECIES && descendant < SPECIES_CUSTOM_END);
+                if (descendant >= FIRST_STRATA_SPECIES && descendant < SPECIES_CUSTOM_END)
+                    next[descendant - FIRST_STRATA_SPECIES] = TRUE;
+            }
+        }
+        memcpy(reachable, next, sizeof(reachable));
+    }
+    for (i = 0; i < STRATA_SPECIES_COUNT; i++)
+        EXPECT_EQ(sStrataSpeciesEras[i + FIRST_STRATA_SPECIES].focal, reachable[i]);
 }
 
 TEST("Lineage_DescendMon keeps the mon's identity and recalculates stats")

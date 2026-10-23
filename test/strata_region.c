@@ -12,6 +12,7 @@
 #include "constants/strata.h"
 #include "constants/vars.h"
 #include "../src/data/strata_map_eras.h"
+#include "../src/data/strata_species_eras.h"
 
 // Checks for the Strata region (tools/strata/maps.py, data/maps/Strata*).
 
@@ -141,8 +142,9 @@ TEST("Strata map connections lead back the way they came")
     }
 }
 
-// A species in a map's encounter table must not have died out, or already
-// descended into something else, by the time of that map's era.
+// A species in a map's encounter table must have appeared by that map's era
+// (roster `first_era`), must not be a stand-in past its wild range (`last_era`),
+// and must not have died out, or already descended into something else, by then.
 static void ExpectAliveInEra(const struct WildPokemonInfo *info, u32 count, enum StrataEra mapEra)
 {
     static const u8 sNoPressure[PRESSURE_COUNT] = {0};
@@ -152,6 +154,9 @@ static void ExpectAliveInEra(const struct WildPokemonInfo *info, u32 count, enum
     for (i = 0; i < count; i++)
     {
         u16 species = info->wildPokemon[i].species;
+        EXPECT_GT(species, SPECIES_CUSTOM_START); // a Strata species
+        EXPECT_LE(sStrataSpeciesEras[species].firstEra, mapEra);
+        EXPECT_GE(sStrataSpeciesEras[species].lastWildEra, mapEra);
         for (era = ERA_HELL_CREEK; era <= mapEra; era++)
         {
             EXPECT(!Lineage_IsExtinctInEra(species, era));
@@ -160,7 +165,7 @@ static void ExpectAliveInEra(const struct WildPokemonInfo *info, u32 count, enum
     }
 }
 
-TEST("Wild Pokemon in each era's maps are alive in that era")
+TEST("Wild Pokemon in each era's maps have appeared and are alive in that era")
 {
     u32 i, j;
     u16 map = 0;
@@ -181,6 +186,28 @@ TEST("Wild Pokemon in each era's maps are alive in that era")
             ExpectAliveInEra(types->waterMonsInfo, 5, era);
             ExpectAliveInEra(types->fishingMonsInfo, 10, era);
         }
+    }
+}
+
+TEST("Every Strata species has a first era, at or before its last wild era")
+{
+    u32 species;
+    for (species = SPECIES_CUSTOM_START + 1; species < SPECIES_CUSTOM_END; species++)
+    {
+        EXPECT_GE(sStrataSpeciesEras[species].firstEra, ERA_HELL_CREEK);
+        EXPECT_LE(sStrataSpeciesEras[species].firstEra, sStrataSpeciesEras[species].lastWildEra);
+        EXPECT_LT(sStrataSpeciesEras[species].lastWildEra, ERA_COUNT);
+    }
+}
+
+// A species that died out in era E must not first appear at or after E.
+TEST("No Strata species dies out before it first appears")
+{
+    u32 species, era;
+    for (species = SPECIES_CUSTOM_START + 1; species < SPECIES_CUSTOM_END; species++)
+    {
+        for (era = ERA_PRESENT_DIG; era <= sStrataSpeciesEras[species].firstEra; era++)
+            EXPECT(!Lineage_IsExtinctInEra(species, era));
     }
 }
 
