@@ -628,6 +628,9 @@ gStdScripts_End::
 	.include "data/maps/StrataLakeForest/scripts.inc"
 	.include "data/maps/StrataRedBeds/scripts.inc"
 	.include "data/maps/StrataPalmForest/scripts.inc"
+	.include "data/maps/StrataLegumeThicket/scripts.inc"
+	.include "data/maps/StrataConcretionBluffs/scripts.inc"
+	.include "data/maps/StrataFrontRangeCreek/scripts.inc"
 
 .if IS_FRLG
 

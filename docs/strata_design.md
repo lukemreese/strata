@@ -82,7 +82,10 @@ largest extinction in the epilogue is the one humans were present for.
 | Fern Glade | 66.04 Ma | Route 120 open grassland (east of the cliff) | Open habitat east of the Levee: Edmontosaurus herd, *Avisaurus*, the *Acheroraptor* pair ambush (wild double Lv 8/8, once); notes on perching vs ground birds |
 | Ashen Levee / River / Swamp | 66.04 Ma + ~1 yr | Same layouts, `*_winter` palettes | Impact winter: survivors only; survival gauntlet in the swamp (the trigger line spans the swamp's whole width) |
 | Burrow Refuge | 66.04 Ma + ~1 yr | Island Cave, top chamber | Mouth is a rock mound in the Ashen Levee; *Mesodma*/*Cimolestes*; seed cache (browse item balls), notes on burrowers |
-| Palm Forest | ~65.7–65.4 Ma | Petalburg Woods | Act 3; *Eoconodon* boss (Lv 22) on the north path |
+| Palm Forest | ~65.7–65.4 Ma | Petalburg Woods | Act 3 arrival and hub (palms, ~300 kyr after the impact); exits up (creek), left (thicket), right (bluffs) |
+| Legume Thicket | ~65.4 Ma | Route 120 (thicket and marsh) | Act 3; oldest legumes (~700 kyr); *Eoconodon* boss (Lv 22) at its carcass in the north marsh |
+| Concretion Bluffs | ~65.4 Ma | Route 116 | Act 3; *Taeniolabis* mini-boss (Lv 20), three crackable concretions (`VAR_STRATA_ACT3`) |
+| Front Range Creek | ~65.5 Ma | Route 119 upper river | Act 3; water map (waders, fishing), notes on the rising Rockies |
 | Red Beds | ~56 Ma | Route 114 north, `*_petm` palettes, drought | Act 4; *Coryphodon* boss (Lv 28) on the land bridge |
 | Lake Gosiute shore | ~50 Ma | Route 104 | Act 5; *Uintatherium* boss (Lv 34) across the south shore |
 | White River badlands | ~33 Ma | Route 114 south, `*_oligocene` palettes | Act 6; *Archaeotherium* boss (Lv 40) at the bone stash |

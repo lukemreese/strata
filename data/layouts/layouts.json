@@ -9545,6 +9545,39 @@
       "layout_version": "emerald"
     },
     {
+      "id": "LAYOUT_STRATA_LEGUME_THICKET",
+      "name": "StrataLegumeThicket_Layout",
+      "width": 25,
+      "height": 33,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Fortree",
+      "border_filepath": "data/layouts/StrataLegumeThicket/border.bin",
+      "blockdata_filepath": "data/layouts/StrataLegumeThicket/map.bin",
+      "layout_version": "emerald"
+    },
+    {
+      "id": "LAYOUT_STRATA_CONCRETION_BLUFFS",
+      "name": "StrataConcretionBluffs_Layout",
+      "width": 60,
+      "height": 20,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Rustboro",
+      "border_filepath": "data/layouts/StrataConcretionBluffs/border.bin",
+      "blockdata_filepath": "data/layouts/StrataConcretionBluffs/map.bin",
+      "layout_version": "emerald"
+    },
+    {
+      "id": "LAYOUT_STRATA_FRONT_RANGE_CREEK",
+      "name": "StrataFrontRangeCreek_Layout",
+      "width": 40,
+      "height": 25,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Fortree",
+      "border_filepath": "data/layouts/StrataFrontRangeCreek/border.bin",
+      "blockdata_filepath": "data/layouts/StrataFrontRangeCreek/map.bin",
+      "layout_version": "emerald"
+    },
+    {
       "id": "LAYOUT_STRATA_FERN_GLADE",
       "name": "StrataFernGlade_Layout",
       "width": 22,

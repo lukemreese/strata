@@ -213,6 +213,12 @@ carry on.
 
 ### 2.4 Act 3: Corral Bluffs, Denver Basin, CO (~65.7–65.4 Ma) ⚠
 
+> **Status (C5, the Act 3 part of the C3–C10 row in §6): ✅ built.** Four maps (Palm Forest hub; Legume Thicket,
+> Concretion Bluffs and Front Range Creek off it). Deviations: Thicket/Bluffs/Creek are Route 120/116/119 crops (the
+> FRLG forest layout can't be rendered or checked by the tools); the Bluffs have no water, so *Protochelyd* is wild in
+> the creek only; the Taeniolabis mini-boss (Lv 20) is on the Bluffs. Concretions give a note and a small
+> item (no Codex entry exists yet).
+
 Relabel the layer **"Denver Fm, ~65.4 Ma"** (or show the span 65.7–65.4). The boss
 *Eoconodon* and *Taeniolabis* appear ~700 kyr after the impact, together with the oldest
 legumes, not at 300 kyr (§5, H1).
