@@ -9543,6 +9543,39 @@
       "border_filepath": "data/layouts/StrataSandArroyo/border.bin",
       "blockdata_filepath": "data/layouts/StrataSandArroyo/map.bin",
       "layout_version": "emerald"
+    },
+    {
+      "id": "LAYOUT_STRATA_FOSSIL_LAKE",
+      "name": "StrataFossilLake_Layout",
+      "width": 49,
+      "height": 22,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Petalburg",
+      "border_filepath": "data/layouts/StrataFossilLake/border.bin",
+      "blockdata_filepath": "data/layouts/StrataFossilLake/map.bin",
+      "layout_version": "emerald"
+    },
+    {
+      "id": "LAYOUT_STRATA_BRIDGER_FOREST",
+      "name": "StrataBridgerForest_Layout",
+      "width": 40,
+      "height": 20,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Rustboro",
+      "border_filepath": "data/layouts/StrataBridgerForest/border.bin",
+      "blockdata_filepath": "data/layouts/StrataBridgerForest/map.bin",
+      "layout_version": "emerald"
+    },
+    {
+      "id": "LAYOUT_STRATA_OIL_SHALE",
+      "name": "StrataOilShale_Layout",
+      "width": 26,
+      "height": 34,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Fallarbor",
+      "border_filepath": "data/layouts/StrataOilShale/border.bin",
+      "blockdata_filepath": "data/layouts/StrataOilShale/map.bin",
+      "layout_version": "emerald"
     }
   ]
 }

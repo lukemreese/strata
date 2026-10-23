@@ -82,7 +82,10 @@ largest extinction in the epilogue is the one humans were present for.
 | Ashen Levee / River / Swamp | 66.04 Ma + ~1 yr | Same layouts, `*_winter` palettes | Impact winter: survivors only; survival gauntlet in the swamp |
 | Palm Forest | ~65.7–65.4 Ma | Petalburg Woods | Act 3; *Eoconodon* boss (Lv 22) on the north path |
 | Red Beds | ~56 Ma | Route 114 north, `*_petm` palettes, drought | Act 4; *Coryphodon* boss (Lv 28) on the land bridge |
-| Lake Gosiute shore | ~50 Ma | Route 104 | Act 5; *Uintatherium* boss (Lv 34) across the south shore |
+| Bridger Shore (`StrataLakeForest`) | ~50 Ma | Route 104, whole | Act 5 arrival; Lake Gosiute shore. Gaps open the north shore (to Fossil Lake) and the east forest (to Bridger Forest). *Uintatherium* boss (Lv 34): a bull charges along the beach when the player crosses the boss line (y 61) |
+| Fossil Lake | ~52 Ma | Route 103 west half | Act 5; Fossil Butte lagerstätte, water map. Mass-mortality scene (labelled hypothesis) on the east shore; field notes on fish, the oldest bats, shorebirds |
+| Bridger Forest | ~50–47 Ma | Route 116 west half, trees planted | Act 5; canopy primates (*Omomys*, *Notharctus*), *Paramys*; plant forage |
+| Oil-Shale Cliffs | ~50 Ma | Route 115 canyon below the ridge | Act 5; varve and kerogen notes; *Patriofelis* set piece (Lv 32, one-time) on the sand path |
 | White River badlands | ~33 Ma | Route 114 south, `*_oligocene` palettes | Act 6; *Archaeotherium* boss (Lv 40) at the bone stash |
 | Ashfall grassland | ~11.9 Ma | Route 113, volcanic ash | Act 7; *Teleoceras* bull (Lv 46) at the waterhole |
 | Ice Age Steppe | ~20 ka | Route 118, `*_ice_age` palettes, snow | Act 8; the sinkhole drops into the trap cave |
@@ -287,7 +290,9 @@ party and the PC boxes.
   | Ashen River, Ashen Swamp (Act 2) | water | dark |
   | Corral Bluffs palm forest (Act 3) | forest | day |
   | Bighorn red beds (Act 4) | open | day |
-  | Lake Gosiute forest (Act 5) | forest | day |
+  | Bridger Shore, Bridger Forest (Act 5) | forest | day |
+  | Fossil Lake (Act 5) | water | day |
+  | Oil-Shale Cliffs (Act 5) | open | day |
   | White River (Act 6) | open | day |
   | Ashfall grassland (Act 7) | open | ash |
   | Ice Age steppe (Act 8) | open | day |

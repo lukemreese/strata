@@ -624,6 +624,9 @@ gStdScripts_End::
 	.include "data/maps/StrataGrassland/scripts.inc"
 	.include "data/maps/StrataWhiteRiver/scripts.inc"
 	.include "data/maps/StrataLakeForest/scripts.inc"
+	.include "data/maps/StrataFossilLake/scripts.inc"
+	.include "data/maps/StrataBridgerForest/scripts.inc"
+	.include "data/maps/StrataOilShale/scripts.inc"
 	.include "data/maps/StrataRedBeds/scripts.inc"
 	.include "data/maps/StrataPalmForest/scripts.inc"
 

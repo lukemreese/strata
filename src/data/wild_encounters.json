@@ -37628,13 +37628,8 @@
               },
               {
                 "min_level": 28,
-                "max_level": 30,
-                "species": "SPECIES_NOTHARCTUS"
-              },
-              {
-                "min_level": 28,
-                "max_level": 30,
-                "species": "SPECIES_ONYCHONYCTER"
+                "max_level": 31,
+                "species": "SPECIES_HYRACHYUS"
               },
               {
                 "min_level": 28,
@@ -37648,13 +37643,13 @@
               },
               {
                 "min_level": 29,
-                "max_level": 31,
-                "species": "SPECIES_MIACIS"
+                "max_level": 32,
+                "species": "SPECIES_HYRACHYUS"
               },
               {
                 "min_level": 29,
                 "max_level": 31,
-                "species": "SPECIES_GALLINULOID"
+                "species": "SPECIES_PRESBYORNIS"
               },
               {
                 "min_level": 29,
@@ -37664,12 +37659,17 @@
               {
                 "min_level": 30,
                 "max_level": 32,
-                "species": "SPECIES_NOTHARCTUS"
+                "species": "SPECIES_HYOPSODUS"
+              },
+              {
+                "min_level": 30,
+                "max_level": 33,
+                "species": "SPECIES_HYRACHYUS"
               },
               {
                 "min_level": 30,
                 "max_level": 32,
-                "species": "SPECIES_PRESBYORNIS"
+                "species": "SPECIES_BOREALOSUCH"
               },
               {
                 "min_level": 31,
@@ -37707,9 +37707,9 @@
                 "species": "SPECIES_BOREALOSUCH"
               },
               {
-                "min_level": 30,
+                "min_level": 31,
                 "max_level": 34,
-                "species": "SPECIES_CHAMPSOSAUR"
+                "species": "SPECIES_BOREALOSUCH"
               }
             ]
           },
@@ -37764,6 +37764,383 @@
               {
                 "min_level": 31,
                 "max_level": 34,
+                "species": "SPECIES_BOREALOSUCH"
+              }
+            ]
+          }
+        },
+        {
+          "map": "MAP_STRATA_FOSSIL_LAKE",
+          "base_label": "gStrataFossilLake",
+          "land_mons": {
+            "encounter_rate": 20,
+            "mons": [
+              {
+                "min_level": 26,
+                "max_level": 28,
+                "species": "SPECIES_ONYCHONYCTER"
+              },
+              {
+                "min_level": 26,
+                "max_level": 28,
+                "species": "SPECIES_GALLINULOID"
+              },
+              {
+                "min_level": 27,
+                "max_level": 29,
+                "species": "SPECIES_PRESBYORNIS"
+              },
+              {
+                "min_level": 27,
+                "max_level": 29,
+                "species": "SPECIES_ONYCHONYCTER"
+              },
+              {
+                "min_level": 27,
+                "max_level": 30,
+                "species": "SPECIES_GALLINULOID"
+              },
+              {
+                "min_level": 28,
+                "max_level": 30,
+                "species": "SPECIES_PRESBYORNIS"
+              },
+              {
+                "min_level": 28,
+                "max_level": 30,
+                "species": "SPECIES_ONYCHONYCTER"
+              },
+              {
+                "min_level": 28,
+                "max_level": 31,
+                "species": "SPECIES_GALLINULOID"
+              },
+              {
+                "min_level": 29,
+                "max_level": 31,
+                "species": "SPECIES_PRESBYORNIS"
+              },
+              {
+                "min_level": 29,
+                "max_level": 31,
+                "species": "SPECIES_BOREALOSUCH"
+              },
+              {
+                "min_level": 30,
+                "max_level": 31,
+                "species": "SPECIES_ONYCHONYCTER"
+              },
+              {
+                "min_level": 30,
+                "max_level": 31,
+                "species": "SPECIES_GALLINULOID"
+              }
+            ]
+          },
+          "water_mons": {
+            "encounter_rate": 4,
+            "mons": [
+              {
+                "min_level": 26,
+                "max_level": 30,
+                "species": "SPECIES_KNIGHTIA"
+              },
+              {
+                "min_level": 27,
+                "max_level": 31,
+                "species": "SPECIES_KNIGHTIA"
+              },
+              {
+                "min_level": 27,
+                "max_level": 31,
+                "species": "SPECIES_HELIOBATIS"
+              },
+              {
+                "min_level": 28,
+                "max_level": 31,
+                "species": "SPECIES_HELIOBATIS"
+              },
+              {
+                "min_level": 29,
+                "max_level": 31,
+                "species": "SPECIES_BOREALOSUCH"
+              }
+            ]
+          },
+          "fishing_mons": {
+            "encounter_rate": 30,
+            "mons": [
+              {
+                "min_level": 26,
+                "max_level": 28,
+                "species": "SPECIES_KNIGHTIA"
+              },
+              {
+                "min_level": 26,
+                "max_level": 28,
+                "species": "SPECIES_KNIGHTIA"
+              },
+              {
+                "min_level": 27,
+                "max_level": 29,
+                "species": "SPECIES_KNIGHTIA"
+              },
+              {
+                "min_level": 27,
+                "max_level": 29,
+                "species": "SPECIES_LEPISOSTEUS"
+              },
+              {
+                "min_level": 28,
+                "max_level": 30,
+                "species": "SPECIES_KNIGHTIA"
+              },
+              {
+                "min_level": 28,
+                "max_level": 30,
+                "species": "SPECIES_LEPISOSTEUS"
+              },
+              {
+                "min_level": 28,
+                "max_level": 30,
+                "species": "SPECIES_HELIOBATIS"
+              },
+              {
+                "min_level": 29,
+                "max_level": 31,
+                "species": "SPECIES_KNIGHTIA"
+              },
+              {
+                "min_level": 29,
+                "max_level": 31,
+                "species": "SPECIES_LEPISOSTEUS"
+              },
+              {
+                "min_level": 30,
+                "max_level": 32,
+                "species": "SPECIES_HELIOBATIS"
+              }
+            ]
+          }
+        },
+        {
+          "map": "MAP_STRATA_BRIDGER_FOREST",
+          "base_label": "gStrataBridgerForest",
+          "land_mons": {
+            "encounter_rate": 20,
+            "mons": [
+              {
+                "min_level": 26,
+                "max_level": 28,
+                "species": "SPECIES_OMOMYS"
+              },
+              {
+                "min_level": 26,
+                "max_level": 28,
+                "species": "SPECIES_PARAMYS"
+              },
+              {
+                "min_level": 27,
+                "max_level": 29,
+                "species": "SPECIES_NOTHARCTUS"
+              },
+              {
+                "min_level": 26,
+                "max_level": 28,
+                "species": "SPECIES_HYOPSODUS"
+              },
+              {
+                "min_level": 27,
+                "max_level": 29,
+                "species": "SPECIES_EOHIPPUS"
+              },
+              {
+                "min_level": 27,
+                "max_level": 30,
+                "species": "SPECIES_OMOMYS"
+              },
+              {
+                "min_level": 27,
+                "max_level": 29,
+                "species": "SPECIES_MIACIS"
+              },
+              {
+                "min_level": 28,
+                "max_level": 30,
+                "species": "SPECIES_PARAMYS"
+              },
+              {
+                "min_level": 29,
+                "max_level": 31,
+                "species": "SPECIES_NOTHARCTUS"
+              },
+              {
+                "min_level": 29,
+                "max_level": 31,
+                "species": "SPECIES_MIACIS"
+              },
+              {
+                "min_level": 29,
+                "max_level": 31,
+                "species": "SPECIES_OMOMYS"
+              },
+              {
+                "min_level": 29,
+                "max_level": 31,
+                "species": "SPECIES_EOHIPPUS"
+              }
+            ]
+          }
+        },
+        {
+          "map": "MAP_STRATA_OIL_SHALE",
+          "base_label": "gStrataOilShale",
+          "land_mons": {
+            "encounter_rate": 20,
+            "mons": [
+              {
+                "min_level": 28,
+                "max_level": 30,
+                "species": "SPECIES_DIACODEXIS"
+              },
+              {
+                "min_level": 28,
+                "max_level": 30,
+                "species": "SPECIES_DIACODEXIS"
+              },
+              {
+                "min_level": 28,
+                "max_level": 30,
+                "species": "SPECIES_HYOPSODUS"
+              },
+              {
+                "min_level": 29,
+                "max_level": 31,
+                "species": "SPECIES_DIACODEXIS"
+              },
+              {
+                "min_level": 29,
+                "max_level": 31,
+                "species": "SPECIES_EOHIPPUS"
+              },
+              {
+                "min_level": 29,
+                "max_level": 31,
+                "species": "SPECIES_HYOPSODUS"
+              },
+              {
+                "min_level": 30,
+                "max_level": 32,
+                "species": "SPECIES_MIACIS"
+              },
+              {
+                "min_level": 30,
+                "max_level": 32,
+                "species": "SPECIES_EOHIPPUS"
+              },
+              {
+                "min_level": 30,
+                "max_level": 32,
+                "species": "SPECIES_DIACODEXIS"
+              },
+              {
+                "min_level": 30,
+                "max_level": 32,
+                "species": "SPECIES_PARAMYS"
+              },
+              {
+                "min_level": 31,
+                "max_level": 33,
+                "species": "SPECIES_HYRACHYUS"
+              },
+              {
+                "min_level": 31,
+                "max_level": 33,
+                "species": "SPECIES_MIACIS"
+              }
+            ]
+          },
+          "water_mons": {
+            "encounter_rate": 4,
+            "mons": [
+              {
+                "min_level": 28,
+                "max_level": 31,
+                "species": "SPECIES_KNIGHTIA"
+              },
+              {
+                "min_level": 28,
+                "max_level": 32,
+                "species": "SPECIES_KNIGHTIA"
+              },
+              {
+                "min_level": 29,
+                "max_level": 32,
+                "species": "SPECIES_HELIOBATIS"
+              },
+              {
+                "min_level": 29,
+                "max_level": 32,
+                "species": "SPECIES_HELIOBATIS"
+              },
+              {
+                "min_level": 30,
+                "max_level": 33,
+                "species": "SPECIES_BOREALOSUCH"
+              }
+            ]
+          },
+          "fishing_mons": {
+            "encounter_rate": 30,
+            "mons": [
+              {
+                "min_level": 27,
+                "max_level": 29,
+                "species": "SPECIES_KNIGHTIA"
+              },
+              {
+                "min_level": 27,
+                "max_level": 29,
+                "species": "SPECIES_KNIGHTIA"
+              },
+              {
+                "min_level": 28,
+                "max_level": 30,
+                "species": "SPECIES_KNIGHTIA"
+              },
+              {
+                "min_level": 28,
+                "max_level": 30,
+                "species": "SPECIES_LEPISOSTEUS"
+              },
+              {
+                "min_level": 28,
+                "max_level": 31,
+                "species": "SPECIES_HELIOBATIS"
+              },
+              {
+                "min_level": 29,
+                "max_level": 31,
+                "species": "SPECIES_LEPISOSTEUS"
+              },
+              {
+                "min_level": 29,
+                "max_level": 31,
+                "species": "SPECIES_KNIGHTIA"
+              },
+              {
+                "min_level": 30,
+                "max_level": 32,
+                "species": "SPECIES_HELIOBATIS"
+              },
+              {
+                "min_level": 30,
+                "max_level": 32,
+                "species": "SPECIES_LEPISOSTEUS"
+              },
+              {
+                "min_level": 31,
+                "max_level": 33,
                 "species": "SPECIES_BOREALOSUCH"
               }
             ]

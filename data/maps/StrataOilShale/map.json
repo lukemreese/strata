@@ -1,0 +1,161 @@
+{
+  "id": "MAP_STRATA_OIL_SHALE",
+  "name": "StrataOilShale",
+  "layout": "LAYOUT_STRATA_OIL_SHALE",
+  "music": "MUS_ROUTE104",
+  "region": "REGION_HOENN",
+  "region_map_section": "MAPSEC_STRATA_OIL_SHALE",
+  "requires_flash": false,
+  "weather": "WEATHER_NONE",
+  "map_type": "MAP_TYPE_ROUTE",
+  "allow_cycling": true,
+  "allow_escaping": false,
+  "allow_running": true,
+  "show_map_name": true,
+  "battle_scene": "MAP_BATTLE_SCENE_NORMAL",
+  "connections": [
+    {
+      "map": "MAP_STRATA_BRIDGER_FOREST",
+      "offset": 0,
+      "direction": "left"
+    }
+  ],
+  "object_events": [
+    {
+      "local_id": "LOCALID_STRATA_A5_PATRIOFELIS",
+      "graphics_id": "OBJ_EVENT_GFX_SPECIES(LITLEO)",
+      "x": 12,
+      "y": 26,
+      "elevation": 3,
+      "movement_type": "MOVEMENT_TYPE_LOOK_AROUND",
+      "movement_range_x": 1,
+      "movement_range_y": 1,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "StrataOilShale_EventScript_Patriofelis",
+      "flag": "0x285"
+    }
+  ],
+  "warp_events": [],
+  "coord_events": [
+    {
+      "type": "trigger",
+      "x": 10,
+      "y": 20,
+      "elevation": 3,
+      "var": "VAR_TEMP_1",
+      "var_value": "0",
+      "script": "StrataOilShale_EventScript_PatriofelisSight"
+    },
+    {
+      "type": "trigger",
+      "x": 11,
+      "y": 20,
+      "elevation": 3,
+      "var": "VAR_TEMP_1",
+      "var_value": "0",
+      "script": "StrataOilShale_EventScript_PatriofelisSight"
+    },
+    {
+      "type": "trigger",
+      "x": 12,
+      "y": 20,
+      "elevation": 3,
+      "var": "VAR_TEMP_1",
+      "var_value": "0",
+      "script": "StrataOilShale_EventScript_PatriofelisSight"
+    },
+    {
+      "type": "trigger",
+      "x": 13,
+      "y": 20,
+      "elevation": 3,
+      "var": "VAR_TEMP_1",
+      "var_value": "0",
+      "script": "StrataOilShale_EventScript_PatriofelisSight"
+    },
+    {
+      "type": "trigger",
+      "x": 14,
+      "y": 20,
+      "elevation": 3,
+      "var": "VAR_TEMP_1",
+      "var_value": "0",
+      "script": "StrataOilShale_EventScript_PatriofelisSight"
+    }
+  ],
+  "bg_events": [
+    {
+      "type": "sign",
+      "x": 2,
+      "y": 12,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
+      "script": "StrataFieldStation_EventScript_Anchor"
+    },
+    {
+      "type": "sign",
+      "x": 10,
+      "y": 14,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
+      "script": "StrataOilShale_EventScript_NoteVarves"
+    },
+    {
+      "type": "sign",
+      "x": 14,
+      "y": 31,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
+      "script": "StrataOilShale_EventScript_NoteKerogen"
+    },
+    {
+      "type": "sign",
+      "x": 17,
+      "y": 20,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
+      "script": "StrataOilShale_EventScript_NoteCreodonts"
+    },
+    {
+      "type": "hidden_item",
+      "x": 12,
+      "y": 28,
+      "elevation": 0,
+      "item": "ITEM_CARRION",
+      "flag": "FLAG_TEMP_11",
+      "quantity": 1,
+      "underfoot": false
+    },
+    {
+      "type": "hidden_item",
+      "x": 17,
+      "y": 24,
+      "elevation": 0,
+      "item": "ITEM_BROWSE",
+      "flag": "FLAG_TEMP_12",
+      "quantity": 1,
+      "underfoot": false
+    },
+    {
+      "type": "hidden_item",
+      "x": 2,
+      "y": 15,
+      "elevation": 0,
+      "item": "ITEM_FERN_FROND",
+      "flag": "FLAG_TEMP_13",
+      "quantity": 1,
+      "underfoot": false
+    },
+    {
+      "type": "hidden_item",
+      "x": 11,
+      "y": 31,
+      "elevation": 0,
+      "item": "ITEM_LARVAE",
+      "flag": "FLAG_TEMP_14",
+      "quantity": 1,
+      "underfoot": false
+    }
+  ]
+}

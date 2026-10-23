@@ -1706,6 +1706,22 @@
     {
       "id": "MAPSEC_STRATA_SAND_ARROYO",
       "name": "SAND ARROYO"
+    },
+    {
+      "id": "MAPSEC_STRATA_BRIDGER_SHORE",
+      "name": "BRIDGER SHORE"
+    },
+    {
+      "id": "MAPSEC_STRATA_FOSSIL_LAKE",
+      "name": "FOSSIL LAKE"
+    },
+    {
+      "id": "MAPSEC_STRATA_BRIDGER_FOREST",
+      "name": "BRIDGER FOREST"
+    },
+    {
+      "id": "MAPSEC_STRATA_OIL_SHALE",
+      "name": "OIL-SHALE CLIFFS"
     }
   ]
 }
