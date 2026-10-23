@@ -685,14 +685,14 @@ plausible but unverified co-occurrence or timing; **Low** = wording.
 
 | # | Risk | Claim (where) | Concern | Action |
 |---|---|---|---|---|
-| H1 | High | Act 3 = "Denver Fm, 65.7 Ma", "~300 kyr" (`strata_acts.c`, design doc), while the boss *Eoconodon* and *Taeniolabis* are listed ~65.4 Ma (roster) | Corral Bluffs reporting puts *Taeniolabis* (with the oldest legumes) ~700 kyr post-impact; *Eoconodon* is in the same study | Relabel Act 3 to ~65.4 Ma, or say the window spans ~300–700 kyr. Check Lyson et al. 2019 (*Science*) |
-| H2 | High | *Ovibos* wild on the present-day Montana prairie (`maps.py`) | Musk oxen don't live in Montana today | Remove it from the epilogue tables |
-| H3 | High | *Gallinuloides* wild at Ashfall, 11.9 Ma (`maps.py`); it's a ~52 Ma Green River bird | ~40 Myr anachronism. It's only there as a stasis placeholder | Remove it from the Act 7 wild table; keep it as a lineage only. Add a `first_era`/`last_era` test |
+| H1 | High | Act 3 = "Denver Fm, 65.7 Ma", "~300 kyr" (`strata_acts.c`, design doc), while the boss *Eoconodon* and *Taeniolabis* are listed ~65.4 Ma (roster) | Corral Bluffs reporting puts *Taeniolabis* (with the oldest legumes) ~700 kyr post-impact; *Eoconodon* is in the same study | Relabel Act 3 to ~65.4 Ma, or say the window spans ~300–700 kyr. Check Lyson et al. 2019 (*Science*). **Layer name, roster, maps and design doc relabelled 65.7–65.4 Ma (R7)**; mentor and boss lines still say 300,000 years |
+| H2 | High | *Ovibos* wild on the present-day Montana prairie (`maps.py`) | Musk oxen don't live in Montana today | Remove it from the epilogue tables. **Done (R7)**: still wild on the Ice Age Steppe |
+| H3 | High | *Gallinuloides* wild at Ashfall, 11.9 Ma (`maps.py`); it's a ~52 Ma Green River bird | ~40 Myr anachronism. It's only there as a stasis placeholder | Remove it from the Act 7 wild table; keep it as a lineage only. Add a `first_era`/`last_era` test. **Removed (R7)**; the test is C1 |
 | H4 | High | Teilhardina → Notharctus descent (`lineages.h`) | *Teilhardina* is omomyiform-grade; *Notharctus* is an adapiform: different primate groups | Descend to *Omomys* (NEW); Notharctus stays a wild species |
 | H5 | High | *Aenocyon dirus* at Natural Trap Cave (roster site, steppe table) | Summaries of the cave's fauna list a Beringian-type wolf, not the dire wolf | Verify against the primary NTC faunal lists. If absent, change the site to another Wyoming/region locality and keep it regionally |
-| H6 | High | Ischyromys dex: "Rodents spread just as the last multituberculates vanished, and may have outcompeted them" | Rodents arrived in NA around the PETM, ~20 Myr before the last multis; competitive replacement is debated | Rewrite; *Paramys* (NEW) carries the arrival story |
+| H6 | High | Ischyromys dex: "Rodents spread just as the last multituberculates vanished, and may have outcompeted them" | Rodents arrived in NA around the PETM, ~20 Myr before the last multis; competitive replacement is debated | Rewrite; *Paramys* (NEW) carries the arrival story. **Dex rewritten (R7)** |
 | H7 | High | PETM vs today's carbon-release rate (planned Act 4 line) | Needs a citable figure (e.g. "~10× faster today") | Cite before shipping (Zeebe et al. 2016 is the usual source) |
-| M1 | Med | *Protictis* wild in the PETM Willwood (Act 4 table) | *Protictis* is mainly a mid/late Paleocene genus; Willwood viverravids are *Didymictis*, *Viverravus* | Remove it from Act 4 (done in §2.5). Keep it as the dog-line stand-in, labelled |
+| M1 | Med | *Protictis* wild in the PETM Willwood (Act 4 table) | *Protictis* is mainly a mid/late Paleocene genus; Willwood viverravids are *Didymictis*, *Viverravus* | Remove it from Act 4 (done in §2.5). Keep it as the dog-line stand-in, labelled. **Done (R7)**: still wild in Act 3 |
 | M2 | Med | *Mesodma* in the PETM and at Green River (Acts 4–5) | Last appearance of *Mesodma* specifically (vs *Ectypodus*) | Check PBDB; if needed, show it as "multituberculate (Mesodma-grade)" |
 | M3 | Med | *Champsosaurus* at Green River ~50 Ma (Act 5 water) | Eocene champsosaurs are known mostly from the high Arctic; Wyoming Eocene uncertain | Check, or drop it from Act 5 |
 | M4 | Med | *Coryphodon* at Green River/Bridger ~50–46 Ma | Mostly a Wasatchian (~55–50 Ma) genus | Keep in Fossil Lake only if it fits the dates |
@@ -706,7 +706,7 @@ plausible but unverified co-occurrence or timing; **Low** = wording.
 | M12 | Med | Black-footed ferret rediscovery (Meeteetse, WY, 1981) and swift fox / ferret reintroductions in Montana | Dates and places in the epilogue text | Check with USFWS / state sources |
 | L1 | Low | "Ash from 1,600 km away; Bruneau–Jarbidge; supereruption" | Distance and source fine; "supereruption" magnitude wording | Say "massive eruption" unless a VEI-8 source is cited |
 | L2 | Low | Mentor: "In 300,000 years the biggest mammals tripled in size" | Exact multiples from Lyson et al. | Check the figure |
-| L3 | Low | Onychonycteris "probably could not echolocate" | Debated since 2008 | Add "debated" |
+| L3 | Low | Onychonycteris "probably could not echolocate" | Debated since 2008 | Add "debated". **Done (R7)** |
 | L4 | Low | Masses: Triceratops 9 t, T. rex 8 t, Arctodus 900 kg, Uintatherium 2 t | Upper-range picks | Fine; show ranges in the Codex |
 | L5 | Low | Design doc multituberculate chain "Mesodma → Taeniolabis → Ptilodus" | Not ancestral; Ptilodus is mid-Paleocene | Fix the design doc wording |
 | L6 | Low | "Time-averaging window" values (§3.9) | New text | Check per act |
@@ -733,9 +733,9 @@ Ordered by leverage ÷ risk. Tasks inside a milestone can run in parallel unless
 | R2 | Waders (surf without badge/HM) + Fishing Kit (Old→Good Rod) + shoreline counts as WATER; tests | M | none | SYS |
 | R3 | Forage items (7) with heal + pressure, hidden-item placement helper in `maps.py` with `FLAG_TEMP_*` | M | R0 | SYS + CON |
 | R4 | `habitat=` and `light=` per map in `maps.py`, generated into the era table; remove the Petalburg placeholder | S | R0 | SYS |
-| R5 | BST formula compression + `focal` bonus in `gen_species.py`; regenerate; update tests; `balance.py` | S | none | SYS |
+| R5 | ✅ **Done.** BST formula compression + `focal` bonus in `gen_species.py`; regenerate; update tests; `balance.py` (lineage resilience, §3.2 part 3, is F7) | S | none | SYS |
 | R6 | Era level floor at the §3.1 values (verify the in-flight work matches; fallback survivor at the floor) | S | (in flight) | SYS |
-| R7 | Fix the high-risk data now: drop Ovibos (prairie), Gallinuloid (Ashfall), Protictis (Act 4); relabel Act 3 age; rewrite the Ischyromys dex | S | none | CON + SCI |
+| R7 | ✅ **Done** (data/text). Drop Ovibos (prairie), Gallinuloid (Ashfall), Protictis (Act 4); relabel Act 3 age; rewrite the Ischyromys dex. Left for owners of other files: H4 descent (`lineages.h`, needs *Omomys* from C1), the "300,000 years" lines in `sMentorLines` and the Palm Forest boss text, H5 site check, H7 citation | S | none | CON + SCI |
 | R8 | Text pass: start menu, PC names, whiteout, dex rating, battle "POKéMON" → reconstruction terms; grep audit of `src/strings.c`, `battle_message.c`, `data/text/*` | M | none | TXT |
 | R9 | PC + Move Relearner + healing cot in the Field Station; `I_EXP_SHARE_FLAG`; camp store | S | none | CON |
 | R10 | T. rex survival rule (running = done) + mentor variant; boss smart-AI var + totem boosts on all bosses | S | none | CON |

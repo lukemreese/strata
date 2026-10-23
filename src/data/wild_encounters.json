@@ -37500,7 +37500,7 @@
               {
                 "min_level": 23,
                 "max_level": 25,
-                "species": "SPECIES_PROTICTIS"
+                "species": "SPECIES_TEILHARDINA"
               },
               {
                 "min_level": 23,
@@ -37872,7 +37872,7 @@
               {
                 "min_level": 41,
                 "max_level": 43,
-                "species": "SPECIES_GALLINULOID"
+                "species": "SPECIES_BALEARICA"
               },
               {
                 "min_level": 41,
@@ -38070,7 +38070,7 @@
               {
                 "min_level": 50,
                 "max_level": 52,
-                "species": "SPECIES_OVIBOS"
+                "species": "SPECIES_ANTILOCAPRA"
               }
             ]
           },

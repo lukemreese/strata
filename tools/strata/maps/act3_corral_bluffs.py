@@ -1,4 +1,4 @@
-"""Act 3: Corral Bluffs, CO (~65.7 Ma).
+"""Act 3: Corral Bluffs, CO (~65.7-65.4 Ma).
 
 Maps of this act only. Add a map by appending a dict to MAPS (order within an act
 is its map-id order), and its MAPSEC to MAP_SECTIONS. Shared helpers are in
@@ -13,7 +13,7 @@ MAP_SECTIONS = [
 
 MAPS = [
     # ------------------------------------------------------------------
-    # Act 3: Corral Bluffs, CO (~65.7 Ma): recovering palm and legume forest
+    # Act 3: Corral Bluffs, CO (~65.7-65.4 Ma, ~300-700 kyr after the impact): recovering palm and legume forest
     # ------------------------------------------------------------------
     dict(
         id="MAP_STRATA_PALM_FOREST", name="StrataPalmForest", era="ERA_CORRAL_BLUFFS",

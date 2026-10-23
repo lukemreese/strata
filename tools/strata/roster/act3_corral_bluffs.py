@@ -1,4 +1,4 @@
-"""Act 3: Corral Bluffs, Denver Basin, CO (~65.7 Ma).
+"""Act 3: Corral Bluffs, Denver Basin, CO (~65.7-65.4 Ma).
 
 Species of this section only, in global-order position (see roster/__init__.py).
 Fields are documented there.
@@ -6,7 +6,7 @@ Fields are documented there.
 
 SPECIES = [
     # ------------------------------------------------------------------
-    # Act 3: Corral Bluffs, Denver Basin, CO (~65.7 Ma, ~300 kyr after the impact)
+    # Act 3: Corral Bluffs, Denver Basin, CO (~65.7-65.4 Ma, ~300-700 kyr after the impact)
     # Body sizes rebound: the largest mammals triple in mass (Lyson et al. 2019).
     # ------------------------------------------------------------------
     dict(

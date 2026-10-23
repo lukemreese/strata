@@ -107,6 +107,6 @@ SPECIES = [
         borrow="skwovet",
         moves=[(1, "TACKLE"), (1, "TAIL_WHIP"), (30, "HYPER_FANG"), (34, "BULLET_SEED"), (38, "DIG"),
                (42, "SUPER_FANG")],
-        dex="A squirrel-like early rodent. Rodents spread just as the last multituberculates vanished, and may have outcompeted them.",
+        dex="A squirrel-like rodent of the White River woodlands. Rodents reached North America about 56 million years ago, in the PETM heat.",
     ),
 ]
