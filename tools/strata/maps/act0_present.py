@@ -41,6 +41,9 @@ MAPS = [
                 "StrataFieldCamp_EventScript_Crew", "MOVEMENT_TYPE_WANDER_AROUND"),
             obj("LOCALID_STRATA_CAMP_STUDENT", "OBJ_EVENT_GFX_PICNICKER", 22, 11,
                 "StrataFieldCamp_EventScript_Student", "MOVEMENT_TYPE_LOOK_AROUND"),
+            # The camp store: the quartermaster, parked beside the station door.
+            obj("LOCALID_STRATA_CAMP_QUARTERMASTER", "OBJ_EVENT_GFX_WORKER_M", 29, 19,
+                "StrataFieldCamp_EventScript_Quartermaster", "MOVEMENT_TYPE_FACE_LEFT"),
         ],
         bgs=[
             sign(13, 6, "StrataFieldCamp_EventScript_CampSign"),
@@ -49,17 +52,28 @@ MAPS = [
     ),
     dict(
         id="MAP_STRATA_FIELD_STATION", name="StrataFieldStation",
-        layout="LAYOUT_LITTLEROOT_TOWN_PROFESSOR_BIRCHS_LAB",
+        crop=dict(**{"from": "LAYOUT_LITTLEROOT_TOWN_PROFESSOR_BIRCHS_LAB"}, rect=(0, 0, 13, 13)),
+        patches=[
+            # The healing cot: a pair of the lab's orange-blanket couch tiles in the west aisle.
+            dict(at=(1, 4), tiles=[[0x274, 0x275]], collision=1),
+        ],
         music="MUS_BIRCH_LAB", map_type="MAP_TYPE_INDOOR",
         mapsec="MAPSEC_STRATA_FIELD_CAMP",
         warps=[warp(6, 12, "MAP_STRATA_FIELD_CAMP", 0), warp(7, 12, "MAP_STRATA_FIELD_CAMP", 0)],
         objects=[
             obj("LOCALID_STRATA_MENTOR", "OBJ_EVENT_GFX_SCIENTIST_1", 6, 5,
                 "StrataFieldStation_EventScript_Mentor"),
+            obj("LOCALID_STRATA_RELEARNER", "OBJ_EVENT_GFX_WORKER_F", 9, 3,
+                "StrataFieldStation_EventScript_Relearner"),
         ],
         bgs=[
             sign(10, 7, "StrataFieldStation_EventScript_Rig", "BG_EVENT_PLAYER_FACING_NORTH"),
             sign(11, 7, "StrataFieldStation_EventScript_Rig", "BG_EVENT_PLAYER_FACING_NORTH"),
+            # The specimen database: the lab's desk computers (the PC behind the desk at (3, 1) and (4, 1)).
+            sign(3, 1, "StrataFieldStation_EventScript_PC", "BG_EVENT_PLAYER_FACING_NORTH"),
+            sign(4, 1, "StrataFieldStation_EventScript_PC", "BG_EVENT_PLAYER_FACING_NORTH"),
+            sign(1, 4, "StrataFieldStation_EventScript_Cot"),
+            sign(2, 4, "StrataFieldStation_EventScript_Cot"),
         ],
     ),
     dict(

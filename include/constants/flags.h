@@ -1313,8 +1313,8 @@
 #define FLAG_UNUSED_0x4EB                                           0x4EB // Unused Flag
 #define FLAG_UNUSED_0x4EC                                           0x4EC // Unused Flag
 #define FLAG_UNUSED_0x4ED                                           0x4ED // Unused Flag
-#define FLAG_UNUSED_0x4EE                                           0x4EE // Unused Flag
-#define FLAG_UNUSED_0x4EF                                           0x4EF // Unused Flag
+#define FLAG_STRATA_EXP_SHARE                                       0x4EE // Exp. Share for the whole party, set in the intro (I_EXP_SHARE_FLAG)
+#define FLAG_STRATA_TREX_FLED                                       0x4EF // Act 1: the player ran from the Tyrannosaurus (picks Dr. Halvorsen's line)
 
 #define FLAG_DEFEATED_RUSTBORO_GYM                                  0x4F0
 #define FLAG_DEFEATED_DEWFORD_GYM                                   0x4F1

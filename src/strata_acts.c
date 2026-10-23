@@ -4,6 +4,8 @@
 #include "strata_acts.h"
 #include "string_util.h"
 #include "text.h"
+#include "constants/battle_ai.h"
+#include "constants/flags.h"
 #include "constants/vars.h"
 
 // The acts of Strata, one per era. The STRATA rig at the field station loads them
@@ -129,6 +131,22 @@ static const u8 *const sMentorLines[STORY_IN_ACT(ERA_EPILOGUE) + 1] =
         "Go and meet them."),
 };
 
+// The act 1 line when the player ran from the Tyrannosaurus instead of fighting it
+// (FLAG_STRATA_TREX_FLED): running is survival too.
+static const u8 *const sMentorLineTyrantFled = COMPOUND_STRING(
+    "You ran from a TYRANNOSAURUS and\n"
+    "lived to tell it. Good.\p"
+    "Small and quick: that's how mammals\n"
+    "lived here.\p"
+    "The rig is ready for the next layer:\n"
+    "the rock just above the boundary\l"
+    "clay. About a year after the impact.");
+
+// The wild AI flags of boss battles must stay the plain "smart trainer" set: scripts set
+// them as the number STRATA_BOSS_AI_FLAGS, which assembly can't build from AI_FLAG_*.
+STATIC_ASSERT(STRATA_BOSS_AI_FLAGS == (AI_FLAG_CHECK_BAD_MOVE | AI_FLAG_TRY_TO_FAINT | AI_FLAG_CHECK_VIABILITY),
+              BossAiFlagsMatchTheScriptConstant);
+
 u32 Strata_GetCurrentAct(void)
 {
     return VarGet(VAR_STRATA_STORY) / 2;
@@ -204,6 +222,8 @@ void Strata_BufferMentorText(void)
 
     if (story < ARRAY_COUNT(sMentorLines))
         line = sMentorLines[story];
+    if (story == STORY_ACT_DONE(ERA_HELL_CREEK) && FlagGet(FLAG_STRATA_TREX_FLED))
+        line = sMentorLineTyrantFled;
     if (line == NULL)
         line = COMPOUND_STRING("Keep up the good work out there.");
     StringExpandPlaceholders(gStringVar4, line);

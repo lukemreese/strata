@@ -180,7 +180,46 @@ It is the "hard mode / safe mode" starter.
 | 8 | *Arctodus simus* (short-faced bear) | Ice Age apex, trapped in Natural Trap Cave |
 
 Each boss is a one-off wild battle on a line of triggers. Running away leaves it in
-place; winning or catching it finishes the act.
+place; winning or catching it finishes the act. The exception is the act 1 Tyrannosaurus,
+a survival set piece: every way out of that fight except a whiteout finishes the act.
+Running sets `FLAG_STRATA_TREX_FLED`, which switches Dr. Halvorsen to a line about being
+small and quick ("that's how mammals lived here").
+
+**Boss settings.** Every boss script brackets its battle with the `strata_boss_prep` and
+`strata_boss_done` macros (`asm/macros/event.inc`). Prep does two things for that battle
+only:
+
+- Smart wild AI: it sets `VAR_STRATA_BOSS_AI` (the config var `B_VAR_WILD_AI_FLAGS`) to
+  `STRATA_BOSS_AI_FLAGS` = `AI_FLAG_CHECK_BAD_MOVE | TRY_TO_FAINT | CHECK_VIABILITY`
+  (the basic trainer set). `strata_boss_done` clears it; whiteouts clear it in
+  `Overworld_ResetBattleFlagsAndVars`. `src/strata_acts.c` asserts the number still matches the flags.
+- A totem-style stage boost (`settotemboost`) of +1 in the boss's signature stat, applied
+  to the first foe when the battle starts.
+
+| Boss | Lv | Boost |
+|---|---|---|
+| Act 1 *Tyrannosaurus* | 12 | +1 Atk |
+| Act 2 gauntlet, all three foes | 13 / 14 / 16 | smart AI; the last foe (old *Borealosuch*) also +1 Atk |
+| Act 3 *Eoconodon* | 22 | +1 Atk |
+| Act 4 *Coryphodon* | 28 | +1 Def |
+| Act 5 *Uintatherium* | 34 | +1 Atk |
+| Act 6 *Archaeotherium* | 40 | +1 Atk |
+| Act 7 *Teleoceras* | 46 | +1 Def |
+| Act 8 *Arctodus* | 52 | +1 Atk |
+
+Boss strength comes from base stats and the one boost, not from extra levels. New boss
+scripts should use the same two macros; a double boss gets the boost on its left foe.
+
+### Field station services
+
+The Field Station has the services the player needs between acts: two desk computers
+at (3, 1) and (4, 1) open the stock PC menu (Pokémon storage, the player's item PC), a
+cot at (1..2, 4) heals the party, and the station tech Wren at (9, 3) re-teaches level-up
+moves for free (party and PC mons). Dr. Halvorsen still heals on talk. The intro sets
+`FLAG_STRATA_EXP_SHARE` (= `I_EXP_SHARE_FLAG`), so the whole party shares experience.
+The camp quartermaster (Marge, at (29, 19) in Hell Creek Camp) runs the store: Poké Ball
+and Potion, plus Great Ball and Super Potion once act 3 is done and Hyper Potion once
+act 6 is done.
 
 ## 7. Systems
 

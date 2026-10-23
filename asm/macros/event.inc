@@ -3011,3 +3011,17 @@
 	getbraillestringwidth \text
 	call EventScript_BrailleCursorWaitButton
 	.endm
+
+	@ Strata boss battles (see docs/strata_design.md, Bosses): call strata_boss_prep right
+	@ before setwildbattle/dowildbattle and strata_boss_done right after, on every path out of
+	@ the battle. The boss (the first opponent) gets smart wild AI for this battle only, through
+	@ B_VAR_WILD_AI_FLAGS (= VAR_STRATA_BOSS_AI), and a totem-style stage boost to the stats given.
+	@ Whiteouts clear the var in Overworld_ResetBattleFlagsAndVars.
+	.macro strata_boss_prep atk=0, def=0, speed=0, spatk=0, spdef=0
+	setvar VAR_STRATA_BOSS_AI, STRATA_BOSS_AI_FLAGS
+	settotemboost B_POSITION_OPPONENT_LEFT, \atk, \def, \speed, \spatk, \spdef
+	.endm
+
+	.macro strata_boss_done
+	setvar VAR_STRATA_BOSS_AI, 0
+	.endm

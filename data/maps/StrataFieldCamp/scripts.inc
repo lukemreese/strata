@@ -61,3 +61,57 @@ StrataFieldCamp_Text_CampSign:
 StrataFieldCamp_Text_StationSign:
 	.string "FIELD STATION\n"
 	.string "STRATA reconstruction rig inside.$"
+
+@ The camp store: the quartermaster's stock grows with the story. Great Balls and Super
+@ Potions come once the Corral Bluffs act (3) is done, Hyper Potions after White River (6).
+StrataFieldCamp_EventScript_Quartermaster::
+	lock
+	faceplayer
+	msgbox StrataFieldCamp_Text_QuartermasterWelcome, MSGBOX_DEFAULT
+	goto_if_ge VAR_STRATA_STORY, STORY_ACT_DONE(ERA_WHITE_RIVER), StrataFieldCamp_EventScript_StoreTier2
+	goto_if_ge VAR_STRATA_STORY, STORY_ACT_DONE(ERA_CORRAL_BLUFFS), StrataFieldCamp_EventScript_StoreTier1
+	pokemart StrataFieldCamp_Pokemart_Tier0
+	goto StrataFieldCamp_EventScript_StoreBye
+
+StrataFieldCamp_EventScript_StoreTier1::
+	pokemart StrataFieldCamp_Pokemart_Tier1
+	goto StrataFieldCamp_EventScript_StoreBye
+
+StrataFieldCamp_EventScript_StoreTier2::
+	pokemart StrataFieldCamp_Pokemart_Tier2
+StrataFieldCamp_EventScript_StoreBye::
+	msgbox StrataFieldCamp_Text_QuartermasterBye, MSGBOX_DEFAULT
+	release
+	end
+
+	.align 2
+StrataFieldCamp_Pokemart_Tier0:
+	.2byte ITEM_POKE_BALL
+	.2byte ITEM_POTION
+	pokemartlistend
+
+	.align 2
+StrataFieldCamp_Pokemart_Tier1:
+	.2byte ITEM_POKE_BALL
+	.2byte ITEM_GREAT_BALL
+	.2byte ITEM_POTION
+	.2byte ITEM_SUPER_POTION
+	pokemartlistend
+
+	.align 2
+StrataFieldCamp_Pokemart_Tier2:
+	.2byte ITEM_POKE_BALL
+	.2byte ITEM_GREAT_BALL
+	.2byte ITEM_POTION
+	.2byte ITEM_SUPER_POTION
+	.2byte ITEM_HYPER_POTION
+	pokemartlistend
+
+StrataFieldCamp_Text_QuartermasterWelcome:
+	.string "MARGE, QUARTERMASTER: Field supplies\n"
+	.string "are on the camp budget. What'll it be?$"
+
+StrataFieldCamp_Text_QuartermasterBye:
+	.string "MARGE: Bring back every specimen\n"
+	.string "capsule you don't use. They're not\l"
+	.string "cheap.$"

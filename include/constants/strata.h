@@ -38,6 +38,12 @@ enum SelectionPressure
 #define STORY_IN_ACT(act)    ((act) * 2)
 #define STORY_ACT_DONE(act)  ((act) * 2 + 1)
 
+// Wild AI flags for boss battles, stored in VAR_STRATA_BOSS_AI (= B_VAR_WILD_AI_FLAGS) by the
+// strata_boss_prep script macro (asm/macros/event.inc). This is AI_FLAG_BASIC_TRAINER:
+// CHECK_BAD_MOVE | TRY_TO_FAINT | CHECK_VIABILITY, so a boss avoids useless moves, goes for
+// the knockout and sets up when it makes sense. Checked against the AI flags in src/strata_acts.c.
+#define STRATA_BOSS_AI_FLAGS  7
+
 // Results of special Strata_RigQuery.
 #define RIG_IDLE      0 // No starter yet
 #define RIG_FIRST     1 // Load the first layer (no warning, nothing to lose)
