@@ -7,8 +7,10 @@ StrataPalmForest_EventScript_Eoconodon::
 	playmoncry SPECIES_EOCONODON, CRY_MODE_ENCOUNTER
 	msgbox StrataPalmForest_Text_EoconodonAppears, MSGBOX_DEFAULT
 	waitmoncry
+	strata_boss_prep atk=1
 	setwildbattle SPECIES_EOCONODON, 22
 	dowildbattle
+	strata_boss_done
 	specialvar VAR_RESULT, GetBattleOutcome
 	goto_if_eq VAR_RESULT, B_OUTCOME_RAN, StrataPalmForest_EventScript_Ran
 	setvar VAR_STRATA_STORY, 7

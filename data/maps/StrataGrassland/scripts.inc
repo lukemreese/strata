@@ -8,8 +8,10 @@ StrataGrassland_EventScript_Teleoceras::
 	playmoncry SPECIES_TELEOCERAS, CRY_MODE_ENCOUNTER
 	msgbox StrataGrassland_Text_TeleocerasAppears, MSGBOX_DEFAULT
 	waitmoncry
+	strata_boss_prep def=1
 	setwildbattle SPECIES_TELEOCERAS, 46
 	dowildbattle
+	strata_boss_done
 	specialvar VAR_RESULT, GetBattleOutcome
 	goto_if_eq VAR_RESULT, B_OUTCOME_RAN, StrataGrassland_EventScript_Ran
 	setvar VAR_STRATA_STORY, 15

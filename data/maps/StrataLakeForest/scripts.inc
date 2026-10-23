@@ -7,8 +7,10 @@ StrataLakeForest_EventScript_Uintatherium::
 	playmoncry SPECIES_UINTATHERIUM, CRY_MODE_ENCOUNTER
 	msgbox StrataLakeForest_Text_UintatheriumAppears, MSGBOX_DEFAULT
 	waitmoncry
+	strata_boss_prep atk=1
 	setwildbattle SPECIES_UINTATHERIUM, 34
 	dowildbattle
+	strata_boss_done
 	specialvar VAR_RESULT, GetBattleOutcome
 	goto_if_eq VAR_RESULT, B_OUTCOME_RAN, StrataLakeForest_EventScript_Ran
 	setvar VAR_STRATA_STORY, 11

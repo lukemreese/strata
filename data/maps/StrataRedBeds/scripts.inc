@@ -7,8 +7,10 @@ StrataRedBeds_EventScript_Coryphodon::
 	playmoncry SPECIES_CORYPHODON, CRY_MODE_ENCOUNTER
 	msgbox StrataRedBeds_Text_CoryphodonAppears, MSGBOX_DEFAULT
 	waitmoncry
+	strata_boss_prep def=1
 	setwildbattle SPECIES_CORYPHODON, 28
 	dowildbattle
+	strata_boss_done
 	specialvar VAR_RESULT, GetBattleOutcome
 	goto_if_eq VAR_RESULT, B_OUTCOME_RAN, StrataRedBeds_EventScript_Ran
 	setvar VAR_STRATA_STORY, 9

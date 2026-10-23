@@ -21,6 +21,7 @@ StrataFieldStation_EventScript_Intro::
 	setflag FLAG_SYS_POKEMON_GET
 	setflag FLAG_SYS_POKEDEX_GET
 	setflag FLAG_SYS_B_DASH
+	setflag FLAG_STRATA_EXP_SHARE
 	special EnableNationalPokedex
 	setrespawn HEAL_LOCATION_STRATA_FIELD_CAMP
 	setvar VAR_STRATA_STORY, 1
@@ -283,3 +284,98 @@ StrataFieldStation_Text_AfterWhiteOut:
 StrataFieldStation_Text_AfterWhiteOutHealed:
 	.string "Out there, nothing is tame. Pick\n"
 	.string "your fights.$"
+
+@ ---------------------------------------------------------------------------
+@ Station services: the specimen database (PC), the healing cot and the rig's
+@ behaviour archive (the move relearner). Halvorsen still patches the team up
+@ when you talk to her.
+@ ---------------------------------------------------------------------------
+
+@ The lab's desk computers. They carry no PC-screen metatile, so there is no
+@ boot-up flicker; the stock PC menu does the rest.
+StrataFieldStation_EventScript_PC::
+	lockall
+	setvar VAR_0x8004, PC_LOCATION_OTHER
+	playse SE_PC_ON
+	msgbox StrataFieldStation_Text_BootUpPC, MSGBOX_DEFAULT
+	goto EventScript_PCMainMenu
+	end
+
+StrataFieldStation_EventScript_Cot::
+	lockall
+	msgbox StrataFieldStation_Text_Cot, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, StrataFieldStation_EventScript_RigCancel
+	call Common_EventScript_OutOfCenterPartyHeal
+	msgbox StrataFieldStation_Text_CotRested, MSGBOX_DEFAULT
+	releaseall
+	end
+
+@ Free, any time: level-up moves only, for party and PC mons alike.
+StrataFieldStation_EventScript_Relearner::
+	lockall
+	faceplayer
+	msgbox StrataFieldStation_Text_RelearnerHello, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, StrataFieldStation_EventScript_RelearnerBye
+StrataFieldStation_EventScript_RelearnerChooseMon::
+	msgbox StrataFieldStation_Text_RelearnerWhichMon, MSGBOX_DEFAULT
+	setmoverelearnerstate MOVE_RELEARNER_LEVEL_UP_MOVES
+	chooseboxmon SELECT_PC_MON_MOVE_RELEARNER
+	waitstate
+	goto_if_eq VAR_0x8004, PARTY_NOTHING_CHOSEN, StrataFieldStation_EventScript_RelearnerBye
+	special IsSelectedMonEgg
+	goto_if_eq VAR_RESULT, TRUE, StrataFieldStation_EventScript_RelearnerEgg
+	special Special_HasMoveToRelearn
+	goto_if_eq VAR_RESULT, FALSE, StrataFieldStation_EventScript_RelearnerNothing
+	msgbox StrataFieldStation_Text_RelearnerWhichMove, MSGBOX_DEFAULT
+	special TeachMoveRelearnerMove
+	goto StrataFieldStation_EventScript_RelearnerChooseMon
+
+StrataFieldStation_EventScript_RelearnerNothing::
+	msgbox StrataFieldStation_Text_RelearnerNothing, MSGBOX_DEFAULT
+	goto StrataFieldStation_EventScript_RelearnerChooseMon
+
+StrataFieldStation_EventScript_RelearnerEgg::
+	msgbox StrataFieldStation_Text_RelearnerEgg, MSGBOX_DEFAULT
+	goto StrataFieldStation_EventScript_RelearnerChooseMon
+
+StrataFieldStation_EventScript_RelearnerBye::
+	msgbox StrataFieldStation_Text_RelearnerBye, MSGBOX_DEFAULT
+	releaseall
+	end
+
+StrataFieldStation_Text_BootUpPC:
+	.string "The specimen database wakes up.\n"
+	.string "Your sample boxes are on file.$"
+
+StrataFieldStation_Text_Cot:
+	.string "A camp cot, made up with a rough\n"
+	.string "wool blanket. Rest a while?$"
+
+StrataFieldStation_Text_CotRested:
+	.string "A short nap, and the whole team is\n"
+	.string "back on its feet.$"
+
+StrataFieldStation_Text_RelearnerHello:
+	.string "WREN, STATION TECH: The rig keeps a\n"
+	.string "behaviour archive for every lineage.\p"
+	.string "I can re-derive a move your partner\n"
+	.string "has forgotten. No charge.\p"
+	.string "Want me to look through the archive?$"
+
+StrataFieldStation_Text_RelearnerWhichMon:
+	.string "Whose behaviours should I pull up?$"
+
+StrataFieldStation_Text_RelearnerWhichMove:
+	.string "Which behaviour should I re-derive?$"
+
+StrataFieldStation_Text_RelearnerNothing:
+	.string "Nothing missing there. It already\n"
+	.string "knows everything it's old enough to.$"
+
+StrataFieldStation_Text_RelearnerEgg:
+	.string "That's a sample that hasn't\n"
+	.string "hatched. It has no behaviours yet.$"
+
+StrataFieldStation_Text_RelearnerBye:
+	.string "WREN: Come back whenever the archive\n"
+	.string "can help.$"

@@ -22,8 +22,10 @@ StrataTrapCave_EventScript_Arctodus::
 	playmoncry SPECIES_ARCTODUS, CRY_MODE_ENCOUNTER
 	msgbox StrataTrapCave_Text_ArctodusAppears, MSGBOX_DEFAULT
 	waitmoncry
+	strata_boss_prep atk=1
 	setwildbattle SPECIES_ARCTODUS, 52
 	dowildbattle
+	strata_boss_done
 	specialvar VAR_RESULT, GetBattleOutcome
 	goto_if_eq VAR_RESULT, B_OUTCOME_RAN, StrataTrapCave_EventScript_Ran
 	setvar VAR_STRATA_STORY, 17

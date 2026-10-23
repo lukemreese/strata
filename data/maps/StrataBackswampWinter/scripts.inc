@@ -3,12 +3,14 @@ StrataBackswampWinter_MapScripts::
 
 @ The impact winter's "boss" is the environment: three hungry survivors in a row,
 @ with no chance to heal between them. Losing whites out and leaves the story
-@ at 4, so the gauntlet is waiting on the next visit.
+@ at 4, so the gauntlet is waiting on the next visit. Smart wild AI (strata_boss_prep)
+@ for all three fights; the old crocodylian that ends it also gets a +1 Attack totem boost.
 StrataBackswampWinter_EventScript_Gauntlet::
 	lockall
 	msgbox StrataBackswampWinter_Text_Approach, MSGBOX_DEFAULT
 	playmoncry SPECIES_CHAMPSOSAUR, CRY_MODE_ENCOUNTER
 	waitmoncry
+	strata_boss_prep
 	setwildbattle SPECIES_CHAMPSOSAUR, 13
 	dowildbattle
 	call StrataBackswampWinter_EventScript_CheckFled
@@ -21,9 +23,11 @@ StrataBackswampWinter_EventScript_Gauntlet::
 	msgbox StrataBackswampWinter_Text_OldCroc, MSGBOX_DEFAULT
 	playmoncry SPECIES_BOREALOSUCH, CRY_MODE_ENCOUNTER
 	waitmoncry
+	strata_boss_prep atk=1
 	setwildbattle SPECIES_BOREALOSUCH, 16
 	dowildbattle
 	call StrataBackswampWinter_EventScript_CheckFled
+	strata_boss_done
 	setvar VAR_STRATA_STORY, 5
 	msgbox StrataBackswampWinter_Text_FernSpike, MSGBOX_DEFAULT
 	releaseall
@@ -35,6 +39,7 @@ StrataBackswampWinter_EventScript_CheckFled::
 	return
 
 StrataBackswampWinter_EventScript_Fled::
+	strata_boss_done
 	msgbox StrataBackswampWinter_Text_Fled, MSGBOX_DEFAULT
 	releaseall
 	end
