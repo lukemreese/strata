@@ -7,6 +7,8 @@
 //     #define FLAG_STRATA_A3_FOUND_BONEBED (FLAG_STRATA_ACT3_BASE + 0)
 // For one-shot state that may reset on map load, prefer FLAG_TEMP_* (but note
 // FLAG_TEMP_11..1F are reserved for forage on maps that have forage).
+// This header is also included by data/map_events.s, so the names work in map
+// data (object flags, trigger vars) as well as in scripts. Keep it #defines only.
 // The flags are FLAG_UNUSED_0x264..0x2AB and the vars VAR_UNUSED_0x40F7..0x40FE in
 // include/constants/flags.h and vars.h.
 
