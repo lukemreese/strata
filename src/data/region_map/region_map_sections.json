@@ -1708,28 +1708,24 @@
       "name": "SAND ARROYO"
     },
     {
-      "id": "MAPSEC_STRATA_BRIDGER_SHORE",
-      "name": "BRIDGER SHORE"
-    },
-    {
-      "id": "MAPSEC_STRATA_FOSSIL_LAKE",
-      "name": "FOSSIL LAKE"
-    },
-    {
-      "id": "MAPSEC_STRATA_BRIDGER_FOREST",
-      "name": "BRIDGER FOREST"
-    },
-    {
-      "id": "MAPSEC_STRATA_OIL_SHALE",
-      "name": "OIL-SHALE CLIFFS"
-    },
-    {
       "id": "MAPSEC_STRATA_FERN_GLADE",
       "name": "FERN GLADE"
     },
     {
       "id": "MAPSEC_STRATA_BURROW",
       "name": "BURROW REFUGE"
+    },
+    {
+      "id": "MAPSEC_STRATA_GALLERY_FOREST",
+      "name": "GALLERY FOREST"
+    },
+    {
+      "id": "MAPSEC_STRATA_BADLANDS_WALL",
+      "name": "BADLANDS WALL"
+    },
+    {
+      "id": "MAPSEC_STRATA_TOADSTOOL",
+      "name": "TOADSTOOL TRACKWAYS"
     },
     {
       "id": "MAPSEC_STRATA_LEGUME_THICKET",
@@ -1754,6 +1750,22 @@
     {
       "id": "MAPSEC_STRATA_CLARKS_FORK",
       "name": "CLARKS FORK"
+    },
+    {
+      "id": "MAPSEC_STRATA_BRIDGER_SHORE",
+      "name": "BRIDGER SHORE"
+    },
+    {
+      "id": "MAPSEC_STRATA_FOSSIL_LAKE",
+      "name": "FOSSIL LAKE"
+    },
+    {
+      "id": "MAPSEC_STRATA_BRIDGER_FOREST",
+      "name": "BRIDGER FOREST"
+    },
+    {
+      "id": "MAPSEC_STRATA_OIL_SHALE",
+      "name": "OIL-SHALE CLIFFS"
     }
   ]
 }

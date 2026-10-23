@@ -38960,6 +38960,11 @@
             "encounter_rate": 20,
             "mons": [
               {
+                "min_level": 32,
+                "max_level": 34,
+                "species": "SPECIES_PALAEOLAGUS"
+              },
+              {
                 "min_level": 34,
                 "max_level": 36,
                 "species": "SPECIES_MESOHIPPUS"
@@ -38975,14 +38980,14 @@
                 "species": "SPECIES_LEPTOMERYX"
               },
               {
+                "min_level": 33,
+                "max_level": 35,
+                "species": "SPECIES_PALAEOLAGUS"
+              },
+              {
                 "min_level": 34,
                 "max_level": 36,
                 "species": "SPECIES_ISCHYROMYS"
-              },
-              {
-                "min_level": 35,
-                "max_level": 37,
-                "species": "SPECIES_MERYCOIDODON"
               },
               {
                 "min_level": 35,
@@ -39002,11 +39007,6 @@
               {
                 "min_level": 36,
                 "max_level": 38,
-                "species": "SPECIES_MESOHIPPUS"
-              },
-              {
-                "min_level": 36,
-                "max_level": 38,
                 "species": "SPECIES_SUBHYRACODON"
               },
               {
@@ -39018,6 +39018,298 @@
                 "min_level": 38,
                 "max_level": 39,
                 "species": "SPECIES_ARCHAEOTHERE"
+              }
+            ]
+          }
+        },
+        {
+          "map": "MAP_STRATA_GALLERY_FOREST",
+          "base_label": "gStrataGalleryForest",
+          "land_mons": {
+            "encounter_rate": 20,
+            "mons": [
+              {
+                "min_level": 33,
+                "max_level": 35,
+                "species": "SPECIES_MESOHIPPUS"
+              },
+              {
+                "min_level": 33,
+                "max_level": 35,
+                "species": "SPECIES_DOUGLASSCIUR"
+              },
+              {
+                "min_level": 33,
+                "max_level": 35,
+                "species": "SPECIES_LEPTOMERYX"
+              },
+              {
+                "min_level": 33,
+                "max_level": 35,
+                "species": "SPECIES_HESPEROCYON"
+              },
+              {
+                "min_level": 34,
+                "max_level": 36,
+                "species": "SPECIES_DOUGLASSCIUR"
+              },
+              {
+                "min_level": 34,
+                "max_level": 36,
+                "species": "SPECIES_MESOHIPPUS"
+              },
+              {
+                "min_level": 34,
+                "max_level": 36,
+                "species": "SPECIES_LEPTOMERYX"
+              },
+              {
+                "min_level": 34,
+                "max_level": 36,
+                "species": "SPECIES_HESPEROCYON"
+              },
+              {
+                "min_level": 35,
+                "max_level": 37,
+                "species": "SPECIES_DOUGLASSCIUR"
+              },
+              {
+                "min_level": 35,
+                "max_level": 37,
+                "species": "SPECIES_MESOHIPPUS"
+              },
+              {
+                "min_level": 36,
+                "max_level": 37,
+                "species": "SPECIES_HESPEROCYON"
+              },
+              {
+                "min_level": 36,
+                "max_level": 37,
+                "species": "SPECIES_LEPTOMERYX"
+              }
+            ]
+          },
+          "water_mons": {
+            "encounter_rate": 4,
+            "mons": [
+              {
+                "min_level": 32,
+                "max_level": 35,
+                "species": "SPECIES_LEPISOSTEUS"
+              },
+              {
+                "min_level": 32,
+                "max_level": 35,
+                "species": "SPECIES_LEPISOSTEUS"
+              },
+              {
+                "min_level": 33,
+                "max_level": 36,
+                "species": "SPECIES_LEPISOSTEUS"
+              },
+              {
+                "min_level": 34,
+                "max_level": 37,
+                "species": "SPECIES_LEPISOSTEUS"
+              },
+              {
+                "min_level": 35,
+                "max_level": 38,
+                "species": "SPECIES_LEPISOSTEUS"
+              }
+            ]
+          },
+          "fishing_mons": {
+            "encounter_rate": 30,
+            "mons": [
+              {
+                "min_level": 32,
+                "max_level": 34,
+                "species": "SPECIES_LEPISOSTEUS"
+              },
+              {
+                "min_level": 32,
+                "max_level": 34,
+                "species": "SPECIES_LEPISOSTEUS"
+              },
+              {
+                "min_level": 33,
+                "max_level": 35,
+                "species": "SPECIES_LEPISOSTEUS"
+              },
+              {
+                "min_level": 33,
+                "max_level": 35,
+                "species": "SPECIES_LEPISOSTEUS"
+              },
+              {
+                "min_level": 34,
+                "max_level": 36,
+                "species": "SPECIES_LEPISOSTEUS"
+              },
+              {
+                "min_level": 34,
+                "max_level": 36,
+                "species": "SPECIES_LEPISOSTEUS"
+              },
+              {
+                "min_level": 35,
+                "max_level": 37,
+                "species": "SPECIES_LEPISOSTEUS"
+              },
+              {
+                "min_level": 35,
+                "max_level": 37,
+                "species": "SPECIES_LEPISOSTEUS"
+              },
+              {
+                "min_level": 36,
+                "max_level": 38,
+                "species": "SPECIES_LEPISOSTEUS"
+              },
+              {
+                "min_level": 36,
+                "max_level": 38,
+                "species": "SPECIES_LEPISOSTEUS"
+              }
+            ]
+          }
+        },
+        {
+          "map": "MAP_STRATA_BADLANDS_WALL",
+          "base_label": "gStrataBadlandsWall",
+          "land_mons": {
+            "encounter_rate": 20,
+            "mons": [
+              {
+                "min_level": 32,
+                "max_level": 34,
+                "species": "SPECIES_PALAEOLAGUS"
+              },
+              {
+                "min_level": 33,
+                "max_level": 35,
+                "species": "SPECIES_MERYCOIDODON"
+              },
+              {
+                "min_level": 33,
+                "max_level": 35,
+                "species": "SPECIES_PALAEOLAGUS"
+              },
+              {
+                "min_level": 33,
+                "max_level": 35,
+                "species": "SPECIES_STYLEMYS"
+              },
+              {
+                "min_level": 34,
+                "max_level": 36,
+                "species": "SPECIES_MERYCOIDODON"
+              },
+              {
+                "min_level": 33,
+                "max_level": 35,
+                "species": "SPECIES_ISCHYROMYS"
+              },
+              {
+                "min_level": 34,
+                "max_level": 36,
+                "species": "SPECIES_MESOHIPPUS"
+              },
+              {
+                "min_level": 34,
+                "max_level": 36,
+                "species": "SPECIES_LEPTOMERYX"
+              },
+              {
+                "min_level": 35,
+                "max_level": 37,
+                "species": "SPECIES_POEBROTHERE"
+              },
+              {
+                "min_level": 34,
+                "max_level": 36,
+                "species": "SPECIES_HESPEROCYON"
+              },
+              {
+                "min_level": 36,
+                "max_level": 38,
+                "species": "SPECIES_SUBHYRACODON"
+              },
+              {
+                "min_level": 36,
+                "max_level": 38,
+                "species": "SPECIES_HOPLOPHONEUS"
+              }
+            ]
+          }
+        },
+        {
+          "map": "MAP_STRATA_TOADSTOOL",
+          "base_label": "gStrataToadstool",
+          "land_mons": {
+            "encounter_rate": 20,
+            "mons": [
+              {
+                "min_level": 34,
+                "max_level": 36,
+                "species": "SPECIES_POEBROTHERE"
+              },
+              {
+                "min_level": 35,
+                "max_level": 37,
+                "species": "SPECIES_SUBHYRACODON"
+              },
+              {
+                "min_level": 34,
+                "max_level": 36,
+                "species": "SPECIES_MERYCOIDODON"
+              },
+              {
+                "min_level": 34,
+                "max_level": 36,
+                "species": "SPECIES_LEPTOMERYX"
+              },
+              {
+                "min_level": 35,
+                "max_level": 37,
+                "species": "SPECIES_POEBROTHERE"
+              },
+              {
+                "min_level": 35,
+                "max_level": 37,
+                "species": "SPECIES_STYLEMYS"
+              },
+              {
+                "min_level": 36,
+                "max_level": 38,
+                "species": "SPECIES_SUBHYRACODON"
+              },
+              {
+                "min_level": 35,
+                "max_level": 37,
+                "species": "SPECIES_HESPEROCYON"
+              },
+              {
+                "min_level": 33,
+                "max_level": 35,
+                "species": "SPECIES_PALAEOLAGUS"
+              },
+              {
+                "min_level": 35,
+                "max_level": 37,
+                "species": "SPECIES_HYAENODON"
+              },
+              {
+                "min_level": 37,
+                "max_level": 39,
+                "species": "SPECIES_HOPLOPHONEUS"
+              },
+              {
+                "min_level": 36,
+                "max_level": 38,
+                "species": "SPECIES_HYAENODON"
               }
             ]
           }

@@ -95,7 +95,10 @@ largest extinction in the epilogue is the one humans were present for.
 | Willwood Swamp | ~56 Ma | Route 114 south basin (rows 34–64), two ponds drawn with the route's own pond tiles, `*_petm` palettes | Act 4 (40×30); *Coryphodon*, *Borealosuch*, *Champsosaur*, rare *Oxyaena*; larvae forage; notes on wallowers, leaf damage, warm-water reptiles; north → the land bridge, east cut → Clarks Fork |
 | Clarks Fork Crossing | ~56 Ma | Route 115 (rows 44–74), sea as the river, `*_petm` palettes | Act 4 (40×30); a gravel-bar ford (patched across the river) with the *Oxyaena* set piece (Lv 26); *Gastornis*; trees give the forest pressure; north → Polecat Bench, west (the ford) → Willwood Swamp |
 | Lake Gosiute shore | ~50 Ma | Route 104 | Act 5; *Uintatherium* boss (Lv 34) across the south shore |
-| White River badlands | ~33 Ma | Route 114 south, `*_oligocene` palettes | Act 6; *Archaeotherium* boss (Lv 40) at the bone stash |
+| White River badlands | ~33 Ma | Route 114 south, `*_oligocene` palettes | Act 6 arrival valley; north edge joins the Gallery Forest; *Archaeotherium* boss (Lv 40) on the stash plateau (hell-pig object plus the stair triggers); 4 carrion forage spots at the stash; 3 field notes; *Palaeolagus* (common) |
+| Gallery Forest | ~33 Ma | Route 114 north (joins White River at offset 0), `*_oligocene` palettes | Act 6; forest strips along a river and lake (plank bridge replaced by a sandbar, house and berry plots removed); *Douglassciurus*, Mesohippus, Leptomeryx, Hesperocyon, gars in the water; the horse forest branch is steered here (forest habitat); 3 field notes |
+| Badlands Wall | ~33 Ma | Route 113 left half, `*_oligocene` palettes | Act 6; open red-soil flats under a banded cliff, with the Chadron / Brule contact note; oreodont herd (flavour objects), *Palaeolagus* (common), Stylemys, Merycoidodon; ash grass swapped for tall grass; east edge joins the Trackways at offset 0 |
+| Toadstool Trackways | ~33 Ma | Route 113 right half, `*_oligocene` palettes | Act 6; floodplain with trackway notes; *Hyaenodon* mini-boss (Lv 38, once, line of sight at x = 10; rare wild 35-38) with a carrion reward; Subhyracodon, Poebrothere |
 | Ashfall grassland | ~11.9 Ma | Route 113, volcanic ash | Act 7; *Teleoceras* bull (Lv 46) at the waterhole |
 | Ice Age Steppe | ~20 ka | Route 118, `*_ice_age` palettes, snow | Act 8; the sinkhole drops into the trap cave |
 | Natural Trap Cave | ~20 ka | Granite Cave 1F | Act 8; *Arctodus* boss (Lv 52); a rope climbs back out |
@@ -300,6 +303,10 @@ party and the PC boxes.
   | Ashen River, Ashen Swamp (Act 2) | water | dark |
   | Burrow Refuge (Act 2) | none | none (never tinted) |
   | Corral Bluffs palm forest (Act 3) | forest | day |
+  | Bighorn red beds (Act 4) | open | day |
+  | Lake Gosiute forest (Act 5) | forest | day |
+  | White River, Badlands Wall, Toadstool Trackways (Act 6) | open | day |
+  | Gallery Forest (Act 6) | forest | day |
   | Bighorn red beds, Polecat Bench (Act 4) | open | day |
   | Willwood Swamp (Act 4) | water | day |
   | Clarks Fork Crossing (Act 4) | forest (riverside trees; shore and surf count as water) | day |
@@ -375,7 +382,7 @@ runs lower on purpose and doesn't count.
 | Corral Bluffs | 15–20 | 12 |
 | Bighorn PETM | 20–27 | 19 |
 | Green River | 28–34 | 25 |
-| White River | 34–39 | 31 |
+| White River | 32–39 | 31 |
 | Ashfall | 40–45 | 37 |
 | Trap Cave (Ice Age) | 46–51 | 43 |
 | Epilogue | 48–53 | 45 |

@@ -9545,39 +9545,6 @@
       "layout_version": "emerald"
     },
     {
-      "id": "LAYOUT_STRATA_FOSSIL_LAKE",
-      "name": "StrataFossilLake_Layout",
-      "width": 49,
-      "height": 22,
-      "primary_tileset": "gTileset_General",
-      "secondary_tileset": "gTileset_Petalburg",
-      "border_filepath": "data/layouts/StrataFossilLake/border.bin",
-      "blockdata_filepath": "data/layouts/StrataFossilLake/map.bin",
-      "layout_version": "emerald"
-    },
-    {
-      "id": "LAYOUT_STRATA_BRIDGER_FOREST",
-      "name": "StrataBridgerForest_Layout",
-      "width": 40,
-      "height": 20,
-      "primary_tileset": "gTileset_General",
-      "secondary_tileset": "gTileset_Rustboro",
-      "border_filepath": "data/layouts/StrataBridgerForest/border.bin",
-      "blockdata_filepath": "data/layouts/StrataBridgerForest/map.bin",
-      "layout_version": "emerald"
-    },
-    {
-      "id": "LAYOUT_STRATA_OIL_SHALE",
-      "name": "StrataOilShale_Layout",
-      "width": 26,
-      "height": 34,
-      "primary_tileset": "gTileset_General",
-      "secondary_tileset": "gTileset_Fallarbor",
-      "border_filepath": "data/layouts/StrataOilShale/border.bin",
-      "blockdata_filepath": "data/layouts/StrataOilShale/map.bin",
-      "layout_version": "emerald"
-    },
-    {
       "id": "LAYOUT_STRATA_FERN_GLADE",
       "name": "StrataFernGlade_Layout",
       "width": 22,
@@ -9597,6 +9564,39 @@
       "secondary_tileset": "gTileset_Cave",
       "border_filepath": "data/layouts/StrataBurrow/border.bin",
       "blockdata_filepath": "data/layouts/StrataBurrow/map.bin",
+      "layout_version": "emerald"
+    },
+    {
+      "id": "LAYOUT_STRATA_GALLERY_FOREST",
+      "name": "StrataGalleryForest_Layout",
+      "width": 40,
+      "height": 37,
+      "primary_tileset": "gTileset_GeneralOligocene",
+      "secondary_tileset": "gTileset_FallarborOligocene",
+      "border_filepath": "data/layouts/StrataGalleryForest/border.bin",
+      "blockdata_filepath": "data/layouts/StrataGalleryForest/map.bin",
+      "layout_version": "emerald"
+    },
+    {
+      "id": "LAYOUT_STRATA_BADLANDS_WALL",
+      "name": "StrataBadlandsWall_Layout",
+      "width": 48,
+      "height": 20,
+      "primary_tileset": "gTileset_GeneralOligocene",
+      "secondary_tileset": "gTileset_FallarborOligocene",
+      "border_filepath": "data/layouts/StrataBadlandsWall/border.bin",
+      "blockdata_filepath": "data/layouts/StrataBadlandsWall/map.bin",
+      "layout_version": "emerald"
+    },
+    {
+      "id": "LAYOUT_STRATA_TOADSTOOL",
+      "name": "StrataToadstool_Layout",
+      "width": 52,
+      "height": 20,
+      "primary_tileset": "gTileset_GeneralOligocene",
+      "secondary_tileset": "gTileset_FallarborOligocene",
+      "border_filepath": "data/layouts/StrataToadstool/border.bin",
+      "blockdata_filepath": "data/layouts/StrataToadstool/map.bin",
       "layout_version": "emerald"
     },
     {
@@ -9663,6 +9663,39 @@
       "secondary_tileset": "gTileset_FallarborPetm",
       "border_filepath": "data/layouts/StrataClarksFork/border.bin",
       "blockdata_filepath": "data/layouts/StrataClarksFork/map.bin",
+      "layout_version": "emerald"
+    },
+    {
+      "id": "LAYOUT_STRATA_FOSSIL_LAKE",
+      "name": "StrataFossilLake_Layout",
+      "width": 49,
+      "height": 22,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Petalburg",
+      "border_filepath": "data/layouts/StrataFossilLake/border.bin",
+      "blockdata_filepath": "data/layouts/StrataFossilLake/map.bin",
+      "layout_version": "emerald"
+    },
+    {
+      "id": "LAYOUT_STRATA_BRIDGER_FOREST",
+      "name": "StrataBridgerForest_Layout",
+      "width": 40,
+      "height": 20,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Rustboro",
+      "border_filepath": "data/layouts/StrataBridgerForest/border.bin",
+      "blockdata_filepath": "data/layouts/StrataBridgerForest/map.bin",
+      "layout_version": "emerald"
+    },
+    {
+      "id": "LAYOUT_STRATA_OIL_SHALE",
+      "name": "StrataOilShale_Layout",
+      "width": 26,
+      "height": 34,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Fallarbor",
+      "border_filepath": "data/layouts/StrataOilShale/border.bin",
+      "blockdata_filepath": "data/layouts/StrataOilShale/map.bin",
       "layout_version": "emerald"
     }
   ]
