@@ -4,7 +4,7 @@
   "layout": "LAYOUT_STRATA_LAKE_FOREST",
   "music": "MUS_ROUTE104",
   "region": "REGION_HOENN",
-  "region_map_section": "MAPSEC_STRATA_GREEN_RIVER",
+  "region_map_section": "MAPSEC_STRATA_BRIDGER_SHORE",
   "requires_flash": false,
   "weather": "WEATHER_NONE",
   "map_type": "MAP_TYPE_ROUTE",
@@ -13,8 +13,34 @@
   "allow_running": true,
   "show_map_name": true,
   "battle_scene": "MAP_BATTLE_SCENE_NORMAL",
-  "connections": null,
-  "object_events": [],
+  "connections": [
+    {
+      "map": "MAP_STRATA_FOSSIL_LAKE",
+      "offset": 2,
+      "direction": "up"
+    },
+    {
+      "map": "MAP_STRATA_BRIDGER_FOREST",
+      "offset": 36,
+      "direction": "right"
+    }
+  ],
+  "object_events": [
+    {
+      "local_id": "LOCALID_STRATA_A5_BULL",
+      "graphics_id": "OBJ_EVENT_GFX_SPECIES(RHYPERIOR)",
+      "x": 39,
+      "y": 62,
+      "elevation": 3,
+      "movement_type": "MOVEMENT_TYPE_FACE_LEFT",
+      "movement_range_x": 1,
+      "movement_range_y": 1,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "StrataLakeForest_EventScript_BullTalk",
+      "flag": "0x284"
+    }
+  ],
   "warp_events": [],
   "coord_events": [
     {
@@ -24,7 +50,7 @@
       "elevation": 3,
       "var": "VAR_STRATA_STORY",
       "var_value": "10",
-      "script": "StrataLakeForest_EventScript_Uintatherium"
+      "script": "StrataLakeForest_EventScript_UintatheriumWest"
     },
     {
       "type": "trigger",
@@ -33,7 +59,7 @@
       "elevation": 3,
       "var": "VAR_STRATA_STORY",
       "var_value": "10",
-      "script": "StrataLakeForest_EventScript_Uintatherium"
+      "script": "StrataLakeForest_EventScript_UintatheriumWest"
     },
     {
       "type": "trigger",
@@ -42,7 +68,7 @@
       "elevation": 3,
       "var": "VAR_STRATA_STORY",
       "var_value": "10",
-      "script": "StrataLakeForest_EventScript_Uintatherium"
+      "script": "StrataLakeForest_EventScript_UintatheriumWest"
     },
     {
       "type": "trigger",
@@ -51,7 +77,7 @@
       "elevation": 3,
       "var": "VAR_STRATA_STORY",
       "var_value": "10",
-      "script": "StrataLakeForest_EventScript_Uintatherium"
+      "script": "StrataLakeForest_EventScript_UintatheriumWest"
     },
     {
       "type": "trigger",
@@ -60,7 +86,7 @@
       "elevation": 3,
       "var": "VAR_STRATA_STORY",
       "var_value": "10",
-      "script": "StrataLakeForest_EventScript_Uintatherium"
+      "script": "StrataLakeForest_EventScript_UintatheriumWest"
     },
     {
       "type": "trigger",
@@ -69,7 +95,7 @@
       "elevation": 3,
       "var": "VAR_STRATA_STORY",
       "var_value": "10",
-      "script": "StrataLakeForest_EventScript_Uintatherium"
+      "script": "StrataLakeForest_EventScript_UintatheriumWest"
     },
     {
       "type": "trigger",
@@ -78,25 +104,7 @@
       "elevation": 3,
       "var": "VAR_STRATA_STORY",
       "var_value": "10",
-      "script": "StrataLakeForest_EventScript_Uintatherium"
-    },
-    {
-      "type": "trigger",
-      "x": 22,
-      "y": 61,
-      "elevation": 3,
-      "var": "VAR_STRATA_STORY",
-      "var_value": "10",
-      "script": "StrataLakeForest_EventScript_Uintatherium"
-    },
-    {
-      "type": "trigger",
-      "x": 23,
-      "y": 61,
-      "elevation": 3,
-      "var": "VAR_STRATA_STORY",
-      "var_value": "10",
-      "script": "StrataLakeForest_EventScript_Uintatherium"
+      "script": "StrataLakeForest_EventScript_UintatheriumWest"
     },
     {
       "type": "trigger",
@@ -253,6 +261,38 @@
       "script": "StrataFieldStation_EventScript_Anchor"
     },
     {
+      "type": "sign",
+      "x": 7,
+      "y": 19,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
+      "script": "StrataLakeForest_EventScript_NoteLake"
+    },
+    {
+      "type": "sign",
+      "x": 26,
+      "y": 4,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
+      "script": "StrataLakeForest_EventScript_NoteClimate"
+    },
+    {
+      "type": "sign",
+      "x": 20,
+      "y": 23,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
+      "script": "StrataLakeForest_EventScript_NoteShallows"
+    },
+    {
+      "type": "sign",
+      "x": 16,
+      "y": 57,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
+      "script": "StrataLakeForest_EventScript_NoteUintatheres"
+    },
+    {
       "type": "hidden_item",
       "x": 3,
       "y": 21,
@@ -279,6 +319,36 @@
       "elevation": 0,
       "item": "ITEM_LEGUME_POD",
       "flag": "FLAG_TEMP_13",
+      "quantity": 1,
+      "underfoot": false
+    },
+    {
+      "type": "hidden_item",
+      "x": 24,
+      "y": 5,
+      "elevation": 0,
+      "item": "ITEM_FERN_FROND",
+      "flag": "FLAG_TEMP_14",
+      "quantity": 1,
+      "underfoot": false
+    },
+    {
+      "type": "hidden_item",
+      "x": 9,
+      "y": 26,
+      "elevation": 0,
+      "item": "ITEM_BROWSE",
+      "flag": "FLAG_TEMP_15",
+      "quantity": 1,
+      "underfoot": false
+    },
+    {
+      "type": "hidden_item",
+      "x": 16,
+      "y": 59,
+      "elevation": 0,
+      "item": "ITEM_CARRION",
+      "flag": "FLAG_TEMP_16",
       "quantity": 1,
       "underfoot": false
     }

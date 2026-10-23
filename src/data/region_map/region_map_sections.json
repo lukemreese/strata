@@ -1708,16 +1708,20 @@
       "name": "SAND ARROYO"
     },
     {
-      "id": "MAPSEC_STRATA_POLECAT",
-      "name": "POLECAT BENCH"
+      "id": "MAPSEC_STRATA_BRIDGER_SHORE",
+      "name": "BRIDGER SHORE"
     },
     {
-      "id": "MAPSEC_STRATA_WILLWOOD",
-      "name": "WILLWOOD SWAMP"
+      "id": "MAPSEC_STRATA_FOSSIL_LAKE",
+      "name": "FOSSIL LAKE"
     },
     {
-      "id": "MAPSEC_STRATA_CLARKS_FORK",
-      "name": "CLARKS FORK"
+      "id": "MAPSEC_STRATA_BRIDGER_FOREST",
+      "name": "BRIDGER FOREST"
+    },
+    {
+      "id": "MAPSEC_STRATA_OIL_SHALE",
+      "name": "OIL-SHALE CLIFFS"
     },
     {
       "id": "MAPSEC_STRATA_FERN_GLADE",
@@ -1738,6 +1742,18 @@
     {
       "id": "MAPSEC_STRATA_FRONT_RANGE_CREEK",
       "name": "FRONT RANGE CREEK"
+    },
+    {
+      "id": "MAPSEC_STRATA_POLECAT",
+      "name": "POLECAT BENCH"
+    },
+    {
+      "id": "MAPSEC_STRATA_WILLWOOD",
+      "name": "WILLWOOD SWAMP"
+    },
+    {
+      "id": "MAPSEC_STRATA_CLARKS_FORK",
+      "name": "CLARKS FORK"
     }
   ]
 }

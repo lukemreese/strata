@@ -87,6 +87,10 @@ largest extinction in the epilogue is the one humans were present for.
 | Concretion Bluffs | ~65.4 Ma | Route 116 | Act 3; *Taeniolabis* mini-boss (Lv 20), three crackable concretions (`VAR_STRATA_ACT3`) |
 | Front Range Creek | ~65.5 Ma | Route 119 upper river | Act 3; water map (waders, fishing), notes on the rising Rockies |
 | Red Beds | ~56 Ma | Route 114 north, `*_petm` palettes, drought | Act 4 (40×34), arrival; field notes (red soils, heat, dwarfing, land bridges); *Coryphodon* boss (Lv 28 + calf Lv 24, wild double) on the land bridge; east → Polecat Bench, south (the bridge) → Willwood Swamp |
+| Bridger Shore (`StrataLakeForest`) | ~50 Ma | Route 104, whole | Act 5 arrival; Lake Gosiute shore. Gaps open the north shore (to Fossil Lake) and the east forest (to Bridger Forest). *Uintatherium* boss (Lv 34): a bull charges along the beach when the player crosses the boss line (y 61) |
+| Fossil Lake | ~52 Ma | Route 103 west half | Act 5; Fossil Butte lagerstätte, water map. Mass-mortality scene (labelled hypothesis) on the east shore; field notes on fish, the oldest bats, shorebirds |
+| Bridger Forest | ~50–47 Ma | Route 116 west half, trees planted | Act 5; canopy primates (*Omomys*, *Notharctus*), *Paramys*; plant forage |
+| Oil-Shale Cliffs | ~50 Ma | Route 115 canyon below the ridge | Act 5; varve and kerogen notes; *Patriofelis* set piece (Lv 32, one-time) on the sand path |
 | Polecat Bench | ~56 Ma | Route 113 (x 52–100), `*_petm` palettes, drought | Act 4 (48×18); open ash flats: *Paramys*, *Sifrhippus*; notes on the carbon isotope excursion, immigrants, and the release rate (H7); south → Clarks Fork |
 | Willwood Swamp | ~56 Ma | Route 114 south basin (rows 34–64), two ponds drawn with the route's own pond tiles, `*_petm` palettes | Act 4 (40×30); *Coryphodon*, *Borealosuch*, *Champsosaur*, rare *Oxyaena*; larvae forage; notes on wallowers, leaf damage, warm-water reptiles; north → the land bridge, east cut → Clarks Fork |
 | Clarks Fork Crossing | ~56 Ma | Route 115 (rows 44–74), sea as the river, `*_petm` palettes | Act 4 (40×30); a gravel-bar ford (patched across the river) with the *Oxyaena* set piece (Lv 26); *Gastornis*; trees give the forest pressure; north → Polecat Bench, west (the ford) → Willwood Swamp |
@@ -299,7 +303,9 @@ party and the PC boxes.
   | Bighorn red beds, Polecat Bench (Act 4) | open | day |
   | Willwood Swamp (Act 4) | water | day |
   | Clarks Fork Crossing (Act 4) | forest (riverside trees; shore and surf count as water) | day |
-  | Lake Gosiute forest (Act 5) | forest | day |
+  | Bridger Shore, Bridger Forest (Act 5) | forest | day |
+  | Fossil Lake (Act 5) | water | day |
+  | Oil-Shale Cliffs (Act 5) | open | day |
   | White River (Act 6) | open | day |
   | Ashfall grassland (Act 7) | open | ash |
   | Ice Age steppe (Act 8) | open | day |

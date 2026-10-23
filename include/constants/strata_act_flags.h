@@ -53,6 +53,13 @@
 #define FLAG_STRATA_ACT5_BASE 0x284
 #define VAR_STRATA_ACT5 0x40FB
 
+// The Uintatherium bull (Bridger Shore) is hidden while set; set on every map load, cleared
+// by the boss line (the bull charges in).
+#define FLAG_STRATA_A5_BULL_HIDDEN (FLAG_STRATA_ACT5_BASE + 0)
+// Set once the Patriofelis set piece (Oil-Shale Cliffs) is won or caught: it leaves.
+#define FLAG_STRATA_A5_PATRIOFELIS (FLAG_STRATA_ACT5_BASE + 1)
+// VAR_STRATA_ACT5: 0 until the player has seen the Fossil Lake mass-mortality scene, then 1.
+
 
 // ---- Act 6: White River ------------------------------------------
 #define FLAG_STRATA_ACT6_BASE 0x28C
