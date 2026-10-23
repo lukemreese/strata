@@ -22,7 +22,12 @@
 
 // ---- Act 3: Corral Bluffs ----------------------------------------
 #define FLAG_STRATA_ACT3_BASE 0x274
-#define VAR_STRATA_ACT3 0x40F9
+#define VAR_STRATA_ACT3 0x40F9           // concretions cracked at Concretion Bluffs (0-3)
+#define FLAG_STRATA_A3_CONCRETION_1     (FLAG_STRATA_ACT3_BASE + 0)  // cracked: the rock is gone
+#define FLAG_STRATA_A3_CONCRETION_2     (FLAG_STRATA_ACT3_BASE + 1)
+#define FLAG_STRATA_A3_CONCRETION_3     (FLAG_STRATA_ACT3_BASE + 2)
+#define FLAG_STRATA_A3_TAENIOLABIS_DONE (FLAG_STRATA_ACT3_BASE + 3)  // the Taeniolabis mini-boss is over (won or caught)
+#define FLAG_STRATA_A3_EOCONODON_GONE   (FLAG_STRATA_ACT3_BASE + 4)  // the Eoconodon boss has left the marsh
 
 
 // ---- Act 4: Bighorn Basin (PETM) ---------------------------------

@@ -1706,6 +1706,18 @@
     {
       "id": "MAPSEC_STRATA_SAND_ARROYO",
       "name": "SAND ARROYO"
+    },
+    {
+      "id": "MAPSEC_STRATA_LEGUME_THICKET",
+      "name": "LEGUME THICKET"
+    },
+    {
+      "id": "MAPSEC_STRATA_CONCRETION_BLUFFS",
+      "name": "CONCRETION BLUFFS"
+    },
+    {
+      "id": "MAPSEC_STRATA_FRONT_RANGE_CREEK",
+      "name": "FRONT RANGE CREEK"
     }
   ]
 }

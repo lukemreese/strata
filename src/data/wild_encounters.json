@@ -37399,15 +37399,212 @@
             "encounter_rate": 20,
             "mons": [
               {
+                "min_level": 14,
+                "max_level": 15,
+                "species": "SPECIES_LOXOLOPHUS"
+              },
+              {
+                "min_level": 14,
+                "max_level": 15,
+                "species": "SPECIES_CARSIOPTYCH"
+              },
+              {
+                "min_level": 14,
+                "max_level": 15,
+                "species": "SPECIES_MESODMA"
+              },
+              {
+                "min_level": 14,
+                "max_level": 16,
+                "species": "SPECIES_PURGATORIUS"
+              },
+              {
                 "min_level": 15,
-                "max_level": 17,
+                "max_level": 16,
                 "species": "SPECIES_LOXOLOPHUS"
               },
               {
                 "min_level": 15,
-                "max_level": 17,
+                "max_level": 16,
                 "species": "SPECIES_CARSIOPTYCH"
               },
+              {
+                "min_level": 15,
+                "max_level": 17,
+                "species": "SPECIES_PROTICTIS"
+              },
+              {
+                "min_level": 15,
+                "max_level": 17,
+                "species": "SPECIES_ASTERIORNIS"
+              },
+              {
+                "min_level": 16,
+                "max_level": 17,
+                "species": "SPECIES_PURGATORIUS"
+              },
+              {
+                "min_level": 16,
+                "max_level": 17,
+                "species": "SPECIES_MESODMA"
+              },
+              {
+                "min_level": 16,
+                "max_level": 17,
+                "species": "SPECIES_PROTICTIS"
+              },
+              {
+                "min_level": 16,
+                "max_level": 17,
+                "species": "SPECIES_LOXOLOPHUS"
+              }
+            ]
+          }
+        },
+        {
+          "map": "MAP_STRATA_LEGUME_THICKET",
+          "base_label": "gStrataLegumeThicket",
+          "land_mons": {
+            "encounter_rate": 20,
+            "mons": [
+              {
+                "min_level": 18,
+                "max_level": 19,
+                "species": "SPECIES_TAENIOLABIS"
+              },
+              {
+                "min_level": 18,
+                "max_level": 19,
+                "species": "SPECIES_CARSIOPTYCH"
+              },
+              {
+                "min_level": 18,
+                "max_level": 19,
+                "species": "SPECIES_LOXOLOPHUS"
+              },
+              {
+                "min_level": 19,
+                "max_level": 20,
+                "species": "SPECIES_TAENIOLABIS"
+              },
+              {
+                "min_level": 18,
+                "max_level": 20,
+                "species": "SPECIES_PURGATORIUS"
+              },
+              {
+                "min_level": 19,
+                "max_level": 20,
+                "species": "SPECIES_CARSIOPTYCH"
+              },
+              {
+                "min_level": 19,
+                "max_level": 21,
+                "species": "SPECIES_LOXOLOPHUS"
+              },
+              {
+                "min_level": 18,
+                "max_level": 19,
+                "species": "SPECIES_MESODMA"
+              },
+              {
+                "min_level": 20,
+                "max_level": 21,
+                "species": "SPECIES_TAENIOLABIS"
+              },
+              {
+                "min_level": 19,
+                "max_level": 21,
+                "species": "SPECIES_PROTICTIS"
+              },
+              {
+                "min_level": 20,
+                "max_level": 21,
+                "species": "SPECIES_EOCONODON"
+              },
+              {
+                "min_level": 20,
+                "max_level": 21,
+                "species": "SPECIES_TAENIOLABIS"
+              }
+            ]
+          }
+        },
+        {
+          "map": "MAP_STRATA_CONCRETION_BLUFFS",
+          "base_label": "gStrataConcretionBluffs",
+          "land_mons": {
+            "encounter_rate": 20,
+            "mons": [
+              {
+                "min_level": 17,
+                "max_level": 19,
+                "species": "SPECIES_TAENIOLABIS"
+              },
+              {
+                "min_level": 17,
+                "max_level": 18,
+                "species": "SPECIES_LOXOLOPHUS"
+              },
+              {
+                "min_level": 17,
+                "max_level": 18,
+                "species": "SPECIES_CARSIOPTYCH"
+              },
+              {
+                "min_level": 17,
+                "max_level": 19,
+                "species": "SPECIES_PURGATORIUS"
+              },
+              {
+                "min_level": 17,
+                "max_level": 19,
+                "species": "SPECIES_ASTERIORNIS"
+              },
+              {
+                "min_level": 17,
+                "max_level": 19,
+                "species": "SPECIES_PROTICTIS"
+              },
+              {
+                "min_level": 18,
+                "max_level": 20,
+                "species": "SPECIES_TAENIOLABIS"
+              },
+              {
+                "min_level": 17,
+                "max_level": 18,
+                "species": "SPECIES_MESODMA"
+              },
+              {
+                "min_level": 18,
+                "max_level": 20,
+                "species": "SPECIES_LOXOLOPHUS"
+              },
+              {
+                "min_level": 18,
+                "max_level": 20,
+                "species": "SPECIES_CARSIOPTYCH"
+              },
+              {
+                "min_level": 19,
+                "max_level": 20,
+                "species": "SPECIES_TAENIOLABIS"
+              },
+              {
+                "min_level": 19,
+                "max_level": 20,
+                "species": "SPECIES_ASTERIORNIS"
+              }
+            ]
+          }
+        },
+        {
+          "map": "MAP_STRATA_FRONT_RANGE_CREEK",
+          "base_label": "gStrataFrontRangeCreek",
+          "land_mons": {
+            "encounter_rate": 20,
+            "mons": [
               {
                 "min_level": 15,
                 "max_level": 16,
@@ -37415,18 +37612,28 @@
               },
               {
                 "min_level": 15,
+                "max_level": 16,
+                "species": "SPECIES_LOXOLOPHUS"
+              },
+              {
+                "min_level": 15,
+                "max_level": 17,
+                "species": "SPECIES_PROTOCHELYD"
+              },
+              {
+                "min_level": 15,
+                "max_level": 17,
+                "species": "SPECIES_CARSIOPTYCH"
+              },
+              {
+                "min_level": 16,
                 "max_level": 17,
                 "species": "SPECIES_PURGATORIUS"
               },
               {
                 "min_level": 16,
                 "max_level": 18,
-                "species": "SPECIES_LOXOLOPHUS"
-              },
-              {
-                "min_level": 16,
-                "max_level": 18,
-                "species": "SPECIES_CARSIOPTYCH"
+                "species": "SPECIES_PROTOCHELYD"
               },
               {
                 "min_level": 16,
@@ -37440,8 +37647,88 @@
               },
               {
                 "min_level": 17,
+                "max_level": 18,
+                "species": "SPECIES_LOXOLOPHUS"
+              },
+              {
+                "min_level": 17,
+                "max_level": 18,
+                "species": "SPECIES_MESODMA"
+              },
+              {
+                "min_level": 17,
                 "max_level": 19,
-                "species": "SPECIES_TAENIOLABIS"
+                "species": "SPECIES_CHAMPSOSAUR"
+              },
+              {
+                "min_level": 18,
+                "max_level": 19,
+                "species": "SPECIES_BOREALOSUCH"
+              }
+            ]
+          },
+          "water_mons": {
+            "encounter_rate": 4,
+            "mons": [
+              {
+                "min_level": 15,
+                "max_level": 18,
+                "species": "SPECIES_LEPISOSTEUS"
+              },
+              {
+                "min_level": 15,
+                "max_level": 18,
+                "species": "SPECIES_CHAMPSOSAUR"
+              },
+              {
+                "min_level": 16,
+                "max_level": 19,
+                "species": "SPECIES_PROTOCHELYD"
+              },
+              {
+                "min_level": 17,
+                "max_level": 19,
+                "species": "SPECIES_BOREALOSUCH"
+              },
+              {
+                "min_level": 18,
+                "max_level": 20,
+                "species": "SPECIES_BOREALOSUCH"
+              }
+            ]
+          },
+          "fishing_mons": {
+            "encounter_rate": 30,
+            "mons": [
+              {
+                "min_level": 15,
+                "max_level": 17,
+                "species": "SPECIES_LEPISOSTEUS"
+              },
+              {
+                "min_level": 15,
+                "max_level": 17,
+                "species": "SPECIES_LEPISOSTEUS"
+              },
+              {
+                "min_level": 16,
+                "max_level": 18,
+                "species": "SPECIES_LEPISOSTEUS"
+              },
+              {
+                "min_level": 16,
+                "max_level": 18,
+                "species": "SPECIES_CHAMPSOSAUR"
+              },
+              {
+                "min_level": 16,
+                "max_level": 18,
+                "species": "SPECIES_PROTOCHELYD"
+              },
+              {
+                "min_level": 17,
+                "max_level": 19,
+                "species": "SPECIES_CHAMPSOSAUR"
               },
               {
                 "min_level": 17,
@@ -37449,14 +37736,19 @@
                 "species": "SPECIES_PROTOCHELYD"
               },
               {
-                "min_level": 18,
-                "max_level": 20,
-                "species": "SPECIES_TAENIOLABIS"
+                "min_level": 17,
+                "max_level": 19,
+                "species": "SPECIES_LEPISOSTEUS"
               },
               {
                 "min_level": 18,
                 "max_level": 20,
-                "species": "SPECIES_EOCONODON"
+                "species": "SPECIES_BOREALOSUCH"
+              },
+              {
+                "min_level": 18,
+                "max_level": 20,
+                "species": "SPECIES_BOREALOSUCH"
               }
             ]
           }

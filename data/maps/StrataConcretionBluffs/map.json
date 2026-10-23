@@ -1,0 +1,159 @@
+{
+  "id": "MAP_STRATA_CONCRETION_BLUFFS",
+  "name": "StrataConcretionBluffs",
+  "layout": "LAYOUT_STRATA_CONCRETION_BLUFFS",
+  "music": "MUS_ROUTE104",
+  "region": "REGION_HOENN",
+  "region_map_section": "MAPSEC_STRATA_CONCRETION_BLUFFS",
+  "requires_flash": false,
+  "weather": "WEATHER_NONE",
+  "map_type": "MAP_TYPE_ROUTE",
+  "allow_cycling": true,
+  "allow_escaping": false,
+  "allow_running": true,
+  "show_map_name": true,
+  "battle_scene": "MAP_BATTLE_SCENE_NORMAL",
+  "connections": [
+    {
+      "map": "MAP_STRATA_PALM_FOREST",
+      "offset": -15,
+      "direction": "left"
+    }
+  ],
+  "object_events": [
+    {
+      "local_id": "LOCALID_STRATA_BLUFFS_TAENIOLABIS",
+      "graphics_id": "OBJ_EVENT_GFX_SPECIES(BIDOOF)",
+      "x": 28,
+      "y": 15,
+      "elevation": 3,
+      "movement_type": "MOVEMENT_TYPE_FACE_DOWN",
+      "movement_range_x": 1,
+      "movement_range_y": 1,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "StrataConcretionBluffs_EventScript_Taeniolabis",
+      "flag": "0x277"
+    },
+    {
+      "local_id": "LOCALID_STRATA_BLUFFS_CONCRETION_1",
+      "graphics_id": "OBJ_EVENT_GFX_BREAKABLE_ROCK",
+      "x": 45,
+      "y": 11,
+      "elevation": 3,
+      "movement_type": "MOVEMENT_TYPE_NONE",
+      "movement_range_x": 1,
+      "movement_range_y": 1,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "StrataConcretionBluffs_EventScript_Concretion1",
+      "flag": "0x274"
+    },
+    {
+      "local_id": "LOCALID_STRATA_BLUFFS_CONCRETION_2",
+      "graphics_id": "OBJ_EVENT_GFX_BREAKABLE_ROCK",
+      "x": 48,
+      "y": 9,
+      "elevation": 3,
+      "movement_type": "MOVEMENT_TYPE_NONE",
+      "movement_range_x": 1,
+      "movement_range_y": 1,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "StrataConcretionBluffs_EventScript_Concretion2",
+      "flag": "0x275"
+    },
+    {
+      "local_id": "LOCALID_STRATA_BLUFFS_CONCRETION_3",
+      "graphics_id": "OBJ_EVENT_GFX_BREAKABLE_ROCK",
+      "x": 51,
+      "y": 16,
+      "elevation": 3,
+      "movement_type": "MOVEMENT_TYPE_NONE",
+      "movement_range_x": 1,
+      "movement_range_y": 1,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "StrataConcretionBluffs_EventScript_Concretion3",
+      "flag": "0x276"
+    }
+  ],
+  "warp_events": [],
+  "coord_events": [],
+  "bg_events": [
+    {
+      "type": "sign",
+      "x": 4,
+      "y": 11,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
+      "script": "StrataConcretionBluffs_EventScript_NoteSite"
+    },
+    {
+      "type": "sign",
+      "x": 30,
+      "y": 16,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
+      "script": "StrataConcretionBluffs_EventScript_NoteTaeniolabis"
+    },
+    {
+      "type": "sign",
+      "x": 47,
+      "y": 12,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
+      "script": "StrataConcretionBluffs_EventScript_NoteConcretions"
+    },
+    {
+      "type": "hidden_item",
+      "x": 10,
+      "y": 6,
+      "elevation": 0,
+      "item": "ITEM_LEGUME_POD",
+      "flag": "FLAG_TEMP_11",
+      "quantity": 1,
+      "underfoot": false
+    },
+    {
+      "type": "hidden_item",
+      "x": 5,
+      "y": 15,
+      "elevation": 0,
+      "item": "ITEM_BROWSE",
+      "flag": "FLAG_TEMP_12",
+      "quantity": 1,
+      "underfoot": false
+    },
+    {
+      "type": "hidden_item",
+      "x": 24,
+      "y": 17,
+      "elevation": 0,
+      "item": "ITEM_LARVAE",
+      "flag": "FLAG_TEMP_13",
+      "quantity": 1,
+      "underfoot": false
+    },
+    {
+      "type": "hidden_item",
+      "x": 44,
+      "y": 10,
+      "elevation": 0,
+      "item": "ITEM_CARRION",
+      "flag": "FLAG_TEMP_14",
+      "quantity": 1,
+      "underfoot": false
+    },
+    {
+      "type": "hidden_item",
+      "x": 30,
+      "y": 12,
+      "elevation": 0,
+      "item": "ITEM_LEGUME_POD",
+      "flag": "FLAG_TEMP_15",
+      "quantity": 1,
+      "underfoot": false
+    }
+  ]
+}
