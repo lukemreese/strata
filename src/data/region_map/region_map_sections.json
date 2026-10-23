@@ -1708,6 +1708,26 @@
       "name": "SAND ARROYO"
     },
     {
+      "id": "MAPSEC_STRATA_POLECAT",
+      "name": "POLECAT BENCH"
+    },
+    {
+      "id": "MAPSEC_STRATA_WILLWOOD",
+      "name": "WILLWOOD SWAMP"
+    },
+    {
+      "id": "MAPSEC_STRATA_CLARKS_FORK",
+      "name": "CLARKS FORK"
+    },
+    {
+      "id": "MAPSEC_STRATA_FERN_GLADE",
+      "name": "FERN GLADE"
+    },
+    {
+      "id": "MAPSEC_STRATA_BURROW",
+      "name": "BURROW REFUGE"
+    },
+    {
       "id": "MAPSEC_STRATA_LEGUME_THICKET",
       "name": "LEGUME THICKET"
     },
@@ -1718,14 +1738,6 @@
     {
       "id": "MAPSEC_STRATA_FRONT_RANGE_CREEK",
       "name": "FRONT RANGE CREEK"
-    },
-    {
-      "id": "MAPSEC_STRATA_FERN_GLADE",
-      "name": "FERN GLADE"
-    },
-    {
-      "id": "MAPSEC_STRATA_BURROW",
-      "name": "BURROW REFUGE"
     }
   ]
 }

@@ -1,0 +1,167 @@
+{
+  "id": "MAP_STRATA_CLARKS_FORK",
+  "name": "StrataClarksFork",
+  "layout": "LAYOUT_STRATA_CLARKS_FORK",
+  "music": "MUS_ROUTE110",
+  "region": "REGION_HOENN",
+  "region_map_section": "MAPSEC_STRATA_CLARKS_FORK",
+  "requires_flash": false,
+  "weather": "WEATHER_DROUGHT",
+  "map_type": "MAP_TYPE_ROUTE",
+  "allow_cycling": true,
+  "allow_escaping": false,
+  "allow_running": true,
+  "show_map_name": true,
+  "battle_scene": "MAP_BATTLE_SCENE_NORMAL",
+  "connections": [
+    {
+      "map": "MAP_STRATA_POLECAT_BENCH",
+      "offset": 6,
+      "direction": "up"
+    },
+    {
+      "map": "MAP_STRATA_WILLWOOD_SWAMP",
+      "offset": 4,
+      "direction": "left"
+    }
+  ],
+  "object_events": [
+    {
+      "local_id": "LOCALID_STRATA_CLARKS_OXYAENA",
+      "graphics_id": "OBJ_EVENT_GFX_MEOWTH",
+      "x": 9,
+      "y": 9,
+      "elevation": 3,
+      "movement_type": "MOVEMENT_TYPE_FACE_LEFT",
+      "movement_range_x": 1,
+      "movement_range_y": 1,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "StrataClarksFork_EventScript_Oxyaena",
+      "flag": "FLAG_UNUSED_0x27C"
+    }
+  ],
+  "warp_events": [],
+  "coord_events": [
+    {
+      "type": "trigger",
+      "x": 6,
+      "y": 8,
+      "elevation": 3,
+      "var": "VAR_UNUSED_0x40FA",
+      "var_value": "0",
+      "script": "StrataClarksFork_EventScript_OxyaenaStalksWest"
+    },
+    {
+      "type": "trigger",
+      "x": 6,
+      "y": 9,
+      "elevation": 3,
+      "var": "VAR_UNUSED_0x40FA",
+      "var_value": "0",
+      "script": "StrataClarksFork_EventScript_OxyaenaStalksWest"
+    },
+    {
+      "type": "trigger",
+      "x": 6,
+      "y": 10,
+      "elevation": 3,
+      "var": "VAR_UNUSED_0x40FA",
+      "var_value": "0",
+      "script": "StrataClarksFork_EventScript_OxyaenaStalksWest"
+    },
+    {
+      "type": "trigger",
+      "x": 12,
+      "y": 8,
+      "elevation": 3,
+      "var": "VAR_UNUSED_0x40FA",
+      "var_value": "0",
+      "script": "StrataClarksFork_EventScript_OxyaenaStalksEast"
+    },
+    {
+      "type": "trigger",
+      "x": 12,
+      "y": 9,
+      "elevation": 3,
+      "var": "VAR_UNUSED_0x40FA",
+      "var_value": "0",
+      "script": "StrataClarksFork_EventScript_OxyaenaStalksEast"
+    },
+    {
+      "type": "trigger",
+      "x": 12,
+      "y": 10,
+      "elevation": 3,
+      "var": "VAR_UNUSED_0x40FA",
+      "var_value": "0",
+      "script": "StrataClarksFork_EventScript_OxyaenaStalksEast"
+    }
+  ],
+  "bg_events": [
+    {
+      "type": "sign",
+      "x": 17,
+      "y": 5,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
+      "script": "StrataClarksFork_EventScript_BasinNote"
+    },
+    {
+      "type": "sign",
+      "x": 25,
+      "y": 8,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
+      "script": "StrataClarksFork_EventScript_GastornisNote"
+    },
+    {
+      "type": "sign",
+      "x": 19,
+      "y": 3,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
+      "script": "StrataFieldStation_EventScript_Anchor"
+    },
+    {
+      "type": "hidden_item",
+      "x": 14,
+      "y": 6,
+      "elevation": 0,
+      "item": "ITEM_CARRION",
+      "flag": "FLAG_TEMP_11",
+      "quantity": 1,
+      "underfoot": false
+    },
+    {
+      "type": "hidden_item",
+      "x": 30,
+      "y": 12,
+      "elevation": 0,
+      "item": "ITEM_FERN_FROND",
+      "flag": "FLAG_TEMP_12",
+      "quantity": 1,
+      "underfoot": false
+    },
+    {
+      "type": "hidden_item",
+      "x": 24,
+      "y": 20,
+      "elevation": 0,
+      "item": "ITEM_LEGUME_POD",
+      "flag": "FLAG_TEMP_13",
+      "quantity": 1,
+      "underfoot": false
+    },
+    {
+      "type": "hidden_item",
+      "x": 25,
+      "y": 15,
+      "elevation": 0,
+      "item": "ITEM_LARVAE",
+      "flag": "FLAG_TEMP_14",
+      "quantity": 1,
+      "underfoot": false
+    }
+  ]
+}

@@ -9545,6 +9545,61 @@
       "layout_version": "emerald"
     },
     {
+      "id": "LAYOUT_STRATA_POLECAT_BENCH",
+      "name": "StrataPolecatBench_Layout",
+      "width": 48,
+      "height": 18,
+      "primary_tileset": "gTileset_GeneralPetm",
+      "secondary_tileset": "gTileset_FallarborPetm",
+      "border_filepath": "data/layouts/StrataPolecatBench/border.bin",
+      "blockdata_filepath": "data/layouts/StrataPolecatBench/map.bin",
+      "layout_version": "emerald"
+    },
+    {
+      "id": "LAYOUT_STRATA_WILLWOOD_SWAMP",
+      "name": "StrataWillwoodSwamp_Layout",
+      "width": 40,
+      "height": 30,
+      "primary_tileset": "gTileset_GeneralPetm",
+      "secondary_tileset": "gTileset_FallarborPetm",
+      "border_filepath": "data/layouts/StrataWillwoodSwamp/border.bin",
+      "blockdata_filepath": "data/layouts/StrataWillwoodSwamp/map.bin",
+      "layout_version": "emerald"
+    },
+    {
+      "id": "LAYOUT_STRATA_CLARKS_FORK",
+      "name": "StrataClarksFork_Layout",
+      "width": 40,
+      "height": 30,
+      "primary_tileset": "gTileset_GeneralPetm",
+      "secondary_tileset": "gTileset_FallarborPetm",
+      "border_filepath": "data/layouts/StrataClarksFork/border.bin",
+      "blockdata_filepath": "data/layouts/StrataClarksFork/map.bin",
+      "layout_version": "emerald"
+    },
+    {
+      "id": "LAYOUT_STRATA_FERN_GLADE",
+      "name": "StrataFernGlade_Layout",
+      "width": 22,
+      "height": 20,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Fortree",
+      "border_filepath": "data/layouts/StrataFernGlade/border.bin",
+      "blockdata_filepath": "data/layouts/StrataFernGlade/map.bin",
+      "layout_version": "emerald"
+    },
+    {
+      "id": "LAYOUT_STRATA_BURROW",
+      "name": "StrataBurrow_Layout",
+      "width": 17,
+      "height": 15,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Cave",
+      "border_filepath": "data/layouts/StrataBurrow/border.bin",
+      "blockdata_filepath": "data/layouts/StrataBurrow/map.bin",
+      "layout_version": "emerald"
+    },
+    {
       "id": "LAYOUT_STRATA_LEGUME_THICKET",
       "name": "StrataLegumeThicket_Layout",
       "width": 25,
@@ -9575,28 +9630,6 @@
       "secondary_tileset": "gTileset_Fortree",
       "border_filepath": "data/layouts/StrataFrontRangeCreek/border.bin",
       "blockdata_filepath": "data/layouts/StrataFrontRangeCreek/map.bin",
-      "layout_version": "emerald"
-    },
-    {
-      "id": "LAYOUT_STRATA_FERN_GLADE",
-      "name": "StrataFernGlade_Layout",
-      "width": 22,
-      "height": 20,
-      "primary_tileset": "gTileset_General",
-      "secondary_tileset": "gTileset_Fortree",
-      "border_filepath": "data/layouts/StrataFernGlade/border.bin",
-      "blockdata_filepath": "data/layouts/StrataFernGlade/map.bin",
-      "layout_version": "emerald"
-    },
-    {
-      "id": "LAYOUT_STRATA_BURROW",
-      "name": "StrataBurrow_Layout",
-      "width": 17,
-      "height": 15,
-      "primary_tileset": "gTileset_General",
-      "secondary_tileset": "gTileset_Cave",
-      "border_filepath": "data/layouts/StrataBurrow/border.bin",
-      "blockdata_filepath": "data/layouts/StrataBurrow/map.bin",
       "layout_version": "emerald"
     }
   ]
