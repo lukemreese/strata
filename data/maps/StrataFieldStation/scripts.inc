@@ -16,6 +16,8 @@ StrataFieldStation_EventScript_Intro::
 	special ChooseStarter
 	msgbox StrataFieldStation_Text_Lineages, MSGBOX_DEFAULT
 	giveitem ITEM_POKE_BALL, 5
+	msgbox StrataFieldStation_Text_WaterGear, MSGBOX_DEFAULT
+	call Strata_EventScript_GiveWaterGear
 	setflag FLAG_SYS_POKEMON_GET
 	setflag FLAG_SYS_POKEDEX_GET
 	setflag FLAG_SYS_B_DASH
@@ -33,8 +35,16 @@ StrataFieldStation_EventScript_Mentor::
 	special HealPlayerParty
 	special Strata_BufferMentorText
 	msgbox gStringVar4, MSGBOX_DEFAULT
+	@ Saves from before the gear existed get it here.
+	checkitem ITEM_WADERS
+	call_if_eq VAR_RESULT, FALSE, StrataFieldStation_EventScript_LateWaterGear
 	release
 	end
+
+StrataFieldStation_EventScript_LateWaterGear::
+	msgbox StrataFieldStation_Text_WaterGear, MSGBOX_DEFAULT
+	call Strata_EventScript_GiveWaterGear
+	return
 
 @ The rig only ever loads the next layer up: time in Strata moves forward.
 StrataFieldStation_EventScript_Rig::
@@ -185,6 +195,12 @@ StrataFieldStation_Text_Lineages:
 	.string "layer, your partner's lineage moves\l"
 	.string "with it, shaped by how it lived.\p"
 	.string "Here, take some specimen capsules.$"
+
+StrataFieldStation_Text_WaterGear:
+	.string "DALE left you some field gear,\n"
+	.string "too: waders and a fishing kit.\p"
+	.string "Half the life down there is in\n"
+	.string "the rivers. Don't skip them.$"
 
 StrataFieldStation_Text_Codex:
 	.string "Your FIELD CODEX will log every\n"

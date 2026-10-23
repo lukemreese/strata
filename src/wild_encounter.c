@@ -31,6 +31,7 @@
 #include "constants/items.h"
 #include "constants/layouts.h"
 #include "constants/weather.h"
+#include "selection.h"
 
 extern const u8 EventScript_SprayWoreOff[];
 
@@ -967,6 +968,7 @@ void FishingWildEncounter(u8 rod)
     }
 
     IncrementGameStat(GAME_STAT_FISHING_ENCOUNTERS);
+    Selection_OnFishHooked();
     SetPokemonAnglerSpecies(species);
     BattleSetup_StartWildBattle();
 }

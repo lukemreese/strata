@@ -208,6 +208,30 @@ party and the PC boxes.
 | Climate | Time in hot vs cold maps | Body size (warming → dwarfing, as in *Sifrhippus*) |
 | Role | Damage dealt vs damage taken vs fled | Predator/defender/runner branch |
 
+**As built** (`src/selection.c`, `src/lineage.c`, `src/data/lineages.h`):
+
+| Counter | Source now | Rate | Missing / later |
+|---|---|---|---|
+| FOREST (`cool`) | Long grass, or a map tagged forest | +1 per 32 steps | Per-map tags are still a placeholder table (`sMapHabitats`, R4) |
+| OPEN (`beauty`) | Tall grass, or a map tagged open | +1 per 32 steps | Same (R4) |
+| WATER (`cute`) | Surfing/wading; **standing next to surfable water** (shore); hooking a fish | +1 per 32 steps; +2 per fish hooked (whole party) | n/a |
+| PLANT (`smart`) | No source yet (`special Strata_AddPressure` only) | n/a | Plant forage items, +12 each (R3) |
+| ANIMAL (`tough`, `PRESSURE_MEAT_DIET`) | Knocking out a foe with a move, **only for carnivores/omnivores** (`src/data/strata_diets.h`) | +1 per KO; KOs stop at 24 | Carrion/larvae forage, +12 each (R3) |
+| HEAT (`sheen`) | Era climate (`sEraHeat`) | 0–2 per tick | n/a |
+
+- **Thresholds:** a branch only competes once its counter reaches its `minScore`
+  (`DESCENT_MIN_SCORE` = 64 for every branch today). The highest eligible counter wins,
+  ties go to the first listed, and the default wins if none is eligible.
+- **KO cap storage:** there is no spare per-mon field to count KOs per era, so knockouts
+  simply can't lift ANIMAL above 24 (other sources can). Counters reset on descent, and
+  both diet-steered descents (Hesperocyon, Leptocyon) have one-era windows, so this is
+  24 per era wherever it matters. Since 24 < 64, a hunting dog still becomes the coyote;
+  *Epicyon*/*Aenocyon* need carrion forage on top.
+- **Water access:** the **Waders** key item lets the player surf (wade) any surfable water
+  with no badge or HM; the **Fishing Kit** is the Old Rod renamed (Good/Super Fishing Kit
+  after upgrades). Both are given at the Field Station after the starter choice
+  (`data/scripts/strata_gear.inc`).
+
 ### 7.3 Extinction
 - Each era has **filters**: e.g. the impact kills all non-avian dinosaurs and anything
   above ~25 kg, and the Eocene–Oligocene cooling hits warmth-dependent lineages.
