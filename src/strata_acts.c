@@ -73,6 +73,10 @@ static const u8 *const sMentorLines[STORY_IN_ACT(ERA_EPILOGUE) + 1] =
         "Bring your team to the heat, and\l"
         "their lineages will feel it too."),
     [STORY_ACT_DONE(ERA_BIGHORN_PETM)] = COMPOUND_STRING(
+        "The PETM carbon release took\n"
+        "thousands of years. Ours is roughly\l"
+        "ten times faster, by current\l"
+        "estimates.\p"
         "Next: the Green River lakes, about\n"
         "50 million years ago.\p"
         "The lake mud there preserved whole\n"

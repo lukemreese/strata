@@ -13,7 +13,18 @@
   "allow_running": true,
   "show_map_name": true,
   "battle_scene": "MAP_BATTLE_SCENE_NORMAL",
-  "connections": null,
+  "connections": [
+    {
+      "map": "MAP_STRATA_POLECAT_BENCH",
+      "offset": 0,
+      "direction": "right"
+    },
+    {
+      "map": "MAP_STRATA_WILLWOOD_SWAMP",
+      "offset": 0,
+      "direction": "down"
+    }
+  ],
   "object_events": [],
   "warp_events": [],
   "coord_events": [
@@ -64,6 +75,38 @@
       "script": "StrataFieldStation_EventScript_Anchor"
     },
     {
+      "type": "sign",
+      "x": 29,
+      "y": 10,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
+      "script": "StrataRedBeds_EventScript_RedBedsNote"
+    },
+    {
+      "type": "sign",
+      "x": 33,
+      "y": 9,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
+      "script": "StrataRedBeds_EventScript_HeatNote"
+    },
+    {
+      "type": "sign",
+      "x": 36,
+      "y": 13,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
+      "script": "StrataRedBeds_EventScript_DwarfingNote"
+    },
+    {
+      "type": "sign",
+      "x": 24,
+      "y": 19,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
+      "script": "StrataRedBeds_EventScript_LandBridgeNote"
+    },
+    {
       "type": "hidden_item",
       "x": 16,
       "y": 12,
@@ -90,6 +133,26 @@
       "elevation": 0,
       "item": "ITEM_LARVAE",
       "flag": "FLAG_TEMP_13",
+      "quantity": 1,
+      "underfoot": false
+    },
+    {
+      "type": "hidden_item",
+      "x": 27,
+      "y": 16,
+      "elevation": 0,
+      "item": "ITEM_FERN_FROND",
+      "flag": "FLAG_TEMP_14",
+      "quantity": 1,
+      "underfoot": false
+    },
+    {
+      "type": "hidden_item",
+      "x": 37,
+      "y": 6,
+      "elevation": 0,
+      "item": "ITEM_LEGUME_POD",
+      "flag": "FLAG_TEMP_15",
       "quantity": 1,
       "underfoot": false
     }

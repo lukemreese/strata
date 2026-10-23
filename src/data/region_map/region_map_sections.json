@@ -1706,6 +1706,18 @@
     {
       "id": "MAPSEC_STRATA_SAND_ARROYO",
       "name": "SAND ARROYO"
+    },
+    {
+      "id": "MAPSEC_STRATA_POLECAT",
+      "name": "POLECAT BENCH"
+    },
+    {
+      "id": "MAPSEC_STRATA_WILLWOOD",
+      "name": "WILLWOOD SWAMP"
+    },
+    {
+      "id": "MAPSEC_STRATA_CLARKS_FORK",
+      "name": "CLARKS FORK"
     }
   ]
 }

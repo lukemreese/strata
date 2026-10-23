@@ -29,6 +29,11 @@
 #define FLAG_STRATA_ACT4_BASE 0x27C
 #define VAR_STRATA_ACT4 0x40FA
 
+// VAR_STRATA_ACT4: 0 = the Oxyaena at the Clarks Fork ford hasn't stalked the player yet,
+// 1 = the set piece is over (won, caught or fled).
+#define FLAG_STRATA_ACT4_OXYAENA        (FLAG_STRATA_ACT4_BASE + 0)  // Oxyaena beaten or caught: hides it
+#define FLAG_STRATA_ACT4_KIT_UPGRADED   (FLAG_STRATA_ACT4_BASE + 1)  // Coryphodon done: fishing kit upgraded once
+
 
 // ---- Act 5: Green River ------------------------------------------
 #define FLAG_STRATA_ACT5_BASE 0x284

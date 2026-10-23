@@ -9543,6 +9543,39 @@
       "border_filepath": "data/layouts/StrataSandArroyo/border.bin",
       "blockdata_filepath": "data/layouts/StrataSandArroyo/map.bin",
       "layout_version": "emerald"
+    },
+    {
+      "id": "LAYOUT_STRATA_POLECAT_BENCH",
+      "name": "StrataPolecatBench_Layout",
+      "width": 48,
+      "height": 18,
+      "primary_tileset": "gTileset_GeneralPetm",
+      "secondary_tileset": "gTileset_FallarborPetm",
+      "border_filepath": "data/layouts/StrataPolecatBench/border.bin",
+      "blockdata_filepath": "data/layouts/StrataPolecatBench/map.bin",
+      "layout_version": "emerald"
+    },
+    {
+      "id": "LAYOUT_STRATA_WILLWOOD_SWAMP",
+      "name": "StrataWillwoodSwamp_Layout",
+      "width": 40,
+      "height": 30,
+      "primary_tileset": "gTileset_GeneralPetm",
+      "secondary_tileset": "gTileset_FallarborPetm",
+      "border_filepath": "data/layouts/StrataWillwoodSwamp/border.bin",
+      "blockdata_filepath": "data/layouts/StrataWillwoodSwamp/map.bin",
+      "layout_version": "emerald"
+    },
+    {
+      "id": "LAYOUT_STRATA_CLARKS_FORK",
+      "name": "StrataClarksFork_Layout",
+      "width": 40,
+      "height": 30,
+      "primary_tileset": "gTileset_GeneralPetm",
+      "secondary_tileset": "gTileset_FallarborPetm",
+      "border_filepath": "data/layouts/StrataClarksFork/border.bin",
+      "blockdata_filepath": "data/layouts/StrataClarksFork/map.bin",
+      "layout_version": "emerald"
     }
   ]
 }

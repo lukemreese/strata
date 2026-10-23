@@ -37468,49 +37468,44 @@
             "encounter_rate": 20,
             "mons": [
               {
-                "min_level": 22,
-                "max_level": 24,
+                "min_level": 20,
+                "max_level": 22,
                 "species": "SPECIES_SIFRHIPPUS"
               },
               {
-                "min_level": 22,
-                "max_level": 24,
+                "min_level": 20,
+                "max_level": 22,
                 "species": "SPECIES_HYOPSODUS"
               },
               {
-                "min_level": 22,
-                "max_level": 24,
+                "min_level": 21,
+                "max_level": 23,
                 "species": "SPECIES_DIACODEXIS"
               },
               {
-                "min_level": 22,
+                "min_level": 21,
                 "max_level": 24,
-                "species": "SPECIES_TEILHARDINA"
+                "species": "SPECIES_PARAMYS"
               },
               {
                 "min_level": 23,
-                "max_level": 25,
-                "species": "SPECIES_SIFRHIPPUS"
-              },
-              {
-                "min_level": 23,
-                "max_level": 25,
-                "species": "SPECIES_HYOPSODUS"
-              },
-              {
-                "min_level": 23,
-                "max_level": 25,
-                "species": "SPECIES_TEILHARDINA"
-              },
-              {
-                "min_level": 23,
-                "max_level": 25,
-                "species": "SPECIES_MESODMA"
-              },
-              {
-                "min_level": 24,
                 "max_level": 26,
-                "species": "SPECIES_DIACODEXIS"
+                "species": "SPECIES_TEILHARDINA"
+              },
+              {
+                "min_level": 22,
+                "max_level": 25,
+                "species": "SPECIES_SIFRHIPPUS"
+              },
+              {
+                "min_level": 23,
+                "max_level": 25,
+                "species": "SPECIES_HYOPSODUS"
+              },
+              {
+                "min_level": 23,
+                "max_level": 25,
+                "species": "SPECIES_PROTOCHELYD"
               },
               {
                 "min_level": 24,
@@ -37519,13 +37514,18 @@
               },
               {
                 "min_level": 24,
-                "max_level": 26,
-                "species": "SPECIES_PROTOCHELYD"
+                "max_level": 27,
+                "species": "SPECIES_MESODMA"
               },
               {
                 "min_level": 25,
                 "max_level": 27,
                 "species": "SPECIES_CORYPHODON"
+              },
+              {
+                "min_level": 26,
+                "max_level": 27,
+                "species": "SPECIES_GASTORNIS"
               }
             ]
           },
@@ -37554,7 +37554,7 @@
               },
               {
                 "min_level": 25,
-                "max_level": 28,
+                "max_level": 27,
                 "species": "SPECIES_CORYPHODON"
               }
             ]
@@ -37563,6 +37563,16 @@
             "encounter_rate": 30,
             "mons": [
               {
+                "min_level": 19,
+                "max_level": 22,
+                "species": "SPECIES_LEPISOSTEUS"
+              },
+              {
+                "min_level": 19,
+                "max_level": 22,
+                "species": "SPECIES_LEPISOSTEUS"
+              },
+              {
                 "min_level": 20,
                 "max_level": 23,
                 "species": "SPECIES_LEPISOSTEUS"
@@ -37570,7 +37580,7 @@
               {
                 "min_level": 20,
                 "max_level": 23,
-                "species": "SPECIES_LEPISOSTEUS"
+                "species": "SPECIES_CHAMPSOSAUR"
               },
               {
                 "min_level": 21,
@@ -37585,7 +37595,7 @@
               {
                 "min_level": 22,
                 "max_level": 25,
-                "species": "SPECIES_LEPISOSTEUS"
+                "species": "SPECIES_PROTOCHELYD"
               },
               {
                 "min_level": 22,
@@ -37595,12 +37605,170 @@
               {
                 "min_level": 23,
                 "max_level": 26,
+                "species": "SPECIES_BOREALOSUCH"
+              },
+              {
+                "min_level": 24,
+                "max_level": 27,
+                "species": "SPECIES_BOREALOSUCH"
+              }
+            ]
+          }
+        },
+        {
+          "map": "MAP_STRATA_POLECAT_BENCH",
+          "base_label": "gStrataPolecatBench",
+          "land_mons": {
+            "encounter_rate": 20,
+            "mons": [
+              {
+                "min_level": 21,
+                "max_level": 23,
+                "species": "SPECIES_PARAMYS"
+              },
+              {
+                "min_level": 21,
+                "max_level": 23,
+                "species": "SPECIES_SIFRHIPPUS"
+              },
+              {
+                "min_level": 22,
+                "max_level": 24,
+                "species": "SPECIES_DIACODEXIS"
+              },
+              {
+                "min_level": 22,
+                "max_level": 25,
+                "species": "SPECIES_PARAMYS"
+              },
+              {
+                "min_level": 22,
+                "max_level": 24,
+                "species": "SPECIES_HYOPSODUS"
+              },
+              {
+                "min_level": 23,
+                "max_level": 26,
+                "species": "SPECIES_SIFRHIPPUS"
+              },
+              {
+                "min_level": 24,
+                "max_level": 26,
+                "species": "SPECIES_DIACODEXIS"
+              },
+              {
+                "min_level": 23,
+                "max_level": 27,
+                "species": "SPECIES_TEILHARDINA"
+              },
+              {
+                "min_level": 24,
+                "max_level": 26,
+                "species": "SPECIES_PARAMYS"
+              },
+              {
+                "min_level": 25,
+                "max_level": 27,
+                "species": "SPECIES_GASTORNIS"
+              },
+              {
+                "min_level": 25,
+                "max_level": 27,
+                "species": "SPECIES_DIACODEXIS"
+              },
+              {
+                "min_level": 26,
+                "max_level": 27,
+                "species": "SPECIES_SIFRHIPPUS"
+              }
+            ]
+          }
+        },
+        {
+          "map": "MAP_STRATA_WILLWOOD_SWAMP",
+          "base_label": "gStrataWillwoodSwamp",
+          "land_mons": {
+            "encounter_rate": 20,
+            "mons": [
+              {
+                "min_level": 22,
+                "max_level": 24,
+                "species": "SPECIES_CHAMPSOSAUR"
+              },
+              {
+                "min_level": 22,
+                "max_level": 24,
                 "species": "SPECIES_PROTOCHELYD"
               },
               {
                 "min_level": 23,
+                "max_level": 25,
+                "species": "SPECIES_HYOPSODUS"
+              },
+              {
+                "min_level": 23,
+                "max_level": 25,
+                "species": "SPECIES_BOREALOSUCH"
+              },
+              {
+                "min_level": 23,
+                "max_level": 25,
+                "species": "SPECIES_DIACODEXIS"
+              },
+              {
+                "min_level": 24,
+                "max_level": 26,
+                "species": "SPECIES_PARAMYS"
+              },
+              {
+                "min_level": 24,
+                "max_level": 26,
+                "species": "SPECIES_CORYPHODON"
+              },
+              {
+                "min_level": 24,
+                "max_level": 27,
+                "species": "SPECIES_TEILHARDINA"
+              },
+              {
+                "min_level": 25,
+                "max_level": 27,
+                "species": "SPECIES_BOREALOSUCH"
+              },
+              {
+                "min_level": 23,
+                "max_level": 26,
+                "species": "SPECIES_OXYAENA"
+              },
+              {
+                "min_level": 26,
+                "max_level": 27,
+                "species": "SPECIES_CORYPHODON"
+              },
+              {
+                "min_level": 26,
+                "max_level": 27,
+                "species": "SPECIES_GASTORNIS"
+              }
+            ]
+          },
+          "water_mons": {
+            "encounter_rate": 4,
+            "mons": [
+              {
+                "min_level": 22,
+                "max_level": 26,
+                "species": "SPECIES_LEPISOSTEUS"
+              },
+              {
+                "min_level": 22,
                 "max_level": 26,
                 "species": "SPECIES_CHAMPSOSAUR"
+              },
+              {
+                "min_level": 23,
+                "max_level": 27,
+                "species": "SPECIES_LEPISOSTEUS"
               },
               {
                 "min_level": 24,
@@ -37609,7 +37777,216 @@
               },
               {
                 "min_level": 25,
-                "max_level": 28,
+                "max_level": 27,
+                "species": "SPECIES_CORYPHODON"
+              }
+            ]
+          },
+          "fishing_mons": {
+            "encounter_rate": 30,
+            "mons": [
+              {
+                "min_level": 19,
+                "max_level": 22,
+                "species": "SPECIES_LEPISOSTEUS"
+              },
+              {
+                "min_level": 19,
+                "max_level": 22,
+                "species": "SPECIES_LEPISOSTEUS"
+              },
+              {
+                "min_level": 20,
+                "max_level": 23,
+                "species": "SPECIES_LEPISOSTEUS"
+              },
+              {
+                "min_level": 20,
+                "max_level": 23,
+                "species": "SPECIES_CHAMPSOSAUR"
+              },
+              {
+                "min_level": 21,
+                "max_level": 24,
+                "species": "SPECIES_LEPISOSTEUS"
+              },
+              {
+                "min_level": 21,
+                "max_level": 24,
+                "species": "SPECIES_CHAMPSOSAUR"
+              },
+              {
+                "min_level": 22,
+                "max_level": 25,
+                "species": "SPECIES_PROTOCHELYD"
+              },
+              {
+                "min_level": 22,
+                "max_level": 25,
+                "species": "SPECIES_CHAMPSOSAUR"
+              },
+              {
+                "min_level": 23,
+                "max_level": 26,
+                "species": "SPECIES_BOREALOSUCH"
+              },
+              {
+                "min_level": 24,
+                "max_level": 27,
+                "species": "SPECIES_BOREALOSUCH"
+              }
+            ]
+          }
+        },
+        {
+          "map": "MAP_STRATA_CLARKS_FORK",
+          "base_label": "gStrataClarksFork",
+          "land_mons": {
+            "encounter_rate": 20,
+            "mons": [
+              {
+                "min_level": 22,
+                "max_level": 24,
+                "species": "SPECIES_GASTORNIS"
+              },
+              {
+                "min_level": 22,
+                "max_level": 24,
+                "species": "SPECIES_SIFRHIPPUS"
+              },
+              {
+                "min_level": 23,
+                "max_level": 25,
+                "species": "SPECIES_DIACODEXIS"
+              },
+              {
+                "min_level": 23,
+                "max_level": 25,
+                "species": "SPECIES_HYOPSODUS"
+              },
+              {
+                "min_level": 23,
+                "max_level": 25,
+                "species": "SPECIES_PARAMYS"
+              },
+              {
+                "min_level": 24,
+                "max_level": 26,
+                "species": "SPECIES_GASTORNIS"
+              },
+              {
+                "min_level": 24,
+                "max_level": 26,
+                "species": "SPECIES_PROTOCHELYD"
+              },
+              {
+                "min_level": 24,
+                "max_level": 27,
+                "species": "SPECIES_TEILHARDINA"
+              },
+              {
+                "min_level": 25,
+                "max_level": 27,
+                "species": "SPECIES_BOREALOSUCH"
+              },
+              {
+                "min_level": 25,
+                "max_level": 27,
+                "species": "SPECIES_SIFRHIPPUS"
+              },
+              {
+                "min_level": 26,
+                "max_level": 27,
+                "species": "SPECIES_CORYPHODON"
+              },
+              {
+                "min_level": 26,
+                "max_level": 27,
+                "species": "SPECIES_GASTORNIS"
+              }
+            ]
+          },
+          "water_mons": {
+            "encounter_rate": 4,
+            "mons": [
+              {
+                "min_level": 22,
+                "max_level": 26,
+                "species": "SPECIES_LEPISOSTEUS"
+              },
+              {
+                "min_level": 22,
+                "max_level": 26,
+                "species": "SPECIES_CHAMPSOSAUR"
+              },
+              {
+                "min_level": 23,
+                "max_level": 27,
+                "species": "SPECIES_LEPISOSTEUS"
+              },
+              {
+                "min_level": 24,
+                "max_level": 27,
+                "species": "SPECIES_PROTOCHELYD"
+              },
+              {
+                "min_level": 25,
+                "max_level": 27,
+                "species": "SPECIES_BOREALOSUCH"
+              }
+            ]
+          },
+          "fishing_mons": {
+            "encounter_rate": 30,
+            "mons": [
+              {
+                "min_level": 19,
+                "max_level": 22,
+                "species": "SPECIES_LEPISOSTEUS"
+              },
+              {
+                "min_level": 19,
+                "max_level": 22,
+                "species": "SPECIES_LEPISOSTEUS"
+              },
+              {
+                "min_level": 20,
+                "max_level": 23,
+                "species": "SPECIES_LEPISOSTEUS"
+              },
+              {
+                "min_level": 20,
+                "max_level": 23,
+                "species": "SPECIES_CHAMPSOSAUR"
+              },
+              {
+                "min_level": 21,
+                "max_level": 24,
+                "species": "SPECIES_LEPISOSTEUS"
+              },
+              {
+                "min_level": 21,
+                "max_level": 24,
+                "species": "SPECIES_CHAMPSOSAUR"
+              },
+              {
+                "min_level": 22,
+                "max_level": 25,
+                "species": "SPECIES_PROTOCHELYD"
+              },
+              {
+                "min_level": 22,
+                "max_level": 25,
+                "species": "SPECIES_CHAMPSOSAUR"
+              },
+              {
+                "min_level": 23,
+                "max_level": 26,
+                "species": "SPECIES_BOREALOSUCH"
+              },
+              {
+                "min_level": 24,
+                "max_level": 27,
                 "species": "SPECIES_BOREALOSUCH"
               }
             ]
