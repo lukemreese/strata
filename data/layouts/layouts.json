@@ -9459,10 +9459,10 @@
     {
       "id": "LAYOUT_STRATA_GRASSLAND",
       "name": "StrataGrassland_Layout",
-      "width": 85,
+      "width": 55,
       "height": 20,
-      "primary_tileset": "gTileset_General",
-      "secondary_tileset": "gTileset_Fallarbor",
+      "primary_tileset": "gTileset_GeneralOligocene",
+      "secondary_tileset": "gTileset_FallarborOligocene",
       "border_filepath": "data/layouts/StrataGrassland/border.bin",
       "blockdata_filepath": "data/layouts/StrataGrassland/map.bin",
       "layout_version": "emerald"
@@ -9567,25 +9567,80 @@
       "layout_version": "emerald"
     },
     {
-      "id": "LAYOUT_STRATA_MISSOURI_BREAKS",
-      "name": "StrataMissouriBreaks_Layout",
-      "width": 24,
-      "height": 29,
-      "primary_tileset": "gTileset_General",
-      "secondary_tileset": "gTileset_Fallarbor",
-      "border_filepath": "data/layouts/StrataMissouriBreaks/border.bin",
-      "blockdata_filepath": "data/layouts/StrataMissouriBreaks/map.bin",
+      "id": "LAYOUT_STRATA_NIOBRARA",
+      "name": "StrataNiobrara_Layout",
+      "width": 32,
+      "height": 32,
+      "primary_tileset": "gTileset_GeneralOligocene",
+      "secondary_tileset": "gTileset_FallarborOligocene",
+      "border_filepath": "data/layouts/StrataNiobrara/border.bin",
+      "blockdata_filepath": "data/layouts/StrataNiobrara/map.bin",
       "layout_version": "emerald"
     },
     {
-      "id": "LAYOUT_STRATA_PRYOR",
-      "name": "StrataPryor_Layout",
-      "width": 31,
-      "height": 17,
+      "id": "LAYOUT_STRATA_SAVANNA",
+      "name": "StrataSavanna_Layout",
+      "width": 28,
+      "height": 28,
+      "primary_tileset": "gTileset_GeneralOligocene",
+      "secondary_tileset": "gTileset_FallarborOligocene",
+      "border_filepath": "data/layouts/StrataSavanna/border.bin",
+      "blockdata_filepath": "data/layouts/StrataSavanna/map.bin",
+      "layout_version": "emerald"
+    },
+    {
+      "id": "LAYOUT_STRATA_WATERHOLE",
+      "name": "StrataWaterhole_Layout",
+      "width": 30,
+      "height": 20,
+      "primary_tileset": "gTileset_GeneralOligocene",
+      "secondary_tileset": "gTileset_FallarborOligocene",
+      "border_filepath": "data/layouts/StrataWaterhole/border.bin",
+      "blockdata_filepath": "data/layouts/StrataWaterhole/map.bin",
+      "layout_version": "emerald"
+    },
+    {
+      "id": "LAYOUT_STRATA_GRASSLAND_ASH",
+      "name": "StrataGrasslandAsh_Layout",
+      "width": 55,
+      "height": 20,
       "primary_tileset": "gTileset_General",
-      "secondary_tileset": "gTileset_Lavaridge",
-      "border_filepath": "data/layouts/StrataPryor/border.bin",
-      "blockdata_filepath": "data/layouts/StrataPryor/map.bin",
+      "secondary_tileset": "gTileset_Fallarbor",
+      "border_filepath": "data/layouts/StrataGrasslandAsh/border.bin",
+      "blockdata_filepath": "data/layouts/StrataGrasslandAsh/map.bin",
+      "layout_version": "emerald"
+    },
+    {
+      "id": "LAYOUT_STRATA_NIOBRARA_ASH",
+      "name": "StrataNiobraraAsh_Layout",
+      "width": 32,
+      "height": 32,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Fallarbor",
+      "border_filepath": "data/layouts/StrataNiobraraAsh/border.bin",
+      "blockdata_filepath": "data/layouts/StrataNiobraraAsh/map.bin",
+      "layout_version": "emerald"
+    },
+    {
+      "id": "LAYOUT_STRATA_SAVANNA_ASH",
+      "name": "StrataSavannaAsh_Layout",
+      "width": 28,
+      "height": 28,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Fallarbor",
+      "border_filepath": "data/layouts/StrataSavannaAsh/border.bin",
+      "blockdata_filepath": "data/layouts/StrataSavannaAsh/map.bin",
+      "layout_version": "emerald"
+    },
+    {
+      "id": "LAYOUT_STRATA_WATERHOLE_ASH",
+      "name": "StrataWaterholeAsh_Layout",
+      "width": 30,
+      "height": 20,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Fallarbor",
+      "border_filepath": "data/layouts/StrataWaterholeAsh/border.bin",
+      "blockdata_filepath": "data/layouts/StrataWaterholeAsh/map.bin",
       "layout_version": "emerald"
     },
     {
@@ -9751,6 +9806,28 @@
       "secondary_tileset": "gTileset_MauvilleIceAge",
       "border_filepath": "data/layouts/StrataColby/border.bin",
       "blockdata_filepath": "data/layouts/StrataColby/map.bin",
+      "layout_version": "emerald"
+    },
+    {
+      "id": "LAYOUT_STRATA_MISSOURI_BREAKS",
+      "name": "StrataMissouriBreaks_Layout",
+      "width": 24,
+      "height": 29,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Fallarbor",
+      "border_filepath": "data/layouts/StrataMissouriBreaks/border.bin",
+      "blockdata_filepath": "data/layouts/StrataMissouriBreaks/map.bin",
+      "layout_version": "emerald"
+    },
+    {
+      "id": "LAYOUT_STRATA_PRYOR",
+      "name": "StrataPryor_Layout",
+      "width": 31,
+      "height": 17,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Lavaridge",
+      "border_filepath": "data/layouts/StrataPryor/border.bin",
+      "blockdata_filepath": "data/layouts/StrataPryor/map.bin",
       "layout_version": "emerald"
     }
   ]

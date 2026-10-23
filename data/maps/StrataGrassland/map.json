@@ -2,68 +2,108 @@
   "id": "MAP_STRATA_GRASSLAND",
   "name": "StrataGrassland",
   "layout": "LAYOUT_STRATA_GRASSLAND",
-  "music": "MUS_ROUTE113",
+  "music": "MUS_ROUTE104",
   "region": "REGION_HOENN",
   "region_map_section": "MAPSEC_STRATA_ASHFALL",
   "requires_flash": false,
-  "weather": "WEATHER_VOLCANIC_ASH",
+  "weather": "WEATHER_SHADE",
   "map_type": "MAP_TYPE_ROUTE",
   "allow_cycling": true,
   "allow_escaping": false,
   "allow_running": true,
   "show_map_name": true,
   "battle_scene": "MAP_BATTLE_SCENE_NORMAL",
-  "connections": null,
+  "connections": [
+    {
+      "map": "MAP_STRATA_WATERHOLE",
+      "offset": 0,
+      "direction": "right"
+    },
+    {
+      "map": "MAP_STRATA_NIOBRARA",
+      "offset": 10,
+      "direction": "up"
+    },
+    {
+      "map": "MAP_STRATA_SAVANNA",
+      "offset": 29,
+      "direction": "down"
+    }
+  ],
   "object_events": [],
   "warp_events": [],
   "coord_events": [
     {
       "type": "trigger",
-      "x": 70,
-      "y": 7,
-      "elevation": 3,
-      "var": "VAR_STRATA_STORY",
-      "var_value": "14",
-      "script": "StrataGrassland_EventScript_Teleoceras"
-    },
-    {
-      "type": "trigger",
-      "x": 70,
-      "y": 8,
-      "elevation": 3,
-      "var": "VAR_STRATA_STORY",
-      "var_value": "14",
-      "script": "StrataGrassland_EventScript_Teleoceras"
-    },
-    {
-      "type": "trigger",
-      "x": 70,
-      "y": 9,
-      "elevation": 3,
-      "var": "VAR_STRATA_STORY",
-      "var_value": "14",
-      "script": "StrataGrassland_EventScript_Teleoceras"
-    },
-    {
-      "type": "trigger",
-      "x": 70,
+      "x": 7,
       "y": 10,
       "elevation": 3,
-      "var": "VAR_STRATA_STORY",
-      "var_value": "14",
-      "script": "StrataGrassland_EventScript_Teleoceras"
+      "var": "VAR_UNUSED_0x40FD",
+      "var_value": "0",
+      "script": "StrataGrassland_EventScript_Haze"
     },
     {
       "type": "trigger",
-      "x": 70,
+      "x": 7,
       "y": 11,
       "elevation": 3,
-      "var": "VAR_STRATA_STORY",
-      "var_value": "14",
-      "script": "StrataGrassland_EventScript_Teleoceras"
+      "var": "VAR_UNUSED_0x40FD",
+      "var_value": "0",
+      "script": "StrataGrassland_EventScript_Haze"
+    },
+    {
+      "type": "trigger",
+      "x": 7,
+      "y": 12,
+      "elevation": 3,
+      "var": "VAR_UNUSED_0x40FD",
+      "var_value": "0",
+      "script": "StrataGrassland_EventScript_Haze"
+    },
+    {
+      "type": "trigger",
+      "x": 7,
+      "y": 13,
+      "elevation": 3,
+      "var": "VAR_UNUSED_0x40FD",
+      "var_value": "0",
+      "script": "StrataGrassland_EventScript_Haze"
+    },
+    {
+      "type": "trigger",
+      "x": 7,
+      "y": 14,
+      "elevation": 3,
+      "var": "VAR_UNUSED_0x40FD",
+      "var_value": "0",
+      "script": "StrataGrassland_EventScript_Haze"
     }
   ],
   "bg_events": [
+    {
+      "type": "sign",
+      "x": 4,
+      "y": 10,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
+      "script": "StrataGrassland_EventScript_NoteTeeth"
+    },
+    {
+      "type": "sign",
+      "x": 36,
+      "y": 11,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
+      "script": "StrataGrassland_EventScript_NoteSeeds"
+    },
+    {
+      "type": "sign",
+      "x": 50,
+      "y": 12,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
+      "script": "StrataGrassland_EventScript_NoteCranes"
+    },
     {
       "type": "sign",
       "x": 5,
@@ -75,7 +115,7 @@
     {
       "type": "hidden_item",
       "x": 20,
-      "y": 6,
+      "y": 3,
       "elevation": 0,
       "item": "ITEM_SEED_HEAD",
       "flag": "FLAG_TEMP_11",
@@ -94,11 +134,21 @@
     },
     {
       "type": "hidden_item",
-      "x": 60,
-      "y": 10,
+      "x": 11,
+      "y": 13,
       "elevation": 0,
-      "item": "ITEM_CARRION",
+      "item": "ITEM_SEED_HEAD",
       "flag": "FLAG_TEMP_13",
+      "quantity": 1,
+      "underfoot": false
+    },
+    {
+      "type": "hidden_item",
+      "x": 48,
+      "y": 13,
+      "elevation": 0,
+      "item": "ITEM_LARVAE",
+      "flag": "FLAG_TEMP_14",
       "quantity": 1,
       "underfoot": false
     }

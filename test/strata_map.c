@@ -55,7 +55,10 @@ TEST("Map tags: habitats and lights of the existing maps")
     SetMap(MAP_STRATA_LEVEE_WINTER);   // Impact winter: dead forest, soot-dark sky
     EXPECT_EQ(Strata_GetMapHabitat(), PRESSURE_OPEN);
     EXPECT_EQ(Strata_GetMapLight(), STRATA_LIGHT_DARK);
-    SetMap(MAP_STRATA_GRASSLAND);
+    SetMap(MAP_STRATA_GRASSLAND);      // Act 7 before the ash: clear day
+    EXPECT_EQ(Strata_GetMapHabitat(), PRESSURE_OPEN);
+    EXPECT_EQ(Strata_GetMapLight(), STRATA_LIGHT_DAY);
+    SetMap(MAP_STRATA_GRASSLAND_ASH);  // and after it
     EXPECT_EQ(Strata_GetMapHabitat(), PRESSURE_OPEN);
     EXPECT_EQ(Strata_GetMapLight(), STRATA_LIGHT_ASH);
     SetMap(MAP_STRATA_TRAP_CAVE);
@@ -172,6 +175,9 @@ TEST("Deep-time maps take their time of day from their light, not the clock")
     UpdateTimeOfDay(TRUE);
     EXPECT_EQ(gTimeOfDay, TIME_NIGHT);
     SetMap(MAP_STRATA_GRASSLAND);
+    UpdateTimeOfDay(TRUE);
+    EXPECT_EQ(gTimeOfDay, TIME_DAY);
+    SetMap(MAP_STRATA_GRASSLAND_ASH);
     UpdateTimeOfDay(TRUE);
     EXPECT_EQ(gTimeOfDay, TIME_EVENING);
 }

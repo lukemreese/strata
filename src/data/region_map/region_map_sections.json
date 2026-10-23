@@ -1716,16 +1716,20 @@
       "name": "BURROW REFUGE"
     },
     {
-      "id": "MAPSEC_STRATA_MISSOURI_BREAKS",
-      "name": "MISSOURI BREAKS"
+      "id": "MAPSEC_STRATA_SAVANNA",
+      "name": "SAVANNA WOODLAND"
     },
     {
-      "id": "MAPSEC_STRATA_PRYOR",
-      "name": "PRYOR MOUNTAINS"
+      "id": "MAPSEC_STRATA_NIOBRARA",
+      "name": "NIOBRARA RIVER"
     },
     {
-      "id": "MAPSEC_STRATA_INTERPRETIVE",
-      "name": "INTERPRETIVE CENTER"
+      "id": "MAPSEC_STRATA_WATERHOLE",
+      "name": "THE WATERHOLE"
+    },
+    {
+      "id": "MAPSEC_STRATA_ASHFALL_ASH",
+      "name": "ASHFALL (ASH)"
     },
     {
       "id": "MAPSEC_STRATA_LEGUME_THICKET",
@@ -1790,6 +1794,18 @@
     {
       "id": "MAPSEC_STRATA_COLBY",
       "name": "COLBY SITE"
+    },
+    {
+      "id": "MAPSEC_STRATA_MISSOURI_BREAKS",
+      "name": "MISSOURI BREAKS"
+    },
+    {
+      "id": "MAPSEC_STRATA_PRYOR",
+      "name": "PRYOR MOUNTAINS"
+    },
+    {
+      "id": "MAPSEC_STRATA_INTERPRETIVE",
+      "name": "INTERPRETIVE CENTER"
     }
   ]
 }

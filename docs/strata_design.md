@@ -96,6 +96,10 @@ largest extinction in the epilogue is the one humans were present for.
 | Clarks Fork Crossing | ~56 Ma | Route 115 (rows 44–74), sea as the river, `*_petm` palettes | Act 4 (40×30); a gravel-bar ford (patched across the river) with the *Oxyaena* set piece (Lv 26); *Gastornis*; trees give the forest pressure; north → Polecat Bench, west (the ford) → Willwood Swamp |
 | Lake Gosiute shore | ~50 Ma | Route 104 | Act 5; *Uintatherium* boss (Lv 34) across the south shore |
 | White River badlands | ~33 Ma | Route 114 south, `*_oligocene` palettes | Act 6 arrival valley; north edge joins the Gallery Forest; *Archaeotherium* boss (Lv 40) on the stash plateau (hell-pig object plus the stair triggers); 4 carrion forage spots at the stash; 3 field notes; *Palaeolagus* (common) |
+| Grassland / Grassland (ash) | ~11.9 Ma | Route 113 (x 15-69), `*_oligocene` palettes before the ash, stock ash tiles after | Act 7 arrival; the haze on the horizon (once); grazers; connects east to the Waterhole, north to the Niobrara River, south to the Savanna Woodland; field notes on teeth, seeds, cranes, ash depth, order of death |
+| Waterhole / Waterhole (ash) | ~11.9 Ma | Route 113 east end (x 70-99), the south plateau cut into a pond | Act 7 boss: *Teleoceras* bull + cow (wild double Lv 46/42); the ashfall starts in the intro text and the win fades into the ash version ("rhino barn" notes) |
+| Savanna Woodland / (ash) | ~11.9 Ma | Route 114 meadow, trees added | Act 7; *Hypohippus* (browser), the *Epicyon* mini-boss (Lv 44, once) at a carcass; ash version: scavengers |
+| Niobrara River / (ash) | ~11.9 Ma | Route 114 north lake (bridge made a gravel bar, tall grass on the banks) | Act 7; *Aphelops*, *Teleoceras*, *Macrochelys* and *Lepisosteus* (surf and fishing); notes on rhinos, turtles, river-laid ash |
 | Gallery Forest | ~33 Ma | Route 114 north (joins White River at offset 0), `*_oligocene` palettes | Act 6; forest strips along a river and lake (plank bridge replaced by a sandbar, house and berry plots removed); *Douglassciurus*, Mesohippus, Leptomeryx, Hesperocyon, gars in the water; the horse forest branch is steered here (forest habitat); 3 field notes |
 | Badlands Wall | ~33 Ma | Route 113 left half, `*_oligocene` palettes | Act 6; open red-soil flats under a banded cliff, with the Chadron / Brule contact note; oreodont herd (flavour objects), *Palaeolagus* (common), Stylemys, Merycoidodon; ash grass swapped for tall grass; east edge joins the Trackways at offset 0 |
 | Toadstool Trackways | ~33 Ma | Route 113 right half, `*_oligocene` palettes | Act 6; floodplain with trackway notes; *Hyaenodon* mini-boss (Lv 38, once, line of sight at x = 10; rare wild 35-38) with a carrion reward; Subhyracodon, Poebrothere |
@@ -321,7 +325,9 @@ party and the PC boxes.
   | Fossil Lake (Act 5) | water | day |
   | Oil-Shale Cliffs (Act 5) | open | day |
   | White River (Act 6) | open | day |
-  | Ashfall grassland (Act 7) | open | ash |
+  | Grassland, Savanna Woodland (Act 7, before the ash) | open / forest | day |
+  | Niobrara River, Waterhole (Act 7, before the ash) | water | day |
+  | Ashfall, all four maps after the boss (Act 7) | same as the clear version | ash |
   | Ice Age steppe (Act 8) | open | day |
   | Natural Trap Cave (Act 8) | none | none (never tinted) |
   | Meltwater River (Act 8) | water | day |
