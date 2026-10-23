@@ -1187,6 +1187,9 @@
     "StrataGrassland",
     "StrataSteppe",
     "StrataTrapCave",
+    "StrataMeltwater",
+    "StrataIceMargin",
+    "StrataColby",
     "StrataPrairie"
   ]
 }

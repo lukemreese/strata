@@ -87,8 +87,11 @@ largest extinction in the epilogue is the one humans were present for.
 | Lake Gosiute shore | ~50 Ma | Route 104 | Act 5; *Uintatherium* boss (Lv 34) across the south shore |
 | White River badlands | ~33 Ma | Route 114 south, `*_oligocene` palettes | Act 6; *Archaeotherium* boss (Lv 40) at the bone stash |
 | Ashfall grassland | ~11.9 Ma | Route 113, volcanic ash | Act 7; *Teleoceras* bull (Lv 46) at the waterhole |
-| Ice Age Steppe | ~20 ka | Route 118, `*_ice_age` palettes, snow | Act 8; the sinkhole drops into the trap cave |
-| Natural Trap Cave | ~20 ka | Granite Cave 1F | Act 8; *Arctodus* boss (Lv 52); a rope climbs back out |
+| Ice Age Steppe | ~20 ka | Route 118, `*_ice_age` palettes, snow | Act 8 hub (80x20): arrival and anchor; the *Panthera* pair set piece (wild double Lv 48/48, once, in the only corridor to the sinkhole); 4 field notes; the sinkhole drops into the trap cave; Meltwater River east, Ice Margin north; the sub-layer marker by the anchor opens Colby once the boss is done |
+| Natural Trap Cave | ~20 ka | Granite Cave 1F | Act 8; *Arctodus* boss (Lv 52); 3 field notes; a rope climbs back out |
+| Meltwater River | ~20 ka | Route 118 west half, `*_ice_age` palettes, snow, sand-bar ford patched across the channel | Act 8; braided outwash, water habitat; *Chelydra* stand-in (surf and fishing), glacial-edge grazers on land; 3 field notes |
+| Ice Margin | ~20 ka | Route 111 desert rows 60-83, `*_ice_age` palettes, snow | Act 8; open habitat; *Ovibos*, *Mammuthus*, *Panthera*, *Ovis*; the ice, sea-level and mixed-bone-bed notes. Not a Laurentide front (that was hundreds of km north): mountain glaciers, drawn close |
+| Colby Site | ~13 ka | Route 118 east crop, `*_ice_age` palettes, no snow | Act 8 coda (same era, a late-glacial sub-layer reached by a marker, not a connection); no encounters; mammoth bone pile and a Clovis point (`FLAG_STRATA_COLBY_SEEN`); an evidence-for-and-against note |
 | Montana Prairie | today | Route 102 | Epilogue; open once the present layer is loaded, via the highway west of Jordan |
 
 The present-day hub sits outside time: returning to camp does not change `VAR_STRATA_ERA`.
@@ -296,6 +299,9 @@ party and the PC boxes.
   | Ashfall grassland (Act 7) | open | ash |
   | Ice Age steppe (Act 8) | open | day |
   | Natural Trap Cave (Act 8) | none | none (never tinted) |
+  | Meltwater River (Act 8) | water | day |
+  | Ice Margin (Act 8) | open | day |
+  | Colby Site (Act 8 coda) | none | day |
   | Montana prairie (epilogue) | open | real clock |
 - **Forage** (`ITEM_FERN_FROND` … `ITEM_CARRION`, `Selection_EatForage`): used from the
   bag on one party mon. Heals 20 HP and adds +12 of its pressure (the item's

@@ -58,6 +58,13 @@
 #define FLAG_STRATA_ACT8_BASE 0x29C
 #define VAR_STRATA_ACT8 0x40FE
 
+// The American lion pair on the Ice Age Steppe have been dealt with (their objects hide).
+#define FLAG_STRATA_A8_LIONS_GONE   (FLAG_STRATA_ACT8_BASE + 0)
+// The player has examined the Clovis point at the Colby site (~13 ka coda). The epilogue gate
+// (story task S3) can check it before the rig offers "Today".
+#define FLAG_STRATA_COLBY_SEEN      (FLAG_STRATA_ACT8_BASE + 1)
+// VAR_STRATA_ACT8: 0 = the lion pair has not been met yet, 1 = it has.
+
 
 // ---- Epilogue ----------------------------------------------------
 #define FLAG_STRATA_EPILOGUE_BASE 0x2A4

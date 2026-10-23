@@ -38052,38 +38052,38 @@
             "encounter_rate": 20,
             "mons": [
               {
-                "min_level": 46,
-                "max_level": 48,
+                "min_level": 44,
+                "max_level": 46,
                 "species": "SPECIES_EQUUS"
               },
               {
-                "min_level": 46,
-                "max_level": 48,
+                "min_level": 44,
+                "max_level": 46,
                 "species": "SPECIES_OVIS"
               },
               {
-                "min_level": 46,
-                "max_level": 48,
+                "min_level": 45,
+                "max_level": 47,
+                "species": "SPECIES_ANTILOCAPRA"
+              },
+              {
+                "min_level": 45,
+                "max_level": 47,
                 "species": "SPECIES_CANIS"
               },
               {
                 "min_level": 46,
                 "max_level": 48,
-                "species": "SPECIES_ANTILOCAPRA"
-              },
-              {
-                "min_level": 47,
-                "max_level": 49,
                 "species": "SPECIES_EQUUS"
               },
               {
-                "min_level": 47,
-                "max_level": 49,
+                "min_level": 46,
+                "max_level": 48,
                 "species": "SPECIES_CAMELOPS"
               },
               {
-                "min_level": 47,
-                "max_level": 49,
+                "min_level": 46,
+                "max_level": 48,
                 "species": "SPECIES_MELEAGRIS"
               },
               {
@@ -38094,12 +38094,12 @@
               {
                 "min_level": 48,
                 "max_level": 50,
-                "species": "SPECIES_AENOCYON"
+                "species": "SPECIES_MIRACINONYX"
               },
               {
                 "min_level": 48,
                 "max_level": 50,
-                "species": "SPECIES_MIRACINONYX"
+                "species": "SPECIES_OVIS"
               },
               {
                 "min_level": 49,
@@ -38140,6 +38140,229 @@
                 "min_level": 49,
                 "max_level": 51,
                 "species": "SPECIES_CHELYDRA"
+              }
+            ]
+          }
+        },
+        {
+          "map": "MAP_STRATA_MELTWATER",
+          "base_label": "gStrataMeltwater",
+          "land_mons": {
+            "encounter_rate": 20,
+            "mons": [
+              {
+                "min_level": 45,
+                "max_level": 47,
+                "species": "SPECIES_EQUUS"
+              },
+              {
+                "min_level": 45,
+                "max_level": 47,
+                "species": "SPECIES_OVIBOS"
+              },
+              {
+                "min_level": 46,
+                "max_level": 48,
+                "species": "SPECIES_CAMELOPS"
+              },
+              {
+                "min_level": 45,
+                "max_level": 47,
+                "species": "SPECIES_ANTILOCAPRA"
+              },
+              {
+                "min_level": 46,
+                "max_level": 48,
+                "species": "SPECIES_CANIS"
+              },
+              {
+                "min_level": 47,
+                "max_level": 49,
+                "species": "SPECIES_OVIBOS"
+              },
+              {
+                "min_level": 46,
+                "max_level": 48,
+                "species": "SPECIES_MELEAGRIS"
+              },
+              {
+                "min_level": 47,
+                "max_level": 49,
+                "species": "SPECIES_EQUUS"
+              },
+              {
+                "min_level": 46,
+                "max_level": 48,
+                "species": "SPECIES_OVIS"
+              },
+              {
+                "min_level": 48,
+                "max_level": 50,
+                "species": "SPECIES_PANTHERA"
+              },
+              {
+                "min_level": 48,
+                "max_level": 50,
+                "species": "SPECIES_MIRACINONYX"
+              },
+              {
+                "min_level": 49,
+                "max_level": 51,
+                "species": "SPECIES_MAMMUTHUS"
+              }
+            ]
+          },
+          "water_mons": {
+            "encounter_rate": 4,
+            "mons": [
+              {
+                "min_level": 45,
+                "max_level": 49,
+                "species": "SPECIES_CHELYDRA"
+              },
+              {
+                "min_level": 45,
+                "max_level": 49,
+                "species": "SPECIES_CHELYDRA"
+              },
+              {
+                "min_level": 46,
+                "max_level": 50,
+                "species": "SPECIES_CHELYDRA"
+              },
+              {
+                "min_level": 47,
+                "max_level": 51,
+                "species": "SPECIES_CHELYDRA"
+              },
+              {
+                "min_level": 48,
+                "max_level": 51,
+                "species": "SPECIES_CHELYDRA"
+              }
+            ]
+          },
+          "fishing_mons": {
+            "encounter_rate": 30,
+            "mons": [
+              {
+                "min_level": 44,
+                "max_level": 46,
+                "species": "SPECIES_CHELYDRA"
+              },
+              {
+                "min_level": 44,
+                "max_level": 46,
+                "species": "SPECIES_CHELYDRA"
+              },
+              {
+                "min_level": 45,
+                "max_level": 47,
+                "species": "SPECIES_CHELYDRA"
+              },
+              {
+                "min_level": 45,
+                "max_level": 47,
+                "species": "SPECIES_CHELYDRA"
+              },
+              {
+                "min_level": 46,
+                "max_level": 48,
+                "species": "SPECIES_CHELYDRA"
+              },
+              {
+                "min_level": 46,
+                "max_level": 48,
+                "species": "SPECIES_CHELYDRA"
+              },
+              {
+                "min_level": 46,
+                "max_level": 49,
+                "species": "SPECIES_CHELYDRA"
+              },
+              {
+                "min_level": 47,
+                "max_level": 49,
+                "species": "SPECIES_CHELYDRA"
+              },
+              {
+                "min_level": 47,
+                "max_level": 50,
+                "species": "SPECIES_CHELYDRA"
+              },
+              {
+                "min_level": 48,
+                "max_level": 50,
+                "species": "SPECIES_CHELYDRA"
+              }
+            ]
+          }
+        },
+        {
+          "map": "MAP_STRATA_ICE_MARGIN",
+          "base_label": "gStrataIceMargin",
+          "land_mons": {
+            "encounter_rate": 20,
+            "mons": [
+              {
+                "min_level": 46,
+                "max_level": 48,
+                "species": "SPECIES_OVIBOS"
+              },
+              {
+                "min_level": 46,
+                "max_level": 48,
+                "species": "SPECIES_OVIS"
+              },
+              {
+                "min_level": 47,
+                "max_level": 49,
+                "species": "SPECIES_OVIBOS"
+              },
+              {
+                "min_level": 47,
+                "max_level": 49,
+                "species": "SPECIES_CANIS"
+              },
+              {
+                "min_level": 47,
+                "max_level": 49,
+                "species": "SPECIES_OVIS"
+              },
+              {
+                "min_level": 48,
+                "max_level": 50,
+                "species": "SPECIES_MAMMUTHUS"
+              },
+              {
+                "min_level": 47,
+                "max_level": 49,
+                "species": "SPECIES_EQUUS"
+              },
+              {
+                "min_level": 48,
+                "max_level": 50,
+                "species": "SPECIES_PANTHERA"
+              },
+              {
+                "min_level": 48,
+                "max_level": 50,
+                "species": "SPECIES_CAMELOPS"
+              },
+              {
+                "min_level": 49,
+                "max_level": 51,
+                "species": "SPECIES_MAMMUTHUS"
+              },
+              {
+                "min_level": 49,
+                "max_level": 51,
+                "species": "SPECIES_PANTHERA"
+              },
+              {
+                "min_level": 50,
+                "max_level": 51,
+                "species": "SPECIES_OVIBOS"
               }
             ]
           }

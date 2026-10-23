@@ -120,8 +120,10 @@ static const u8 *const sMentorLines[STORY_IN_ACT(ERA_EPILOGUE) + 1] =
     [STORY_IN_ACT(ERA_TRAP_CAVE)] = COMPOUND_STRING(
         "Most of these giants will be gone\n"
         "within 10,000 years.\p"
-        "A changing climate, and a new\n"
-        "hunter in the Americas: people."),
+        "A changing climate, and people, who\n"
+        "may already be in the Americas.\p"
+        "How much each mattered is still\n"
+        "argued. We don't know."),
     [STORY_ACT_DONE(ERA_TRAP_CAVE)] = COMPOUND_STRING(
         "One layer left, {PLAYER}.\p"
         "The top of the column: the ground\n"

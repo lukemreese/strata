@@ -1714,6 +1714,18 @@
     {
       "id": "MAPSEC_STRATA_BURROW",
       "name": "BURROW REFUGE"
+    },
+    {
+      "id": "MAPSEC_STRATA_MELTWATER",
+      "name": "MELTWATER RIVER"
+    },
+    {
+      "id": "MAPSEC_STRATA_ICE_MARGIN",
+      "name": "ICE MARGIN"
+    },
+    {
+      "id": "MAPSEC_STRATA_COLBY",
+      "name": "COLBY SITE"
     }
   ]
 }

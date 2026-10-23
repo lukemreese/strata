@@ -235,6 +235,30 @@
       "script": "StrataTrapCave_EventScript_Rope"
     },
     {
+      "type": "sign",
+      "x": 16,
+      "y": 4,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
+      "script": "StrataTrapCave_EventScript_NoteTrap"
+    },
+    {
+      "type": "sign",
+      "x": 22,
+      "y": 4,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
+      "script": "StrataTrapCave_EventScript_NoteBlur"
+    },
+    {
+      "type": "sign",
+      "x": 30,
+      "y": 4,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
+      "script": "StrataTrapCave_EventScript_NotePredators"
+    },
+    {
       "type": "hidden_item",
       "x": 26,
       "y": 4,

@@ -9565,6 +9565,39 @@
       "border_filepath": "data/layouts/StrataBurrow/border.bin",
       "blockdata_filepath": "data/layouts/StrataBurrow/map.bin",
       "layout_version": "emerald"
+    },
+    {
+      "id": "LAYOUT_STRATA_MELTWATER",
+      "name": "StrataMeltwater_Layout",
+      "width": 40,
+      "height": 20,
+      "primary_tileset": "gTileset_GeneralIceAge",
+      "secondary_tileset": "gTileset_MauvilleIceAge",
+      "border_filepath": "data/layouts/StrataMeltwater/border.bin",
+      "blockdata_filepath": "data/layouts/StrataMeltwater/map.bin",
+      "layout_version": "emerald"
+    },
+    {
+      "id": "LAYOUT_STRATA_ICE_MARGIN",
+      "name": "StrataIceMargin_Layout",
+      "width": 40,
+      "height": 24,
+      "primary_tileset": "gTileset_GeneralIceAge",
+      "secondary_tileset": "gTileset_MauvilleIceAge",
+      "border_filepath": "data/layouts/StrataIceMargin/border.bin",
+      "blockdata_filepath": "data/layouts/StrataIceMargin/map.bin",
+      "layout_version": "emerald"
+    },
+    {
+      "id": "LAYOUT_STRATA_COLBY",
+      "name": "StrataColby_Layout",
+      "width": 30,
+      "height": 17,
+      "primary_tileset": "gTileset_GeneralIceAge",
+      "secondary_tileset": "gTileset_MauvilleIceAge",
+      "border_filepath": "data/layouts/StrataColby/border.bin",
+      "blockdata_filepath": "data/layouts/StrataColby/map.bin",
+      "layout_version": "emerald"
     }
   ]
 }
