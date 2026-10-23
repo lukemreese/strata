@@ -1,5 +1,7 @@
 // Lineage descent table: what each species becomes when the game enters an era.
-// See docs/strata_design.md §4-5 and §7.1-7.3, and tools/strata/roster.py for the species.
+// See docs/strata_design.md §4-5 and §7.1-7.3, and tools/strata/roster/ for the species.
+// Every descendant must exist by its era (roster `first_era`; test/lineage.c), and
+// every species a starter line can become must be `focal=True` in the roster.
 // Lineages without an entry for an era are in stasis.
 // Extinctions and the era level floors are at the end of this file.
 //
@@ -44,8 +46,10 @@ static const struct DescentOption sDescent_Leptocyon[] =
 {
     DESCENT_DEFAULT(SPECIES_CANIS), // coyote, survives to today
     // Dire wolf, megafauna specialist. Steered in Act 7 (carrion).
-    // TODO(content): Vulpes velox, PRESSURE_OPEN, 96, once the species exists.
     DESCENT_BRANCH(SPECIES_AENOCYON, PRESSURE_MEAT_DIET, DESCENT_MIN_SCORE),
+    // Swift fox: steered in Act 7's open grassland. Survives, though it was nearly
+    // lost in the 20th century. A higher bar than 64: most of Act 7 in the open.
+    DESCENT_BRANCH(SPECIES_VULPES, PRESSURE_OPEN, 96),
     DESCENT_END,
 };
 
@@ -60,9 +64,12 @@ static const struct DescentOption sDescent_Asteriornis[] =
     DESCENT_END,
 };
 
+// Window: Acts 4-7.
 static const struct DescentOption sDescent_Gallinuloid[] =
 {
     DESCENT_DEFAULT(SPECIES_MELEAGRIS),
+    // Sage-grouse: steered in the White River and Ashfall grasslands.
+    DESCENT_BRANCH(SPECIES_CENTROCERCUS, PRESSURE_OPEN, 96),
     DESCENT_END,
 };
 
@@ -73,9 +80,14 @@ static const struct DescentOption sDescent_Emarginachel[] =
     DESCENT_END,
 };
 
+// Window: Acts 3-6, so the PETM's heat (2 per tick, sEraHeat) counts. A turtle
+// carried in the party through the PETM may well get there; banking it in the PC
+// (which gains no pressure) keeps the common snapper.
 static const struct DescentOption sDescent_Protochelyd[] =
 {
     DESCENT_DEFAULT(SPECIES_CHELYDRA),
+    // Alligator snapping turtle: Miocene of Nebraska, now only in the warm Southeast.
+    DESCENT_BRANCH(SPECIES_MACROCHELYS, PRESSURE_HEAT, 160),
     DESCENT_END,
 };
 
@@ -95,7 +107,9 @@ static const struct DescentOption sDescent_Eohippus[] =
 
 static const struct DescentOption sDescent_Mesohippus[] =
 {
-    DESCENT_DEFAULT(SPECIES_PROTOHIPPUS),
+    DESCENT_DEFAULT(SPECIES_PROTOHIPPUS), // grazer
+    // Anchitheriine browser, steered in Act 6's gallery forest. Dies out by the Ice Age.
+    DESCENT_BRANCH(SPECIES_HYPOHIPPUS, PRESSURE_FOREST, DESCENT_MIN_SCORE),
     DESCENT_END,
 };
 
@@ -118,18 +132,53 @@ static const struct DescentOption sDescent_Procamelus[] =
     DESCENT_END,
 };
 
-// Rhino line.
-static const struct DescentOption sDescent_Subhyracodon[] =
+// Rhino line. Grades, not ancestors: Hyrachyus is a rhinocerotoid, and the Miocene
+// rhinos were immigrants, not Subhyracodon's descendants (outline §5 M7).
+static const struct DescentOption sDescent_Hyrachyus[] =
 {
-    DESCENT_DEFAULT(SPECIES_TELEOCERAS),
+    DESCENT_DEFAULT(SPECIES_SUBHYRACODON),
     DESCENT_END,
 };
 
-// Primates: from the PETM newcomers to the Eocene canopy. Stand-in chain;
-// Notharctus is a relative of Teilhardina's descendants, not a proven one.
+// Both branches die out by the Ice Age: fitness in one era is no guarantee.
+static const struct DescentOption sDescent_Subhyracodon[] =
+{
+    DESCENT_DEFAULT(SPECIES_TELEOCERAS), // barrel-bodied grazer
+    // Long-legged hornless browser of open country, steered on the White River flats.
+    DESCENT_BRANCH(SPECIES_APHELOPS, PRESSURE_OPEN, DESCENT_MIN_SCORE),
+    DESCENT_END,
+};
+
+// Primates: from the PETM newcomers to the Eocene canopy. Stand-in chain within
+// one group: Teilhardina is an early omomyiform, Omomys a later omomyid (not a
+// proven descendant). Notharctus is an adapiform, a different branch, and stays
+// a wild species only (outline §5 H4).
 static const struct DescentOption sDescent_Teilhardina[] =
 {
-    DESCENT_DEFAULT(SPECIES_NOTHARCTUS),
+    DESCENT_DEFAULT(SPECIES_OMOMYS),
+    DESCENT_END,
+};
+
+// Rodents: a paramyid grade becomes the White River ischyromyid. Window: Acts 4-5.
+static const struct DescentOption sDescent_Paramys[] =
+{
+    DESCENT_DEFAULT(SPECIES_ISCHYROMYS),
+    DESCENT_END,
+};
+
+// Squirrels: stand-in. The oldest squirrel (a tree squirrel) stands in for the
+// ground-squirrel line of the prairie dogs. Window: Acts 6-7.
+static const struct DescentOption sDescent_Douglassciur[] =
+{
+    DESCENT_DEFAULT(SPECIES_CYNOMYS),
+    DESCENT_END,
+};
+
+// Pronghorns: stand-in. Cosoryx is a merycodontine, an extinct side branch of the
+// pronghorn family, not Antilocapra's ancestor. Window: Act 7.
+static const struct DescentOption sDescent_Cosoryx[] =
+{
+    DESCENT_DEFAULT(SPECIES_ANTILOCAPRA),
     DESCENT_END,
 };
 
@@ -141,8 +190,12 @@ static const struct LineageDescent sLineageDescents[] =
     { SPECIES_PROTOHIPPUS,  ERA_TRAP_CAVE,     sDescent_Protohippus },
     { SPECIES_POEBROTHERE,  ERA_ASHFALL,       sDescent_Poebrothere },
     { SPECIES_PROCAMELUS,   ERA_TRAP_CAVE,     sDescent_Procamelus },
+    { SPECIES_HYRACHYUS,    ERA_WHITE_RIVER,   sDescent_Hyrachyus },
     { SPECIES_SUBHYRACODON, ERA_ASHFALL,       sDescent_Subhyracodon },
     { SPECIES_TEILHARDINA,  ERA_GREEN_RIVER,   sDescent_Teilhardina },
+    { SPECIES_PARAMYS,      ERA_WHITE_RIVER,   sDescent_Paramys },
+    { SPECIES_DOUGLASSCIUR, ERA_TRAP_CAVE,     sDescent_Douglassciur },
+    { SPECIES_COSORYX,      ERA_TRAP_CAVE,     sDescent_Cosoryx },
     { SPECIES_CIMOLESTES,   ERA_CORRAL_BLUFFS, sDescent_Cimolestes },
     { SPECIES_PROTICTIS,    ERA_GREEN_RIVER,   sDescent_Protictis },
     { SPECIES_MIACIS,       ERA_WHITE_RIVER,   sDescent_Miacis },
@@ -161,8 +214,10 @@ static const struct LineageDescent sLineageDescents[] =
 // metatherians was also lost in North America. Small, burrowing, freshwater and
 // detritus-feeding animals (multituberculates, champsosaurs, crocodylians, gars,
 // turtles, ground birds) are the survivors in the Hell Creek-to-Tullock record.
+// The tree-perching enantiornithine birds (Avisaurus) did not survive anywhere.
 static const u16 sExtinctions_ImpactWinter[] =
 {
+    SPECIES_AVISAURUS,
     SPECIES_TYRANNOSAUR,
     SPECIES_TRICERATOPS,
     SPECIES_EDMONTOSAUR,
@@ -188,10 +243,15 @@ static const u16 sExtinctions_BighornPetm[] =
 
 // By the Eocene-Oligocene transition (~34 Ma): the lake fauna of Green River,
 // the archaic Eocene mammals, North America's primates, Gastornis (gone by the
-// mid-Eocene), champsosaurs, Borealosuchus and the last multituberculates.
+// mid-Eocene), champsosaurs, Borealosuchus and the last multituberculates; and
+// the oxyaenids (Oxyaena by ~52 Ma, Patriofelis by the late Eocene).
+// Omomys: omomyids lingered (perhaps to Ekgmowechashala, ~29 Ma), the genus did not.
 // TODO: fact-check the last appearances against the Paleobiology Database.
 static const u16 sExtinctions_WhiteRiver[] =
 {
+    SPECIES_OMOMYS,
+    SPECIES_OXYAENA,
+    SPECIES_PATRIOFELIS,
     SPECIES_GASTORNIS,
     SPECIES_PRESBYORNIS,
     SPECIES_CHAMPSOSAUR,
@@ -208,9 +268,12 @@ static const u16 sExtinctions_WhiteRiver[] =
     SPECIES_NONE,
 };
 
-// White River genera gone by the late Miocene.
+// White River genera gone by the late Miocene. Hyaenodon's last North American
+// species are late Oligocene; rabbits live on, Palaeolagus does not.
 static const u16 sExtinctions_Ashfall[] =
 {
+    SPECIES_HYAENODON,
+    SPECIES_PALAEOLAGUS,
     SPECIES_ARCHAEOTHERE,
     SPECIES_HOPLOPHONEUS,
     SPECIES_MERYCOIDODON,
@@ -220,10 +283,14 @@ static const u16 sExtinctions_Ashfall[] =
     SPECIES_NONE,
 };
 
-// By the Ice Age: the North American rhinos (gone ~5 Ma), Epicyon and the other
-// bone-crushing dogs (~2 Ma), and the Ashfall crane and scavenger.
+// By the Ice Age: the North American rhinos (gone ~5 Ma; both rhino branches),
+// Epicyon and the other bone-crushing dogs (~2 Ma), the Ashfall crane and
+// scavenger, the browsing horse Hypohippus and the three-toed Cormohipparion.
 static const u16 sExtinctions_TrapCave[] =
 {
+    SPECIES_APHELOPS,
+    SPECIES_HYPOHIPPUS,
+    SPECIES_CORMOHIPPARI,
     SPECIES_TELEOCERAS,
     SPECIES_EPICYON,
     SPECIES_BALEARICA,

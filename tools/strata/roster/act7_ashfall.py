@@ -11,6 +11,7 @@ SPECIES = [
     # ------------------------------------------------------------------
     dict(
         name="Protohippus", genus="Protohippus simus", site="Ashfall, NE", age="~11.9 Ma",
+        first_era="ASHFALL",
         mass=100.0, length=1.6, mass_est=True,
         weights=dict(hp=6, atk=5, defn=4, spa=4, spd=4, spe=8),
         types=("NORMAL", "GRASS"), abilities=("RUN_AWAY", "QUICK_FEET"),
@@ -23,6 +24,7 @@ SPECIES = [
     ),
     dict(
         name="Teleoceras", genus="Teleoceras major", site="Ashfall, NE", age="~11.9 Ma",
+        first_era="ASHFALL",
         mass=1800.0, length=4.0, mass_est=True,
         weights=dict(hp=8, atk=6, defn=7, spa=2, spd=6, spe=2),
         types=("GROUND", "WATER"), abilities=("THICK_FAT", "STURDY"),
@@ -34,6 +36,7 @@ SPECIES = [
     ),
     dict(
         name="Procamelus", genus="Procamelus grandis", site="Ashfall, NE", age="~11.9 Ma",
+        first_era="ASHFALL",
         mass=300.0, length=2.5, mass_est=True,
         weights=dict(hp=6, atk=5, defn=5, spa=4, spd=5, spe=6),
         types=("NORMAL", "GROUND"), abilities=("OBLIVIOUS", "STURDY"),
@@ -45,6 +48,7 @@ SPECIES = [
     ),
     dict(
         name="Balearica", genus="Balearica exigua", site="Ashfall, NE", age="~11.9 Ma",
+        first_era="ASHFALL", diet="OMNIVORE",  # cranes
         mass=3.5, length=1.0, mass_est=True,
         weights=dict(hp=5, atk=5, defn=4, spa=5, spd=5, spe=6),
         types=("FLYING", "GRASS"), abilities=("KEEN_EYE", "BIG_PECKS"),
@@ -56,6 +60,7 @@ SPECIES = [
     ),
     dict(
         name="Anchigyps", genus="Anchigyps voorhiesi", site="Ashfall, NE", age="~11.9 Ma",
+        first_era="ASHFALL", diet="CARNIVORE",  # raptor and scavenger
         mass=5.0, length=0.8, mass_est=True,
         weights=dict(hp=5, atk=6, defn=4, spa=4, spd=5, spe=6),
         types=("FLYING", "DARK"), abilities=("KEEN_EYE", "BIG_PECKS"),

@@ -11,6 +11,7 @@ SPECIES = [
     # ------------------------------------------------------------------
     dict(
         name="Purgatorius", genus="Purgatorius", site="Tullock Fm, MT", age="~65.9 Ma",
+        first_era="CORRAL_BLUFFS", diet="OMNIVORE",  # insects and fruit
         mass=0.04, length=0.15, mass_est=True,
         weights=dict(hp=4, atk=3, defn=3, spa=6, spd=4, spe=7),
         types=("NORMAL", "PSYCHIC"), abilities=("RUN_AWAY", "PICKUP"),
@@ -22,6 +23,7 @@ SPECIES = [
     ),
     dict(
         name="Loxolophus", genus="Loxolophus", site="Denver Fm, CO", age="~65.7 Ma",
+        first_era="CORRAL_BLUFFS", diet="OMNIVORE",
         mass=3.0, length=0.5, mass_est=True,
         weights=dict(hp=5, atk=5, defn=4, spa=4, spd=4, spe=5),
         types=("NORMAL",), abilities=("PICKUP", "GLUTTONY"),
@@ -33,6 +35,7 @@ SPECIES = [
     ),
     dict(
         name="Carsioptych", genus="Carsioptychus", site="Denver Fm, CO", age="~65.7 Ma",
+        first_era="CORRAL_BLUFFS",
         mass=6.0, length=0.6, mass_est=True,
         weights=dict(hp=6, atk=5, defn=5, spa=3, spd=5, spe=4),
         types=("GRASS", "NORMAL"), abilities=("THICK_FAT", "GLUTTONY"),
@@ -44,6 +47,7 @@ SPECIES = [
     ),
     dict(
         name="Taeniolabis", genus="Taeniolabis taoensis", site="Denver Fm, CO", age="~65.4 Ma",
+        first_era="CORRAL_BLUFFS",
         mass=30.0, length=0.9, mass_est=True,
         weights=dict(hp=7, atk=6, defn=6, spa=3, spd=5, spe=3),
         types=("NORMAL", "GROUND"), abilities=("THICK_FAT", "STRONG_JAW"),
@@ -55,6 +59,7 @@ SPECIES = [
     ),
     dict(
         name="Eoconodon", genus="Eoconodon", site="Denver Fm, CO", age="~65.4 Ma",
+        first_era="CORRAL_BLUFFS", diet="CARNIVORE",
         mass=30.0, length=1.2, mass_est=True,
         weights=dict(hp=6, atk=7, defn=5, spa=3, spd=4, spe=5),
         types=("DARK", "NORMAL"), abilities=("STRONG_JAW", "INTIMIDATE"),

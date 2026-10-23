@@ -2624,6 +2624,23 @@ gCryTable::
 	cry Cry_StrataAntilocapra
 	cry Cry_StrataBison
 	cry Cry_StrataCynomys
+	cry Cry_StrataAvisaurus
+	cry Cry_StrataParamys
+	cry Cry_StrataOxyaena
+	cry Cry_StrataOmomys
+	cry Cry_StrataHyrachyus
+	cry Cry_StrataPatriofelis
+	cry Cry_StrataHyaenodon
+	cry Cry_StrataPalaeolagus
+	cry Cry_StrataDouglassciur
+	cry Cry_StrataHypohippus
+	cry Cry_StrataAphelops
+	cry Cry_StrataCormohippari
+	cry Cry_StrataCosoryx
+	cry Cry_StrataMacrochelys
+	cry Cry_StrataVulpes
+	cry Cry_StrataCentrocercus
+	cry Cry_StrataMustela
 @ END STRATA CRY_TABLE
 .endif @ P_CRIES_ENABLED
 
@@ -5253,5 +5270,22 @@ gCryTable_Reverse::
 	cry_reverse Cry_StrataAntilocapra
 	cry_reverse Cry_StrataBison
 	cry_reverse Cry_StrataCynomys
+	cry_reverse Cry_StrataAvisaurus
+	cry_reverse Cry_StrataParamys
+	cry_reverse Cry_StrataOxyaena
+	cry_reverse Cry_StrataOmomys
+	cry_reverse Cry_StrataHyrachyus
+	cry_reverse Cry_StrataPatriofelis
+	cry_reverse Cry_StrataHyaenodon
+	cry_reverse Cry_StrataPalaeolagus
+	cry_reverse Cry_StrataDouglassciur
+	cry_reverse Cry_StrataHypohippus
+	cry_reverse Cry_StrataAphelops
+	cry_reverse Cry_StrataCormohippari
+	cry_reverse Cry_StrataCosoryx
+	cry_reverse Cry_StrataMacrochelys
+	cry_reverse Cry_StrataVulpes
+	cry_reverse Cry_StrataCentrocercus
+	cry_reverse Cry_StrataMustela
 @ END STRATA CRY_TABLE_REVERSE
 .endif @ P_CRIES_ENABLED

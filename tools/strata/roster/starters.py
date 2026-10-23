@@ -10,6 +10,7 @@ SPECIES = [
     # ------------------------------------------------------------------
     dict(
         name="Cimolestes", genus="Cimolestes", site="Hell Creek Fm, MT", age="66.1 Ma",
+        first_era="HELL_CREEK", diet="CARNIVORE",  # insectivore-carnivore teeth
         focal=True,
         mass=0.5, length=0.3, mass_est=True,
         weights=dict(hp=4, atk=4, defn=3, spa=4, spd=4, spe=6),
@@ -23,6 +24,7 @@ SPECIES = [
     ),
     dict(
         name="Protictis", genus="Protictis", site="Paleocene, MT/WY", age="~63 Ma",
+        first_era="CORRAL_BLUFFS", diet="CARNIVORE",
         focal=True,
         mass=1.5, length=0.5, mass_est=True,
         weights=dict(hp=4, atk=5, defn=3, spa=4, spd=3, spe=6),
@@ -36,6 +38,7 @@ SPECIES = [
     ),
     dict(
         name="Miacis", genus="Miacis", site="Bridger Fm, WY", age="~48 Ma",
+        first_era="GREEN_RIVER", diet="CARNIVORE",
         focal=True,
         mass=1.5, length=0.6, mass_est=True,
         weights=dict(hp=4, atk=5, defn=3, spa=5, spd=3, spe=6),
@@ -48,6 +51,7 @@ SPECIES = [
     ),
     dict(
         name="Hesperocyon", genus="Hesperocyon", site="White River Gp, SD/NE", age="~37-34 Ma",
+        first_era="WHITE_RIVER", diet="CARNIVORE",
         focal=True,
         mass=2.0, length=0.8,
         weights=dict(hp=4, atk=5, defn=3, spa=5, spd=3, spe=7),
@@ -60,6 +64,7 @@ SPECIES = [
     ),
     dict(
         name="Epicyon", genus="Epicyon", site="Ogallala Gp, NE", age="~12-6 Ma",
+        first_era="ASHFALL", diet="CARNIVORE",
         focal=True,
         mass=120.0, length=1.5,
         weights=dict(hp=6, atk=8, defn=4, spa=3, spd=4, spe=4),
@@ -72,6 +77,7 @@ SPECIES = [
     ),
     dict(
         name="Leptocyon", genus="Leptocyon", site="Ogallala Gp, NE", age="~12 Ma",
+        first_era="ASHFALL", diet="OMNIVORE",  # fox-like generalist
         focal=True,
         mass=2.0, length=0.8,
         weights=dict(hp=4, atk=4, defn=3, spa=6, spd=4, spe=7),
@@ -84,6 +90,7 @@ SPECIES = [
     ),
     dict(
         name="Aenocyon", genus="Aenocyon dirus", site="Natural Trap Cave, WY", age="~20 ka",
+        first_era="TRAP_CAVE", diet="CARNIVORE",
         focal=True,
         mass=65.0, length=1.6,
         weights=dict(hp=6, atk=7, defn=4, spa=4, spd=4, spe=5),
@@ -98,6 +105,7 @@ SPECIES = [
     ),
     dict(
         name="Canis", genus="Canis latrans", site="Living; WY", age="today",
+        first_era="TRAP_CAVE", diet="OMNIVORE",  # coyote
         focal=True,
         mass=13.0, length=1.2,
         weights=dict(hp=5, atk=5, defn=4, spa=6, spd=5, spe=7),
@@ -114,6 +122,7 @@ SPECIES = [
     # ------------------------------------------------------------------
     dict(
         name="Asteriornis", genus="Asteriornis", site="Maastricht Fm, Belgium (stand-in)", age="66.8 Ma",
+        first_era="HELL_CREEK", last_era="CORRAL_BLUFFS", diet="OMNIVORE",
         focal=True,
         mass=0.4, length=0.3,
         weights=dict(hp=4, atk=4, defn=3, spa=4, spd=4, spe=6),
@@ -127,6 +136,7 @@ SPECIES = [
     ),
     dict(
         name="Gastornis", genus="Gastornis", site="Willwood Fm, WY", age="~55 Ma",
+        first_era="BIGHORN_PETM",
         focal=True,
         mass=160.0, length=2.0,
         weights=dict(hp=7, atk=6, defn=5, spa=3, spd=5, spe=4),
@@ -140,6 +150,7 @@ SPECIES = [
     ),
     dict(
         name="Presbyornis", genus="Presbyornis", site="Green River Fm, WY", age="~52 Ma",
+        first_era="BIGHORN_PETM", diet="OMNIVORE",  # filter-feeding wader
         focal=True,
         mass=2.5, length=1.0, mass_est=True,
         weights=dict(hp=4, atk=4, defn=3, spa=5, spd=4, spe=6),
@@ -152,6 +163,7 @@ SPECIES = [
     ),
     dict(
         name="Gallinuloid", genus="Gallinuloides", site="Green River Fm, WY", age="~52 Ma",
+        first_era="BIGHORN_PETM", last_era="GREEN_RIVER", diet="OMNIVORE",
         focal=True,
         mass=0.3, length=0.3, mass_est=True,
         weights=dict(hp=4, atk=4, defn=4, spa=4, spd=4, spe=6),
@@ -165,6 +177,7 @@ SPECIES = [
     ),
     dict(
         name="Meleagris", genus="Meleagris gallopavo", site="Natural Trap Cave, WY", age="~20 ka",
+        first_era="TRAP_CAVE", diet="OMNIVORE",
         focal=True,
         mass=8.0, length=1.1,
         weights=dict(hp=5, atk=5, defn=4, spa=4, spd=4, spe=5),
@@ -181,6 +194,7 @@ SPECIES = [
     # ------------------------------------------------------------------
     dict(
         name="Emarginachel", genus="Emarginachelys", site="Hell Creek Fm, MT", age="~66 Ma",
+        first_era="HELL_CREEK", diet="OMNIVORE",
         focal=True,
         mass=8.0, length=0.5, mass_est=True,
         weights=dict(hp=5, atk=5, defn=7, spa=3, spd=6, spe=2),
@@ -194,6 +208,7 @@ SPECIES = [
     ),
     dict(
         name="Protochelyd", genus="Protochelydra", site="Paleocene, ND", age="~60 Ma",
+        first_era="CORRAL_BLUFFS", last_era="BIGHORN_PETM", diet="OMNIVORE",
         focal=True,
         mass=25.0, length=0.8, mass_est=True,
         weights=dict(hp=5, atk=5, defn=8, spa=3, spd=6, spe=2),
@@ -206,6 +221,7 @@ SPECIES = [
     ),
     dict(
         name="Chelydra", genus="Chelydra serpentina", site="Living; MT", age="today",
+        first_era="ASHFALL", diet="OMNIVORE",
         focal=True,
         mass=10.0, length=0.5,
         weights=dict(hp=5, atk=6, defn=7, spa=3, spd=6, spe=2),
