@@ -13,6 +13,9 @@ Every species is a real, fossil-documented (or living) animal. Fields:
   length    Body length in m (stored as the dex "height").
   mass_est  True when no published estimate exists and the mass is our own
             estimate from size comparisons. Shown as such in the Codex.
+  focal     True for the starter lineages (every species a starter can descend
+            into). Adds a flat +40 to the base stat total: a game concession so
+            the lineage the player carries stays usable (gen_species.py).
   weights   Relative stat split {hp, atk, def, spa, spd, spe}, from anatomy:
             atk = bite/weapon, def = armour/shell, spe = locomotion,
             spa = senses/brain, spd = hardiness, hp = bulk.

@@ -30,7 +30,7 @@ SPECIES = [
         borrow="zubat",
         moves=[(1, "LEECH_LIFE"), (1, "ASTONISH"), (24, "WING_ATTACK"), (28, "BITE"), (32, "AIR_SLASH"),
                (36, "ACROBATICS"), (40, "CRUNCH")],
-        dex="One of the oldest bats. It still had claws on every finger, and its ears show it could fly but probably could not echolocate.",
+        dex="One of the oldest bats. It could fly, and still had claws on every finger. Whether it could echolocate is still debated.",
     ),
     dict(
         name="Heliobatis", genus="Heliobatis radians", site="Green River Fm, WY", age="~52 Ma",

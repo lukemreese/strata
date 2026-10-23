@@ -8,7 +8,7 @@ enum StrataEra
     ERA_PRESENT_DIG,    // Prologue: present-day dig site, Hell Creek, MT
     ERA_HELL_CREEK,     // 66.04 Ma: last days of the dinosaurs
     ERA_IMPACT_WINTER,  // 66.04 Ma + ~1 yr: Chicxulub aftermath
-    ERA_CORRAL_BLUFFS,  // ~65.7 Ma: mammal recovery
+    ERA_CORRAL_BLUFFS,  // ~65.7-65.4 Ma: mammal recovery
     ERA_BIGHORN_PETM,   // ~56 Ma: Paleocene-Eocene Thermal Maximum
     ERA_GREEN_RIVER,    // ~52-46 Ma: subtropical Eocene lakes
     ERA_WHITE_RIVER,    // ~33 Ma: Eocene-Oligocene cooling

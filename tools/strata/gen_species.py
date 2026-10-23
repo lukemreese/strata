@@ -19,9 +19,11 @@ Strata species own copies of everything they borrow, so they keep working when
 the stock generations are disabled in include/config/species_enabled.h.
 
 Stats are grounded in body mass. The base stat total is
-    BST = 300 + 70 * log10(mass in kg), clamped to [180, 600]
-so a 50 g Mesodma gets ~209 and an 8 t Tyrannosaurus ~573. Each species'
-`weights` then split that total by anatomy (see roster/__init__.py).
+    BST = 340 + 50 * log10(mass in kg), clamped to [250, 600]
+plus FOCAL_BONUS (+40) for species with `focal=True` (the starter lines), so a
+50 g Mesodma gets 275, an 8 t Tyrannosaurus 535 and the 0.5 kg starter
+Cimolestes 365. Each species' `weights` then split that total by anatomy (see
+roster/__init__.py). docs/strata_design.md §7.7 explains the choice.
 """
 
 import math
@@ -72,12 +74,22 @@ def folder_name(sp):
     return re.sub(r"[^a-z0-9]", "_", sp["name"].lower())
 
 
-def base_stat_total(mass):
-    return max(180, min(600, round(300 + 70 * math.log10(mass))))
+# Base stat total from body mass (see the module docstring). The log keeps mass
+# ordering everything while a 0.04 kg bat and an 8 t theropod stay within ~2x.
+BST_BASE, BST_PER_DECADE = 340, 50
+BST_MIN, BST_MAX = 250, 600
+# Game concession, not biology: the starter lineages (`focal=True`) are the ones the
+# player carries through every act, so they get a flat bonus to stay usable.
+FOCAL_BONUS = 40
+
+
+def base_stat_total(mass, focal=False):
+    bst = max(BST_MIN, min(BST_MAX, round(BST_BASE + BST_PER_DECADE * math.log10(mass))))
+    return min(BST_MAX, bst + (FOCAL_BONUS if focal else 0))
 
 
 def base_stats(sp):
-    bst = base_stat_total(sp["mass"])
+    bst = base_stat_total(sp["mass"], sp.get("focal", False))
     weights = sp["weights"]
     total = sum(weights[k] for k in STAT_KEYS)
     return {k: max(1, min(255, round(bst * weights[k] / total))) for k in STAT_KEYS}, bst

@@ -36,7 +36,7 @@ MAPS = [
         coords=boss_triggers("ERA_BIGHORN_PETM", "StrataRedBeds_EventScript_Coryphodon", [(x, 26) for x in range(19, 23)]),
         encounters=dict(
             land_mons=mons(("SIFRHIPPUS", 22, 24), ("HYOPSODUS", 22, 24), ("DIACODEXIS", 22, 24), ("TEILHARDINA", 22, 24),
-                           ("SIFRHIPPUS", 23, 25), ("HYOPSODUS", 23, 25), ("PROTICTIS", 23, 25), ("MESODMA", 23, 25),
+                           ("SIFRHIPPUS", 23, 25), ("HYOPSODUS", 23, 25), ("TEILHARDINA", 23, 25), ("MESODMA", 23, 25),
                            ("DIACODEXIS", 24, 26), ("GASTORNIS", 24, 26), ("PROTOCHELYD", 24, 26), ("CORYPHODON", 25, 27)),
             water_mons=mons(("LEPISOSTEUS", 22, 26), ("CHAMPSOSAUR", 22, 26), ("LEPISOSTEUS", 23, 27),
                             ("BOREALOSUCH", 24, 27), ("CORYPHODON", 25, 28)),

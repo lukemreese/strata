@@ -14,7 +14,7 @@ static const u8 *const sLayerNames[ERA_COUNT] =
 {
     [ERA_HELL_CREEK]    = COMPOUND_STRING("Hell Creek Fm, 66.04 Ma"),
     [ERA_IMPACT_WINTER] = COMPOUND_STRING("Tullock Fm, 66.04 Ma +1 yr"),
-    [ERA_CORRAL_BLUFFS] = COMPOUND_STRING("Denver Fm, 65.7 Ma"),
+    [ERA_CORRAL_BLUFFS] = COMPOUND_STRING("Denver Fm, 65.7-65.4 Ma"),
     [ERA_BIGHORN_PETM]  = COMPOUND_STRING("Willwood Fm, 56 Ma"),
     [ERA_GREEN_RIVER]   = COMPOUND_STRING("Green River Fm, 50 Ma"),
     [ERA_WHITE_RIVER]   = COMPOUND_STRING("Brule Fm, 32 Ma"),

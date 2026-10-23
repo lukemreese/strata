@@ -45,7 +45,7 @@ present-day hub.
 | 0 | Present-day dig, Hell Creek, MT | today | — | real time | Prologue, starter fossil |
 | 1 | Hell Creek Formation, MT | 66.04 Ma | — | hours | Last days of the dinosaurs |
 | 2 | Hell Creek, MT, impact aftermath | 66.04 Ma + ~1 yr | days → 1 yr | weeks | Chicxulub impact, impact winter, "fern spike" |
-| 3 | Corral Bluffs, CO | ~65.7 Ma | ~300 kyr | millennia | Mammal recovery, first legumes |
+| 3 | Corral Bluffs, CO | ~65.7–65.4 Ma | ~300–700 kyr | millennia | Mammal recovery, first legumes (~700 kyr, with *Taeniolabis*) |
 | 4 | Bighorn Basin, WY | ~56 Ma | ~10 Myr | ~100 kyr | PETM global warming, horses & primates arrive |
 | 5 | Green River lakes / Bridger Basin, WY | ~52–46 Ma | ~5 Myr | ~1 Myr | Subtropical Eocene; bats, giant birds |
 | 6 | White River badlands, SD/NE | ~33 Ma | ~15 Myr | ~1 Myr | Eocene–Oligocene cooling, forests open up |
@@ -77,7 +77,7 @@ largest extinction in the epilogue is the one humans were present for.
 | River Channel | 66.04 Ma | Route 119 middle | Tyrannosaur boss on the bluff |
 | Backswamp | 66.04 Ma | Route 120 marsh | Gar, champsosaurs, crocodylians |
 | Ashen Levee / River / Swamp | 66.04 Ma + ~1 yr | Same layouts, `*_winter` palettes | Impact winter: survivors only; survival gauntlet in the swamp |
-| Palm Forest | ~65.7 Ma | Petalburg Woods | Act 3; *Eoconodon* boss (Lv 22) on the north path |
+| Palm Forest | ~65.7–65.4 Ma | Petalburg Woods | Act 3; *Eoconodon* boss (Lv 22) on the north path |
 | Red Beds | ~56 Ma | Route 114 north, `*_petm` palettes, drought | Act 4; *Coryphodon* boss (Lv 28) on the land bridge |
 | Lake Gosiute shore | ~50 Ma | Route 104 | Act 5; *Uintatherium* boss (Lv 34) across the south shore |
 | White River badlands | ~33 Ma | Route 114 south, `*_oligocene` palettes | Act 6; *Archaeotherium* boss (Lv 40) at the bone stash |
@@ -299,10 +299,26 @@ Keep the standard 18 types for compatibility, but assign them by ecology.
   genus if it fits. Otherwise use the informal anglicized form (*Tyrannosaurus* →
   Tyrannosaur). Otherwise cut the genus at a morpheme boundary (*Pachycephalosaurus* →
   Pachycephalo). The Codex always shows the full scientific name.
-- **Stats come from body mass:** BST = 300 + 70·log10(mass in kg), clamped to 180–600.
+- **Stats come from body mass:** BST = 340 + 50·log10(mass in kg), clamped to 250–600
+  (`base_stat_total()` in `gen_species.py`). Mass still orders every species, but the
+  spread between a 40 g primate (270) and an 8 t theropod (535) is about 2×, not 3×,
+  because a 0.04 kg bat and an 8-tonne animal can meet at the same level.
   Each species' anatomy then splits that total: bite/weapons → Attack,
   armour → Defence, locomotion → Speed, senses → Sp. Atk, hardiness → Sp. Def.
+  Small species keep speed-heavy weights, so they are fast rather than bulky.
   Masses without a published estimate are flagged `mass_est` and shown as estimates.
+- **Focal bonus (a game concession, not biology):** species with `focal=True` in the
+  roster, the 16 species of the three starter lines, get a flat +40 BST (capped at 600).
+  The player carries these lineages through every act, and a 0.3 kg ground bird would
+  otherwise sit far below the wilds of Acts 6–8. Examples: *Cimolestes* 365,
+  *Gallinuloides* 354, *Leptocyon* 395, *Canis* 436, *Emarginachelys* 425; for comparison,
+  non-focal *Mesodma* 275, *Teilhardina* 264, *Tyrannosaurus* 535, *Mammuthus* 538.
+  When a new species joins a starter line (e.g. *Vulpes*, *Centrocercus*, *Macrochelys*),
+  give it `focal=True` too.
+- **Balance report:** `python3 tools/strata/balance.py` prints, per act, the wild species
+  and levels, the boss fights, the era level floor and the expected starter-line party,
+  with stat totals at level, and flags gaps (`--strict` exits 1 on any flag). Run it after
+  any roster, encounter or boss change.
 - **Placeholder art and cries** are copied from a similar stock Pokémon (`borrow`)
   into `graphics/pokemon/strata/` and `sound/direct_sound_samples/cries/strata_*`.
   Strata species therefore never depend on the stock Pokémon, which are disabled in

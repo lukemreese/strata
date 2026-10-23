@@ -27,7 +27,7 @@ MAPS = [
         coords=boss_triggers("ERA_ASHFALL", "StrataGrassland_EventScript_Teleoceras", [(70, y) for y in range(7, 12)]),
         encounters=dict(
             land_mons=mons(("PROTOHIPPUS", 40, 42), ("PROCAMELUS", 40, 42), ("LEPTOCYON", 40, 42), ("BALEARICA", 40, 42),
-                           ("PROTOHIPPUS", 41, 43), ("GALLINULOID", 41, 43), ("PROCAMELUS", 41, 43), ("ANCHIGYPS", 41, 43),
+                           ("PROTOHIPPUS", 41, 43), ("BALEARICA", 41, 43), ("PROCAMELUS", 41, 43), ("ANCHIGYPS", 41, 43),
                            ("TELEOCERAS", 42, 44), ("CHELYDRA", 42, 44), ("EPICYON", 43, 45), ("TELEOCERAS", 43, 45)),
         ),
     ),

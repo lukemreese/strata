@@ -10,6 +10,7 @@ SPECIES = [
     # ------------------------------------------------------------------
     dict(
         name="Cimolestes", genus="Cimolestes", site="Hell Creek Fm, MT", age="66.1 Ma",
+        focal=True,
         mass=0.5, length=0.3, mass_est=True,
         weights=dict(hp=4, atk=4, defn=3, spa=4, spd=4, spe=6),
         types=("NORMAL",), abilities=("RUN_AWAY", "PICKUP"),
@@ -22,6 +23,7 @@ SPECIES = [
     ),
     dict(
         name="Protictis", genus="Protictis", site="Paleocene, MT/WY", age="~63 Ma",
+        focal=True,
         mass=1.5, length=0.5, mass_est=True,
         weights=dict(hp=4, atk=5, defn=3, spa=4, spd=3, spe=6),
         types=("DARK",), abilities=("RUN_AWAY", "STAKEOUT"),
@@ -34,6 +36,7 @@ SPECIES = [
     ),
     dict(
         name="Miacis", genus="Miacis", site="Bridger Fm, WY", age="~48 Ma",
+        focal=True,
         mass=1.5, length=0.6, mass_est=True,
         weights=dict(hp=4, atk=5, defn=3, spa=5, spd=3, spe=6),
         types=("DARK", "NORMAL"), abilities=("STAKEOUT", "QUICK_FEET"),
@@ -45,6 +48,7 @@ SPECIES = [
     ),
     dict(
         name="Hesperocyon", genus="Hesperocyon", site="White River Gp, SD/NE", age="~37-34 Ma",
+        focal=True,
         mass=2.0, length=0.8,
         weights=dict(hp=4, atk=5, defn=3, spa=5, spd=3, spe=7),
         types=("DARK", "NORMAL"), abilities=("RUN_AWAY", "STAKEOUT"),
@@ -56,6 +60,7 @@ SPECIES = [
     ),
     dict(
         name="Epicyon", genus="Epicyon", site="Ogallala Gp, NE", age="~12-6 Ma",
+        focal=True,
         mass=120.0, length=1.5,
         weights=dict(hp=6, atk=8, defn=4, spa=3, spd=4, spe=4),
         types=("DARK", "STEEL"), abilities=("STRONG_JAW", "INTIMIDATE"),
@@ -67,6 +72,7 @@ SPECIES = [
     ),
     dict(
         name="Leptocyon", genus="Leptocyon", site="Ogallala Gp, NE", age="~12 Ma",
+        focal=True,
         mass=2.0, length=0.8,
         weights=dict(hp=4, atk=4, defn=3, spa=6, spd=4, spe=7),
         types=("NORMAL", "DARK"), abilities=("RUN_AWAY", "ADAPTABILITY"),
@@ -78,6 +84,7 @@ SPECIES = [
     ),
     dict(
         name="Aenocyon", genus="Aenocyon dirus", site="Natural Trap Cave, WY", age="~20 ka",
+        focal=True,
         mass=65.0, length=1.6,
         weights=dict(hp=6, atk=7, defn=4, spa=4, spd=4, spe=5),
         types=("DARK", "FIGHTING"), abilities=("STRONG_JAW", "INTIMIDATE"),
@@ -86,10 +93,12 @@ SPECIES = [
         moves=[(1, "BITE"), (1, "HOWL"), (1, "PURSUIT"), (34, "CRUNCH"), (40, "JAW_LOCK"),
                (46, "THROAT_CHOP"), (52, "CLOSE_COMBAT")],
         dex="A heavy wolf that hunted horses and bison. When the Ice Age megafauna vanished, the dire wolf vanished with them.",
-        notes="A separate lineage from the gray wolf, as shown by ancient DNA.",
+        notes="A separate lineage from the gray wolf, as shown by ancient DNA. "
+              "Unverified at Natural Trap Cave, whose wolves are reported as gray wolves; check the site (outline §5 H5).",
     ),
     dict(
         name="Canis", genus="Canis latrans", site="Living; WY", age="today",
+        focal=True,
         mass=13.0, length=1.2,
         weights=dict(hp=5, atk=5, defn=4, spa=6, spd=5, spe=7),
         types=("NORMAL", "DARK"), abilities=("ADAPTABILITY", "RUN_AWAY"),
@@ -105,6 +114,7 @@ SPECIES = [
     # ------------------------------------------------------------------
     dict(
         name="Asteriornis", genus="Asteriornis", site="Maastricht Fm, Belgium (stand-in)", age="66.8 Ma",
+        focal=True,
         mass=0.4, length=0.3,
         weights=dict(hp=4, atk=4, defn=3, spa=4, spd=4, spe=6),
         types=("NORMAL", "FLYING"), abilities=("KEEN_EYE", "EARLY_BIRD"),
@@ -117,6 +127,7 @@ SPECIES = [
     ),
     dict(
         name="Gastornis", genus="Gastornis", site="Willwood Fm, WY", age="~55 Ma",
+        focal=True,
         mass=160.0, length=2.0,
         weights=dict(hp=7, atk=6, defn=5, spa=3, spd=5, spe=4),
         types=("GRASS", "FIGHTING"), abilities=("BIG_PECKS", "STURDY"),
@@ -129,6 +140,7 @@ SPECIES = [
     ),
     dict(
         name="Presbyornis", genus="Presbyornis", site="Green River Fm, WY", age="~52 Ma",
+        focal=True,
         mass=2.5, length=1.0, mass_est=True,
         weights=dict(hp=4, atk=4, defn=3, spa=5, spd=4, spe=6),
         types=("WATER", "FLYING"), abilities=("SWIFT_SWIM", "HYDRATION"),
@@ -140,6 +152,7 @@ SPECIES = [
     ),
     dict(
         name="Gallinuloid", genus="Gallinuloides", site="Green River Fm, WY", age="~52 Ma",
+        focal=True,
         mass=0.3, length=0.3, mass_est=True,
         weights=dict(hp=4, atk=4, defn=4, spa=4, spd=4, spe=6),
         types=("NORMAL", "FLYING"), abilities=("KEEN_EYE", "BIG_PECKS"),
@@ -152,6 +165,7 @@ SPECIES = [
     ),
     dict(
         name="Meleagris", genus="Meleagris gallopavo", site="Natural Trap Cave, WY", age="~20 ka",
+        focal=True,
         mass=8.0, length=1.1,
         weights=dict(hp=5, atk=5, defn=4, spa=4, spd=4, spe=5),
         types=("NORMAL", "FLYING"), abilities=("KEEN_EYE", "EARLY_BIRD"),
@@ -167,6 +181,7 @@ SPECIES = [
     # ------------------------------------------------------------------
     dict(
         name="Emarginachel", genus="Emarginachelys", site="Hell Creek Fm, MT", age="~66 Ma",
+        focal=True,
         mass=8.0, length=0.5, mass_est=True,
         weights=dict(hp=5, atk=5, defn=7, spa=3, spd=6, spe=2),
         types=("WATER", "ROCK"), abilities=("SHELL_ARMOR", "STRONG_JAW"),
@@ -179,6 +194,7 @@ SPECIES = [
     ),
     dict(
         name="Protochelyd", genus="Protochelydra", site="Paleocene, ND", age="~60 Ma",
+        focal=True,
         mass=25.0, length=0.8, mass_est=True,
         weights=dict(hp=5, atk=5, defn=8, spa=3, spd=6, spe=2),
         types=("WATER", "ROCK"), abilities=("SHELL_ARMOR", "STRONG_JAW"),
@@ -190,6 +206,7 @@ SPECIES = [
     ),
     dict(
         name="Chelydra", genus="Chelydra serpentina", site="Living; MT", age="today",
+        focal=True,
         mass=10.0, length=0.5,
         weights=dict(hp=5, atk=6, defn=7, spa=3, spd=6, spe=2),
         types=("WATER", "ROCK"), abilities=("SHELL_ARMOR", "STRONG_JAW"),

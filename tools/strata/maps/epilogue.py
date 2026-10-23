@@ -27,7 +27,7 @@ MAPS = [
         encounters=dict(
             land_mons=mons(("CYNOMYS", 48, 50), ("ANTILOCAPRA", 48, 50), ("CYNOMYS", 48, 50), ("CANIS", 48, 50),
                            ("MELEAGRIS", 49, 51), ("ANTILOCAPRA", 49, 51), ("BISON", 49, 51), ("OVIS", 49, 51),
-                           ("CANIS", 50, 52), ("BISON", 50, 52), ("EQUUS", 50, 52), ("OVIBOS", 50, 52)),
+                           ("CANIS", 50, 52), ("BISON", 50, 52), ("EQUUS", 50, 52), ("ANTILOCAPRA", 50, 52)),
             water_mons=mons(("CHELYDRA", 48, 52), ("LEPISOSTEUS", 48, 52), ("CHELYDRA", 49, 52),
                             ("LEPISOSTEUS", 50, 53), ("CHELYDRA", 51, 53)),
             fishing_mons=mons(("LEPISOSTEUS", 46, 49), ("LEPISOSTEUS", 46, 49), ("LEPISOSTEUS", 47, 50), ("CHELYDRA", 47, 50),
