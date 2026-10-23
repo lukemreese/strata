@@ -85,8 +85,9 @@ def strip(s):
 def read_lineages():
     with open(os.path.join(ROOT, "src/data/lineages.h")) as f:
         text = f.read()
+    # The default descendant is the DESCENT_DEFAULT entry of each option list.
     defaults = {m.group(1): m.group(2) for m in re.finditer(
-        r"struct DescentOption (sDescent_\w+)\[\]\s*=\s*\{\s*\{\s*SPECIES_(\w+)", text)}
+        r"struct DescentOption (sDescent_\w+)\[\]\s*=\s*\{[^}]*?DESCENT_DEFAULT\(SPECIES_(\w+)\)", text)}
     descents = {}
     for m in re.finditer(r"\{\s*SPECIES_(\w+),\s*(ERA_\w+),\s*(sDescent_\w+)\s*\}", text):
         descents[(m.group(1), m.group(2))] = defaults[m.group(3)]
