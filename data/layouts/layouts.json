@@ -9565,6 +9565,39 @@
       "border_filepath": "data/layouts/StrataBurrow/border.bin",
       "blockdata_filepath": "data/layouts/StrataBurrow/map.bin",
       "layout_version": "emerald"
+    },
+    {
+      "id": "LAYOUT_STRATA_GALLERY_FOREST",
+      "name": "StrataGalleryForest_Layout",
+      "width": 40,
+      "height": 37,
+      "primary_tileset": "gTileset_GeneralOligocene",
+      "secondary_tileset": "gTileset_FallarborOligocene",
+      "border_filepath": "data/layouts/StrataGalleryForest/border.bin",
+      "blockdata_filepath": "data/layouts/StrataGalleryForest/map.bin",
+      "layout_version": "emerald"
+    },
+    {
+      "id": "LAYOUT_STRATA_BADLANDS_WALL",
+      "name": "StrataBadlandsWall_Layout",
+      "width": 48,
+      "height": 20,
+      "primary_tileset": "gTileset_GeneralOligocene",
+      "secondary_tileset": "gTileset_FallarborOligocene",
+      "border_filepath": "data/layouts/StrataBadlandsWall/border.bin",
+      "blockdata_filepath": "data/layouts/StrataBadlandsWall/map.bin",
+      "layout_version": "emerald"
+    },
+    {
+      "id": "LAYOUT_STRATA_TOADSTOOL",
+      "name": "StrataToadstool_Layout",
+      "width": 52,
+      "height": 20,
+      "primary_tileset": "gTileset_GeneralOligocene",
+      "secondary_tileset": "gTileset_FallarborOligocene",
+      "border_filepath": "data/layouts/StrataToadstool/border.bin",
+      "blockdata_filepath": "data/layouts/StrataToadstool/map.bin",
+      "layout_version": "emerald"
     }
   ]
 }

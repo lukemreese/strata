@@ -48,6 +48,12 @@
 #define FLAG_STRATA_ACT6_BASE 0x28C
 #define VAR_STRATA_ACT6 0x40FC
 
+// The Hyaenodon on the Toadstool Trackways has been dealt with (its object hides). Won, caught or run.
+#define FLAG_STRATA_A6_HYAENODON_GONE (FLAG_STRATA_ACT6_BASE + 0)
+// The Archaeotherium at the bone stash on the White River plateau is gone (the act is done).
+#define FLAG_STRATA_A6_STASH_CLEARED  (FLAG_STRATA_ACT6_BASE + 1)
+// VAR_STRATA_ACT6: 0 = the Hyaenodon has not been met yet (its line of sight triggers), 1 = it has.
+
 
 // ---- Act 7: Ashfall ----------------------------------------------
 #define FLAG_STRATA_ACT7_BASE 0x294

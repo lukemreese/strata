@@ -1714,6 +1714,18 @@
     {
       "id": "MAPSEC_STRATA_BURROW",
       "name": "BURROW REFUGE"
+    },
+    {
+      "id": "MAPSEC_STRATA_GALLERY_FOREST",
+      "name": "GALLERY FOREST"
+    },
+    {
+      "id": "MAPSEC_STRATA_BADLANDS_WALL",
+      "name": "BADLANDS WALL"
+    },
+    {
+      "id": "MAPSEC_STRATA_TOADSTOOL",
+      "name": "TOADSTOOL TRACKWAYS"
     }
   ]
 }
