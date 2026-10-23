@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
-"""Generate Strata map layouts and map headers from tools/strata/maps.py.
+"""Generate Strata map layouts and map headers from the package tools/strata/maps/.
 
 Usage (from the repo root):
   python3 tools/strata/gen_maps.py [--render DIR]
 
 Each Strata map's layout is cut from a hand-made stock map with a matching
 terrain and tileset (a placeholder until Strata has its own tilesets), then
-patched to remove anything man-made. Writes, for every map in maps.py:
+patched to remove anything man-made. Writes, for every map in the maps package:
   data/layouts/<Name>/map.bin, border.bin   (if the map has a `crop`)
   data/layouts/layouts.json                 layout entry
   data/maps/<Name>/map.json                 header, connections and events

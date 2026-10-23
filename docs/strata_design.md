@@ -66,7 +66,7 @@ largest extinction in the epilogue is the one humans were present for.
 - Act 7: the ash cloud of a Yellowstone-hotspot eruption (Bruneau–Jarbidge, Idaho) buries Nebraska.
 - Act 8: glaciers sit to the north, and the land bridge to Asia opens and closes.
 
-**Maps built so far** (defined in `tools/strata/maps.py`, scripts in `data/maps/Strata*/`)
+**Maps built so far** (defined in `tools/strata/maps/`, one module per act; scripts in `data/maps/Strata*/`)
 
 | Map | Era | Layout source (placeholder) | Notes |
 |---|---|---|---|
@@ -234,7 +234,7 @@ Mons at or above the floor and eggs are untouched. The survivor that joins an
 empty party joins at the floor (at least level 10), as Mesodma until it dies out
 at White River, then as the gar.
 
-Floor = the era's lowest land encounter level (`tools/strata/maps.py`) − 3. Fishing
+Floor = the era's lowest land encounter level (`tools/strata/maps/`) − 3. Fishing
 runs lower on purpose and doesn't count.
 
 | Era | Wild (land and surf) | Floor |
@@ -280,8 +280,21 @@ Keep the standard 18 types for compatibility, but assign them by ecology.
 | Electric | Electroreceptive fish (later) | — |
 
 ### 7.7 Species data
-- The roster lives in `tools/strata/roster.py`. `tools/strata/gen_species.py`
+- The roster lives in the package `tools/strata/roster/`. `tools/strata/gen_species.py`
   generates the C data from it. Never hand-edit the generated files.
+- **How to add a species:** append it to the end of `roster/part3.py` (or, for parallel
+  work, a new `roster/partN.py` that you also append to `PARTS` in `roster/__init__.py`).
+  A species' position in the global list is its species ID and National Dex number, so
+  new species are *always appended at the end*, even when they belong to an early act.
+  Never insert, remove or reorder species in the act modules. Then run
+  `python3 tools/strata/gen_species.py`. The fields are documented in `roster/__init__.py`.
+- **How to add a map:** append a dict to `MAPS` in the act's module under
+  `tools/strata/maps/` (`act0_present.py` ... `act8_ice_age.py`, `epilogue.py`), with its
+  MAPSEC in the same module's `MAP_SECTIONS`, write `data/maps/<Name>/scripts.inc`, and run
+  `python3 tools/strata/gen_maps.py`. Shared helpers (`trigger`, `sign`, `anchor`,
+  `boss_triggers`, `mons`, `winter`, ...), `ERAS` and crops used by several acts are in
+  `maps/common.py`. The aggregator in `maps/__init__.py` concatenates the acts in order;
+  map-id order = act order, then order within the act's `MAPS`.
 - **Names** are at most 12 characters (the save format's nickname length). Use the
   genus if it fits. Otherwise use the informal anglicized form (*Tyrannosaurus* →
   Tyrannosaur). Otherwise cut the genus at a morpheme boundary (*Pachycephalosaurus* →

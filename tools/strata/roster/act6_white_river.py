@@ -1,0 +1,112 @@
+"""Act 6: White River Group, SD/NE (~33 Ma).
+
+Species of this section only, in global-order position (see roster/__init__.py).
+Fields are documented there.
+"""
+
+SPECIES = [
+    # ------------------------------------------------------------------
+    # Act 6: White River Group, SD/NE badlands (~33 Ma)
+    # After the Eocene-Oligocene cooling: drier, more open woodland.
+    # ------------------------------------------------------------------
+    dict(
+        name="Mesohippus", genus="Mesohippus bairdi", site="Brule Fm, SD", age="~32 Ma",
+        mass=40.0, length=1.2, mass_est=True,
+        weights=dict(hp=5, atk=5, defn=4, spa=4, spd=4, spe=7),
+        types=("NORMAL", "GRASS"), abilities=("RUN_AWAY", "QUICK_FEET"),
+        category="Three-toed", color="BROWN", growth="MEDIUM_SLOW", catch=75, gender=50,
+        borrow="zebstrika",
+        moves=[(1, "DOUBLE_KICK"), (1, "STOMP"), (34, "AGILITY"), (38, "MAGICAL_LEAF"), (42, "BOUNCE"),
+               (46, "HIGH_HORSEPOWER"), (52, "DOUBLE_EDGE")],
+        dex="A three-toed horse with longer legs for running in more open country. It still browsed leaves rather than grass.",
+    ),
+    dict(
+        name="Archaeothere", genus="Archaeotherium", site="Brule Fm, SD", age="~32 Ma",
+        mass=270.0, length=2.0, mass_est=True,
+        weights=dict(hp=7, atk=7, defn=6, spa=2, spd=5, spe=4),
+        types=("DARK", "GROUND"), abilities=("STRONG_JAW", "GLUTTONY"),
+        category="Entelodont", color="BROWN", growth="SLOW", catch=45, gender=50,
+        borrow="pignite",
+        moves=[(1, "BITE"), (1, "TACKLE"), (34, "CRUNCH"), (38, "DIG"), (42, "JAW_LOCK"),
+               (48, "STOMPING_TANTRUM"), (54, "HEAD_SMASH")],
+        dex="Nicknamed the hell pig: a huge-headed omnivore with bony cheek flanges. Bite marks show it cached carcasses to eat later.",
+        notes="Caching carcasses: interpretation of Brule Fm bone accumulations.",
+    ),
+    dict(
+        name="Hoplophoneus", genus="Hoplophoneus", site="Brule Fm, SD", age="~32 Ma",
+        mass=50.0, length=1.4, mass_est=True,
+        weights=dict(hp=5, atk=8, defn=4, spa=3, spd=4, spe=6),
+        types=("DARK",), abilities=("SUPER_LUCK", "INTIMIDATE"),
+        category="Nimravid", color="BROWN", growth="SLOW", catch=45, gender=50,
+        borrow="liepard",
+        moves=[(1, "SCRATCH"), (1, "BITE"), (34, "NIGHT_SLASH"), (38, "SUCKER_PUNCH"), (42, "CRUNCH"),
+               (48, "PSYCHIC_FANGS"), (54, "THROAT_CHOP")],
+        dex="A saber-toothed false cat. Nimravids evolved long sabers separately from true cats: a striking case of convergent evolution.",
+    ),
+    dict(
+        name="Merycoidodon", genus="Merycoidodon", site="Brule Fm, SD", age="~32 Ma",
+        mass=100.0, length=1.4, mass_est=True,
+        weights=dict(hp=7, atk=5, defn=5, spa=3, spd=5, spe=4),
+        types=("NORMAL", "GRASS"), abilities=("THICK_FAT", "SAP_SIPPER"),
+        category="Oreodont", color="BROWN", growth="MEDIUM_FAST", catch=150, gender=50,
+        borrow="mudbray",
+        moves=[(1, "TACKLE"), (1, "GROWL"), (34, "SEED_BOMB"), (38, "STOMP"), (42, "TAKE_DOWN"),
+               (48, "BODY_SLAM")],
+        dex="A sheep-sized plant eater that lived in herds. Oreodonts are among the most common fossils in the White River badlands.",
+    ),
+    dict(
+        name="Subhyracodon", genus="Subhyracodon", site="Brule Fm, SD", age="~32 Ma",
+        mass=500.0, length=2.5, mass_est=True,
+        weights=dict(hp=7, atk=6, defn=7, spa=2, spd=6, spe=4),
+        types=("GROUND", "NORMAL"), abilities=("STURDY", "THICK_FAT"),
+        category="Rhinoceros", color="GRAY", growth="SLOW", catch=60, gender=50,
+        borrow="bouffalant",
+        moves=[(1, "TACKLE"), (1, "STOMP"), (34, "HEADBUTT"), (38, "TAKE_DOWN"), (42, "BULLDOZE"),
+               (48, "HIGH_HORSEPOWER"), (54, "DOUBLE_EDGE")],
+        dex="A hornless rhino the size of a cow. Rhinos were once common across North America, where they lived for over 30 million years.",
+    ),
+    dict(
+        name="Poebrothere", genus="Poebrotherium", site="Brule Fm, SD", age="~32 Ma",
+        mass=30.0, length=1.2, mass_est=True,
+        weights=dict(hp=5, atk=4, defn=4, spa=4, spd=5, spe=7),
+        types=("NORMAL",), abilities=("RUN_AWAY", "OBLIVIOUS"),
+        category="Early Camel", color="BROWN", growth="MEDIUM_SLOW", catch=90, gender=50,
+        borrow="numel",
+        moves=[(1, "TACKLE"), (1, "SAND_ATTACK"), (34, "DOUBLE_KICK"), (38, "STOMP"), (42, "AGILITY"),
+               (48, "DOUBLE_EDGE")],
+        dex="A goat-sized early camel with long, slender legs. Camels evolved in North America and only later spread to Asia.",
+    ),
+    dict(
+        name="Leptomeryx", genus="Leptomeryx", site="Brule Fm, SD", age="~32 Ma",
+        mass=5.0, length=0.6, mass_est=True,
+        weights=dict(hp=4, atk=4, defn=3, spa=5, spd=4, spe=8),
+        types=("NORMAL", "GRASS"), abilities=("RUN_AWAY", "QUICK_FEET"),
+        category="Ruminant", color="BROWN", growth="MEDIUM_FAST", catch=170, gender=50,
+        borrow="stantler",
+        moves=[(1, "TACKLE"), (1, "GROWL"), (32, "DOUBLE_KICK"), (36, "MAGICAL_LEAF"), (40, "AGILITY"),
+               (44, "BOUNCE")],
+        dex="A tiny, hornless deer-like ruminant that browsed the woodland floor. It is one of the most abundant White River fossils.",
+    ),
+    dict(
+        name="Stylemys", genus="Stylemys nebrascensis", site="Brule Fm, SD", age="~32 Ma",
+        mass=15.0, length=0.5, mass_est=True,
+        weights=dict(hp=5, atk=4, defn=8, spa=3, spd=7, spe=2),
+        types=("GRASS", "ROCK"), abilities=("SHELL_ARMOR", "STURDY"),
+        category="Tortoise", color="BROWN", growth="MEDIUM_FAST", catch=170, gender=50,
+        borrow="turtwig",
+        moves=[(1, "TACKLE"), (1, "WITHDRAW"), (32, "RAZOR_LEAF"), (36, "ROCK_TOMB"), (40, "IRON_DEFENSE"),
+               (46, "SEED_BOMB")],
+        dex="A land tortoise. Thousands of its shells weather out of the badlands, often the first fossil a visitor finds.",
+    ),
+    dict(
+        name="Ischyromys", genus="Ischyromys", site="Brule Fm, SD", age="~32 Ma",
+        mass=0.8, length=0.4, mass_est=True,
+        weights=dict(hp=4, atk=5, defn=4, spa=4, spd=4, spe=7),
+        types=("NORMAL",), abilities=("RUN_AWAY", "PICKUP"),
+        category="Rodent", color="BROWN", growth="MEDIUM_FAST", catch=255, gender=50,
+        borrow="skwovet",
+        moves=[(1, "TACKLE"), (1, "TAIL_WHIP"), (30, "HYPER_FANG"), (34, "BULLET_SEED"), (38, "DIG"),
+               (42, "SUPER_FANG")],
+        dex="A squirrel-like early rodent. Rodents spread just as the last multituberculates vanished, and may have outcompeted them.",
+    ),
+]

@@ -389,7 +389,7 @@ Every starter now has one real choice, and each choice has a visible cost:
 - **Turtle:** stasis, plus the heat-driven alligator snapping turtle (bigger, BST up,
   lives far from Montana today).
 
-### 2.12 Species additions (NEW; 17, appended in a new `roster_part3.py` so IDs never shift)
+### 2.12 Species additions (NEW; 17, appended in `tools/strata/roster/part3.py` so IDs never shift)
 
 | Species | Act(s) | Mass kg (est?) | Types | Borrow (placeholder) | Why |
 |---|---|---|---|---|---|
@@ -605,7 +605,7 @@ The player must always be able to see *what they are steering*.
 | Start menu | CODEX / TEAM / FIELD BAG / FIELD LOG (replaces POKéNAV; opens the Fossil Case and quest log) / {PLAYER} / SAVE / OPTIONS | S |
 | Region map | Replace Hoenn with a West map (MT/WY/CO/SD/NE) showing the act sites; one image, palette-swapped per era | M (art) |
 | Quest log | `FIELD LOG` lists the current objective from `VAR_STRATA_STORY` + `VAR_STRATA_SUBPLOT` (table of strings in `strata_acts.c`) | S |
-| Split `maps.py` and the roster for parallel work | `maps.py` → `maps/act0.py … act8.py, epilogue.py` aggregated by `maps.py`; roster part 3 as its own file | S (do it first) |
+| Split `maps.py` and the roster for parallel work | `maps.py` → package `tools/strata/maps/` (`act0_present.py … act8_ice_age.py`, `epilogue.py`, `common.py`, aggregated in `__init__.py`); roster → package `tools/strata/roster/` with append-only `part3.py` (**done, R0**) | S (do it first) |
 | Saves | New vars: `VAR_STRATA_SUBPLOT`, `VAR_STRATA_FIELDKIT`, `VAR_STRATA_STIPEND_COUNT`; flags: waders, fossils (87), tips, set pieces (~20), Colby | S |
 
 ---

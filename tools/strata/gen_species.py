@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generate Strata species data from tools/strata/roster.py.
+"""Generate Strata species data from the package tools/strata/roster/.
 
 Usage (from the repo root):  python3 tools/strata/gen_species.py
 
@@ -21,7 +21,7 @@ the stock generations are disabled in include/config/species_enabled.h.
 Stats are grounded in body mass. The base stat total is
     BST = 300 + 70 * log10(mass in kg), clamped to [180, 600]
 so a 50 g Mesodma gets ~209 and an 8 t Tyrannosaurus ~573. Each species'
-`weights` then split that total by anatomy (see roster.py).
+`weights` then split that total by anatomy (see roster/__init__.py).
 """
 
 import math
