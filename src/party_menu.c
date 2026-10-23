@@ -66,6 +66,7 @@
 #include "task.h"
 #include "text.h"
 #include "text_window.h"
+#include "selection.h"
 #include "trade.h"
 #include "union_room.h"
 #include "window.h"
@@ -4946,6 +4947,75 @@ void ItemUseCB_Medicine(u8 taskId, TaskFunc task)
                 gTasks[taskId].func = task;
         }
     }
+}
+
+// Strata forage (src/selection.c, Selection_EatForage). Unlike medicine it works at
+// full HP: eating is what steers the lineage, the HP is a bonus.
+static const u8 sText_StrataAteForage[] = _("{STR_VAR_1} ate the {STR_VAR_3}.");
+static const u8 sText_StrataAteForageHealed[] = _("{STR_VAR_1} ate the {STR_VAR_3}\nand recovered {STR_VAR_2} HP.");
+
+static void DisplayStrataForageMessage(u8 taskId, const u8 *text)
+{
+    struct Pokemon *party = NULL;
+    s8 partySlot = 0;
+
+    GetPartyAndSlotFromPartyMenuId(gPartyMenu.slotId, &party, &partySlot);
+    GetMonNickname(&party[partySlot], gStringVar1);
+    CopyItemName(gSpecialVar_ItemId, gStringVar3);
+    StringExpandPlaceholders(gStringVar4, text);
+    DisplayPartyMenuMessage(gStringVar4, FALSE);
+    ScheduleBgCopyTilemapToVram(2);
+    if (gPartyMenu.menuType == PARTY_MENU_TYPE_FIELD && CheckBagHasItem(gSpecialVar_ItemId, 1))
+        gTasks[taskId].func = Task_ReturnToChooseMonAfterText;
+    else
+        gTasks[taskId].func = Task_ClosePartyMenuAfterText;
+}
+
+static void Task_DisplayStrataForageMessage(u8 taskId)
+{
+    DisplayStrataForageMessage(taskId, sText_StrataAteForage);
+}
+
+// After the HP animation, which buffers the HP healed in gStringVar2.
+static void Task_DisplayStrataForageHealedMessage(u8 taskId)
+{
+    DisplayStrataForageMessage(taskId, sText_StrataAteForageHealed);
+}
+
+void ItemUseCB_StrataForage(u8 taskId, TaskFunc task)
+{
+    struct Pokemon *party = NULL;
+    s8 partySlot = 0;
+    GetPartyAndSlotFromPartyMenuId(gPartyMenu.slotId, &party, &partySlot);
+    struct Pokemon *mon = &party[partySlot];
+    enum Item item = gSpecialVar_ItemId;
+    u32 hp, healed;
+
+    if (!Selection_CanEatForage(mon))
+    {
+        gPartyMenuUseExitCallback = FALSE;
+        PlaySE(SE_SELECT);
+        DisplayPartyMenuMessage(gText_WontHaveEffect, TRUE);
+        ScheduleBgCopyTilemapToVram(2);
+        if (gPartyMenu.menuType == PARTY_MENU_TYPE_FIELD)
+            gTasks[taskId].func = Task_ReturnToChooseMonAfterText;
+        else
+            gTasks[taskId].func = task;
+        return;
+    }
+
+    gPartyMenuUseExitCallback = TRUE;
+    PlaySE(SE_USE_ITEM);
+    RemoveBagItem(item, 1);
+    hp = GetMonData(mon, MON_DATA_HP);
+    healed = Selection_EatForage(mon, item);
+    if (healed != 0)
+    {
+        PartyMenuModifyHP(taskId, gPartyMenu.slotId, 1, healed, Task_DisplayStrataForageHealedMessage);
+        ResetHPTaskData(taskId, 0, hp);
+        return;
+    }
+    Task_DisplayStrataForageMessage(taskId);
 }
 
 #define tState      data[0]

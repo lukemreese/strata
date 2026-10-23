@@ -20,6 +20,7 @@ MAPS = [
     # ------------------------------------------------------------------
     dict(
         id="MAP_STRATA_LEVEE_WINTER", name="StrataLeveeWinter", era="ERA_IMPACT_WINTER",
+        habitat="open", light="dark", forage=[forage(6, 20, "CARRION"), forage(34, 12, "FERN_FROND")],
         crop=winter(LEVEE_CROP), patches=LEVEE_PATCHES,
         music="MUS_ABANDONED_SHIP", weather="WEATHER_VOLCANIC_ASH", map_type="MAP_TYPE_ROUTE",
         mapsec="MAPSEC_STRATA_ASHEN_LEVEE",
@@ -35,6 +36,7 @@ MAPS = [
     ),
     dict(
         id="MAP_STRATA_RIVER_WINTER", name="StrataRiverWinter", era="ERA_IMPACT_WINTER",
+        habitat="water", light="dark", forage=[forage(27, 15, "CARRION"), forage(34, 19, "LARVAE")],
         crop=winter(RIVER_CROP), patches=RIVER_PATCHES, swap=RIVER_SWAP,
         music="MUS_ABANDONED_SHIP", weather="WEATHER_VOLCANIC_ASH", map_type="MAP_TYPE_ROUTE",
         mapsec="MAPSEC_STRATA_ASHEN_RIVER",
@@ -55,6 +57,7 @@ MAPS = [
     ),
     dict(
         id="MAP_STRATA_BACKSWAMP_WINTER", name="StrataBackswampWinter", era="ERA_IMPACT_WINTER",
+        habitat="water", light="dark", forage=[forage(5, 2, "FERN_FROND"), forage(14, 12, "CARRION")],
         crop=winter(BACKSWAMP_CROP),
         music="MUS_ABANDONED_SHIP", weather="WEATHER_VOLCANIC_ASH", map_type="MAP_TYPE_ROUTE",
         mapsec="MAPSEC_STRATA_ASHEN_SWAMP",

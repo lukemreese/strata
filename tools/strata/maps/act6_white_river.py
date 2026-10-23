@@ -17,6 +17,7 @@ MAPS = [
     # ------------------------------------------------------------------
     dict(
         id="MAP_STRATA_WHITE_RIVER", name="StrataWhiteRiver", era="ERA_WHITE_RIVER",
+        habitat="open", light="day", forage=[forage(20, 6, "SEED_HEAD"), forage(10, 13, "BROWSE"), forage(29, 22, "CARRION")],
         crop=dict(**{"from": "LAYOUT_ROUTE114"}, rect=(0, 37, 40, 43), tilesets=("gTileset_GeneralOligocene", "gTileset_FallarborOligocene")),
         patches=[
             dict(rect=(31, 5, 2, 5), metatile=0x001, elevation=3),    # berry-soil plot -> grass

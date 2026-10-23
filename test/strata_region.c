@@ -11,6 +11,7 @@
 #include "constants/map_groups.h"
 #include "constants/strata.h"
 #include "constants/vars.h"
+#include "strata_map.h"
 #include "../src/data/strata_map_eras.h"
 #include "../src/data/strata_species_eras.h"
 
@@ -170,9 +171,11 @@ TEST("Wild Pokemon in each era's maps have appeared and are alive in that era")
     u32 i, j;
     u16 map = 0;
     u8 era = 0;
-    for (i = 0; i < ARRAY_COUNT(sStrataMapEras); i++)
+    for (i = 0; i < ARRAY_COUNT(sStrataMapInfo); i++)
     {
-        PARAMETRIZE { map = sStrataMapEras[i].map; era = sStrataMapEras[i].era; }
+        if (sStrataMapInfo[i].era == ERA_COUNT)
+            continue; // Present-day hub: no era
+        PARAMETRIZE { map = sStrataMapInfo[i].map; era = sStrataMapInfo[i].era; }
     }
 
     for (i = 0; gWildMonHeaders[i].mapGroup != MAP_GROUP(MAP_UNDEFINED); i++)

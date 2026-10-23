@@ -265,12 +265,48 @@ party and the PC boxes.
 
 | Counter | Source now | Rate | Missing / later |
 |---|---|---|---|
-| FOREST (`cool`) | Long grass, or a map tagged forest | +1 per 32 steps | Per-map tags are still a placeholder table (`sMapHabitats`, R4) |
-| OPEN (`beauty`) | Tall grass, or a map tagged open | +1 per 32 steps | Same (R4) |
-| WATER (`cute`) | Surfing/wading; **standing next to surfable water** (shore); hooking a fish | +1 per 32 steps; +2 per fish hooked (whole party) | n/a |
-| PLANT (`smart`) | No source yet (`special Strata_AddPressure` only) | n/a | Plant forage items, +12 each (R3) |
-| ANIMAL (`tough`, `PRESSURE_MEAT_DIET`) | Knocking out a foe with a move, **only for carnivores/omnivores** (roster `diet`, generated into `src/data/strata_diets.h`) | +1 per KO; KOs stop at 24 | Carrion/larvae forage, +12 each (R3) |
+| FOREST (`cool`) | Anywhere on a map tagged `habitat="forest"`; on untagged maps, long grass | +1 per 32 steps (whole party) | n/a |
+| OPEN (`beauty`) | Anywhere on a map tagged `habitat="open"`; on untagged maps, tall grass | +1 per 32 steps | n/a |
+| WATER (`cute`) | Surfing/wading; **standing next to surfable water** (shore); anywhere on a map tagged `habitat="water"`; hooking a fish | +1 per 32 steps; +2 per fish hooked (whole party) | n/a |
+| PLANT (`smart`) | Eating plant forage: Fern Frond, Palm Fruit, Legume Pod, Seed Head, Browse | +12 per item (one mon) | n/a |
+| ANIMAL (`tough`, `PRESSURE_MEAT_DIET`) | Eating animal forage: Larvae, Carrion; knocking out a foe with a move, **only for carnivores/omnivores** (roster `diet`, generated into `src/data/strata_diets.h`) | +12 per item; +1 per KO, KOs stop at 24 | n/a |
 | HEAT (`sheen`) | Era climate (`sEraHeat`) | 0–2 per tick | n/a |
+
+- **Habitat order:** water (surfing, water tiles, shores) beats the map's tag, and the
+  tag beats the grass underfoot. Map tags (`habitat=` in `tools/strata/maps/`) are
+  generated into `sStrataMapInfo` (`src/data/strata_map_eras.h`, read by
+  `src/strata_map.c`), one row per Strata map with its era, habitat and light:
+
+  | Map | Habitat | Light |
+  |---|---|---|
+  | Field Camp, Field Station | none (grass decides) | real clock |
+  | Badlands | open | real clock |
+  | Levee Forest, Backswamp (Act 1) | forest | day |
+  | River Channel (Act 1) | water | day |
+  | Ashen Levee (Act 2) | open (dead forest) | dark |
+  | Ashen River, Ashen Swamp (Act 2) | water | dark |
+  | Corral Bluffs palm forest (Act 3) | forest | day |
+  | Bighorn red beds (Act 4) | open | day |
+  | Lake Gosiute forest (Act 5) | forest | day |
+  | White River (Act 6) | open | day |
+  | Ashfall grassland (Act 7) | open | ash |
+  | Ice Age steppe (Act 8) | open | day |
+  | Natural Trap Cave (Act 8) | none | none (never tinted) |
+  | Montana prairie (epilogue) | open | real clock |
+- **Forage** (`ITEM_FERN_FROND` … `ITEM_CARRION`, `Selection_EatForage`): used from the
+  bag on one party mon. Heals 20 HP and adds +12 of its pressure (the item's
+  `secondaryId`); it works at full HP (the diet is the point) but not on a fainted mon
+  or an egg. Six of one kind (72) pass a branch's 64. Placed per map with
+  `forage(x, y, item)` (`tools/strata/maps/common.py`) as hidden items, or item balls with
+  `visible=True`, under the temp flags `FLAG_TEMP_11..1F`, which every map load clears:
+  forage **regrows each time the player re-enters the map**, so steering a diet is
+  a choice the player can always make, not a scarce resource. Each spot is
+  era-checked (no palm fruit after the Eocene, no legume pods before Corral Bluffs,
+  grass seed heads from White River on). Hidden items store their flag as a wrapping
+  13-bit offset (`GET_HIDDEN_ITEM_FLAG`), which is what lets temp flags work.
+- **Light** (`light=`): deep-time maps have a fixed day/night tint (day, dusk, dark,
+  ash), which `UpdateTimeOfDay` uses instead of the wall clock; `none` is never tinted;
+  present-day maps follow the real clock (`OW_ENABLE_DNS`).
 
 - **Thresholds:** a branch only competes once its counter reaches its `minScore`
   (`DESCENT_MIN_SCORE` = 64 for every branch today). The highest eligible counter wins,

@@ -449,7 +449,7 @@ bool8 ItemfinderCheckForHiddenItems(const struct MapEvents *events, u8 taskId)
     for (i = 0; i < events->bgEventCount; i++)
     {
         // Check if there are any hidden items on the current map that haven't been picked up
-        if (events->bgEvents[i].kind == BG_EVENT_HIDDEN_ITEM && !FlagGet(events->bgEvents[i].bgUnion.hiddenItem.hiddenItemId + FLAG_HIDDEN_ITEMS_START))
+        if (events->bgEvents[i].kind == BG_EVENT_HIDDEN_ITEM && !FlagGet(GET_HIDDEN_ITEM_FLAG(&events->bgEvents[i])))
         {
             distanceX = events->bgEvents[i].x + MAP_OFFSET - playerX;
             distanceY = events->bgEvents[i].y + MAP_OFFSET - playerY;
@@ -478,7 +478,7 @@ static bool8 IsHiddenItemPresentAtCoords(const struct MapEvents *events, s16 x, 
     {
         if (bgEvent[i].kind == BG_EVENT_HIDDEN_ITEM && x == bgEvent[i].x && y == bgEvent[i].y) // hidden item and coordinates matches x and y passed?
         {
-            if (!FlagGet(bgEvent[i].bgUnion.hiddenItem.hiddenItemId + FLAG_HIDDEN_ITEMS_START))
+            if (!FlagGet(GET_HIDDEN_ITEM_FLAG(&bgEvent[i])))
                 return TRUE;
             else
                 return FALSE;
@@ -848,6 +848,13 @@ static void ItemUseOnFieldCB_WailmerPailSudowoodo(u8 taskId)
 void ItemUseOutOfBattle_Medicine(u8 taskId)
 {
     gItemUseCB = ItemUseCB_Medicine;
+    SetUpItemUseCallback(taskId);
+}
+
+// Strata forage: eaten by one party mon (ItemUseCB_StrataForage).
+void ItemUseOutOfBattle_StrataForage(u8 taskId)
+{
+    gItemUseCB = ItemUseCB_StrataForage;
     SetUpItemUseCallback(taskId);
 }
 

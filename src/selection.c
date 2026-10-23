@@ -3,10 +3,13 @@
 #include "event_data.h"
 #include "field_player_avatar.h"
 #include "fieldmap.h"
+#include "item.h"
+#include "item_use.h"
 #include "metatile_behavior.h"
 #include "pokemon.h"
 #include "selection.h"
-#include "constants/map_groups.h"
+#include "strata_map.h"
+#include "constants/items.h"
 #include "constants/vars.h"
 
 // Selection pressures: hidden per-mon counters that decide which descendant a
@@ -37,17 +40,6 @@ static const u8 sEraHeat[ERA_COUNT] =
     [ERA_ASHFALL]       = 0, // Cooling after the mid-Miocene optimum
     [ERA_TRAP_CAVE]     = 0, // Last Glacial Maximum
     [ERA_EPILOGUE]      = 0,
-};
-
-// Maps whose habitat isn't evident from their metatiles.
-// PLACEHOLDER: replace with Strata maps as they're built.
-static const struct
-{
-    u16 map;
-    u8 habitat; // enum SelectionPressure
-} sMapHabitats[] =
-{
-    { MAP_PETALBURG_WOODS, PRESSURE_FOREST },
 };
 
 void Selection_GetBoxMonPressures(struct BoxPokemon *boxMon, u8 *pressures)
@@ -106,27 +98,16 @@ bool32 Selection_EatsAnimals(enum Species species)
     return Selection_GetSpeciesDiet(species) != DIET_HERBIVORE;
 }
 
-static enum SelectionPressure GetMapHabitat(void)
-{
-    u32 i;
-    u32 map = gSaveBlock1Ptr->location.mapNum | (gSaveBlock1Ptr->location.mapGroup << 8);
-
-    for (i = 0; i < ARRAY_COUNT(sMapHabitats); i++)
-    {
-        if (sMapHabitats[i].map == map)
-            return sMapHabitats[i].habitat;
-    }
-    return PRESSURE_NONE;
-}
-
 // TRUE if the player stands on land orthogonally next to surfable water: a shore,
-// bank or lake edge.
+// bank or lake edge. FALSE with no map loaded (in tests).
 static bool32 IsPlayerOnShore(void)
 {
     static const s8 sOffsets[][2] = { {0, -1}, {0, 1}, {-1, 0}, {1, 0} };
     s16 x, y;
     u32 i;
 
+    if (gMapHeader.mapLayout == NULL)
+        return FALSE;
     PlayerGetDestCoords(&x, &y);
     for (i = 0; i < ARRAY_COUNT(sOffsets); i++)
     {
@@ -139,7 +120,9 @@ static bool32 IsPlayerOnShore(void)
 // Habitat the player is in, or PRESSURE_NONE for neutral ground (paths, towns).
 // Water wins over the map's habitat: a lake in a forest is still a lake, and so
 // is its shore (`onShore`: standing next to surfable water). Wading (waders)
-// is surfing as far as the game is concerned.
+// is surfing as far as the game is concerned. Then the map's `habitat=` tag
+// (Strata_GetMapHabitat, generated from tools/strata/maps/), and on untagged maps
+// the grass underfoot.
 enum SelectionPressure Selection_GetHabitat(u32 metatileBehavior, bool32 onShore)
 {
     enum SelectionPressure habitat;
@@ -149,7 +132,7 @@ enum SelectionPressure Selection_GetHabitat(u32 metatileBehavior, bool32 onShore
      || onShore)
         return PRESSURE_WATER;
 
-    habitat = GetMapHabitat();
+    habitat = Strata_GetMapHabitat();
     if (habitat != PRESSURE_NONE)
         return habitat;
 
@@ -220,6 +203,48 @@ void Selection_OnFishHooked(void)
     u32 i;
     for (i = 0; i < PARTY_SIZE; i++)
         Selection_AddPressure(&gParties[B_TRAINER_PLAYER][i], PRESSURE_WATER, SELECTION_FISH_PRESSURE);
+}
+
+// Forage items (ITEM_FERN_FROND ... ITEM_CARRION, src/data/items.h): food found in
+// the field. The item's secondaryId is the pressure it adds (PRESSURE_PLANT_DIET or
+// PRESSURE_MEAT_DIET), its holdEffectParam the HP it heals.
+//
+// Forage is placed as hidden items whose flags are temp flags, so it regrows on every
+// map load (tools/strata/maps/common.py, forage()). Hidden items store their flag as a
+// 13-bit offset that wraps (GET_HIDDEN_ITEM_FLAG), which needs every flag ID to fit.
+STATIC_ASSERT(FLAGS_COUNT <= (1 << 13), HiddenItemFlagsFitIn13Bits);
+bool32 Selection_IsForage(enum Item item)
+{
+    return item < ITEMS_COUNT && GetItemFieldFunc(item) == ItemUseOutOfBattle_StrataForage;
+}
+
+// Any conscious mon can eat, even at full HP: the diet is the point, the HP a bonus.
+bool32 Selection_CanEatForage(struct Pokemon *mon)
+{
+    return GetMonData(mon, MON_DATA_SANITY_HAS_SPECIES)
+        && !GetMonData(mon, MON_DATA_IS_EGG)
+        && GetMonData(mon, MON_DATA_HP) != 0;
+}
+
+// `mon` eats one `item`: adds FORAGE_PRESSURE of its pressure and heals it. Returns
+// the HP healed (0 at full HP). Doesn't take the item from the bag. Does nothing
+// (returns 0) if the mon can't eat or `item` isn't forage.
+u32 Selection_EatForage(struct Pokemon *mon, enum Item item)
+{
+    u32 hp, maxHP, heal;
+
+    if (!Selection_IsForage(item) || !Selection_CanEatForage(mon))
+        return 0;
+
+    Selection_AddPressure(mon, GetItemSecondaryId(item), FORAGE_PRESSURE);
+    hp = GetMonData(mon, MON_DATA_HP);
+    maxHP = GetMonData(mon, MON_DATA_MAX_HP);
+    heal = GetItemHoldEffectParam(item);
+    if (heal > maxHP - hp)
+        heal = maxHP - hp;
+    hp += heal;
+    SetMonData(mon, MON_DATA_HP, &hp);
+    return heal;
 }
 
 // special Strata_AddPressure

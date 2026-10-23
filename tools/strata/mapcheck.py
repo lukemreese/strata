@@ -7,7 +7,8 @@ Usage: python3 tools/strata/mapcheck.py [MapName ...]   (default: every Strata m
 Walks the layout from the arrival tile (include/constants/strata_maps.h, or the
 first warp, or the first connected edge) the way the player can: no surfing, elevation rules as in
 field_player_avatar.c, ledges one way. Then reports every coord event, sign and
-map edge that can't be reached.
+map edge that can't be reached, and every hidden item (forage) and item ball that
+can't be picked up.
 """
 
 import json
@@ -102,7 +103,15 @@ def check(name):
     for e in m["bg_events"]:
         x, y = e["x"], e["y"]
         if not any((x + dx, y + dy) in seen for dx, dy in DIRS.values()):
-            print(f"{name}: sign ({x}, {y}) {e.get('script')} can't be stood next to")
+            what = f"hidden {e['item']}" if e.get("type") == "hidden_item" else f"sign {e.get('script')}"
+            print(f"{name}: {what} at ({x}, {y}) can't be stood next to")
+            ok = False
+    # Item balls (forage with visible=True, see maps/common.py) are picked up from beside.
+    for e in m["object_events"]:
+        x, y = e["x"], e["y"]
+        if e.get("graphics_id") == "OBJ_EVENT_GFX_ITEM_BALL" \
+           and not any((x + dx, y + dy) in seen for dx, dy in DIRS.values()):
+            print(f"{name}: item ball {e.get('trainer_sight_or_berry_tree_id')} at ({x}, {y}) can't be reached")
             ok = False
     for c in m["connections"] or []:
         if not any(t in seen for t in edges[c["direction"]]):

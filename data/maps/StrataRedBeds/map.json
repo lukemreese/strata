@@ -62,6 +62,36 @@
       "elevation": 0,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
       "script": "StrataFieldStation_EventScript_Anchor"
+    },
+    {
+      "type": "hidden_item",
+      "x": 16,
+      "y": 12,
+      "elevation": 0,
+      "item": "ITEM_PALM_FRUIT",
+      "flag": "FLAG_TEMP_11",
+      "quantity": 1,
+      "underfoot": false
+    },
+    {
+      "type": "hidden_item",
+      "x": 24,
+      "y": 6,
+      "elevation": 0,
+      "item": "ITEM_BROWSE",
+      "flag": "FLAG_TEMP_12",
+      "quantity": 1,
+      "underfoot": false
+    },
+    {
+      "type": "hidden_item",
+      "x": 36,
+      "y": 10,
+      "elevation": 0,
+      "item": "ITEM_LARVAE",
+      "flag": "FLAG_TEMP_13",
+      "quantity": 1,
+      "underfoot": false
     }
   ]
 }

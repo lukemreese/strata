@@ -1,6 +1,7 @@
 #ifndef GUARD_SELECTION_H
 #define GUARD_SELECTION_H
 
+#include "constants/items.h"
 #include "constants/strata.h"
 
 #define SELECTION_STEPS_PER_TICK  32 // Steps between habitat/climate pressure ticks
@@ -20,6 +21,9 @@ void Selection_UpdateStepCounter(u16 metatileBehavior);
 void Selection_OnPreyTaken(struct Pokemon *mon);
 void Selection_OnFoeFainted(u32 battler);
 void Selection_OnFishHooked(void);
+bool32 Selection_IsForage(enum Item item);
+bool32 Selection_CanEatForage(struct Pokemon *mon);
+u32 Selection_EatForage(struct Pokemon *mon, enum Item item);
 void Strata_AddPressure(void);
 
 #endif // GUARD_SELECTION_H

@@ -189,13 +189,18 @@ struct BgEvent
         const u8 *script;
         struct {
             u32 item:11;
-            u32 hiddenItemId:13;
+            u32 hiddenItemId:13; // flag - FLAG_HIDDEN_ITEMS_START, mod 2^13: use GET_HIDDEN_ITEM_FLAG
             u32 quantity:7;
             u32 underfoot:1;
         } hiddenItem;
         u32 secretBaseId;
     } bgUnion;
 };
+
+// The flag of a hidden item bg event. Stored as a 13-bit offset from FLAG_HIDDEN_ITEMS_START
+// that wraps, so it can also be a temp flag below that range (Strata forage, which
+// regrows on every map load). Every flag ID fits in 13 bits (checked in src/selection.c).
+#define GET_HIDDEN_ITEM_FLAG(bgEvent) (((bgEvent)->bgUnion.hiddenItem.hiddenItemId + FLAG_HIDDEN_ITEMS_START) & 0x1FFF)
 
 struct MapEvents
 {
