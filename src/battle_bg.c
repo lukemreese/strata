@@ -18,6 +18,7 @@
 #include "palette.h"
 #include "sound.h"
 #include "sprite.h"
+#include "strata_art.h"
 #include "task.h"
 #include "test_runner.h"
 #include "text_window.h"
@@ -878,7 +879,7 @@ static void LoadBattleEnvironmentGfx(u16 environment)
     // Copy to bg3
     DecompressDataWithHeaderVram(gBattleEnvironmentInfo[environment].background.tileset, (void *)(BG_CHAR_ADDR(2)));
     DecompressDataWithHeaderVram(gBattleEnvironmentInfo[environment].background.tilemap, (void *)(BG_SCREEN_ADDR(26)));
-    LoadPalette(gBattleEnvironmentInfo[environment].palette, BG_PLTT_ID(2), 3 * PLTT_SIZE_4BPP);
+    LoadPalette(Strata_GetBattleEnvironmentPalette(environment, gBattleEnvironmentInfo[environment].palette), BG_PLTT_ID(2), 3 * PLTT_SIZE_4BPP);
 }
 
 // Loads the entry associated with the battle environment.
@@ -1344,8 +1345,11 @@ bool8 LoadChosenBattleElement(u8 caseId)
         DecompressDataWithHeaderVram(gBattleEnvironmentInfo[GetBattleEnvironmentOverride()].background.tilemap, (void *)(BG_SCREEN_ADDR(26)));
         break;
     case 5:
-        LoadPalette(gBattleEnvironmentInfo[GetBattleEnvironmentOverride()].palette, BG_PLTT_ID(2), 3 * PLTT_SIZE_4BPP);
+    {
+        u32 environment = GetBattleEnvironmentOverride();
+        LoadPalette(Strata_GetBattleEnvironmentPalette(environment, gBattleEnvironmentInfo[environment].palette), BG_PLTT_ID(2), 3 * PLTT_SIZE_4BPP);
         break;
+    }
     case 6:
         LoadBattleMenuWindowGfx();
         break;

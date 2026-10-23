@@ -28,6 +28,7 @@
 #include "script.h"
 #include "sound.h"
 #include "sprite.h"
+#include "strata_art.h"
 #include "task.h"
 #include "trainer.h"
 #include "trainer_pokemon_sprites.h"
@@ -870,7 +871,7 @@ static bool32 ShouldFieldEffectBeFogBlended(u8 *script)
 void FieldEffectScript_LoadFadedPalette(u8 **script)
 {
     struct SpritePalette *palette = (struct SpritePalette *)FieldEffectScript_ReadWord(script);
-    u32 paletteSlot = LoadSpritePalette(palette);
+    u32 paletteSlot = LoadSpritePalette(Strata_GetFieldEffectPalette(palette));
     (*script) += 4;
     SetPaletteColorMapType(paletteSlot + 16, T1_READ_8(*script));
     (*script)++;
@@ -879,7 +880,7 @@ void FieldEffectScript_LoadFadedPalette(u8 **script)
 
 void FieldEffect_LoadFadedPalette(struct SpritePalette *palette, enum ColorMapType colorMap)
 {
-    u32 paletteSlot = LoadSpritePalette(palette);
+    u32 paletteSlot = LoadSpritePalette(Strata_GetFieldEffectPalette(palette));
     SetPaletteColorMapType(paletteSlot + 16, colorMap);
     UpdateSpritePaletteWithWeather(paletteSlot, TRUE);
 }
@@ -887,7 +888,7 @@ void FieldEffect_LoadFadedPalette(struct SpritePalette *palette, enum ColorMapTy
 void FieldEffectScript_LoadPalette(u8 **script)
 {
     struct SpritePalette *palette = (struct SpritePalette *)FieldEffectScript_ReadWord(script);
-    LoadSpritePalette(palette);
+    LoadSpritePalette(Strata_GetFieldEffectPalette(palette));
     (*script) += 4;
 }
 

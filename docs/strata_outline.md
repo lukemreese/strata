@@ -676,6 +676,16 @@ grass, long-grass, water and sand battle-environment palettes. Select them when
 `battle_bg.c`). Then do the tall-grass overlay palette the same way. Acceptance: a screenshot
 pair, Hell Creek vs the Ashen Levee battle.
 
+**Status: both pilots are done.** The pipeline, how to add a creature, and the lessons are in
+[`strata_art.md`](strata_art.md). Two things differ from the plan above:
+(1) Generated art opts out of borrowing through a `CUSTOM` marker file in the
+species' graphics folder, written by `gen_sprite.py`, instead of a roster `art=` field.
+The marker also carries the measured pic sizes and offsets and the icon palette.
+(2) Era art is chosen by the *current map's* era (`sStrataMapEras`), not `VAR_STRATA_ERA`.
+It covers all four transformed eras (winter, PETM, Oligocene, ice age) and 9 outdoor
+battle environments, plus the shared grass/ripple field-effect palette. The previews
+are rendered offline (`--preview`), not taken from emulator screenshots.
+
 ---
 
 ## 5. Scientific integrity: fact-check list

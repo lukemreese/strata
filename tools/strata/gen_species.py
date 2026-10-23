@@ -12,7 +12,9 @@ Writes:
   src/data/pokemon/species_info/strata_families.h
   src/data/pokemon/level_up_learnsets/strata.h
   src/data/graphics/strata_pokemon.h
-  graphics/pokemon/strata/<name>/             sprites copied from the borrowed species
+  graphics/pokemon/strata/<name>/             sprites copied from the borrowed species, unless the
+                                              folder has a CUSTOM marker (own art from gen_sprite.py,
+                                              whose presentation fields override the borrowed ones)
   sound/direct_sound_samples/cries/strata_<name>.wav   cry copied from the borrowed species
 
 Strata species own copies of everything they borrow, so they keep working when
@@ -168,10 +170,36 @@ def c_string(s):
     return s.replace("\\", "\\\\").replace('"', '\\"')
 
 
+def custom_art(sp):
+    """Presentation-field overrides if the species has its own art (a CUSTOM
+    marker written by gen_sprite.py in its graphics folder), else None."""
+    path = os.path.join(ROOT, "graphics/pokemon/strata", folder_name(sp), "CUSTOM")
+    if not os.path.exists(path):
+        return None
+    with open(path) as f:
+        return [l.strip() for l in f if l.strip().startswith(".")]
+
+
+def apply_overrides(fields, overrides):
+    """Replaces borrowed `.field = ...,` lines with the custom art's."""
+    key = lambda line: line.strip().split("=")[0].strip()  # noqa: E731
+    wanted = {key(o): o for o in overrides}
+    out = []
+    for line in fields:
+        k = key(line)
+        if k in wanted and line.strip().startswith(k + " "):
+            out.append(line[:len(line) - len(line.lstrip())] + wanted.pop(k))
+        else:
+            out.append(line)
+    return out + ["        " + o for o in wanted.values()]
+
+
 def copy_graphics(sp):
     src = os.path.join(ROOT, "graphics/pokemon", sp["borrow"])
     dst = os.path.join(ROOT, "graphics/pokemon/strata", folder_name(sp))
     os.makedirs(dst, exist_ok=True)
+    if custom_art(sp) is not None:  # our own sprites: keep them
+        return [f for f in GRAPHIC_FILES if os.path.exists(os.path.join(dst, f))]
     copied = []
     for fname in GRAPHIC_FILES:
         if os.path.exists(os.path.join(src, fname)):
@@ -281,8 +309,13 @@ def gen_species_info(sp, files):
     o.append(f"        .palette = gMonPalette_{sym},")
     o.append(f"        .shinyPalette = gMonShinyPalette_{sym},")
     o.append(f"        .iconSprite = gMonIcon_{sym},")
-    o.append(f"        // Placeholder presentation borrowed from SPECIES_{sp['borrow'].upper()}")
-    o.extend(borrowed)
+    overrides = custom_art(sp)
+    if overrides is None:
+        o.append(f"        // Placeholder presentation borrowed from SPECIES_{sp['borrow'].upper()}")
+        o.extend(borrowed)
+    else:
+        o.append(f"        // Own art (tools/strata/gen_sprite.py); other presentation borrowed from SPECIES_{sp['borrow'].upper()}")
+        o.extend(apply_overrides(borrowed, overrides))
     if "footprint.png" in files:
         o.append(f"        FOOTPRINT({sym})")
     o.append(f"        .levelUpLearnset = s{sym}LevelUpLearnset,")

@@ -19,6 +19,7 @@
 #include "script_movement.h"
 #include "sprite.h"
 #include "sound.h"
+#include "strata_art.h"
 #include "task.h"
 #include "trainer_hill.h"
 #include "wild_encounter.h"
@@ -1754,7 +1755,7 @@ struct SpritePalette GetOWESpawnDespawnAnimFldEffPalette(enum SpawnDespawnTypeOW
     {
     case OWE_SPAWN_ANIM_GRASS:
     case OWE_SPAWN_ANIM_LONG_GRASS:
-        palette = gSpritePalette_GeneralFieldEffect1;
+        palette = *Strata_GetFieldEffectPalette(&gSpritePalette_GeneralFieldEffect1);
         break;
 
     case OWE_SPAWN_ANIM_WATER:

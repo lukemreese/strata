@@ -7,6 +7,12 @@ A variant reuses its base tileset's tiles and metatiles and only swaps the
 palettes, so a map can show the same kind of place in a different climate.
 Writes data/tilesets/<kind>/<variant>/palettes/*.pal and the C definitions in
 src/data/tilesets/strata_headers.h (copied from the base's struct in headers.h).
+
+The same era transforms are applied to the outdoor battle-background palettes
+and the grass field-effect palette (graphics/battle_environment/strata/,
+graphics/field_effects/palettes/strata/, src/data/strata_era_art.h).
+
+    python3 tools/strata/gen_tilesets.py --preview DIR   renders before/after PNGs
 """
 
 import os
@@ -110,7 +116,143 @@ def base_struct(base_suffix):
     return m.group(1)
 
 
+# --- Battle backgrounds and field-effect overlays ----------------------------
+#
+# Battles and the grass/ripple field effects use their own palettes, not the
+# map's tileset, so they get the same era transform here. The game picks the
+# set by the current map's era (src/data/strata_map_eras.h, see src/strata_art.c).
+
+# era -> transform. Eras not listed keep the stock palettes (they also use stock tilesets).
+ERA_TRANSFORMS = {
+    "ERA_IMPACT_WINTER": "impact_winter",
+    "ERA_BIGHORN_PETM": "petm",
+    "ERA_WHITE_RIVER": "oligocene",
+    "ERA_TRAP_CAVE": "ice_age",
+}
+
+# Outdoor battle environments -> stock palette dir under graphics/battle_environment.
+BATTLE_ENVS = {
+    "BATTLE_ENVIRONMENT_GRASS": "tall_grass",
+    "BATTLE_ENVIRONMENT_LONG_GRASS": "long_grass",
+    "BATTLE_ENVIRONMENT_SAND": "sand",
+    "BATTLE_ENVIRONMENT_UNDERWATER": "underwater",
+    "BATTLE_ENVIRONMENT_WATER": "water",
+    "BATTLE_ENVIRONMENT_POND": "pond_water",
+    "BATTLE_ENVIRONMENT_MOUNTAIN": "rock",
+    "BATTLE_ENVIRONMENT_CAVE": "cave",
+    "BATTLE_ENVIRONMENT_PLAIN": "plain",
+}
+
+# The tall/long/shaking grass, ripple and ash field effects share this sprite palette.
+FIELD_EFFECT_PAL = "graphics/field_effects/palettes/general_1.pal"
+
+
+def transform_pal(colors, transform):
+    """Applies an era transform to every 16-colour bank, keeping each bank's
+    colour 0 (transparent / backdrop) unchanged."""
+    return [c if i % 16 == 0 else TRANSFORMS[transform](*c) for i, c in enumerate(colors)]
+
+
+def gen_era_art():
+    """Writes the era palettes for battle backgrounds and the grass overlay,
+    and src/data/strata_era_art.h, which strata_art.c includes."""
+    out = [GENERATED, "// Era palette variants of the battle backgrounds and the grass field-effect palette.", ""]
+    era_rows = []
+    for era, transform in ERA_TRANSFORMS.items():
+        suffix = symbol_suffix(transform)
+        dst = os.path.join("graphics/battle_environment/strata", transform)
+        os.makedirs(os.path.join(ROOT, dst), exist_ok=True)
+        rows = []
+        for env, envdir in BATTLE_ENVS.items():
+            colors = read_pal(os.path.join(ROOT, "graphics/battle_environment", envdir, "palette.pal"))
+            pal = f"{dst}/{envdir}.pal"
+            write_pal(os.path.join(ROOT, pal), transform_pal(colors, transform))
+            sym = f"sBattleEnvPal_{suffix}_{symbol_suffix(envdir)}"
+            out.append(f'static const u16 {sym}[] = INCGFX_U16("{pal}", ".gbapal");')
+            rows.append(f"    [{env}] = {sym},")
+        out.append("")
+        out.append(f"static const u16 *const sBattleEnvPals_{suffix}[BATTLE_ENVIRONMENT_COUNT] =")
+        out += ["{"] + rows + ["};", ""]
+
+        fe_dir = "graphics/field_effects/palettes/strata"
+        os.makedirs(os.path.join(ROOT, fe_dir), exist_ok=True)
+        fe_pal = f"{fe_dir}/general_1_{transform}.pal"
+        write_pal(os.path.join(ROOT, fe_pal), transform_pal(read_pal(os.path.join(ROOT, FIELD_EFFECT_PAL)), transform))
+        out.append(f'static const u16 sFieldEffectPal1_{suffix}[] = INCGFX_U16("{fe_pal}", ".gbapal");')
+        out.append(f"static const struct SpritePalette sFieldEffectSpritePal1_{suffix} = "
+                   f"{{sFieldEffectPal1_{suffix}, FLDEFF_PAL_TAG_GENERAL_1}};")
+        out.append("")
+        era_rows.append(f"    [{era}] = {{ sBattleEnvPals_{suffix}, &sFieldEffectSpritePal1_{suffix} }},")
+        print("wrote era art", era, transform)
+
+    out.append("static const struct StrataEraArt sStrataEraArt[ERA_COUNT] =")
+    out += ["{"] + era_rows + ["};"]
+    with open(os.path.join(ROOT, "src/data/strata_era_art.h"), "w") as f:
+        f.write("\n".join(out) + "\n")
+
+
+def render_battle_bg(envdir, colors, scale=1):
+    """RGB rows of a battle background (tiles.png + map.bin) in the given 48-colour palette."""
+    from maprender import read_png
+    w, h, idx = read_png(os.path.join(ROOT, "graphics/battle_environment", envdir, "tiles.png"))
+    tiles_per_row = w // 8
+    data = open(os.path.join(ROOT, "graphics/battle_environment", envdir, "map.bin"), "rb").read()
+    cols, rows = 32, 20  # the visible 240x160 part of the 32x32 screen
+    img = [[(0, 0, 0)] * (cols * 8 * scale) for _ in range(rows * 8 * scale)]
+    for ty in range(rows):
+        for tx in range(cols):
+            e = data[(ty * 32 + tx) * 2] | data[(ty * 32 + tx) * 2 + 1] << 8
+            tile, hf, vf, pal = e & 0x3FF, e >> 10 & 1, e >> 11 & 1, e >> 12
+            bank = (pal - 2) % 3  # battle BG palettes are loaded at BG palette 2
+            sx, sy = (tile % tiles_per_row) * 8, (tile // tiles_per_row) * 8
+            for y in range(8):
+                for x in range(8):
+                    py, px = sy + (7 - y if vf else y), sx + (7 - x if hf else x)
+                    c = colors[bank * 16 + idx[py][px]] if py < h else (0, 0, 0)
+                    for yy in range(scale):
+                        for xx in range(scale):
+                            img[(ty * 8 + y) * scale + yy][(tx * 8 + x) * scale + xx] = c
+    return img
+
+
+def preview(outdir):
+    """Writes battle_bg_<env>.png: the stock background above each era variant."""
+    from maprender import write_png
+    os.makedirs(outdir, exist_ok=True)
+    for envdir in ("tall_grass", "long_grass", "water", "sand", "cave"):
+        stock = read_pal(os.path.join(ROOT, "graphics/battle_environment", envdir, "palette.pal"))
+        panels = [render_battle_bg(envdir, stock)]
+        for transform in ERA_TRANSFORMS.values():
+            panels.append(render_battle_bg(envdir, transform_pal(stock, transform)))
+        img = [row for p in panels for row in p + [[(255, 255, 255)] * len(p[0])] * 2]
+        path = os.path.join(outdir, f"battle_bg_{envdir}.png")
+        write_png(path, len(img[0]), len(img), img)
+        print("wrote", path, "(stock, then", ", ".join(ERA_TRANSFORMS.values()) + ")")
+
+    # The tall-grass field effect (4 frames of 16x16) on its era palettes, at 4x.
+    from maprender import read_png
+    w, h, idx = read_png(os.path.join(ROOT, "graphics/field_effects/pics/tall_grass.png"))
+    stock = read_pal(os.path.join(ROOT, FIELD_EFFECT_PAL))
+    pals = [stock] + [transform_pal(stock, t) for t in ERA_TRANSFORMS.values()]
+    s, bg = 4, (96, 96, 96)
+    img = [[bg] * (w * s) for _ in range(h * len(pals) * s)]
+    for n, pal in enumerate(pals):
+        for y in range(h * s):
+            for x in range(w * s):
+                i = idx[y // s][x // s]
+                if i:
+                    img[n * h * s + y][x] = pal[i]
+    path = os.path.join(outdir, "tall_grass_overlay.png")
+    write_png(path, len(img[0]), len(img), img)
+    print("wrote", path)
+
+
 def main():
+    if len(sys.argv) == 3 and sys.argv[1] == "--preview":
+        sys.path.insert(0, os.path.dirname(__file__))
+        preview(sys.argv[2])
+        return
+    gen_era_art()
     header = [GENERATED, "// Strata era variants of stock tilesets: same tiles and metatiles, new palettes.", ""]
     for variant, (kind, base, base_suffix, transform) in VARIANTS.items():
         src = os.path.join(ROOT, "data/tilesets", kind, base, "palettes")
