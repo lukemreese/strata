@@ -9543,6 +9543,28 @@
       "border_filepath": "data/layouts/StrataSandArroyo/border.bin",
       "blockdata_filepath": "data/layouts/StrataSandArroyo/map.bin",
       "layout_version": "emerald"
+    },
+    {
+      "id": "LAYOUT_STRATA_FERN_GLADE",
+      "name": "StrataFernGlade_Layout",
+      "width": 22,
+      "height": 20,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Fortree",
+      "border_filepath": "data/layouts/StrataFernGlade/border.bin",
+      "blockdata_filepath": "data/layouts/StrataFernGlade/map.bin",
+      "layout_version": "emerald"
+    },
+    {
+      "id": "LAYOUT_STRATA_BURROW",
+      "name": "StrataBurrow_Layout",
+      "width": 17,
+      "height": 15,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Cave",
+      "border_filepath": "data/layouts/StrataBurrow/border.bin",
+      "blockdata_filepath": "data/layouts/StrataBurrow/map.bin",
+      "layout_version": "emerald"
     }
   ]
 }

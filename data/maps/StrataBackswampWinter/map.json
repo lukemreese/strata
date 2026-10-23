@@ -25,6 +25,96 @@
   "coord_events": [
     {
       "type": "trigger",
+      "x": 13,
+      "y": 13,
+      "elevation": 3,
+      "var": "VAR_STRATA_STORY",
+      "var_value": "4",
+      "script": "StrataBackswampWinter_EventScript_Gauntlet"
+    },
+    {
+      "type": "trigger",
+      "x": 14,
+      "y": 13,
+      "elevation": 3,
+      "var": "VAR_STRATA_STORY",
+      "var_value": "4",
+      "script": "StrataBackswampWinter_EventScript_Gauntlet"
+    },
+    {
+      "type": "trigger",
+      "x": 15,
+      "y": 13,
+      "elevation": 3,
+      "var": "VAR_STRATA_STORY",
+      "var_value": "4",
+      "script": "StrataBackswampWinter_EventScript_Gauntlet"
+    },
+    {
+      "type": "trigger",
+      "x": 16,
+      "y": 13,
+      "elevation": 3,
+      "var": "VAR_STRATA_STORY",
+      "var_value": "4",
+      "script": "StrataBackswampWinter_EventScript_Gauntlet"
+    },
+    {
+      "type": "trigger",
+      "x": 17,
+      "y": 13,
+      "elevation": 0,
+      "var": "VAR_STRATA_STORY",
+      "var_value": "4",
+      "script": "StrataBackswampWinter_EventScript_Gauntlet"
+    },
+    {
+      "type": "trigger",
+      "x": 18,
+      "y": 13,
+      "elevation": 3,
+      "var": "VAR_STRATA_STORY",
+      "var_value": "4",
+      "script": "StrataBackswampWinter_EventScript_Gauntlet"
+    },
+    {
+      "type": "trigger",
+      "x": 19,
+      "y": 13,
+      "elevation": 3,
+      "var": "VAR_STRATA_STORY",
+      "var_value": "4",
+      "script": "StrataBackswampWinter_EventScript_Gauntlet"
+    },
+    {
+      "type": "trigger",
+      "x": 20,
+      "y": 13,
+      "elevation": 3,
+      "var": "VAR_STRATA_STORY",
+      "var_value": "4",
+      "script": "StrataBackswampWinter_EventScript_Gauntlet"
+    },
+    {
+      "type": "trigger",
+      "x": 21,
+      "y": 13,
+      "elevation": 3,
+      "var": "VAR_STRATA_STORY",
+      "var_value": "4",
+      "script": "StrataBackswampWinter_EventScript_Gauntlet"
+    },
+    {
+      "type": "trigger",
+      "x": 22,
+      "y": 13,
+      "elevation": 3,
+      "var": "VAR_STRATA_STORY",
+      "var_value": "4",
+      "script": "StrataBackswampWinter_EventScript_Gauntlet"
+    },
+    {
+      "type": "trigger",
       "x": 23,
       "y": 13,
       "elevation": 3,
@@ -160,6 +250,22 @@
     }
   ],
   "bg_events": [
+    {
+      "type": "sign",
+      "x": 30,
+      "y": 11,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
+      "script": "StrataBackswampWinter_EventScript_NoteFernSpike"
+    },
+    {
+      "type": "sign",
+      "x": 22,
+      "y": 14,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
+      "script": "StrataBackswampWinter_EventScript_NoteThin"
+    },
     {
       "type": "hidden_item",
       "x": 5,

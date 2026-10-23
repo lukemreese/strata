@@ -38,6 +38,14 @@
       "script": "StrataRiverWinter_EventScript_Bluff"
     },
     {
+      "type": "sign",
+      "x": 30,
+      "y": 18,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
+      "script": "StrataRiverWinter_EventScript_NoteFreshwater"
+    },
+    {
       "type": "hidden_item",
       "x": 27,
       "y": 15,

@@ -14,10 +14,19 @@
 #define FLAG_STRATA_ACT1_BASE 0x264
 #define VAR_STRATA_ACT1 0x40F7
 
+// The Acheroraptor pair in the Fern Glade have been dealt with (their objects hide).
+#define FLAG_STRATA_A1_RAPTORS_GONE (FLAG_STRATA_ACT1_BASE + 0)
+// The tyrannosaur on the River Channel bluff is gone (the act is done: it limped off, or you left).
+#define FLAG_STRATA_A1_TYRANT_GONE  (FLAG_STRATA_ACT1_BASE + 1)
+// VAR_STRATA_ACT1: 0 = the Fern Glade ambush has not happened yet, 1 = it has.
+
 
 // ---- Act 2: impact winter ----------------------------------------
 #define FLAG_STRATA_ACT2_BASE 0x26C
 #define VAR_STRATA_ACT2 0x40F8
+
+// The first visit to the Burrow Refuge has been shown (one-time text).
+#define FLAG_STRATA_A2_BURROW_SEEN (FLAG_STRATA_ACT2_BASE + 0)
 
 
 // ---- Act 3: Corral Bluffs ----------------------------------------

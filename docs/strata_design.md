@@ -76,10 +76,12 @@ largest extinction in the epilogue is the one humans were present for.
 | Sand Arroyo | present | Route 111 desert rows 74–100 (joins the badlands) | BLM land: the poached pit, a broken jacket, spoil and tire tracks |
 | Lindqvist Ranch | present | Route 117 | Bea; Kessler and a crew hand (until Act 1 is done); the Pair under a tarp (`FLAG_STRATA_SAW_PAIR`) |
 | Jordan | present | Fallarbor Town (tent and Pokémon Center removed) | General store (Mart), café (House 2, heals), BLM field office (Lanette's house; Ranger Ortiz gives the permit after Act 2); the highway west leads to the prairie in the epilogue |
-| Levee Forest | 66.04 Ma | Route 119 south | Arrival point; south edge returns to camp |
-| River Channel | 66.04 Ma | Route 119 middle | Tyrannosaur boss on the bluff |
-| Backswamp | 66.04 Ma | Route 120 marsh | Gar, champsosaurs, crocodylians |
-| Ashen Levee / River / Swamp | 66.04 Ma + ~1 yr | Same layouts, `*_winter` palettes | Impact winter: survivors only; survival gauntlet in the swamp |
+| Levee Forest | 66.04 Ma | Route 119 south | Arrival point; south edge returns to camp; east side opens into the Fern Glade; 3 field notes; *Avisaurus* at the forest edge |
+| River Channel | 66.04 Ma | Route 119 middle | The tyrannosaur waits on the bluff (survival set piece); the ejecta streaks end the act and the rig pulls you out |
+| Backswamp | 66.04 Ma | Route 120 marsh | Gar, champsosaurs, crocodylians, *Emarginachelys*; field notes on the detritus food web |
+| Fern Glade | 66.04 Ma | Route 120 open grassland (east of the cliff) | Open habitat east of the Levee: Edmontosaurus herd, *Avisaurus*, the *Acheroraptor* pair ambush (wild double Lv 8/8, once); notes on perching vs ground birds |
+| Ashen Levee / River / Swamp | 66.04 Ma + ~1 yr | Same layouts, `*_winter` palettes | Impact winter: survivors only; survival gauntlet in the swamp (the trigger line spans the swamp's whole width) |
+| Burrow Refuge | 66.04 Ma + ~1 yr | Island Cave, top chamber | Mouth is a rock mound in the Ashen Levee; *Mesodma*/*Cimolestes*; seed cache (browse item balls), notes on burrowers |
 | Palm Forest | ~65.7–65.4 Ma | Petalburg Woods | Act 3; *Eoconodon* boss (Lv 22) on the north path |
 | Red Beds | ~56 Ma | Route 114 north, `*_petm` palettes, drought | Act 4; *Coryphodon* boss (Lv 28) on the land bridge |
 | Lake Gosiute shore | ~50 Ma | Route 104 | Act 5; *Uintatherium* boss (Lv 34) across the south shore |
@@ -212,8 +214,8 @@ only:
 
 | Boss | Lv | Boost |
 |---|---|---|
-| Act 1 *Tyrannosaurus* | 12 | +1 Atk |
-| Act 2 gauntlet, all three foes | 13 / 14 / 16 | smart AI; the last foe (old *Borealosuch*) also +1 Atk |
+| Act 1 *Tyrannosaurus* | 14 | +1 Atk |
+| Act 2 gauntlet, all three foes | 14 / 15 / 17 | smart AI; the last foe (old *Borealosuch*) also +1 Atk |
 | Act 3 *Eoconodon* | 22 | +1 Atk |
 | Act 4 *Coryphodon* | 28 | +1 Def |
 | Act 5 *Uintatherium* | 34 | +1 Atk |
@@ -282,9 +284,11 @@ party and the PC boxes.
   | Field Camp, Field Station | none (grass decides) | real clock |
   | Badlands | open | real clock |
   | Levee Forest, Backswamp (Act 1) | forest | day |
+  | Fern Glade (Act 1) | open | day |
   | River Channel (Act 1) | water | day |
   | Ashen Levee (Act 2) | open (dead forest) | dark |
   | Ashen River, Ashen Swamp (Act 2) | water | dark |
+  | Burrow Refuge (Act 2) | none | none (never tinted) |
   | Corral Bluffs palm forest (Act 3) | forest | day |
   | Bighorn red beds (Act 4) | open | day |
   | Lake Gosiute forest (Act 5) | forest | day |

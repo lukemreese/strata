@@ -18,6 +18,11 @@
       "map": "MAP_STRATA_RIVER",
       "offset": 0,
       "direction": "up"
+    },
+    {
+      "map": "MAP_STRATA_FERN_GLADE",
+      "offset": 12,
+      "direction": "right"
     }
   ],
   "object_events": [],
@@ -52,6 +57,30 @@
     }
   ],
   "bg_events": [
+    {
+      "type": "sign",
+      "x": 21,
+      "y": 25,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
+      "script": "StrataLevee_EventScript_NoteFlora"
+    },
+    {
+      "type": "sign",
+      "x": 12,
+      "y": 20,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
+      "script": "StrataLevee_EventScript_NoteTriceratops"
+    },
+    {
+      "type": "sign",
+      "x": 30,
+      "y": 13,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
+      "script": "StrataLevee_EventScript_NoteSmall"
+    },
     {
       "type": "hidden_item",
       "x": 6,

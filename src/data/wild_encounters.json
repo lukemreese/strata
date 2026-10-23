@@ -36610,9 +36610,9 @@
                 "species": "SPECIES_MESODMA"
               },
               {
-                "min_level": 4,
-                "max_level": 6,
-                "species": "SPECIES_DIDELPHODON"
+                "min_level": 5,
+                "max_level": 7,
+                "species": "SPECIES_AVISAURUS"
               },
               {
                 "min_level": 4,
@@ -36850,7 +36850,7 @@
               {
                 "min_level": 6,
                 "max_level": 8,
-                "species": "SPECIES_CHAMPSOSAUR"
+                "species": "SPECIES_EMARGINACHEL"
               },
               {
                 "min_level": 7,
@@ -36915,7 +36915,7 @@
               {
                 "min_level": 7,
                 "max_level": 10,
-                "species": "SPECIES_LEPISOSTEUS"
+                "species": "SPECIES_EMARGINACHEL"
               },
               {
                 "min_level": 8,
@@ -36981,6 +36981,75 @@
                 "min_level": 9,
                 "max_level": 11,
                 "species": "SPECIES_BOREALOSUCH"
+              }
+            ]
+          }
+        },
+        {
+          "map": "MAP_STRATA_FERN_GLADE",
+          "base_label": "gStrataFernGlade",
+          "land_mons": {
+            "encounter_rate": 20,
+            "mons": [
+              {
+                "min_level": 5,
+                "max_level": 6,
+                "species": "SPECIES_THESCELOSAUR"
+              },
+              {
+                "min_level": 5,
+                "max_level": 7,
+                "species": "SPECIES_EDMONTOSAUR"
+              },
+              {
+                "min_level": 5,
+                "max_level": 6,
+                "species": "SPECIES_MESODMA"
+              },
+              {
+                "min_level": 6,
+                "max_level": 7,
+                "species": "SPECIES_EDMONTOSAUR"
+              },
+              {
+                "min_level": 6,
+                "max_level": 7,
+                "species": "SPECIES_THESCELOSAUR"
+              },
+              {
+                "min_level": 6,
+                "max_level": 8,
+                "species": "SPECIES_AVISAURUS"
+              },
+              {
+                "min_level": 6,
+                "max_level": 8,
+                "species": "SPECIES_PACHYCEPHALO"
+              },
+              {
+                "min_level": 7,
+                "max_level": 8,
+                "species": "SPECIES_EDMONTOSAUR"
+              },
+              {
+                "min_level": 7,
+                "max_level": 8,
+                "species": "SPECIES_ANZU"
+              },
+              {
+                "min_level": 7,
+                "max_level": 9,
+                "species": "SPECIES_AVISAURUS"
+              },
+              {
+                "min_level": 7,
+                "max_level": 9,
+                "species": "SPECIES_ACHERORAPTOR"
+              },
+              {
+                "min_level": 8,
+                "max_level": 9,
+                "species": "SPECIES_TRICERATOPS"
               }
             ]
           }
@@ -37388,6 +37457,75 @@
                 "min_level": 14,
                 "max_level": 16,
                 "species": "SPECIES_BOREALOSUCH"
+              }
+            ]
+          }
+        },
+        {
+          "map": "MAP_STRATA_BURROW",
+          "base_label": "gStrataBurrow",
+          "land_mons": {
+            "encounter_rate": 20,
+            "mons": [
+              {
+                "min_level": 10,
+                "max_level": 11,
+                "species": "SPECIES_MESODMA"
+              },
+              {
+                "min_level": 10,
+                "max_level": 12,
+                "species": "SPECIES_MESODMA"
+              },
+              {
+                "min_level": 10,
+                "max_level": 12,
+                "species": "SPECIES_CIMOLESTES"
+              },
+              {
+                "min_level": 11,
+                "max_level": 12,
+                "species": "SPECIES_MESODMA"
+              },
+              {
+                "min_level": 11,
+                "max_level": 12,
+                "species": "SPECIES_CIMOLESTES"
+              },
+              {
+                "min_level": 11,
+                "max_level": 13,
+                "species": "SPECIES_MESODMA"
+              },
+              {
+                "min_level": 11,
+                "max_level": 13,
+                "species": "SPECIES_CIMOLESTES"
+              },
+              {
+                "min_level": 12,
+                "max_level": 13,
+                "species": "SPECIES_MESODMA"
+              },
+              {
+                "min_level": 12,
+                "max_level": 13,
+                "species": "SPECIES_CIMOLESTES"
+              },
+              {
+                "min_level": 12,
+                "max_level": 13,
+                "species": "SPECIES_MESODMA"
+              },
+              {
+                "min_level": 12,
+                "max_level": 13,
+                "species": "SPECIES_CIMOLESTES"
+              },
+              {
+                "min_level": 13,
+                "max_level": 13,
+                "species": "SPECIES_CIMOLESTES"
               }
             ]
           }

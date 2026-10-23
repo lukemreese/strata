@@ -33,7 +33,10 @@ static const u8 *const sMentorLines[STORY_IN_ACT(ERA_EPILOGUE) + 1] =
         "Creek layer, 66.04 million years ago."),
     [STORY_IN_ACT(ERA_HELL_CREEK)] = COMPOUND_STRING(
         "You saw tyrannosaur tracks by the\n"
-        "river? Be careful up on that bluff."),
+        "river? Be careful up on that bluff.\p"
+        "In this layer a mammal is a snack.\n"
+        "Out there, surviving counts as\l"
+        "winning."),
     [STORY_ACT_DONE(ERA_HELL_CREEK)] = COMPOUND_STRING(
         "You stood your ground against a\n"
         "TYRANNOSAURUS! Remarkable.\p"
@@ -46,7 +49,10 @@ static const u8 *const sMentorLines[STORY_IN_ACT(ERA_EPILOGUE) + 1] =
         "Crocodiles and champsosaurs are cold-\n"
         "blooded. They can go months without\l"
         "a meal. That's part of why they\l"
-        "made it."),
+        "made it.\p"
+        "This layer is about who's left, not\n"
+        "who changes. Nothing new evolves\l"
+        "in a year; the filter just runs."),
     [STORY_ACT_DONE(ERA_IMPACT_WINTER)] = COMPOUND_STRING(
         "Ferns! The fern spike: the first\n"
         "plants back after a disaster.\p"

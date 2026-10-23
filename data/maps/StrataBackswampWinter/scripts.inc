@@ -11,20 +11,20 @@ StrataBackswampWinter_EventScript_Gauntlet::
 	playmoncry SPECIES_CHAMPSOSAUR, CRY_MODE_ENCOUNTER
 	waitmoncry
 	strata_boss_prep
-	setwildbattle SPECIES_CHAMPSOSAUR, 13
+	setwildbattle SPECIES_CHAMPSOSAUR, 14
 	dowildbattle
 	call StrataBackswampWinter_EventScript_CheckFled
 	msgbox StrataBackswampWinter_Text_SecondSurvivor, MSGBOX_DEFAULT
 	playmoncry SPECIES_BOREALOSUCH, CRY_MODE_ENCOUNTER
 	waitmoncry
-	setwildbattle SPECIES_BOREALOSUCH, 14
+	setwildbattle SPECIES_BOREALOSUCH, 15
 	dowildbattle
 	call StrataBackswampWinter_EventScript_CheckFled
 	msgbox StrataBackswampWinter_Text_OldCroc, MSGBOX_DEFAULT
 	playmoncry SPECIES_BOREALOSUCH, CRY_MODE_ENCOUNTER
 	waitmoncry
 	strata_boss_prep atk=1
-	setwildbattle SPECIES_BOREALOSUCH, 16
+	setwildbattle SPECIES_BOREALOSUCH, 17
 	dowildbattle
 	call StrataBackswampWinter_EventScript_CheckFled
 	strata_boss_done
@@ -69,3 +69,28 @@ StrataBackswampWinter_Text_FernSpike:
 	.string "Ferns. The first plants to return.\n"
 	.string "Life is starting over.\p"
 	.string "Better tell DR. HALVORSEN.$"
+
+StrataBackswampWinter_EventScript_NoteFernSpike::
+	msgbox StrataBackswampWinter_Text_NoteFernSpike, MSGBOX_SIGN
+	end
+
+StrataBackswampWinter_EventScript_NoteThin::
+	msgbox StrataBackswampWinter_Text_NoteThin, MSGBOX_SIGN
+	end
+
+StrataBackswampWinter_Text_NoteFernSpike:
+	.string "FIELD NOTE: The fern spike\p"
+	.string "Just above the boundary clay, fern\n"
+	.string "spores jump to dominate the pollen\l"
+	.string "record. Then flowering plants\l"
+	.string "return.\p"
+	.string "Ferns are fast pioneers of bare,\n"
+	.string "burned ground.$"
+
+StrataBackswampWinter_Text_NoteThin:
+	.string "FIELD NOTE: A thin layer\p"
+	.string "The boundary clay is only\n"
+	.string "centimetres thick. The rig has\l"
+	.string "little to build on here, so this\l"
+	.string "reconstruction is sparse and partly\l"
+	.string "inferred.$"

@@ -1706,6 +1706,14 @@
     {
       "id": "MAPSEC_STRATA_SAND_ARROYO",
       "name": "SAND ARROYO"
+    },
+    {
+      "id": "MAPSEC_STRATA_FERN_GLADE",
+      "name": "FERN GLADE"
+    },
+    {
+      "id": "MAPSEC_STRATA_BURROW",
+      "name": "BURROW REFUGE"
     }
   ]
 }

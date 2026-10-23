@@ -49,13 +49,56 @@
       "var": "VAR_TEMP_1",
       "var_value": "0",
       "script": "StrataLevee_EventScript_ReconstructionEdge"
+    },
+    {
+      "type": "trigger",
+      "x": 5,
+      "y": 22,
+      "elevation": 3,
+      "var": "VAR_TEMP_1",
+      "var_value": "0",
+      "script": "StrataLeveeWinter_EventScript_BurrowMouth"
+    },
+    {
+      "type": "trigger",
+      "x": 6,
+      "y": 22,
+      "elevation": 3,
+      "var": "VAR_TEMP_1",
+      "var_value": "0",
+      "script": "StrataLeveeWinter_EventScript_BurrowMouth"
+    },
+    {
+      "type": "trigger",
+      "x": 7,
+      "y": 22,
+      "elevation": 3,
+      "var": "VAR_TEMP_1",
+      "var_value": "0",
+      "script": "StrataLeveeWinter_EventScript_BurrowMouth"
     }
   ],
   "bg_events": [
     {
+      "type": "sign",
+      "x": 21,
+      "y": 25,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
+      "script": "StrataLeveeWinter_EventScript_NoteDark"
+    },
+    {
+      "type": "sign",
+      "x": 13,
+      "y": 24,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
+      "script": "StrataLeveeWinter_EventScript_NoteBurrows"
+    },
+    {
       "type": "hidden_item",
       "x": 6,
-      "y": 20,
+      "y": 25,
       "elevation": 0,
       "item": "ITEM_CARRION",
       "flag": "FLAG_TEMP_11",
