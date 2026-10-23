@@ -50,12 +50,12 @@ static const u8 *const sMentorLines[STORY_IN_ACT(ERA_EPILOGUE) + 1] =
     [STORY_ACT_DONE(ERA_IMPACT_WINTER)] = COMPOUND_STRING(
         "Ferns! The fern spike: the first\n"
         "plants back after a disaster.\p"
-        "The next good layer is 300,000\n"
-        "years on, at CORRAL BLUFFS in\l"
-        "Colorado. The rig is ready."),
+        "The next good layer is under a\n"
+        "million years on, at CORRAL BLUFFS\l"
+        "in Colorado. The rig is ready."),
     [STORY_IN_ACT(ERA_CORRAL_BLUFFS)] = COMPOUND_STRING(
-        "In 300,000 years the biggest mammals\n"
-        "tripled in size.\p"
+        "In under a million years the\n"
+        "biggest mammals tripled in size.\p"
         "Palms first, then legumes, then\n"
         "bigger plant eaters, then the\l"
         "predators that hunt them."),

@@ -1,4 +1,4 @@
-@ Act 3: Corral Bluffs, Denver Basin, Colorado, ~65.7 Ma.
+@ Act 3: Corral Bluffs, Denver Basin, Colorado, ~65.7-65.4 Ma.
 StrataPalmForest_MapScripts::
 	.byte 0
 
@@ -27,8 +27,8 @@ StrataPalmForest_Text_EoconodonAppears:
 	.string "Under the palms, something big is\n"
 	.string "gnawing a carcass.\p"
 	.string "An EOCONODON! A predator as big as\n"
-	.string "a wolf, 300,000 years after there\l"
-	.string "were none at all.$"
+	.string "a wolf, less than a million years\l"
+	.string "after there were none at all.$"
 
 StrataPalmForest_Text_EoconodonDone:
 	.string "The EOCONODON slinks off into the\n"
