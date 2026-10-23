@@ -1716,16 +1716,16 @@
       "name": "BURROW REFUGE"
     },
     {
-      "id": "MAPSEC_STRATA_GALLERY_FOREST",
-      "name": "GALLERY FOREST"
+      "id": "MAPSEC_STRATA_MELTWATER",
+      "name": "MELTWATER RIVER"
     },
     {
-      "id": "MAPSEC_STRATA_BADLANDS_WALL",
-      "name": "BADLANDS WALL"
+      "id": "MAPSEC_STRATA_ICE_MARGIN",
+      "name": "ICE MARGIN"
     },
     {
-      "id": "MAPSEC_STRATA_TOADSTOOL",
-      "name": "TOADSTOOL TRACKWAYS"
+      "id": "MAPSEC_STRATA_COLBY",
+      "name": "COLBY SITE"
     },
     {
       "id": "MAPSEC_STRATA_LEGUME_THICKET",
@@ -1766,6 +1766,18 @@
     {
       "id": "MAPSEC_STRATA_OIL_SHALE",
       "name": "OIL-SHALE CLIFFS"
+    },
+    {
+      "id": "MAPSEC_STRATA_GALLERY_FOREST",
+      "name": "GALLERY FOREST"
+    },
+    {
+      "id": "MAPSEC_STRATA_BADLANDS_WALL",
+      "name": "BADLANDS WALL"
+    },
+    {
+      "id": "MAPSEC_STRATA_TOADSTOOL",
+      "name": "TOADSTOOL TRACKS"
     }
   ]
 }
