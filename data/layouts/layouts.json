@@ -9510,6 +9510,39 @@
       "border_filepath": "data/layouts/StrataFieldStation/border.bin",
       "blockdata_filepath": "data/layouts/StrataFieldStation/map.bin",
       "layout_version": "emerald"
+    },
+    {
+      "id": "LAYOUT_STRATA_JORDAN",
+      "name": "StrataJordan_Layout",
+      "width": 20,
+      "height": 20,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Fallarbor",
+      "border_filepath": "data/layouts/StrataJordan/border.bin",
+      "blockdata_filepath": "data/layouts/StrataJordan/map.bin",
+      "layout_version": "emerald"
+    },
+    {
+      "id": "LAYOUT_STRATA_LINDQVIST_RANCH",
+      "name": "StrataLindqvistRanch_Layout",
+      "width": 60,
+      "height": 20,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Mauville",
+      "border_filepath": "data/layouts/StrataLindqvistRanch/border.bin",
+      "blockdata_filepath": "data/layouts/StrataLindqvistRanch/map.bin",
+      "layout_version": "emerald"
+    },
+    {
+      "id": "LAYOUT_STRATA_SAND_ARROYO",
+      "name": "StrataSandArroyo_Layout",
+      "width": 40,
+      "height": 27,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Mauville",
+      "border_filepath": "data/layouts/StrataSandArroyo/border.bin",
+      "blockdata_filepath": "data/layouts/StrataSandArroyo/map.bin",
+      "layout_version": "emerald"
     }
   ]
 }

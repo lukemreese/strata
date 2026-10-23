@@ -207,7 +207,11 @@ StrataFieldStation_Text_Codex:
 	.string "Your FIELD CODEX will log every\n"
 	.string "species you meet.\p"
 	.string "When you're ready, use the rig to\n"
-	.string "enter the Hell Creek layer.$"
+	.string "enter the Hell Creek layer.\p"
+	.string "But first, find DALE at the outcrop\n"
+	.string "in the badlands, south of camp.\p"
+	.string "He'll show you where your partner\n"
+	.string "came out of the rock.$"
 
 StrataFieldStation_Text_Rest:
 	.string "DR. HALVORSEN: Let's patch up your\n"
@@ -342,6 +346,28 @@ StrataFieldStation_EventScript_RelearnerBye::
 	msgbox StrataFieldStation_Text_RelearnerBye, MSGBOX_DEFAULT
 	releaseall
 	end
+
+@ The rig's in-fiction rules (outline §1.2), pinned over the back desk.
+StrataFieldStation_EventScript_RigRules::
+	msgbox StrataFieldStation_Text_RigRules, MSGBOX_SIGN
+	end
+
+StrataFieldStation_Text_RigRules:
+	.string "STRATA RIG: OPERATING RULES\n"
+	.string "(pinned up in DR. HALVORSEN's hand)\p"
+	.string "1. It's a model, not a time machine.\n"
+	.string "It only loads where the record is\l"
+	.string "rich.\p"
+	.string "2. It runs forward only, each layer\n"
+	.string "built on the one below.\p"
+	.string "3. It must match the record. What\n"
+	.string "the rock says died out, dies out.\p"
+	.string "4. Where the record is silent, your\n"
+	.string "choices steer the run.\p"
+	.string "5. Colors, calls and behavior are\n"
+	.string "best guesses.\p"
+	.string "6. People appear only as traces:\n"
+	.string "tools, cut marks. Never as people.$"
 
 StrataFieldStation_Text_BootUpPC:
 	.string "The specimen database wakes up.\n"

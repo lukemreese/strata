@@ -1305,14 +1305,14 @@
 #define FLAG_UNUSED_0x4E3                                           0x4E3 // Unused Flag
 #define FLAG_UNUSED_0x4E4                                           0x4E4 // Unused Flag
 #define FLAG_UNUSED_0x4E5                                           0x4E5 // Unused Flag
-#define FLAG_UNUSED_0x4E6                                           0x4E6 // Unused Flag
-#define FLAG_UNUSED_0x4E7                                           0x4E7 // Unused Flag
-#define FLAG_UNUSED_0x4E8                                           0x4E8 // Unused Flag
-#define FLAG_UNUSED_0x4E9                                           0x4E9 // Unused Flag
-#define FLAG_UNUSED_0x4EA                                           0x4EA // Unused Flag
-#define FLAG_UNUSED_0x4EB                                           0x4EB // Unused Flag
-#define FLAG_UNUSED_0x4EC                                           0x4EC // Unused Flag
-#define FLAG_UNUSED_0x4ED                                           0x4ED // Unused Flag
+#define FLAG_STRATA_DIG_STARTED                                     0x4E6 // Act 0: Dale sent the player to the three survey stakes
+#define FLAG_STRATA_DIG_JAW                                         0x4E7 // Act 0 tutorial dig: the mammal jaw site is logged
+#define FLAG_STRATA_DIG_BIRD                                        0x4E8 // Act 0 tutorial dig: the ground bird site is logged
+#define FLAG_STRATA_DIG_SHELL                                       0x4E9 // Act 0 tutorial dig: the turtle shell site is logged
+#define FLAG_STRATA_DIG_DONE                                        0x4EA // Act 0 tutorial dig finished (Dale's reward given)
+#define FLAG_STRATA_BLM_PERMIT                                      0x4EB // Ranger Ortiz's collecting permit: opens Sand Arroyo
+#define FLAG_STRATA_SAW_PAIR                                        0x4EC // The player has looked under the tarp at the Pair (Lindqvist Ranch)
+#define FLAG_STRATA_MET_KESSLER                                     0x4ED // The player has spoken to Wade Kessler
 #define FLAG_STRATA_EXP_SHARE                                       0x4EE // Exp. Share for the whole party, set in the intro (I_EXP_SHARE_FLAG)
 #define FLAG_STRATA_TREX_FLED                                       0x4EF // Act 1: the player ran from the Tyrannosaurus (picks Dr. Halvorsen's line)
 

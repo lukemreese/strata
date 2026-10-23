@@ -1,0 +1,116 @@
+{
+  "id": "MAP_STRATA_LINDQVIST_RANCH",
+  "name": "StrataLindqvistRanch",
+  "layout": "LAYOUT_STRATA_LINDQVIST_RANCH",
+  "music": "MUS_ROUTE110",
+  "region": "REGION_HOENN",
+  "region_map_section": "MAPSEC_STRATA_LINDQVIST_RANCH",
+  "requires_flash": false,
+  "weather": "WEATHER_SUNNY",
+  "map_type": "MAP_TYPE_ROUTE",
+  "allow_cycling": true,
+  "allow_escaping": false,
+  "allow_running": true,
+  "show_map_name": true,
+  "battle_scene": "MAP_BATTLE_SCENE_NORMAL",
+  "connections": [
+    {
+      "map": "MAP_STRATA_JORDAN",
+      "offset": 0,
+      "direction": "left"
+    },
+    {
+      "map": "MAP_STRATA_FIELD_CAMP",
+      "offset": 1,
+      "direction": "right"
+    }
+  ],
+  "object_events": [
+    {
+      "local_id": "LOCALID_STRATA_RANCH_BEA",
+      "graphics_id": "OBJ_EVENT_GFX_EXPERT_F",
+      "x": 46,
+      "y": 7,
+      "elevation": 3,
+      "movement_type": "MOVEMENT_TYPE_FACE_RIGHT",
+      "movement_range_x": 1,
+      "movement_range_y": 1,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "StrataLindqvistRanch_EventScript_Bea",
+      "flag": "0"
+    },
+    {
+      "local_id": "LOCALID_STRATA_RANCH_KESSLER",
+      "graphics_id": "OBJ_EVENT_GFX_GENTLEMAN",
+      "x": 47,
+      "y": 7,
+      "elevation": 3,
+      "movement_type": "MOVEMENT_TYPE_FACE_LEFT",
+      "movement_range_x": 1,
+      "movement_range_y": 1,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "StrataLindqvistRanch_EventScript_Kessler",
+      "flag": "FLAG_TEMP_1F"
+    },
+    {
+      "local_id": "LOCALID_STRATA_RANCH_HAND",
+      "graphics_id": "OBJ_EVENT_GFX_MANIAC",
+      "x": 55,
+      "y": 8,
+      "elevation": 3,
+      "movement_type": "MOVEMENT_TYPE_LOOK_AROUND",
+      "movement_range_x": 1,
+      "movement_range_y": 1,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "StrataLindqvistRanch_EventScript_KesslerHand",
+      "flag": "FLAG_TEMP_1F"
+    }
+  ],
+  "warp_events": [],
+  "coord_events": [],
+  "bg_events": [
+    {
+      "type": "sign",
+      "x": 49,
+      "y": 5,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
+      "script": "StrataLindqvistRanch_EventScript_RanchSign"
+    },
+    {
+      "type": "sign",
+      "x": 51,
+      "y": 5,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_NORTH",
+      "script": "StrataLindqvistRanch_EventScript_HouseDoor"
+    },
+    {
+      "type": "sign",
+      "x": 16,
+      "y": 6,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
+      "script": "StrataLindqvistRanch_EventScript_SplitEstateNote"
+    },
+    {
+      "type": "sign",
+      "x": 49,
+      "y": 12,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
+      "script": "StrataLindqvistRanch_EventScript_DroughtNote"
+    },
+    {
+      "type": "sign",
+      "x": 42,
+      "y": 13,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_NORTH",
+      "script": "StrataLindqvistRanch_EventScript_Tarp"
+    }
+  ]
+}

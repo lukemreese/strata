@@ -70,9 +70,12 @@ largest extinction in the epilogue is the one humans were present for.
 
 | Map | Era | Layout source (placeholder) | Notes |
 |---|---|---|---|
-| Hell Creek Camp | present | Route 111 north | Hub; field station door at (26, 18) |
-| Field Station | present | Birch's lab | STRATA rig at (10–11, 7); mentor Dr. Halvorsen; respawn point |
-| Hell Creek Badlands | present | Route 111 desert | K-Pg boundary clay; no encounters |
+| Hell Creek Camp | present | Route 111 north | Hub; field station door at (26, 18); Theo, Josie, Marge's store; ranch road west to the Lindqvist Ranch |
+| Field Station | present | Birch's lab | STRATA rig at (10–11, 7); mentor Dr. Halvorsen; respawn point; PC, cot, relearner Wren, rig-rules notes |
+| Hell Creek Badlands | present | Route 111 desert | K-Pg boundary clay; Dale's tutorial dig (3 survey stakes, `FLAG_STRATA_DIG_*`); BLM boundary on the south edge (needs `FLAG_STRATA_BLM_PERMIT`); no encounters |
+| Sand Arroyo | present | Route 111 desert rows 74–100 (joins the badlands) | BLM land: the poached pit, a broken jacket, spoil and tire tracks |
+| Lindqvist Ranch | present | Route 117 | Bea; Kessler and a crew hand (until Act 1 is done); the Pair under a tarp (`FLAG_STRATA_SAW_PAIR`) |
+| Jordan | present | Fallarbor Town (tent and Pokémon Center removed) | General store (Mart), café (House 2, heals), BLM field office (Lanette's house; Ranger Ortiz gives the permit after Act 2); the highway west leads to the prairie in the epilogue |
 | Levee Forest | 66.04 Ma | Route 119 south | Arrival point; south edge returns to camp |
 | River Channel | 66.04 Ma | Route 119 middle | Tyrannosaur boss on the bluff |
 | Backswamp | 66.04 Ma | Route 120 marsh | Gar, champsosaurs, crocodylians |
@@ -84,7 +87,7 @@ largest extinction in the epilogue is the one humans were present for.
 | Ashfall grassland | ~11.9 Ma | Route 113, volcanic ash | Act 7; *Teleoceras* bull (Lv 46) at the waterhole |
 | Ice Age Steppe | ~20 ka | Route 118, `*_ice_age` palettes, snow | Act 8; the sinkhole drops into the trap cave |
 | Natural Trap Cave | ~20 ka | Granite Cave 1F | Act 8; *Arctodus* boss (Lv 52); a rope climbs back out |
-| Montana Prairie | today | Route 102 | Epilogue; open once the present layer is loaded, via the camp's west road |
+| Montana Prairie | today | Route 102 | Epilogue; open once the present layer is loaded, via the highway west of Jordan |
 
 The present-day hub sits outside time: returning to camp does not change `VAR_STRATA_ERA`.
 The rig only moves up: once a layer is loaded, earlier layers are closed.

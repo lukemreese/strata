@@ -161,9 +161,9 @@ General rules for every act:
 | Hell Creek Camp | built | Route 111 north | Hub. Add: camp store (quartermaster NPC with a `pokemart` script), the visiting-researcher spot, Josie, Dale | "Lower is older"; the iridium layer |
 | Field Station | built | Birch's lab | Rig, Halvorsen. Add **PC** (bg on the desk), **Move Relearner** (the rig "re-derives" behaviours), Codex terminal | Rig rules R-a…R-i as wall posters |
 | Hell Creek Badlands | built | Route 111 desert | Tutorial dig (3 hidden "specimen" items before the starter choice), the K-Pg boundary sign | Boundary clay, iridium |
-| **Jordan** (town, NEW) | NEW | `FallarborTown` crop | General store, café (gossip about fossil prices), BLM field office (Ranger Ortiz) | "Fossils on private land belong to the landowner" ⚠ |
-| **Lindqvist Ranch** (NEW) | NEW | `Route117` (Day Care house = ranch house, fences) | Bea; fence line to Kessler's lease; the Pair's quarry under a tarp (story-gated) | Ranching vs drought; surface vs mineral rights ⚠ |
-| **Sand Arroyo, BLM land** (NEW) | NEW | `Route111` desert rows 74+ (joins the badlands seamlessly) | The poached pit (scattered plaster, a broken jacket). Evidence objects to photograph | Why context matters: an illegally dug bone loses its date |
+| **Jordan** (town, NEW) | built (C2) | `FallarborTown` crop | General store, café (gossip about fossil prices), BLM field office (Ranger Ortiz) | "Fossils on private land belong to the landowner" ⚠ |
+| **Lindqvist Ranch** (NEW) | built (C2) | `Route117` (Day Care house = ranch house, fences) | Bea; fence line to Kessler's lease; the Pair's quarry under a tarp (story-gated) | Ranching vs drought; surface vs mineral rights ⚠ |
+| **Sand Arroyo, BLM land** (NEW) | built (C2) | `Route111` desert rows 74+ (joins the badlands seamlessly) | The poached pit (scattered plaster, a broken jacket). Evidence objects to photograph | Why context matters: an illegally dug bone loses its date |
 
 No wild encounters in Act 0. Present-day wildlife appears only in the epilogue (§2.10).
 
@@ -768,7 +768,7 @@ Ordered by leverage ÷ risk. Tasks inside a milestone can run in parallel unless
 | ID | Task | Size | Deps | Track |
 |---|---|---|---|---|
 | C1 | Add the 17 species (roster part 3, borrow placeholders, dex text, `diet`, `focal`, `first_era`) + `first_era` test | M | R0, SCI checks for ⚠ entries | CON + SCI |
-| C2 | Act 0 hub: Jordan, Lindqvist Ranch, Sand Arroyo; cast NPCs; tutorial dig | L | R0, R9 | CON |
+| C2 | ✅ **Done.** Act 0 hub: Jordan (+ store, café, BLM office), Lindqvist Ranch, Sand Arroyo; cast NPCs; tutorial dig. Camp → ranch → Jordan by connections; Jordan's west highway now gates the epilogue prairie (was the camp's west road). The dig runs *after* the starter choice (Halvorsen sends you to Dale), so the new-game flow is unchanged. Hooks: `FLAG_STRATA_DIG_*`, `FLAG_STRATA_BLM_PERMIT` (Ortiz, after Act 2; opens the arroyo), `FLAG_STRATA_SAW_PAIR`, `FLAG_STRATA_MET_KESSLER`; Kessler at the ranch until Act 1 is done. Left for others: Theo's peer review #0 (C13), the truck arrival, Ortiz's evidence scene at the pit (S1) | L | R0, R9 | CON |
 | C3–C10 | Acts 1–8: new maps per §2, field notes, forage, set pieces, boss restaging. **One agent per act, 8 in parallel** | M each | R0, R3, R4, C1 (for acts using new species) | CON |
 | C11 | Act 7 pre-ash / ash map pairs (palette + warp swap after the boss) | M | C9, palettes (A1) | CON |
 | C12 | Epilogue maps + Interpretive Center + Hall of Lost Lineages | M | F4 | CON |

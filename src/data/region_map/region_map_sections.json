@@ -1694,6 +1694,18 @@
     {
       "id": "MAPSEC_STRATA_PRAIRIE",
       "name": "MONTANA PRAIRIE"
+    },
+    {
+      "id": "MAPSEC_STRATA_JORDAN",
+      "name": "JORDAN"
+    },
+    {
+      "id": "MAPSEC_STRATA_LINDQVIST_RANCH",
+      "name": "LINDQVIST RANCH"
+    },
+    {
+      "id": "MAPSEC_STRATA_SAND_ARROYO",
+      "name": "SAND ARROYO"
     }
   ]
 }
