@@ -10981,6 +10981,139 @@ const struct ItemInfo gItemsInfo[] =
         .iconPalette = gItemIconPalette_HeavyDutyBoots,
     },
 
+    // Strata forage: found in hidden spots that regrow on every visit (tools/strata/maps/
+    // common.py, forage()). Eaten from the bag on one party mon (ItemUseCB_StrataForage):
+    // heals holdEffectParam HP and adds FORAGE_PRESSURE of the secondaryId pressure.
+    // Price 0: can't be sold. Placeholder icons.
+    [ITEM_FERN_FROND] =
+    {
+        .name = ITEM_NAME("Fern Frond"),
+        .price = 0,
+        .holdEffectParam = 20,
+        .description = COMPOUND_STRING(
+            "A curled young\n"
+            "fern frond. Plant\n"
+            "food; heals 20 HP."),
+        .pocket = POCKET_ITEMS,
+        .sortType = ITEM_TYPE_HEALTH_RECOVERY,
+        .type = ITEM_USE_PARTY_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_StrataForage,
+        .secondaryId = PRESSURE_PLANT_DIET,
+        .iconPic = gItemIcon_RevivalHerb,
+        .iconPalette = gItemIconPalette_RevivalHerb,
+    },
+
+    [ITEM_PALM_FRUIT] =
+    {
+        .name = ITEM_NAME("Palm Fruit"),
+        .price = 0,
+        .holdEffectParam = 20,
+        .description = COMPOUND_STRING(
+            "A fibrous fruit of\n"
+            "a palm. Plant\n"
+            "food; heals 20 HP."),
+        .pocket = POCKET_ITEMS,
+        .sortType = ITEM_TYPE_HEALTH_RECOVERY,
+        .type = ITEM_USE_PARTY_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_StrataForage,
+        .secondaryId = PRESSURE_PLANT_DIET,
+        .iconPic = gItemIcon_TartApple,
+        .iconPalette = gItemIconPalette_TartApple,
+    },
+
+    [ITEM_LEGUME_POD] =
+    {
+        .name = ITEM_NAME("Legume Pod"),
+        .price = 0,
+        .holdEffectParam = 20,
+        .description = COMPOUND_STRING(
+            "A bean pod from a\n"
+            "legume tree. Plant\n"
+            "food; heals 20 HP."),
+        .pocket = POCKET_ITEMS,
+        .sortType = ITEM_TYPE_HEALTH_RECOVERY,
+        .type = ITEM_USE_PARTY_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_StrataForage,
+        .secondaryId = PRESSURE_PLANT_DIET,
+        .iconPic = gItemIcon_Leek,
+        .iconPalette = gItemIconPalette_Leek,
+    },
+
+    [ITEM_SEED_HEAD] =
+    {
+        .name = ITEM_NAME("Seed Head"),
+        .price = 0,
+        .holdEffectParam = 20,
+        .description = COMPOUND_STRING(
+            "Ripe grass seeds\n"
+            "on the stalk. Plant\n"
+            "food; heals 20 HP."),
+        .pocket = POCKET_ITEMS,
+        .sortType = ITEM_TYPE_HEALTH_RECOVERY,
+        .type = ITEM_USE_PARTY_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_StrataForage,
+        .secondaryId = PRESSURE_PLANT_DIET,
+        .iconPic = gItemIcon_MiracleSeed,
+        .iconPalette = gItemIconPalette_MiracleSeed,
+    },
+
+    [ITEM_BROWSE] =
+    {
+        .name = ITEM_NAME("Browse"),
+        .pluralName = ITEM_PLURAL_NAME("Browse"),
+        .price = 0,
+        .holdEffectParam = 20,
+        .description = COMPOUND_STRING(
+            "Leafy twigs and\n"
+            "shoots. Plant\n"
+            "food; heals 20 HP."),
+        .pocket = POCKET_ITEMS,
+        .sortType = ITEM_TYPE_HEALTH_RECOVERY,
+        .type = ITEM_USE_PARTY_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_StrataForage,
+        .secondaryId = PRESSURE_PLANT_DIET,
+        .iconPic = gItemIcon_GalaricaTwig,
+        .iconPalette = gItemIconPalette_GalaricaItem,
+    },
+
+    [ITEM_LARVAE] =
+    {
+        .name = ITEM_NAME("Larvae"),
+        .pluralName = ITEM_PLURAL_NAME("Larvae"),
+        .price = 0,
+        .holdEffectParam = 20,
+        .description = COMPOUND_STRING(
+            "Beetle grubs from\n"
+            "rotten wood. Animal\n"
+            "food; heals 20 HP."),
+        .pocket = POCKET_ITEMS,
+        .sortType = ITEM_TYPE_HEALTH_RECOVERY,
+        .type = ITEM_USE_PARTY_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_StrataForage,
+        .secondaryId = PRESSURE_MEAT_DIET,
+        .iconPic = gItemIcon_ShedShell,
+        .iconPalette = gItemIconPalette_ShedShell,
+    },
+
+    [ITEM_CARRION] =
+    {
+        .name = ITEM_NAME("Carrion"),
+        .pluralName = ITEM_PLURAL_NAME("Carrion"),
+        .price = 0,
+        .holdEffectParam = 20,
+        .description = COMPOUND_STRING(
+            "Scraps from a\n"
+            "carcass. Animal\n"
+            "food; heals 20 HP."),
+        .pocket = POCKET_ITEMS,
+        .sortType = ITEM_TYPE_HEALTH_RECOVERY,
+        .type = ITEM_USE_PARTY_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_StrataForage,
+        .secondaryId = PRESSURE_MEAT_DIET,
+        .iconPic = gItemIcon_Bone,
+        .iconPalette = gItemIconPalette_Bone,
+    },
+
     [ITEM_BLUNDER_POLICY] =
     {
         .name = ITEM_NAME("Blunder Policy"),

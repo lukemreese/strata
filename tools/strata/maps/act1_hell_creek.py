@@ -19,6 +19,7 @@ MAPS = [
     # ------------------------------------------------------------------
     dict(
         id="MAP_STRATA_LEVEE", name="StrataLevee", era="ERA_HELL_CREEK",
+        habitat="forest", light="day", forage=[forage(6, 20, "FERN_FROND"), forage(34, 12, "LARVAE"), forage(28, 4, "PALM_FRUIT")],
         crop=LEVEE_CROP, patches=LEVEE_PATCHES,
         music="MUS_ROUTE119", map_type="MAP_TYPE_ROUTE",
         mapsec="MAPSEC_STRATA_LEVEE",
@@ -34,6 +35,7 @@ MAPS = [
     ),
     dict(
         id="MAP_STRATA_RIVER", name="StrataRiver", era="ERA_HELL_CREEK",
+        habitat="water", light="day", forage=[forage(27, 15, "CARRION"), forage(34, 19, "FERN_FROND")],
         crop=RIVER_CROP, patches=RIVER_PATCHES, swap=RIVER_SWAP,
         music="MUS_ROUTE119", map_type="MAP_TYPE_ROUTE",
         mapsec="MAPSEC_STRATA_RIVER",
@@ -59,6 +61,7 @@ MAPS = [
     ),
     dict(
         id="MAP_STRATA_BACKSWAMP", name="StrataBackswamp", era="ERA_HELL_CREEK",
+        habitat="forest", light="day", forage=[forage(28, 12, "FERN_FROND"), forage(5, 2, "LARVAE"), forage(22, 4, "BROWSE")],
         crop=BACKSWAMP_CROP,
         music="MUS_ROUTE120", map_type="MAP_TYPE_ROUTE",
         mapsec="MAPSEC_STRATA_BACKSWAMP",

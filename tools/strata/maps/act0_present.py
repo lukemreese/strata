@@ -23,6 +23,7 @@ MAPS = [
     # ------------------------------------------------------------------
     dict(
         id="MAP_STRATA_FIELD_CAMP", name="StrataFieldCamp",
+        habitat=None, light="dns",
         crop=dict(**{"from": "LAYOUT_ROUTE111"}, rect=(0, 0, 40, 34)),
         patches=[
             dict(rect=(17, 5, 8, 2), metatile=0x001, elevation=3),    # two berry-soil plots -> grass
@@ -52,6 +53,7 @@ MAPS = [
     ),
     dict(
         id="MAP_STRATA_FIELD_STATION", name="StrataFieldStation",
+        habitat=None, light="dns",
         crop=dict(**{"from": "LAYOUT_LITTLEROOT_TOWN_PROFESSOR_BIRCHS_LAB"}, rect=(0, 0, 13, 13)),
         patches=[
             # The healing cot: a pair of the lab's orange-blanket couch tiles in the west aisle.
@@ -78,6 +80,7 @@ MAPS = [
     ),
     dict(
         id="MAP_STRATA_BADLANDS", name="StrataBadlands",
+        habitat="open", light="dns",
         crop=dict(**{"from": "LAYOUT_ROUTE111"}, rect=(0, 34, 40, 40)),
         patches=[
             dict(rect=(17, 17, 5, 9), like=(24, 49)),  # Mirage Tower -> sand

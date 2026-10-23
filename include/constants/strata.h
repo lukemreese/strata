@@ -32,6 +32,23 @@ enum SelectionPressure
     PRESSURE_NONE = PRESSURE_COUNT, // Default descendant, chosen when nothing else scores higher
 };
 
+// Fixed lighting of a map (`light=` in tools/strata/maps/, generated into
+// src/data/strata_map_eras.h; see src/strata_map.c). Deep time ignores the wall clock.
+enum StrataLight
+{
+    STRATA_LIGHT_DNS,  // Real-time day/night tint (present day, and maps with no entry)
+    STRATA_LIGHT_DAY,  // Fixed midday: no tint
+    STRATA_LIGHT_DUSK, // Fixed evening tint
+    STRATA_LIGHT_DARK, // Fixed night tint (the impact winter's soot-dark sky)
+    STRATA_LIGHT_ASH,  // Fixed light evening tint, under an ash sky
+    STRATA_LIGHT_NONE, // Never tinted (caves)
+    STRATA_LIGHT_COUNT,
+};
+
+// Forage items (ITEM_FERN_FROND ... ITEM_CARRION): each one eaten adds this much
+// of its item's pressure (its secondaryId) and heals its holdEffectParam in HP.
+#define FORAGE_PRESSURE  12
+
 // What a species eats (sSpeciesDiets in src/data/strata_diets.h). Only animal
 // eaters gain PRESSURE_MEAT_DIET from knocking out a foe.
 enum StrataDiet

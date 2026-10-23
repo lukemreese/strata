@@ -1054,6 +1054,14 @@ enum __attribute__((packed)) Item
 
     // Strata
     ITEM_WADERS = 874,
+    // Strata forage (src/selection.c, Selection_EatForage): heal a little and add diet pressure.
+    ITEM_FERN_FROND = 875,
+    ITEM_PALM_FRUIT = 876,
+    ITEM_LEGUME_POD = 877,
+    ITEM_SEED_HEAD = 878,
+    ITEM_BROWSE = 879,
+    ITEM_LARVAE = 880,
+    ITEM_CARRION = 881,
 
     ITEMS_COUNT,
     ITEM_FIELD_ARROW = ITEMS_COUNT,

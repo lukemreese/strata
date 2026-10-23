@@ -1,8 +1,8 @@
 #include "global.h"
 #include "strata_art.h"
+#include "strata_map.h"
 #include "constants/battle.h"
 #include "constants/field_effects.h"
-#include "constants/map_groups.h"
 #include "constants/strata.h"
 
 struct StrataEraArt
@@ -11,21 +11,7 @@ struct StrataEraArt
     const struct SpritePalette *fieldEffectPal1; // replaces FLDEFF_PAL_TAG_GENERAL_1 (grass, ripples)
 };
 
-#include "data/strata_map_eras.h"
 #include "data/strata_era_art.h"
-
-u32 Strata_GetMapEra(void)
-{
-    u32 i;
-    u16 map = (gSaveBlock1Ptr->location.mapGroup << 8) | gSaveBlock1Ptr->location.mapNum;
-
-    for (i = 0; i < ARRAY_COUNT(sStrataMapEras); i++)
-    {
-        if (sStrataMapEras[i].map == map)
-            return sStrataMapEras[i].era;
-    }
-    return ERA_COUNT;
-}
 
 static const struct StrataEraArt *GetEraArt(void)
 {

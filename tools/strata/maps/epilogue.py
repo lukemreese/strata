@@ -17,6 +17,7 @@ MAPS = [
     # ------------------------------------------------------------------
     dict(
         id="MAP_STRATA_PRAIRIE", name="StrataPrairie", era="ERA_EPILOGUE",
+        habitat="open", light="dns", forage=[forage(20, 9, "SEED_HEAD"), forage(10, 4, "LEGUME_POD")],
         crop=dict(**{"from": "LAYOUT_ROUTE102"}, rect=(0, 0, 50, 20)),
         patches=[
             dict(rect=(23, 2, 4, 2), metatile=0x001, elevation=3),    # berry-soil plot -> grass

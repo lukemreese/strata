@@ -21,6 +21,7 @@
 #include "constants/moves.h"
 #include "constants/item_effects.h"
 #include "constants/hold_effects.h"
+#include "constants/strata.h"
 
 #define DUMMY_PC_BAG_POCKET                 \
 {                                           \

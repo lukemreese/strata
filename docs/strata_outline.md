@@ -741,8 +741,8 @@ Ordered by leverage ÷ risk. Tasks inside a milestone can run in parallel unless
 | R0 | Split `maps.py` into per-act modules, and the roster part 3 file (unlocks parallel content work) | S | none | CON |
 | R1 | Per-option `minScore` in descents; knockout pressure only for `diet` carnivore/omnivore, +1, capped at 24/era; tests | S | none | SYS |
 | R2 | Waders (surf without badge/HM) + Fishing Kit (Old→Good Rod) + shoreline counts as WATER; tests | M | none | SYS |
-| R3 | Forage items (7) with heal + pressure, hidden-item placement helper in `maps.py` with `FLAG_TEMP_*` | M | R0 | SYS + CON |
-| R4 | `habitat=` and `light=` per map in `maps.py`, generated into the era table; remove the Petalburg placeholder | S | R0 | SYS |
+| R3 | ✅ **Done.** Forage items (7) with heal + pressure (`Selection_EatForage`), `forage(x, y, item)` placement helper in `maps/common.py` (hidden items under `FLAG_TEMP_11..1F`, era-checked), 1–3 spots per deep-time map; tests | M | R0 | SYS + CON |
+| R4 | ✅ **Done.** `habitat=` and `light=` per map in `maps/`, generated into `sStrataMapInfo` (`strata_map_eras.h`, `src/strata_map.c`); Petalburg placeholder removed; every map tagged (table in design doc §7.2) | S | R0 | SYS |
 | R5 | ✅ **Done.** BST formula compression + `focal` bonus in `gen_species.py`; regenerate; update tests; `balance.py` (lineage resilience, §3.2 part 3, is F7) | S | none | SYS |
 | R6 | Era level floor at the §3.1 values (verify the in-flight work matches; fallback survivor at the floor) | S | (in flight) | SYS |
 | R7 | ✅ **Done** (data/text). Drop Ovibos (prairie), Gallinuloid (Ashfall), Protictis (Act 4); relabel Act 3 age; rewrite the Ischyromys dex. Left for owners of other files: H4 descent (`lineages.h`, needs *Omomys* from C1), the "300,000 years" lines in `sMentorLines` and the Palm Forest boss text, H5 site check, H7 citation | S | none | CON + SCI |
@@ -758,8 +758,8 @@ Ordered by leverage ÷ risk. Tasks inside a milestone can run in parallel unless
 | F2 | Pressure chart (relabelled condition graph) from the party menu, with branch hints | M | R1 | SYS |
 | F3 | Descent scene via the evolution scene for party mons | M | none | SYS |
 | F4 | Extinction list message + Fossil Case + fossil flags | M | none | SYS |
-| F5 | Map popup age/window line | S | R4 | SYS |
-| F6 | Fixed per-map lighting (DNS override) | S | R4 | SYS |
+| F5 | Map popup age/window line. Hook: add an `age=` string key per map and a `const u8 *age` field to `struct StrataMapInfo` (`include/strata_map.h`, written by `write_map_info` in `gen_maps.py`), then print it in `map_name_popup.c` | S | R4 | SYS |
+| F6 | ✅ **Done** with R4. `light=` overrides the clock in `UpdateTimeOfDay`; `none` turns tinting off (`MapHasNaturalLight`) | S | R4 | SYS |
 | F7 | Lineage resilience (IV raise per era survived) | S | none | SYS |
 | F8 | Lineage table additions/changes from §2.11 (data only; needs the new species) | S | C1 | SYS |
 

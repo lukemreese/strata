@@ -17,6 +17,7 @@ MAPS = [
     # ------------------------------------------------------------------
     dict(
         id="MAP_STRATA_RED_BEDS", name="StrataRedBeds", era="ERA_BIGHORN_PETM",
+        habitat="open", light="day", forage=[forage(16, 12, "PALM_FRUIT"), forage(24, 6, "BROWSE"), forage(36, 10, "LARVAE")],
         crop=dict(**{"from": "LAYOUT_ROUTE114"}, rect=(0, 0, 40, 34), tilesets=("gTileset_GeneralPetm", "gTileset_FallarborPetm")),
         patches=[
             dict(rect=(26, 0, 7, 6), like=(32, 9)),     # house -> ground

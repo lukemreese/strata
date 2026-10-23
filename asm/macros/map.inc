@@ -105,8 +105,11 @@
 
 	@ Defines a background hidden item event for map data
 	.macro bg_hidden_item_event x:req, y:req, elevation:req, item:req, flag:req, quantity=1, underfoot=FALSE
-	.if \flag < FLAG_HIDDEN_ITEMS_START
-	.error "Hidden Item flag \flag is too small. Must be >= FLAG_HIDDEN_ITEMS_START."
+	@ Strata: temp flags (FLAG_TEMP_*, cleared on every map load) are allowed too, for
+	@ forage that regrows. The flag is stored as a 13-bit offset from FLAG_HIDDEN_ITEMS_START
+	@ that wraps (GET_HIDDEN_ITEM_FLAG in include/global.fieldmap.h).
+	.if \flag < FLAG_HIDDEN_ITEMS_START && \flag > TEMP_FLAGS_END
+	.error "Hidden Item flag \flag is too small. Must be >= FLAG_HIDDEN_ITEMS_START, or a temp flag."
 	.endif
 	.if \item >= (1 << 12)
 	.error "quantity \quantity too large"
@@ -114,7 +117,7 @@
 	.if \quantity >= (1 << 7)
 	.error "quantity \quantity too large"
 	.endif
-	bg_event \x, \y, \elevation, BG_EVENT_HIDDEN_ITEM, \item | (((\flag) - FLAG_HIDDEN_ITEMS_START) << 11)| (\quantity << 24) | (\underfoot << 31)
+	bg_event \x, \y, \elevation, BG_EVENT_HIDDEN_ITEM, \item | ((((\flag) - FLAG_HIDDEN_ITEMS_START) & 0x1FFF) << 11)| (\quantity << 24) | (\underfoot << 31)
 	.endm
 
 	@ Defines a background secret base event for map data

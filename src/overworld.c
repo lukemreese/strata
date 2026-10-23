@@ -75,6 +75,7 @@
 #include "wild_encounter_ow.h"
 #include "vs_seeker.h"
 #include "frontier_util.h"
+#include "strata_map.h"
 #include "constants/abilities.h"
 #include "constants/event_object_movement.h"
 #include "constants/event_objects.h"
@@ -886,6 +887,7 @@ void LoadMapFromCameraTransition(u8 mapGroup, u8 mapNum)
     ResetDexNavSearch();
     ResetCyclingRoadChallengeData();
     RestartWildEncounterImmunitySteps();
+    gTimeUpdateCounter = 0; // Strata: re-tint now, in case the new map's fixed light differs
 #if FREE_MATCH_CALL == FALSE
     TryUpdateRandomTrainerRematches(mapGroup, mapNum);
 #endif //FREE_MATCH_CALL
@@ -1704,6 +1706,10 @@ void UpdateTimeOfDay(bool32 updateBlend)
     RtcCalcLocalTime();
     hours = sHoursOverride ? sHoursOverride : gLocalTime.hours;
     minutes = sHoursOverride ? 0 : gLocalTime.minutes;
+    // Strata: deep-time maps have fixed light (`light=` in tools/strata/maps/),
+    // which wins over the wall clock but not over a scripted override.
+    if (!sHoursOverride)
+        Strata_GetLightTime(Strata_GetMapLight(), &hours, &minutes);
 
     if (IsBetweenHours(hours, MORNING_HOUR_BEGIN, MORNING_HOUR_MIDDLE)) // night->morning
     {
@@ -1775,13 +1781,15 @@ void UpdateTimeOfDay(bool32 updateBlend)
 #undef DEFAULT_WEIGHT
 
 // Whether a map type is naturally lit/outside
+// Strata: maps with `light="none"` are never tinted.
 bool32 MapHasNaturalLight(enum MapType mapType)
 {
     return (OW_ENABLE_DNS
          && (mapType == MAP_TYPE_TOWN
           || mapType == MAP_TYPE_CITY
           || mapType == MAP_TYPE_ROUTE
-          || mapType == MAP_TYPE_OCEAN_ROUTE));
+          || mapType == MAP_TYPE_OCEAN_ROUTE)
+         && Strata_GetMapLight() != STRATA_LIGHT_NONE);
 }
 
 bool32 CurrentMapHasShadows(void)

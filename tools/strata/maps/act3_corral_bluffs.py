@@ -17,6 +17,7 @@ MAPS = [
     # ------------------------------------------------------------------
     dict(
         id="MAP_STRATA_PALM_FOREST", name="StrataPalmForest", era="ERA_CORRAL_BLUFFS",
+        habitat="forest", light="day", forage=[forage(6, 10, "PALM_FRUIT"), forage(26, 25, "LEGUME_POD"), forage(40, 34, "LARVAE")],
         crop=dict(**{"from": "LAYOUT_PETALBURG_WOODS"}, rect=(0, 0, 48, 44)),
         # Petalburg Woods' wooden fences, arrow-warp mats and ledge logs -> plain ground
         swap={0x149: GROUND(0x001), 0x203: GROUND(0x001), 0x204: GROUND(0x001),

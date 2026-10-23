@@ -18,6 +18,7 @@ MAPS = [
     # ------------------------------------------------------------------
     dict(
         id="MAP_STRATA_STEPPE", name="StrataSteppe", era="ERA_TRAP_CAVE",
+        habitat="open", light="day", forage=[forage(45, 10, "SEED_HEAD"), forage(40, 11, "CARRION"), forage(75, 10, "BROWSE")],
         crop=dict(**{"from": "LAYOUT_ROUTE118"}, rect=(0, 0, 80, 20), tilesets=("gTileset_GeneralIceAge", "gTileset_MauvilleIceAge")),
         patches=[
             dict(rect=(0, 13, 5, 5), like=(2, 8)),      # house -> steppe
@@ -44,6 +45,7 @@ MAPS = [
     ),
     dict(
         id="MAP_STRATA_TRAP_CAVE", name="StrataTrapCave", era="ERA_TRAP_CAVE",
+        habitat=None, light="none", forage=[forage(26, 4, "CARRION"), forage(5, 9, "LARVAE")],
         crop=dict(**{"from": "LAYOUT_GRANITE_CAVE_1F"}, rect=(0, 0, 42, 15)),
         patches=[
             # The rope down from the surface, over the arrival point (14, 3).

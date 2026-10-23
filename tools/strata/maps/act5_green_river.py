@@ -17,6 +17,7 @@ MAPS = [
     # ------------------------------------------------------------------
     dict(
         id="MAP_STRATA_LAKE_FOREST", name="StrataLakeForest", era="ERA_GREEN_RIVER",
+        habitat="forest", light="day", forage=[forage(3, 21, "PALM_FRUIT"), forage(30, 24, "LARVAE"), forage(20, 44, "LEGUME_POD")],
         crop=dict(**{"from": "LAYOUT_ROUTE104"}, rect=(0, 0, 40, 80)),
         patches=[
             dict(rect=(3, 14, 7, 5), like=(5, 21)),     # house -> grass
