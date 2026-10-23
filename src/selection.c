@@ -2,6 +2,7 @@
 #include "battle.h"
 #include "event_data.h"
 #include "field_player_avatar.h"
+#include "fieldmap.h"
 #include "metatile_behavior.h"
 #include "pokemon.h"
 #include "selection.h"
@@ -64,19 +65,45 @@ void Selection_ResetBoxMonPressures(struct BoxPokemon *boxMon)
         SetBoxMonData(boxMon, sPressureDataIds[i], &zero);
 }
 
-// Saturates at 255.
-void Selection_AddPressure(struct Pokemon *mon, enum SelectionPressure pressure, u32 amount)
+// Adds `amount`, but never takes the counter above `cap`. A counter already at or
+// above the cap (from other sources) is left alone.
+void Selection_AddPressureUpTo(struct Pokemon *mon, enum SelectionPressure pressure, u32 amount, u32 cap)
 {
-    u32 value;
+    u32 value, old;
 
     if (pressure >= PRESSURE_COUNT || amount == 0
      || !GetMonData(mon, MON_DATA_SANITY_HAS_SPECIES) || GetMonData(mon, MON_DATA_IS_EGG))
         return;
 
-    value = GetMonData(mon, sPressureDataIds[pressure]) + amount;
-    if (value > 255)
-        value = 255;
+    if (cap > 255)
+        cap = 255;
+    old = GetMonData(mon, sPressureDataIds[pressure]);
+    if (old >= cap)
+        return;
+    value = old + amount;
+    if (value > cap)
+        value = cap;
     SetMonData(mon, sPressureDataIds[pressure], &value);
+}
+
+// Saturates at 255.
+void Selection_AddPressure(struct Pokemon *mon, enum SelectionPressure pressure, u32 amount)
+{
+    Selection_AddPressureUpTo(mon, pressure, amount, 255);
+}
+
+#include "data/strata_diets.h"
+
+enum StrataDiet Selection_GetSpeciesDiet(enum Species species)
+{
+    if (species >= NUM_SPECIES)
+        return DIET_HERBIVORE;
+    return sSpeciesDiets[species];
+}
+
+bool32 Selection_EatsAnimals(enum Species species)
+{
+    return Selection_GetSpeciesDiet(species) != DIET_HERBIVORE;
 }
 
 static enum SelectionPressure GetMapHabitat(void)
@@ -92,14 +119,34 @@ static enum SelectionPressure GetMapHabitat(void)
     return PRESSURE_NONE;
 }
 
+// TRUE if the player stands on land orthogonally next to surfable water: a shore,
+// bank or lake edge.
+static bool32 IsPlayerOnShore(void)
+{
+    static const s8 sOffsets[][2] = { {0, -1}, {0, 1}, {-1, 0}, {1, 0} };
+    s16 x, y;
+    u32 i;
+
+    PlayerGetDestCoords(&x, &y);
+    for (i = 0; i < ARRAY_COUNT(sOffsets); i++)
+    {
+        if (MetatileBehavior_IsSurfableFishableWater(MapGridGetMetatileBehaviorAt(x + sOffsets[i][0], y + sOffsets[i][1])))
+            return TRUE;
+    }
+    return FALSE;
+}
+
 // Habitat the player is in, or PRESSURE_NONE for neutral ground (paths, towns).
-// Water wins over the map's habitat: a lake in a forest is still a lake.
-enum SelectionPressure Selection_GetHabitat(u32 metatileBehavior)
+// Water wins over the map's habitat: a lake in a forest is still a lake, and so
+// is its shore (`onShore`: standing next to surfable water). Wading (waders)
+// is surfing as far as the game is concerned.
+enum SelectionPressure Selection_GetHabitat(u32 metatileBehavior, bool32 onShore)
 {
     enum SelectionPressure habitat;
 
     if (TestPlayerAvatarFlags(PLAYER_AVATAR_FLAG_SURFING | PLAYER_AVATAR_FLAG_UNDERWATER)
-     || MetatileBehavior_IsSurfableWaterOrUnderwater(metatileBehavior))
+     || MetatileBehavior_IsSurfableWaterOrUnderwater(metatileBehavior)
+     || onShore)
         return PRESSURE_WATER;
 
     habitat = GetMapHabitat();
@@ -127,11 +174,29 @@ void Selection_UpdateStepCounter(u16 metatileBehavior)
 {
     u16 *steps = GetVarPointer(VAR_STRATA_SELECTION_STEPS);
     u32 era = VarGet(VAR_STRATA_ERA);
+    bool32 onShore;
 
     if (++(*steps) < SELECTION_STEPS_PER_TICK)
         return;
     *steps = 0;
-    Selection_ApplyTick(Selection_GetHabitat(metatileBehavior), era < ERA_COUNT ? sEraHeat[era] : 0);
+    // The shore check reads the map, so skip it when the answer is already water.
+    onShore = !TestPlayerAvatarFlags(PLAYER_AVATAR_FLAG_SURFING | PLAYER_AVATAR_FLAG_UNDERWATER)
+           && !MetatileBehavior_IsSurfableWaterOrUnderwater(metatileBehavior)
+           && IsPlayerOnShore();
+    Selection_ApplyTick(Selection_GetHabitat(metatileBehavior, onShore), era < ERA_COUNT ? sEraHeat[era] : 0);
+}
+
+// A party mon took prey. Only animal eaters count it, and knockouts alone can't
+// lift PRESSURE_MEAT_DIET past SELECTION_PREY_CAP: a branch steered by diet needs
+// animal forage (carrion, larvae) on top. Storage: the save has no spare per-mon
+// field to count knockouts per era, so the cap is on the counter itself. It
+// resets on descent, and every diet-steered descent (Hesperocyon, Leptocyon) has
+// a one-era window, so this is 24 per era wherever it matters.
+void Selection_OnPreyTaken(struct Pokemon *mon)
+{
+    if (!Selection_EatsAnimals(GetMonData(mon, MON_DATA_SPECIES)))
+        return;
+    Selection_AddPressureUpTo(mon, PRESSURE_MEAT_DIET, SELECTION_PREY_PRESSURE, SELECTION_PREY_CAP);
 }
 
 // Called when a foe faints. If one of the player's mons knocked it out with a
@@ -145,7 +210,16 @@ void Selection_OnFoeFainted(u32 battler)
      || GetBattlerParty(gBattlerAttacker) != gParties[B_TRAINER_PLAYER])
         return;
 
-    Selection_AddPressure(GetBattlerMon(gBattlerAttacker), PRESSURE_MEAT_DIET, SELECTION_PREY_PRESSURE);
+    Selection_OnPreyTaken(GetBattlerMon(gBattlerAttacker));
+}
+
+// A fish took the hook (called as the fishing encounter starts): the whole party
+// has been at the water's edge.
+void Selection_OnFishHooked(void)
+{
+    u32 i;
+    for (i = 0; i < PARTY_SIZE; i++)
+        Selection_AddPressure(&gParties[B_TRAINER_PLAYER][i], PRESSURE_WATER, SELECTION_FISH_PRESSURE);
 }
 
 // special Strata_AddPressure

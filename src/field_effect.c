@@ -3367,7 +3367,12 @@ static void SurfFieldEffect_Init(struct Task *task)
     SetPlayerAvatarStateMask(PLAYER_AVATAR_FLAG_SURFING);
     PlayerGetDestCoords(&task->tDestX, &task->tDestY);
     MoveCoords(gObjectEvents[gPlayerAvatar.objectEventId].movementDirection, &task->tDestX, &task->tDestY);
-    task->tState++;
+    // Strata: wading in (waders, tMonId == PARTY_SIZE) skips the field move pose
+    // and the mon popping out, and goes straight to SurfFieldEffect_JumpOnSurfBlob.
+    if (task->tMonId >= PARTY_SIZE)
+        task->tState = 3;
+    else
+        task->tState++;
 }
 
 static void SurfFieldEffect_FieldMovePose(struct Task *task)

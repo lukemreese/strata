@@ -640,6 +640,8 @@ gSpecials::
 	def_special CheckAddCoins
 	def_special Strata_AdvanceEra
 	def_special Strata_AddPressure
+	def_special Strata_GiveWaterGear
+	def_special Strata_SpecialUpgradeFishingKit
 	def_special Strata_RigQuery
 	def_special Strata_RigLoadNext
 	def_special Strata_SpecialGetCurrentAct

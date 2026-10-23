@@ -14042,12 +14042,12 @@ const struct ItemInfo gItemsInfo[] =
 
     [ITEM_OLD_ROD] =
     {
-        .name = ITEM_NAME("Old Rod"),
+        .name = ITEM_NAME("Fishing Kit"),
         .price = 0,
         .description = COMPOUND_STRING(
-            "Use by any body of\n"
-            "water to fish for\n"
-            "wild Pokémon."),
+            "A field crew's rod\n"
+            "and line. Use it by\n"
+            "water to fish."),
         .importance = 1,
         .pocket = POCKET_KEY_ITEMS,
         .type = ITEM_USE_FIELD,
@@ -14059,12 +14059,12 @@ const struct ItemInfo gItemsInfo[] =
 
     [ITEM_GOOD_ROD] =
     {
-        .name = ITEM_NAME("Good Rod"),
+        .name = ITEM_NAME("Good Fishing Kit"),
         .price = 0,
         .description = COMPOUND_STRING(
-            "A decent fishing\n"
-            "rod for catching\n"
-            "wild Pokémon."),
+            "A better rod and\n"
+            "line that reach\n"
+            "deeper water."),
         .importance = 1,
         .pocket = POCKET_KEY_ITEMS,
         .type = ITEM_USE_FIELD,
@@ -14076,12 +14076,12 @@ const struct ItemInfo gItemsInfo[] =
 
     [ITEM_SUPER_ROD] =
     {
-        .name = ITEM_NAME("Super Rod"),
+        .name = ITEM_NAME("Super Fishing Kit"),
         .price = 0,
         .description = COMPOUND_STRING(
-            "The best fishing\n"
-            "rod for catching\n"
-            "wild Pokémon."),
+            "The crew's best\n"
+            "rod and line, for\n"
+            "the deepest water."),
         .importance = 1,
         .pocket = POCKET_KEY_ITEMS,
         .type = ITEM_USE_FIELD,
@@ -14089,6 +14089,25 @@ const struct ItemInfo gItemsInfo[] =
         .secondaryId = SUPER_ROD,
         .iconPic = gItemIcon_SuperRod,
         .iconPalette = gItemIconPalette_SuperRod,
+    },
+
+    // Strata: lets the player surf without a badge or a mon that knows Surf
+    // (see GetInteractedWaterScript). Placeholder icon.
+    [ITEM_WADERS] =
+    {
+        .name = ITEM_NAME("Waders"),
+        .pluralName = ITEM_PLURAL_NAME("Waders"),
+        .price = 0,
+        .description = COMPOUND_STRING(
+            "Chest waders. Face\n"
+            "deep water and\n"
+            "press A to wade in."),
+        .importance = 1,
+        .pocket = POCKET_KEY_ITEMS,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .iconPic = gItemIcon_HeavyDutyBoots,
+        .iconPalette = gItemIconPalette_HeavyDutyBoots,
     },
 
     [ITEM_DOWSING_MACHINE] =

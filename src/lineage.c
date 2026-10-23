@@ -26,29 +26,52 @@ static const struct LineageDescent *FindDescent(enum Species ancestor, enum Stra
     return NULL;
 }
 
-// Returns the species `ancestor` becomes on entering `era`, or `ancestor` itself if
-// the lineage is in stasis. Ties go to the option listed first.
-enum Species Lineage_GetDescendant(enum Species ancestor, enum StrataEra era, const u8 *pressures)
+// The options for `ancestor` entering `era` (terminated by SPECIES_NONE), or NULL
+// if the lineage is in stasis then.
+const struct DescentOption *Lineage_GetDescentOptions(enum Species ancestor, enum StrataEra era)
 {
     const struct LineageDescent *descent = FindDescent(ancestor, era);
-    const struct DescentOption *option;
-    enum Species best;
+    return descent != NULL ? descent->options : NULL;
+}
+
+// Pressure a branch needs before it can win; 0 for the default.
+u32 Lineage_GetOptionMinScore(const struct DescentOption *option)
+{
+    if (option->pressure >= PRESSURE_COUNT)
+        return 0;
+    return option->minScore != 0 ? option->minScore : DESCENT_MIN_SCORE;
+}
+
+// Returns the species `ancestor` becomes on entering `era`, or `ancestor` itself if
+// the lineage is in stasis. A branch competes only once its pressure reaches its
+// minScore; the highest eligible counter wins, ties going to the option listed
+// first. If no branch is eligible, the default (PRESSURE_NONE) wins.
+enum Species Lineage_GetDescendant(enum Species ancestor, enum StrataEra era, const u8 *pressures)
+{
+    const struct DescentOption *option = Lineage_GetDescentOptions(ancestor, era);
+    enum Species best = SPECIES_NONE, fallback = ancestor;
     s32 bestScore = -1;
 
-    if (descent == NULL)
+    if (option == NULL)
         return ancestor;
 
-    best = ancestor;
-    for (option = descent->options; option->species != SPECIES_NONE; option++)
+    for (; option->species != SPECIES_NONE; option++)
     {
-        s32 score = (option->pressure == PRESSURE_NONE) ? 0 : pressures[option->pressure];
-        if (score > bestScore)
+        s32 score;
+        if (option->pressure >= PRESSURE_COUNT)
+        {
+            if (fallback == ancestor)
+                fallback = option->species;
+            continue;
+        }
+        score = pressures[option->pressure];
+        if (score >= (s32)Lineage_GetOptionMinScore(option) && score > bestScore)
         {
             best = option->species;
             bestScore = score;
         }
     }
-    return best;
+    return best != SPECIES_NONE ? best : fallback;
 }
 
 // Box counterpart of EvolutionRenameMon: a mon still called by its species name

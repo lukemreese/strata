@@ -26,10 +26,19 @@ enum SelectionPressure
     PRESSURE_OPEN,       // MON_DATA_BEAUTY: time spent in open plains / grassland
     PRESSURE_WATER,      // MON_DATA_CUTE:   time spent in or near water
     PRESSURE_PLANT_DIET, // MON_DATA_SMART:  plant foods eaten
-    PRESSURE_MEAT_DIET,  // MON_DATA_TOUGH:  meat foods eaten / prey taken
+    PRESSURE_MEAT_DIET,  // MON_DATA_TOUGH:  animal foods eaten / prey taken (the "ANIMAL" pressure)
     PRESSURE_HEAT,       // MON_DATA_SHEEN:  time spent in hot climates
     PRESSURE_COUNT,
     PRESSURE_NONE = PRESSURE_COUNT, // Default descendant, chosen when nothing else scores higher
+};
+
+// What a species eats (sSpeciesDiets in src/data/strata_diets.h). Only animal
+// eaters gain PRESSURE_MEAT_DIET from knocking out a foe.
+enum StrataDiet
+{
+    DIET_HERBIVORE,
+    DIET_OMNIVORE,
+    DIET_CARNIVORE,
 };
 
 // Story progress (VAR_STRATA_STORY): 0 new game, 1 starter chosen, then for each

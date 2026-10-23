@@ -3,6 +3,7 @@
 #include "lineage.h"
 #include "pokemon.h"
 #include "pokemon_storage_system.h"
+#include "selection.h"
 #include "string_util.h"
 #include "test/overworld_script.h"
 #include "test/test.h"
@@ -35,14 +36,90 @@ TEST("Lineage_GetDescendant picks the default option with no pressures")
     EXPECT_EQ(Lineage_GetDescendant(SPECIES_ASTERIORNIS, ERA_BIGHORN_PETM, pressures), SPECIES_GALLINULOID);
 }
 
-TEST("Lineage_GetDescendant picks the option with the highest pressure")
+TEST("Lineage_GetDescendant picks the eligible option with the highest pressure")
 {
     u8 pressures[PRESSURE_COUNT] = {0};
-    pressures[PRESSURE_WATER] = 10;
-    pressures[PRESSURE_PLANT_DIET] = 30;
+    pressures[PRESSURE_WATER] = DESCENT_MIN_SCORE + 10;
+    pressures[PRESSURE_PLANT_DIET] = DESCENT_MIN_SCORE + 30;
     EXPECT_EQ(Lineage_GetDescendant(SPECIES_ASTERIORNIS, ERA_BIGHORN_PETM, pressures), SPECIES_GASTORNIS);
-    pressures[PRESSURE_WATER] = 40;
+    pressures[PRESSURE_WATER] = DESCENT_MIN_SCORE + 40;
     EXPECT_EQ(Lineage_GetDescendant(SPECIES_ASTERIORNIS, ERA_BIGHORN_PETM, pressures), SPECIES_PRESBYORNIS);
+    // Ties go to the option listed first.
+    pressures[PRESSURE_PLANT_DIET] = DESCENT_MIN_SCORE + 40;
+    EXPECT_EQ(Lineage_GetDescendant(SPECIES_ASTERIORNIS, ERA_BIGHORN_PETM, pressures), SPECIES_PRESBYORNIS);
+}
+
+TEST("Lineage_GetDescendant keeps the default until a branch reaches its threshold")
+{
+    u8 pressures[PRESSURE_COUNT] = {0};
+    pressures[PRESSURE_WATER] = DESCENT_MIN_SCORE - 1;
+    pressures[PRESSURE_PLANT_DIET] = DESCENT_MIN_SCORE - 1;
+    EXPECT_EQ(Lineage_GetDescendant(SPECIES_ASTERIORNIS, ERA_BIGHORN_PETM, pressures), SPECIES_GALLINULOID);
+    pressures[PRESSURE_WATER] = DESCENT_MIN_SCORE;
+    EXPECT_EQ(Lineage_GetDescendant(SPECIES_ASTERIORNIS, ERA_BIGHORN_PETM, pressures), SPECIES_PRESBYORNIS);
+}
+
+TEST("Lineage_GetDescendant ignores a higher pressure that is below its threshold")
+{
+    u8 pressures[PRESSURE_COUNT] = {0};
+    // Gastornis needs PLANT_DIET >= 64; Presbyornis is eligible with a lower counter.
+    ASSUME(DESCENT_MIN_SCORE == 64);
+    pressures[PRESSURE_WATER] = 64;
+    pressures[PRESSURE_PLANT_DIET] = 63;
+    EXPECT_EQ(Lineage_GetDescendant(SPECIES_ASTERIORNIS, ERA_BIGHORN_PETM, pressures), SPECIES_PRESBYORNIS);
+}
+
+TEST("The dog lineage needs a clear meat diet to leave the coyote line")
+{
+    u8 pressures[PRESSURE_COUNT] = {0};
+    pressures[PRESSURE_MEAT_DIET] = DESCENT_MIN_SCORE - 1;
+    EXPECT_EQ(Lineage_GetDescendant(SPECIES_HESPEROCYON, ERA_ASHFALL, pressures), SPECIES_LEPTOCYON);
+    EXPECT_EQ(Lineage_GetDescendant(SPECIES_LEPTOCYON, ERA_TRAP_CAVE, pressures), SPECIES_CANIS);
+    pressures[PRESSURE_MEAT_DIET] = DESCENT_MIN_SCORE;
+    EXPECT_EQ(Lineage_GetDescendant(SPECIES_HESPEROCYON, ERA_ASHFALL, pressures), SPECIES_EPICYON);
+    EXPECT_EQ(Lineage_GetDescendant(SPECIES_LEPTOCYON, ERA_TRAP_CAVE, pressures), SPECIES_AENOCYON);
+}
+
+TEST("Every descent branch needs more pressure than knockouts can give")
+{
+    u32 species, era;
+    const struct DescentOption *option;
+
+    for (species = SPECIES_NONE + 1; species < NUM_SPECIES; species++)
+    {
+        for (era = 0; era < ERA_COUNT; era++)
+        {
+            option = Lineage_GetDescentOptions(species, era);
+            if (option == NULL)
+                continue;
+            for (; option->species != SPECIES_NONE; option++)
+            {
+                if (option->pressure == PRESSURE_NONE)
+                    EXPECT_EQ(Lineage_GetOptionMinScore(option), 0);
+                else
+                    EXPECT_GT(Lineage_GetOptionMinScore(option), SELECTION_PREY_CAP);
+            }
+        }
+    }
+}
+
+TEST("A dog lineage that only hunts reaches the coyote")
+{
+    u32 era, i;
+    struct Pokemon *mon = &gParties[B_TRAINER_PLAYER][0];
+
+    ResetStrata();
+    VarSet(VAR_STRATA_ERA, ERA_HELL_CREEK);
+    CreateMon(mon, SPECIES_CIMOLESTES, 10, 0, OTID_STRUCT_PLAYER_ID);
+    // Hundreds of knockouts in every era, then the next layer loads.
+    for (era = ERA_IMPACT_WINTER; era <= ERA_TRAP_CAVE; era++)
+    {
+        for (i = 0; i < 200; i++)
+            Selection_OnPreyTaken(mon);
+        EXPECT_EQ(GetMonData(mon, MON_DATA_TOUGH), SELECTION_PREY_CAP);
+        Lineage_AdvanceToEra(era);
+    }
+    EXPECT_EQ(GetMonData(mon, MON_DATA_SPECIES), SPECIES_CANIS);
 }
 
 TEST("Lineage_GetDescendant ignores pressures no option selects for")
@@ -55,7 +132,7 @@ TEST("Lineage_GetDescendant ignores pressures no option selects for")
 TEST("Lineage_DescendMon keeps the mon's identity and recalculates stats")
 {
     struct Pokemon mon;
-    u8 pressure = 50;
+    u8 pressure = DESCENT_MIN_SCORE;
     CreateMon(&mon, SPECIES_ASTERIORNIS, 30, 0x12345678, OTID_STRUCT_PLAYER_ID);
     SetMonData(&mon, MON_DATA_CUTE, &pressure); // PRESSURE_WATER
 

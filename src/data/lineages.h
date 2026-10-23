@@ -2,120 +2,135 @@
 // See docs/strata_design.md §4-5 and §7.1-7.3, and tools/strata/roster.py for the species.
 // Lineages without an entry for an era are in stasis.
 // Extinctions and the era level floors are at the end of this file.
+//
+// Thresholds: a branch needs its pressure counter at or above its minScore before
+// it can beat the default (see Lineage_GetDescendant). DESCENT_MIN_SCORE (64) is
+// a deliberate choice: about three forage items (+12 each, R3) plus some time in
+// the right habitat, or ~2,000 steps (64 ticks) in one habitat. Knockouts alone
+// can't get there: they give ANIMAL pressure only to predators and omnivores and
+// stop at SELECTION_PREY_CAP (24), so the dog line reaches the coyote unless the
+// player feeds it carrion on purpose. Counters reset only when a lineage
+// descends, so each threshold is met over the whole window since the previous
+// descent (or the catch), e.g. Acts 1-3 for Asteriornis.
 
 // Dog line: Canidae originated in North America.
 static const struct DescentOption sDescent_Cimolestes[] =
 {
-    { SPECIES_PROTICTIS, PRESSURE_NONE },
-    { SPECIES_NONE },
+    DESCENT_DEFAULT(SPECIES_PROTICTIS),
+    DESCENT_END,
 };
 
 static const struct DescentOption sDescent_Protictis[] =
 {
-    { SPECIES_MIACIS, PRESSURE_NONE },
-    { SPECIES_NONE },
+    DESCENT_DEFAULT(SPECIES_MIACIS),
+    DESCENT_END,
 };
 
 static const struct DescentOption sDescent_Miacis[] =
 {
-    { SPECIES_HESPEROCYON, PRESSURE_NONE },
-    { SPECIES_NONE },
+    DESCENT_DEFAULT(SPECIES_HESPEROCYON),
+    DESCENT_END,
 };
 
 static const struct DescentOption sDescent_Hesperocyon[] =
 {
-    { SPECIES_LEPTOCYON, PRESSURE_NONE },      // generalist, ancestor of all living canines
-    { SPECIES_EPICYON,   PRESSURE_MEAT_DIET }, // bone-crushing borophagine
-    { SPECIES_NONE },
+    DESCENT_DEFAULT(SPECIES_LEPTOCYON), // generalist, ancestor of all living canines
+    // Bone-crushing borophagine. Steered in Act 6 (Archaeotherium's bone stash).
+    DESCENT_BRANCH(SPECIES_EPICYON, PRESSURE_MEAT_DIET, DESCENT_MIN_SCORE),
+    DESCENT_END,
 };
 
 static const struct DescentOption sDescent_Leptocyon[] =
 {
-    { SPECIES_CANIS,    PRESSURE_NONE },      // coyote, survives to today
-    { SPECIES_AENOCYON, PRESSURE_MEAT_DIET }, // dire wolf, megafauna specialist
-    { SPECIES_NONE },
+    DESCENT_DEFAULT(SPECIES_CANIS), // coyote, survives to today
+    // Dire wolf, megafauna specialist. Steered in Act 7 (carrion).
+    // TODO(content): Vulpes velox, PRESSURE_OPEN, 96, once the species exists.
+    DESCENT_BRANCH(SPECIES_AENOCYON, PRESSURE_MEAT_DIET, DESCENT_MIN_SCORE),
+    DESCENT_END,
 };
 
-// Bird line: ground birds survived the impact, then radiated.
+// Bird line: ground birds survived the impact, then radiated. Window: Acts 1-3.
 static const struct DescentOption sDescent_Asteriornis[] =
 {
-    { SPECIES_GALLINULOID, PRESSURE_NONE },       // forest ground fowl
-    { SPECIES_PRESBYORNIS, PRESSURE_WATER },      // lake wader
-    { SPECIES_GASTORNIS,   PRESSURE_PLANT_DIET }, // flightless giant herbivore
-    { SPECIES_NONE },
+    DESCENT_DEFAULT(SPECIES_GALLINULOID), // forest ground fowl
+    // Lake wader: surfing, shores and fishing (waders and fishing kit).
+    DESCENT_BRANCH(SPECIES_PRESBYORNIS, PRESSURE_WATER, DESCENT_MIN_SCORE),
+    // Flightless giant herbivore: plant forage (R3).
+    DESCENT_BRANCH(SPECIES_GASTORNIS, PRESSURE_PLANT_DIET, DESCENT_MIN_SCORE),
+    DESCENT_END,
 };
 
 static const struct DescentOption sDescent_Gallinuloid[] =
 {
-    { SPECIES_MELEAGRIS, PRESSURE_NONE },
-    { SPECIES_NONE },
+    DESCENT_DEFAULT(SPECIES_MELEAGRIS),
+    DESCENT_END,
 };
 
 // Snapping turtle line: stasis, with rare changes.
 static const struct DescentOption sDescent_Emarginachel[] =
 {
-    { SPECIES_PROTOCHELYD, PRESSURE_NONE },
-    { SPECIES_NONE },
+    DESCENT_DEFAULT(SPECIES_PROTOCHELYD),
+    DESCENT_END,
 };
 
 static const struct DescentOption sDescent_Protochelyd[] =
 {
-    { SPECIES_CHELYDRA, PRESSURE_NONE },
-    { SPECIES_NONE },
+    DESCENT_DEFAULT(SPECIES_CHELYDRA),
+    DESCENT_END,
 };
 
 // Horse line: one of the best-documented lineages in the fossil record. Horses
 // evolved in North America, browsing in forests, then grazing as grasslands spread.
 static const struct DescentOption sDescent_Sifrhippus[] =
 {
-    { SPECIES_EOHIPPUS, PRESSURE_NONE },
-    { SPECIES_NONE },
+    DESCENT_DEFAULT(SPECIES_EOHIPPUS),
+    DESCENT_END,
 };
 
 static const struct DescentOption sDescent_Eohippus[] =
 {
-    { SPECIES_MESOHIPPUS, PRESSURE_NONE },
-    { SPECIES_NONE },
+    DESCENT_DEFAULT(SPECIES_MESOHIPPUS),
+    DESCENT_END,
 };
 
 static const struct DescentOption sDescent_Mesohippus[] =
 {
-    { SPECIES_PROTOHIPPUS, PRESSURE_NONE },
-    { SPECIES_NONE },
+    DESCENT_DEFAULT(SPECIES_PROTOHIPPUS),
+    DESCENT_END,
 };
 
 static const struct DescentOption sDescent_Protohippus[] =
 {
-    { SPECIES_EQUUS, PRESSURE_NONE },
-    { SPECIES_NONE },
+    DESCENT_DEFAULT(SPECIES_EQUUS),
+    DESCENT_END,
 };
 
 // Camel line: camels also evolved in North America.
 static const struct DescentOption sDescent_Poebrothere[] =
 {
-    { SPECIES_PROCAMELUS, PRESSURE_NONE },
-    { SPECIES_NONE },
+    DESCENT_DEFAULT(SPECIES_PROCAMELUS),
+    DESCENT_END,
 };
 
 static const struct DescentOption sDescent_Procamelus[] =
 {
-    { SPECIES_CAMELOPS, PRESSURE_NONE },
-    { SPECIES_NONE },
+    DESCENT_DEFAULT(SPECIES_CAMELOPS),
+    DESCENT_END,
 };
 
 // Rhino line.
 static const struct DescentOption sDescent_Subhyracodon[] =
 {
-    { SPECIES_TELEOCERAS, PRESSURE_NONE },
-    { SPECIES_NONE },
+    DESCENT_DEFAULT(SPECIES_TELEOCERAS),
+    DESCENT_END,
 };
 
 // Primates: from the PETM newcomers to the Eocene canopy. Stand-in chain;
 // Notharctus is a relative of Teilhardina's descendants, not a proven one.
 static const struct DescentOption sDescent_Teilhardina[] =
 {
-    { SPECIES_NOTHARCTUS, PRESSURE_NONE },
-    { SPECIES_NONE },
+    DESCENT_DEFAULT(SPECIES_NOTHARCTUS),
+    DESCENT_END,
 };
 
 static const struct LineageDescent sLineageDescents[] =
