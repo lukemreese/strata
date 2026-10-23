@@ -39712,64 +39712,64 @@
             "encounter_rate": 20,
             "mons": [
               {
-                "min_level": 48,
-                "max_level": 50,
+                "min_level": 46,
+                "max_level": 49,
                 "species": "SPECIES_CYNOMYS"
               },
               {
-                "min_level": 48,
+                "min_level": 47,
                 "max_level": 50,
                 "species": "SPECIES_ANTILOCAPRA"
               },
               {
-                "min_level": 48,
+                "min_level": 46,
                 "max_level": 50,
+                "species": "SPECIES_CENTROCERCUS"
+              },
+              {
+                "min_level": 46,
+                "max_level": 50,
+                "species": "SPECIES_VULPES"
+              },
+              {
+                "min_level": 48,
+                "max_level": 51,
                 "species": "SPECIES_CYNOMYS"
               },
               {
                 "min_level": 48,
-                "max_level": 50,
+                "max_level": 51,
                 "species": "SPECIES_CANIS"
               },
               {
-                "min_level": 49,
-                "max_level": 51,
+                "min_level": 48,
+                "max_level": 52,
                 "species": "SPECIES_MELEAGRIS"
               },
               {
                 "min_level": 49,
-                "max_level": 51,
-                "species": "SPECIES_ANTILOCAPRA"
-              },
-              {
-                "min_level": 49,
-                "max_level": 51,
+                "max_level": 52,
                 "species": "SPECIES_BISON"
               },
               {
-                "min_level": 49,
-                "max_level": 51,
+                "min_level": 46,
+                "max_level": 50,
+                "species": "SPECIES_MUSTELA"
+              },
+              {
+                "min_level": 47,
+                "max_level": 50,
+                "species": "SPECIES_MUSTELA"
+              },
+              {
+                "min_level": 51,
+                "max_level": 53,
+                "species": "SPECIES_BISON"
+              },
+              {
+                "min_level": 51,
+                "max_level": 53,
                 "species": "SPECIES_OVIS"
-              },
-              {
-                "min_level": 50,
-                "max_level": 52,
-                "species": "SPECIES_CANIS"
-              },
-              {
-                "min_level": 50,
-                "max_level": 52,
-                "species": "SPECIES_BISON"
-              },
-              {
-                "min_level": 50,
-                "max_level": 52,
-                "species": "SPECIES_EQUUS"
-              },
-              {
-                "min_level": 50,
-                "max_level": 52,
-                "species": "SPECIES_ANTILOCAPRA"
               }
             ]
           },
@@ -39855,6 +39855,229 @@
                 "min_level": 51,
                 "max_level": 54,
                 "species": "SPECIES_CHELYDRA"
+              }
+            ]
+          }
+        },
+        {
+          "map": "MAP_STRATA_MISSOURI_BREAKS",
+          "base_label": "gStrataMissouriBreaks",
+          "land_mons": {
+            "encounter_rate": 20,
+            "mons": [
+              {
+                "min_level": 47,
+                "max_level": 51,
+                "species": "SPECIES_OVIS"
+              },
+              {
+                "min_level": 47,
+                "max_level": 50,
+                "species": "SPECIES_MELEAGRIS"
+              },
+              {
+                "min_level": 48,
+                "max_level": 52,
+                "species": "SPECIES_OVIS"
+              },
+              {
+                "min_level": 48,
+                "max_level": 51,
+                "species": "SPECIES_MELEAGRIS"
+              },
+              {
+                "min_level": 48,
+                "max_level": 51,
+                "species": "SPECIES_CANIS"
+              },
+              {
+                "min_level": 49,
+                "max_level": 52,
+                "species": "SPECIES_OVIS"
+              },
+              {
+                "min_level": 48,
+                "max_level": 52,
+                "species": "SPECIES_CHELYDRA"
+              },
+              {
+                "min_level": 49,
+                "max_level": 52,
+                "species": "SPECIES_MELEAGRIS"
+              },
+              {
+                "min_level": 49,
+                "max_level": 53,
+                "species": "SPECIES_CHELYDRA"
+              },
+              {
+                "min_level": 50,
+                "max_level": 53,
+                "species": "SPECIES_OVIS"
+              },
+              {
+                "min_level": 50,
+                "max_level": 53,
+                "species": "SPECIES_CANIS"
+              },
+              {
+                "min_level": 51,
+                "max_level": 54,
+                "species": "SPECIES_OVIS"
+              }
+            ]
+          },
+          "water_mons": {
+            "encounter_rate": 4,
+            "mons": [
+              {
+                "min_level": 48,
+                "max_level": 53,
+                "species": "SPECIES_CHELYDRA"
+              },
+              {
+                "min_level": 48,
+                "max_level": 53,
+                "species": "SPECIES_LEPISOSTEUS"
+              },
+              {
+                "min_level": 49,
+                "max_level": 53,
+                "species": "SPECIES_CHELYDRA"
+              },
+              {
+                "min_level": 50,
+                "max_level": 54,
+                "species": "SPECIES_LEPISOSTEUS"
+              },
+              {
+                "min_level": 51,
+                "max_level": 54,
+                "species": "SPECIES_CHELYDRA"
+              }
+            ]
+          },
+          "fishing_mons": {
+            "encounter_rate": 30,
+            "mons": [
+              {
+                "min_level": 46,
+                "max_level": 49,
+                "species": "SPECIES_LEPISOSTEUS"
+              },
+              {
+                "min_level": 46,
+                "max_level": 49,
+                "species": "SPECIES_LEPISOSTEUS"
+              },
+              {
+                "min_level": 47,
+                "max_level": 50,
+                "species": "SPECIES_LEPISOSTEUS"
+              },
+              {
+                "min_level": 47,
+                "max_level": 50,
+                "species": "SPECIES_CHELYDRA"
+              },
+              {
+                "min_level": 48,
+                "max_level": 51,
+                "species": "SPECIES_LEPISOSTEUS"
+              },
+              {
+                "min_level": 48,
+                "max_level": 51,
+                "species": "SPECIES_CHELYDRA"
+              },
+              {
+                "min_level": 49,
+                "max_level": 52,
+                "species": "SPECIES_LEPISOSTEUS"
+              },
+              {
+                "min_level": 49,
+                "max_level": 52,
+                "species": "SPECIES_CHELYDRA"
+              },
+              {
+                "min_level": 50,
+                "max_level": 53,
+                "species": "SPECIES_CHELYDRA"
+              },
+              {
+                "min_level": 51,
+                "max_level": 54,
+                "species": "SPECIES_LEPISOSTEUS"
+              }
+            ]
+          }
+        },
+        {
+          "map": "MAP_STRATA_PRYOR",
+          "base_label": "gStrataPryor",
+          "land_mons": {
+            "encounter_rate": 20,
+            "mons": [
+              {
+                "min_level": 50,
+                "max_level": 53,
+                "species": "SPECIES_EQUUS"
+              },
+              {
+                "min_level": 51,
+                "max_level": 54,
+                "species": "SPECIES_EQUUS"
+              },
+              {
+                "min_level": 50,
+                "max_level": 53,
+                "species": "SPECIES_ANTILOCAPRA"
+              },
+              {
+                "min_level": 51,
+                "max_level": 54,
+                "species": "SPECIES_EQUUS"
+              },
+              {
+                "min_level": 51,
+                "max_level": 54,
+                "species": "SPECIES_OVIS"
+              },
+              {
+                "min_level": 50,
+                "max_level": 53,
+                "species": "SPECIES_CENTROCERCUS"
+              },
+              {
+                "min_level": 50,
+                "max_level": 53,
+                "species": "SPECIES_CANIS"
+              },
+              {
+                "min_level": 52,
+                "max_level": 54,
+                "species": "SPECIES_EQUUS"
+              },
+              {
+                "min_level": 52,
+                "max_level": 54,
+                "species": "SPECIES_ANTILOCAPRA"
+              },
+              {
+                "min_level": 52,
+                "max_level": 54,
+                "species": "SPECIES_OVIS"
+              },
+              {
+                "min_level": 52,
+                "max_level": 54,
+                "species": "SPECIES_CENTROCERCUS"
+              },
+              {
+                "min_level": 53,
+                "max_level": 54,
+                "species": "SPECIES_EQUUS"
               }
             ]
           }

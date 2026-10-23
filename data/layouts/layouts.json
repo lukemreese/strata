@@ -9567,36 +9567,25 @@
       "layout_version": "emerald"
     },
     {
-      "id": "LAYOUT_STRATA_MELTWATER",
-      "name": "StrataMeltwater_Layout",
-      "width": 40,
-      "height": 20,
-      "primary_tileset": "gTileset_GeneralIceAge",
-      "secondary_tileset": "gTileset_MauvilleIceAge",
-      "border_filepath": "data/layouts/StrataMeltwater/border.bin",
-      "blockdata_filepath": "data/layouts/StrataMeltwater/map.bin",
+      "id": "LAYOUT_STRATA_MISSOURI_BREAKS",
+      "name": "StrataMissouriBreaks_Layout",
+      "width": 24,
+      "height": 29,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Fallarbor",
+      "border_filepath": "data/layouts/StrataMissouriBreaks/border.bin",
+      "blockdata_filepath": "data/layouts/StrataMissouriBreaks/map.bin",
       "layout_version": "emerald"
     },
     {
-      "id": "LAYOUT_STRATA_ICE_MARGIN",
-      "name": "StrataIceMargin_Layout",
-      "width": 40,
-      "height": 24,
-      "primary_tileset": "gTileset_GeneralIceAge",
-      "secondary_tileset": "gTileset_MauvilleIceAge",
-      "border_filepath": "data/layouts/StrataIceMargin/border.bin",
-      "blockdata_filepath": "data/layouts/StrataIceMargin/map.bin",
-      "layout_version": "emerald"
-    },
-    {
-      "id": "LAYOUT_STRATA_COLBY",
-      "name": "StrataColby_Layout",
-      "width": 30,
+      "id": "LAYOUT_STRATA_PRYOR",
+      "name": "StrataPryor_Layout",
+      "width": 31,
       "height": 17,
-      "primary_tileset": "gTileset_GeneralIceAge",
-      "secondary_tileset": "gTileset_MauvilleIceAge",
-      "border_filepath": "data/layouts/StrataColby/border.bin",
-      "blockdata_filepath": "data/layouts/StrataColby/map.bin",
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Lavaridge",
+      "border_filepath": "data/layouts/StrataPryor/border.bin",
+      "blockdata_filepath": "data/layouts/StrataPryor/map.bin",
       "layout_version": "emerald"
     },
     {
@@ -9729,6 +9718,39 @@
       "secondary_tileset": "gTileset_FallarborOligocene",
       "border_filepath": "data/layouts/StrataToadstool/border.bin",
       "blockdata_filepath": "data/layouts/StrataToadstool/map.bin",
+      "layout_version": "emerald"
+    },
+    {
+      "id": "LAYOUT_STRATA_MELTWATER",
+      "name": "StrataMeltwater_Layout",
+      "width": 40,
+      "height": 20,
+      "primary_tileset": "gTileset_GeneralIceAge",
+      "secondary_tileset": "gTileset_MauvilleIceAge",
+      "border_filepath": "data/layouts/StrataMeltwater/border.bin",
+      "blockdata_filepath": "data/layouts/StrataMeltwater/map.bin",
+      "layout_version": "emerald"
+    },
+    {
+      "id": "LAYOUT_STRATA_ICE_MARGIN",
+      "name": "StrataIceMargin_Layout",
+      "width": 40,
+      "height": 24,
+      "primary_tileset": "gTileset_GeneralIceAge",
+      "secondary_tileset": "gTileset_MauvilleIceAge",
+      "border_filepath": "data/layouts/StrataIceMargin/border.bin",
+      "blockdata_filepath": "data/layouts/StrataIceMargin/map.bin",
+      "layout_version": "emerald"
+    },
+    {
+      "id": "LAYOUT_STRATA_COLBY",
+      "name": "StrataColby_Layout",
+      "width": 30,
+      "height": 17,
+      "primary_tileset": "gTileset_GeneralIceAge",
+      "secondary_tileset": "gTileset_MauvilleIceAge",
+      "border_filepath": "data/layouts/StrataColby/border.bin",
+      "blockdata_filepath": "data/layouts/StrataColby/map.bin",
       "layout_version": "emerald"
     }
   ]

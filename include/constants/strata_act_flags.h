@@ -94,5 +94,16 @@
 // ---- Epilogue ----------------------------------------------------
 #define FLAG_STRATA_EPILOGUE_BASE 0x2A4
 
+// The black-footed ferret in the prairie-dog town has been met (its object hides).
+#define FLAG_STRATA_EPI_FERRET_MET        (FLAG_STRATA_EPILOGUE_BASE + 0)
+// The player has read the Pair's case in the Interpretive Center.
+#define FLAG_STRATA_EPI_PAIR_SEEN         (FLAG_STRATA_EPILOGUE_BASE + 1)
+// The player has been through the Hall of Lost Lineages (set by the Docent).
+#define FLAG_STRATA_EPI_HALL_SEEN         (FLAG_STRATA_EPILOGUE_BASE + 2)
+// Halvorsen's final peer review is done. Not set yet: C13 sets it where the
+// Lv 55 battle goes (StrataInterpretive1F_EventScript_Halvorsen).
+#define FLAG_STRATA_EPI_PEER_REVIEW_DONE  (FLAG_STRATA_EPILOGUE_BASE + 3)
+// (4..7 are free.) There is no epilogue var: the story value 18 is the epilogue.
+
 
 #endif // GUARD_CONSTANTS_STRATA_ACT_FLAGS_H

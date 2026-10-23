@@ -1716,16 +1716,16 @@
       "name": "BURROW REFUGE"
     },
     {
-      "id": "MAPSEC_STRATA_MELTWATER",
-      "name": "MELTWATER RIVER"
+      "id": "MAPSEC_STRATA_MISSOURI_BREAKS",
+      "name": "MISSOURI BREAKS"
     },
     {
-      "id": "MAPSEC_STRATA_ICE_MARGIN",
-      "name": "ICE MARGIN"
+      "id": "MAPSEC_STRATA_PRYOR",
+      "name": "PRYOR MOUNTAINS"
     },
     {
-      "id": "MAPSEC_STRATA_COLBY",
-      "name": "COLBY SITE"
+      "id": "MAPSEC_STRATA_INTERPRETIVE",
+      "name": "INTERPRETIVE CENTER"
     },
     {
       "id": "MAPSEC_STRATA_LEGUME_THICKET",
@@ -1778,6 +1778,18 @@
     {
       "id": "MAPSEC_STRATA_TOADSTOOL",
       "name": "TOADSTOOL TRACKS"
+    },
+    {
+      "id": "MAPSEC_STRATA_MELTWATER",
+      "name": "MELTWATER RIVER"
+    },
+    {
+      "id": "MAPSEC_STRATA_ICE_MARGIN",
+      "name": "ICE MARGIN"
+    },
+    {
+      "id": "MAPSEC_STRATA_COLBY",
+      "name": "COLBY SITE"
     }
   ]
 }

@@ -105,7 +105,11 @@ largest extinction in the epilogue is the one humans were present for.
 | Meltwater River | ~20 ka | Route 118 west half, `*_ice_age` palettes, snow, sand-bar ford patched across the channel | Act 8; braided outwash, water habitat; *Chelydra* stand-in (surf and fishing), glacial-edge grazers on land; 3 field notes |
 | Ice Margin | ~20 ka | Route 111 desert rows 60-83, `*_ice_age` palettes, snow | Act 8; open habitat; *Ovibos*, *Mammuthus*, *Panthera*, *Ovis*; the ice, sea-level and mixed-bone-bed notes. Not a Laurentide front (that was hundreds of km north): mountain glaciers, drawn close |
 | Colby Site | ~13 ka | Route 118 east crop, `*_ice_age` palettes, no snow | Act 8 coda (same era, a late-glacial sub-layer reached by a marker, not a connection); no encounters; mammoth bone pile and a Clovis point (`FLAG_STRATA_COLBY_SEEN`); an evidence-for-and-against note |
-| Montana Prairie | today | Route 102 | Epilogue; open once the present layer is loaded, via the highway west of Jordan |
+| Montana Prairie | today | Route 102 | Epilogue; open once the present layer is loaded, via the highway west of Jordan. Prairie-dog town and a one-time black-footed ferret encounter (`FLAG_STRATA_EPI_FERRET_MET`), swift fox, sage-grouse, bison, pronghorn; 4 field notes; the Interpretive Center is the building in the east half (door warp); east edge opens to the Breaks, south edge to the Pryor Mountains |
+| Missouri Breaks | today | Route 114 top (river, badlands ground; house, berry plots and bridge removed) | Epilogue; water habitat: *Chelydra*, *Lepisosteus*, *Ovis*, *Meleagris*; 3 field notes (the same Hell Creek rock eroding today) |
+| Pryor Mountains | today | Route 112 south (red limestone plateau, stairs, lowland) | Epilogue, optional; feral *Equus* (3 visible horses), pronghorn, *Ovis*, sage-grouse; 3 field notes |
+| Interpretive Center | today | Lilycove Museum 1F | Epilogue; the Pair in the round case, paleoart murals of the layers, Halvorsen (final peer review hook for C13), Josie, Bea, Dale, Theo; stairs up |
+| Hall of Lost Lineages | today | Lilycove Museum 2F | Epilogue; five cases (one plaque per extinction filter: K-Pg, Paleocene recovery, Eocene-Oligocene, Miocene grassland, Ice Age) and two statues (end-Pleistocene; the case not written yet). Generic until F4 adds fossil flags |
 
 The present-day hub sits outside time: returning to camp does not change `VAR_STRATA_ERA`.
 The rig only moves up: once a layer is loaded, earlier layers are closed.
