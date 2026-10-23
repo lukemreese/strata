@@ -89,7 +89,11 @@ largest extinction in the epilogue is the one humans were present for.
 | Ashfall grassland | ~11.9 Ma | Route 113, volcanic ash | Act 7; *Teleoceras* bull (Lv 46) at the waterhole |
 | Ice Age Steppe | ~20 ka | Route 118, `*_ice_age` palettes, snow | Act 8; the sinkhole drops into the trap cave |
 | Natural Trap Cave | ~20 ka | Granite Cave 1F | Act 8; *Arctodus* boss (Lv 52); a rope climbs back out |
-| Montana Prairie | today | Route 102 | Epilogue; open once the present layer is loaded, via the highway west of Jordan |
+| Montana Prairie | today | Route 102 | Epilogue; open once the present layer is loaded, via the highway west of Jordan. Prairie-dog town and a one-time black-footed ferret encounter (`FLAG_STRATA_EPI_FERRET_MET`), swift fox, sage-grouse, bison, pronghorn; 4 field notes; the Interpretive Center is the building in the east half (door warp); east edge opens to the Breaks, south edge to the Pryor Mountains |
+| Missouri Breaks | today | Route 114 top (river, badlands ground; house, berry plots and bridge removed) | Epilogue; water habitat: *Chelydra*, *Lepisosteus*, *Ovis*, *Meleagris*; 3 field notes (the same Hell Creek rock eroding today) |
+| Pryor Mountains | today | Route 112 south (red limestone plateau, stairs, lowland) | Epilogue, optional; feral *Equus* (3 visible horses), pronghorn, *Ovis*, sage-grouse; 3 field notes |
+| Interpretive Center | today | Lilycove Museum 1F | Epilogue; the Pair in the round case, paleoart murals of the layers, Halvorsen (final peer review hook for C13), Josie, Bea, Dale, Theo; stairs up |
+| Hall of Lost Lineages | today | Lilycove Museum 2F | Epilogue; five cases (one plaque per extinction filter: K-Pg, Paleocene recovery, Eocene-Oligocene, Miocene grassland, Ice Age) and two statues (end-Pleistocene; the case not written yet). Generic until F4 adds fossil flags |
 
 The present-day hub sits outside time: returning to camp does not change `VAR_STRATA_ERA`.
 The rig only moves up: once a layer is loaded, earlier layers are closed.

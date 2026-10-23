@@ -1714,6 +1714,18 @@
     {
       "id": "MAPSEC_STRATA_BURROW",
       "name": "BURROW REFUGE"
+    },
+    {
+      "id": "MAPSEC_STRATA_MISSOURI_BREAKS",
+      "name": "MISSOURI BREAKS"
+    },
+    {
+      "id": "MAPSEC_STRATA_PRYOR",
+      "name": "PRYOR MOUNTAINS"
+    },
+    {
+      "id": "MAPSEC_STRATA_INTERPRETIVE",
+      "name": "INTERPRETIVE CENTER"
     }
   ]
 }
