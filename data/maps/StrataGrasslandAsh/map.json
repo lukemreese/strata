@@ -1,0 +1,92 @@
+{
+  "id": "MAP_STRATA_GRASSLAND_ASH",
+  "name": "StrataGrasslandAsh",
+  "layout": "LAYOUT_STRATA_GRASSLAND_ASH",
+  "music": "MUS_ROUTE113",
+  "region": "REGION_HOENN",
+  "region_map_section": "MAPSEC_STRATA_ASHFALL",
+  "requires_flash": false,
+  "weather": "WEATHER_VOLCANIC_ASH",
+  "map_type": "MAP_TYPE_ROUTE",
+  "allow_cycling": true,
+  "allow_escaping": false,
+  "allow_running": true,
+  "show_map_name": true,
+  "battle_scene": "MAP_BATTLE_SCENE_NORMAL",
+  "connections": [
+    {
+      "map": "MAP_STRATA_WATERHOLE_ASH",
+      "offset": 0,
+      "direction": "right"
+    },
+    {
+      "map": "MAP_STRATA_NIOBRARA_ASH",
+      "offset": 10,
+      "direction": "up"
+    },
+    {
+      "map": "MAP_STRATA_SAVANNA_ASH",
+      "offset": 29,
+      "direction": "down"
+    }
+  ],
+  "object_events": [],
+  "warp_events": [],
+  "coord_events": [],
+  "bg_events": [
+    {
+      "type": "sign",
+      "x": 4,
+      "y": 10,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
+      "script": "StrataGrassland_EventScript_NoteAshDepth"
+    },
+    {
+      "type": "sign",
+      "x": 23,
+      "y": 8,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
+      "script": "StrataGrassland_EventScript_NoteOrder"
+    },
+    {
+      "type": "sign",
+      "x": 5,
+      "y": 12,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
+      "script": "StrataFieldStation_EventScript_Anchor"
+    },
+    {
+      "type": "hidden_item",
+      "x": 45,
+      "y": 6,
+      "elevation": 0,
+      "item": "ITEM_CARRION",
+      "flag": "FLAG_TEMP_11",
+      "quantity": 1,
+      "underfoot": false
+    },
+    {
+      "type": "hidden_item",
+      "x": 11,
+      "y": 13,
+      "elevation": 0,
+      "item": "ITEM_CARRION",
+      "flag": "FLAG_TEMP_12",
+      "quantity": 1,
+      "underfoot": false
+    },
+    {
+      "type": "hidden_item",
+      "x": 48,
+      "y": 13,
+      "elevation": 0,
+      "item": "ITEM_CARRION",
+      "flag": "FLAG_TEMP_13",
+      "quantity": 1,
+      "underfoot": false
+    }
+  ]
+}

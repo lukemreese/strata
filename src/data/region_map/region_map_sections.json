@@ -1714,6 +1714,22 @@
     {
       "id": "MAPSEC_STRATA_BURROW",
       "name": "BURROW REFUGE"
+    },
+    {
+      "id": "MAPSEC_STRATA_SAVANNA",
+      "name": "SAVANNA WOODLAND"
+    },
+    {
+      "id": "MAPSEC_STRATA_NIOBRARA",
+      "name": "NIOBRARA RIVER"
+    },
+    {
+      "id": "MAPSEC_STRATA_WATERHOLE",
+      "name": "THE WATERHOLE"
+    },
+    {
+      "id": "MAPSEC_STRATA_ASHFALL_ASH",
+      "name": "ASHFALL (ASH)"
     }
   ]
 }

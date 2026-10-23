@@ -53,6 +53,12 @@
 #define FLAG_STRATA_ACT7_BASE 0x294
 #define VAR_STRATA_ACT7 0x40FD
 
+// The Epicyon at the carcass in the Savanna Woodland has been dealt with (its object hides).
+#define FLAG_STRATA_A7_EPICYON_GONE (FLAG_STRATA_ACT7_BASE + 0)
+// VAR_STRATA_ACT7: 0 = the haze on the horizon has not been seen yet, 1 = it has,
+// 2 = the Teleoceras battle is over and the ash maps have just loaded (Weeks-later text pending),
+// 3 = that text has been shown.
+
 
 // ---- Act 8: Ice Age ----------------------------------------------
 #define FLAG_STRATA_ACT8_BASE 0x29C

@@ -1,51 +1,63 @@
-@ Act 7: Ashfall Fossil Beds, Nebraska, ~11.9 Ma.
+@ Act 7: Ashfall Fossil Beds, Nebraska, ~11.9 Ma. The Grassland, before the ash: the
+@ rig arrives here. Its ash version is StrataGrasslandAsh; the boss is at the Waterhole.
 StrataGrassland_MapScripts::
 	.byte 0
 
-StrataGrassland_EventScript_Teleoceras::
+@ The first step away from the arrival point: the plume on the horizon (once).
+StrataGrassland_EventScript_Haze::
 	lockall
-	msgbox StrataGrassland_Text_Waterhole, MSGBOX_DEFAULT
-	playmoncry SPECIES_TELEOCERAS, CRY_MODE_ENCOUNTER
-	msgbox StrataGrassland_Text_TeleocerasAppears, MSGBOX_DEFAULT
-	waitmoncry
-	strata_boss_prep def=1
-	setwildbattle SPECIES_TELEOCERAS, 46
-	dowildbattle
-	strata_boss_done
-	specialvar VAR_RESULT, GetBattleOutcome
-	goto_if_eq VAR_RESULT, B_OUTCOME_RAN, StrataGrassland_EventScript_Ran
-	setvar VAR_STRATA_STORY, 15
-	msgbox StrataGrassland_Text_TeleocerasDone, MSGBOX_DEFAULT
+	msgbox StrataGrassland_Text_Haze, MSGBOX_DEFAULT
+	setvar VAR_STRATA_ACT7, 1
 	releaseall
 	end
 
-StrataGrassland_EventScript_Ran::
-	msgbox StrataGrassland_Text_Ran, MSGBOX_DEFAULT
-	releaseall
+StrataGrassland_EventScript_NoteTeeth::
+	msgbox StrataGrassland_Text_NoteTeeth, MSGBOX_SIGN
 	end
 
-StrataGrassland_Text_Waterhole:
-	.string "Grey ash drifts down without end.\n"
-	.string "It came from a volcano 1,600 km\l"
-	.string "away, in what is now Idaho.\p"
-	.string "Animals crowd the last waterhole.\n"
-	.string "Many are coughing.$"
+StrataGrassland_EventScript_NoteSeeds::
+	msgbox StrataGrassland_Text_NoteSeeds, MSGBOX_SIGN
+	end
 
-StrataGrassland_Text_TeleocerasAppears:
-	.string "A TELEOCERAS bull stands between\n"
-	.string "you and the water, ash caked on its\l"
-	.string "hide!$"
+StrataGrassland_EventScript_NoteCranes::
+	msgbox StrataGrassland_Text_NoteCranes, MSGBOX_SIGN
+	end
 
-StrataGrassland_Text_TeleocerasDone:
-	.string "The bull staggers back to the herd.\p"
-	.string "Breathing the glassy ash will make\n"
-	.string "them sick for weeks. The small\l"
-	.string "animals die first, then the horses\l"
-	.string "and camels, the rhinos last.\p"
-	.string "Their skeletons will be found here,\n"
-	.string "still standing in the ash.\p"
-	.string "Report back to DR. HALVORSEN.$"
+StrataGrassland_Text_Haze:
+	.string "Grass, as far as you can see, under\n"
+	.string "a warm, dry wind.\p"
+	.string "On the western horizon hangs a grey\n"
+	.string "smudge. It is the plume of a huge\l"
+	.string "eruption in what is now Idaho,\l"
+	.string "1,600 km away.\p"
+	.string "The animals here haven't noticed.$"
 
-StrataGrassland_Text_Ran:
-	.string "You stumble back through the ash.\n"
-	.string "The bull still guards the water.$"
+StrataGrassland_Text_NoteTeeth:
+	.string "FIELD NOTE: Teeth against grit\p"
+	.string "CORMOHIPPARION has tall, ridged\n"
+	.string "cheek teeth (high-crowned, or\l"
+	.string "hypsodont) that wear down slowly.\p"
+	.string "Grass is tough and gritty, and so\n"
+	.string "is dust. Which of the two drove\l"
+	.string "tall teeth is still debated.$"
+
+StrataGrassland_Text_NoteSeeds:
+	.string "FIELD NOTE: Seed heads\p"
+	.string "Grasslands covered the Great Plains\n"
+	.string "by now, mostly cool-season grasses.\l"
+	.string "The warm-season kind spread later,\l"
+	.string "a few million years on.\p"
+	.string "Ancient soil carbon in teeth and\n"
+	.string "soil tells the two apart.\p"
+	.string "Lineages that feed here are pushed\n"
+	.string "toward open ground.$"
+
+StrataGrassland_Text_NoteCranes:
+	.string "FIELD NOTE: Cranes on the plain\p"
+	.string "A BALEARICA, a crowned crane, has\n"
+	.string "been reported from Ashfall. Cranes\l"
+	.string "wade for seeds, insects and small\l"
+	.string "animals.\p"
+	.string "The identification rests on a few\n"
+	.string "bones, so treat it as tentative.\l"
+	.string "It does suggest wet ground nearby.$"

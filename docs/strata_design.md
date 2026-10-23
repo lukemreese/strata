@@ -86,7 +86,10 @@ largest extinction in the epilogue is the one humans were present for.
 | Red Beds | ~56 Ma | Route 114 north, `*_petm` palettes, drought | Act 4; *Coryphodon* boss (Lv 28) on the land bridge |
 | Lake Gosiute shore | ~50 Ma | Route 104 | Act 5; *Uintatherium* boss (Lv 34) across the south shore |
 | White River badlands | ~33 Ma | Route 114 south, `*_oligocene` palettes | Act 6; *Archaeotherium* boss (Lv 40) at the bone stash |
-| Ashfall grassland | ~11.9 Ma | Route 113, volcanic ash | Act 7; *Teleoceras* bull (Lv 46) at the waterhole |
+| Grassland / Grassland (ash) | ~11.9 Ma | Route 113 (x 15-69), `*_oligocene` palettes before the ash, stock ash tiles after | Act 7 arrival; the haze on the horizon (once); grazers; connects east to the Waterhole, north to the Niobrara River, south to the Savanna Woodland; field notes on teeth, seeds, cranes, ash depth, order of death |
+| Waterhole / Waterhole (ash) | ~11.9 Ma | Route 113 east end (x 70-99), the south plateau cut into a pond | Act 7 boss: *Teleoceras* bull + cow (wild double Lv 46/42); the ashfall starts in the intro text and the win fades into the ash version ("rhino barn" notes) |
+| Savanna Woodland / (ash) | ~11.9 Ma | Route 114 meadow, trees added | Act 7; *Hypohippus* (browser), the *Epicyon* mini-boss (Lv 44, once) at a carcass; ash version: scavengers |
+| Niobrara River / (ash) | ~11.9 Ma | Route 114 north lake (bridge made a gravel bar, tall grass on the banks) | Act 7; *Aphelops*, *Teleoceras*, *Macrochelys* and *Lepisosteus* (surf and fishing); notes on rhinos, turtles, river-laid ash |
 | Ice Age Steppe | ~20 ka | Route 118, `*_ice_age` palettes, snow | Act 8; the sinkhole drops into the trap cave |
 | Natural Trap Cave | ~20 ka | Granite Cave 1F | Act 8; *Arctodus* boss (Lv 52); a rope climbs back out |
 | Montana Prairie | today | Route 102 | Epilogue; open once the present layer is loaded, via the highway west of Jordan |
@@ -293,7 +296,9 @@ party and the PC boxes.
   | Bighorn red beds (Act 4) | open | day |
   | Lake Gosiute forest (Act 5) | forest | day |
   | White River (Act 6) | open | day |
-  | Ashfall grassland (Act 7) | open | ash |
+  | Grassland, Savanna Woodland (Act 7, before the ash) | open / forest | day |
+  | Niobrara River, Waterhole (Act 7, before the ash) | water | day |
+  | Ashfall, all four maps after the boss (Act 7) | same as the clear version | ash |
   | Ice Age steppe (Act 8) | open | day |
   | Natural Trap Cave (Act 8) | none | none (never tinted) |
   | Montana prairie (epilogue) | open | real clock |
