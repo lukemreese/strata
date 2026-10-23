@@ -1512,13 +1512,13 @@
         .palette = gMonPalette_Mesodma,
         .shinyPalette = gMonShinyPalette_Mesodma,
         .iconSprite = gMonIcon_Mesodma,
-        // Placeholder presentation borrowed from SPECIES_RATTATA
+        // Own art (tools/strata/gen_sprite.py); other presentation borrowed from SPECIES_RATTATA
         .pokemonScale = 481,
         .pokemonOffset = 21,
         .trainerScale = 256,
         .trainerOffset = 0,
-        .frontPicSize = P_GBA_STYLE_SPECIES_GFX ? MON_COORDS_SIZE(32, 32) : MON_COORDS_SIZE(40, 40),
-        .frontPicYOffset = P_GBA_STYLE_SPECIES_GFX ? 16 : 13,
+        .frontPicSize = MON_COORDS_SIZE(64, 40),
+        .frontPicYOffset = 16,
         .frontAnimFrames = ANIM_FRAMES(
             ANIMCMD_FRAME(1, 11),
             ANIMCMD_FRAME(0, 11),
@@ -1526,8 +1526,8 @@
             ANIMCMD_FRAME(0, 1),
         ),
         .frontAnimId = P_GBA_STYLE_SPECIES_GFX ? ANIM_RAPID_H_HOPS : ANIM_H_JUMPS,
-        .backPicSize = P_GBA_STYLE_SPECIES_GFX ? MON_COORDS_SIZE(48, 40) : MON_COORDS_SIZE(64, 56),
-        .backPicYOffset = P_GBA_STYLE_SPECIES_GFX ? 13 : 7,
+        .backPicSize = MON_COORDS_SIZE(64, 40),
+        .backPicYOffset = 15,
         .backAnimId = BACK_ANIM_V_SHAKE_H_SLIDE,
         .iconPalIndex = 2,
         SHADOW(1, -3, SHADOW_SIZE_S)
@@ -2512,13 +2512,13 @@
         .palette = gMonPalette_Knightia,
         .shinyPalette = gMonShinyPalette_Knightia,
         .iconSprite = gMonIcon_Knightia,
-        // Placeholder presentation borrowed from SPECIES_FINNEON
+        // Own art (tools/strata/gen_sprite.py); other presentation borrowed from SPECIES_FINNEON
         .pokemonScale = 491,
         .pokemonOffset = 12,
         .trainerScale = 256,
         .trainerOffset = 0,
-        .frontPicSize = MON_COORDS_SIZE(32, 40),
-        .frontPicYOffset = 14,
+        .frontPicSize = MON_COORDS_SIZE(56, 32),
+        .frontPicYOffset = 18,
         .frontAnimFrames = ANIM_FRAMES(
             ANIMCMD_FRAME(1, 12),
             ANIMCMD_FRAME(0, 12),
@@ -2530,10 +2530,10 @@
             ANIMCMD_FRAME(0, 15),
         ),
         .frontAnimId = ANIM_V_SLIDE_WOBBLE_SMALL,
-        .backPicSize = MON_COORDS_SIZE(56, 40),
-        .backPicYOffset = 12,
+        .backPicSize = MON_COORDS_SIZE(64, 32),
+        .backPicYOffset = 17,
         .backAnimId = BACK_ANIM_CONVEX_DOUBLE_ARC,
-        .iconPalIndex = 0,
+        .iconPalIndex = 3,
         SHADOW(0, 1, SHADOW_SIZE_S)
         FOOTPRINT(Knightia)
         .levelUpLearnset = sKnightiaLevelUpLearnset,
