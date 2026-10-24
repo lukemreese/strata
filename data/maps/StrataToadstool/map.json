@@ -23,7 +23,7 @@
   "object_events": [
     {
       "local_id": "LOCALID_STRATA_TT_HYAENODON",
-      "graphics_id": "OBJ_EVENT_GFX_SPECIES(MIGHTYENA)",
+      "graphics_id": "OBJ_EVENT_GFX_SPECIES(HYAENODON)",
       "x": 12,
       "y": 8,
       "elevation": 3,

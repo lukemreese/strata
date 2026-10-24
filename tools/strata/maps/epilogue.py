@@ -91,13 +91,13 @@ MAPS = [
         warps=[warp(CENTER_DOOR[0], CENTER_DOOR[1], "MAP_STRATA_INTERPRETIVE_1F", 0)],     # 0: the Interpretive Center
         objects=[
             # The prairie-dog town: three black-tailed prairie dogs, and the ferret that hunts them.
-            obj("LOCALID_STRATA_PRAIRIE_DOG_A", "OBJ_EVENT_GFX_SPECIES(SKWOVET)", 42, 8,
+            obj("LOCALID_STRATA_PRAIRIE_DOG_A", "OBJ_EVENT_GFX_SPECIES(CYNOMYS)", 42, 8,
                 "StrataPrairie_EventScript_Dog", "MOVEMENT_TYPE_LOOK_AROUND"),
-            obj("LOCALID_STRATA_PRAIRIE_DOG_B", "OBJ_EVENT_GFX_SPECIES(SKWOVET)", 45, 12,
+            obj("LOCALID_STRATA_PRAIRIE_DOG_B", "OBJ_EVENT_GFX_SPECIES(CYNOMYS)", 45, 12,
                 "StrataPrairie_EventScript_Dog", "MOVEMENT_TYPE_FACE_LEFT"),
-            obj("LOCALID_STRATA_PRAIRIE_DOG_C", "OBJ_EVENT_GFX_SPECIES(SKWOVET)", 41, 14,
+            obj("LOCALID_STRATA_PRAIRIE_DOG_C", "OBJ_EVENT_GFX_SPECIES(CYNOMYS)", 41, 14,
                 "StrataPrairie_EventScript_Dog", "MOVEMENT_TYPE_FACE_UP"),
-            obj("LOCALID_STRATA_PRAIRIE_FERRET", "OBJ_EVENT_GFX_SPECIES(FURRET)", 44, 10,
+            obj("LOCALID_STRATA_PRAIRIE_FERRET", "OBJ_EVENT_GFX_SPECIES(MUSTELA)", 44, 10,
                 "StrataPrairie_EventScript_Ferret", "MOVEMENT_TYPE_FACE_DOWN", flag=_FERRET_MET),
         ],
         bgs=[sign(2, 10, "StrataPrairie_EventScript_TrailToCamp"),
@@ -154,11 +154,11 @@ MAPS = [
         connections=[connection("up", "MAP_STRATA_PRAIRIE", -18)],
         objects=[
             # Feral horses: Equus came back with the Spanish, in the 1500s.
-            obj("LOCALID_STRATA_PRYOR_HORSE_A", "OBJ_EVENT_GFX_SPECIES(MUDSDALE)", 14, 12,
+            obj("LOCALID_STRATA_PRYOR_HORSE_A", "OBJ_EVENT_GFX_SPECIES(EQUUS)", 14, 12,
                 "StrataPryor_EventScript_Horse", "MOVEMENT_TYPE_FACE_RIGHT"),
-            obj("LOCALID_STRATA_PRYOR_HORSE_B", "OBJ_EVENT_GFX_SPECIES(MUDSDALE)", 18, 13,
+            obj("LOCALID_STRATA_PRYOR_HORSE_B", "OBJ_EVENT_GFX_SPECIES(EQUUS)", 18, 13,
                 "StrataPryor_EventScript_Horse", "MOVEMENT_TYPE_FACE_LEFT"),
-            obj("LOCALID_STRATA_PRYOR_HORSE_C", "OBJ_EVENT_GFX_SPECIES(MUDSDALE)", 26, 10,
+            obj("LOCALID_STRATA_PRYOR_HORSE_C", "OBJ_EVENT_GFX_SPECIES(EQUUS)", 26, 10,
                 "StrataPryor_EventScript_Horse", "MOVEMENT_TYPE_FACE_DOWN"),
         ],
         bgs=[s for _, s in _PRYOR_NOTES],

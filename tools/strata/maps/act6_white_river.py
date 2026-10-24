@@ -98,7 +98,7 @@ MAPS = [
                              [(13, 32), (14, 32), (24, 34), (25, 34)]),
         objects=[
             # The hell pig at its stash: talking to it starts the same fight as the triggers.
-            obj("LOCALID_STRATA_WR_ARCHAEOTHERIUM", "OBJ_EVENT_GFX_SPECIES(PIGNITE)", _HELL_PIG_AT[0], _HELL_PIG_AT[1],
+            obj("LOCALID_STRATA_WR_ARCHAEOTHERIUM", "OBJ_EVENT_GFX_SPECIES(ARCHAEOTHERE)", _HELL_PIG_AT[0], _HELL_PIG_AT[1],
                 "StrataWhiteRiver_EventScript_Archaeotherium", "MOVEMENT_TYPE_FACE_DOWN", flag="FLAG_UNUSED_0x28D",
                 elevation=7),
         ],
@@ -158,11 +158,11 @@ MAPS = [
         bgs=[_BW_ANCHOR[1]] + [s for _, s in _BW_NOTES],
         objects=[
             # Oreodonts grazing: a herd (talk for a note; they ignore you).
-            obj("LOCALID_STRATA_BW_HERD_A", "OBJ_EVENT_GFX_SPECIES(MUDBRAY)", 24, 9, "StrataBadlandsWall_EventScript_Herd",
+            obj("LOCALID_STRATA_BW_HERD_A", "OBJ_EVENT_GFX_SPECIES(MERYCOIDODON)", 24, 9, "StrataBadlandsWall_EventScript_Herd",
                 "MOVEMENT_TYPE_FACE_DOWN"),
-            obj("LOCALID_STRATA_BW_HERD_B", "OBJ_EVENT_GFX_SPECIES(MUDBRAY)", 26, 11, "StrataBadlandsWall_EventScript_Herd",
+            obj("LOCALID_STRATA_BW_HERD_B", "OBJ_EVENT_GFX_SPECIES(MERYCOIDODON)", 26, 11, "StrataBadlandsWall_EventScript_Herd",
                 "MOVEMENT_TYPE_FACE_LEFT"),
-            obj("LOCALID_STRATA_BW_HERD_C", "OBJ_EVENT_GFX_SPECIES(MUDBRAY)", 22, 12, "StrataBadlandsWall_EventScript_Herd",
+            obj("LOCALID_STRATA_BW_HERD_C", "OBJ_EVENT_GFX_SPECIES(MERYCOIDODON)", 22, 12, "StrataBadlandsWall_EventScript_Herd",
                 "MOVEMENT_TYPE_FACE_RIGHT"),
         ],
         encounters=dict(
@@ -188,7 +188,7 @@ MAPS = [
             trigger(10, y, "VAR_UNUSED_0x40FC", 0, "StrataToadstool_EventScript_Hyaenodon") for y in (9, 10, 11)
         ],
         objects=[
-            obj("LOCALID_STRATA_TT_HYAENODON", "OBJ_EVENT_GFX_SPECIES(MIGHTYENA)", _HYAENODON_AT[0], _HYAENODON_AT[1],
+            obj("LOCALID_STRATA_TT_HYAENODON", "OBJ_EVENT_GFX_SPECIES(HYAENODON)", _HYAENODON_AT[0], _HYAENODON_AT[1],
                 "StrataToadstool_EventScript_Hyaenodon", "MOVEMENT_TYPE_FACE_LEFT", flag="FLAG_UNUSED_0x28C"),
         ],
         encounters=dict(

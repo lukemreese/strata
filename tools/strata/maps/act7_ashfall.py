@@ -176,15 +176,15 @@ WATERHOLE = dict(
         coords=boss_triggers("ERA_ASHFALL", "StrataWaterhole_EventScript_Teleoceras", [(16, y) for y in range(7, 20)]),
         objects=[
             # The bull and the cow at the water: talking to either starts the boss battle.
-            obj("LOCALID_STRATA_WATERHOLE_BULL", "OBJ_EVENT_GFX_SPECIES(RHYDON)", 22, 12,
+            obj("LOCALID_STRATA_WATERHOLE_BULL", "OBJ_EVENT_GFX_SPECIES(TELEOCERAS)", 22, 12,
                 "StrataWaterhole_EventScript_Teleoceras", "MOVEMENT_TYPE_FACE_DOWN"),
-            obj("LOCALID_STRATA_WATERHOLE_COW", "OBJ_EVENT_GFX_SPECIES(RHYDON)", 24, 12,
+            obj("LOCALID_STRATA_WATERHOLE_COW", "OBJ_EVENT_GFX_SPECIES(TELEOCERAS)", 24, 12,
                 "StrataWaterhole_EventScript_Teleoceras", "MOVEMENT_TYPE_FACE_DOWN"),
-            obj("LOCALID_STRATA_WATERHOLE_HERD_A", "OBJ_EVENT_GFX_SPECIES(RHYDON)", 20, 18,
+            obj("LOCALID_STRATA_WATERHOLE_HERD_A", "OBJ_EVENT_GFX_SPECIES(TELEOCERAS)", 20, 18,
                 "StrataWaterhole_EventScript_Herd", "MOVEMENT_TYPE_FACE_UP"),
-            obj("LOCALID_STRATA_WATERHOLE_HERD_B", "OBJ_EVENT_GFX_SPECIES(RHYDON)", 26, 18,
+            obj("LOCALID_STRATA_WATERHOLE_HERD_B", "OBJ_EVENT_GFX_SPECIES(TELEOCERAS)", 26, 18,
                 "StrataWaterhole_EventScript_Herd", "MOVEMENT_TYPE_FACE_LEFT"),
-            obj("LOCALID_STRATA_WATERHOLE_CAMEL", "OBJ_EVENT_GFX_SPECIES(CAMERUPT)", 19, 11,
+            obj("LOCALID_STRATA_WATERHOLE_CAMEL", "OBJ_EVENT_GFX_SPECIES(PROCAMELUS)", 19, 11,
                 "StrataWaterhole_EventScript_Camel", "MOVEMENT_TYPE_FACE_DOWN"),
         ],
         encounters=dict(
@@ -204,9 +204,9 @@ WATERHOLE = dict(
         forage=[forage(26, 11, "CARRION"), forage(16, 18, "CARRION")],
         objects=[
             # The skeletons-to-be: the herd, still standing at the water.
-            obj("LOCALID_STRATA_WATERHOLE_ASH_A", "OBJ_EVENT_GFX_SPECIES(RHYDON)", 21, 12,
+            obj("LOCALID_STRATA_WATERHOLE_ASH_A", "OBJ_EVENT_GFX_SPECIES(TELEOCERAS)", 21, 12,
                 "StrataWaterhole_EventScript_AshRhino", "MOVEMENT_TYPE_FACE_DOWN"),
-            obj("LOCALID_STRATA_WATERHOLE_ASH_B", "OBJ_EVENT_GFX_SPECIES(RHYDON)", 25, 12,
+            obj("LOCALID_STRATA_WATERHOLE_ASH_B", "OBJ_EVENT_GFX_SPECIES(TELEOCERAS)", 25, 12,
                 "StrataWaterhole_EventScript_AshRhino", "MOVEMENT_TYPE_FACE_DOWN"),
         ],
         encounters=dict(
@@ -247,7 +247,7 @@ SAVANNA = dict(
         forage=[forage(12, 11, "BROWSE"), forage(16, 19, "BROWSE"), forage(18, 13, "LARVAE"), forage(9, 20, "SEED_HEAD")],
         objects=[
             # The Epicyon mini-boss (Lv 44), once: a bone-cracking dog at a carcass.
-            obj("LOCALID_STRATA_SAVANNA_EPICYON", "OBJ_EVENT_GFX_SPECIES(HOUNDOUR)", 15, 14,
+            obj("LOCALID_STRATA_SAVANNA_EPICYON", "OBJ_EVENT_GFX_SPECIES(EPICYON)", 15, 14,
                 "StrataSavanna_EventScript_Epicyon", "MOVEMENT_TYPE_FACE_LEFT", flag="FLAG_UNUSED_0x294"),
         ],
         encounters=dict(

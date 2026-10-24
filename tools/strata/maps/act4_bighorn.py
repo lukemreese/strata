@@ -214,7 +214,7 @@ MAPS = [
         music="MUS_ROUTE110", weather="WEATHER_DROUGHT", map_type="MAP_TYPE_ROUTE", mapsec="MAPSEC_STRATA_CLARKS_FORK",
         connections=[connection("up", "MAP_STRATA_POLECAT_BENCH", 6), connection("left", "MAP_STRATA_WILLWOOD_SWAMP", 4)],
         objects=[
-            obj("LOCALID_STRATA_CLARKS_OXYAENA", "OBJ_EVENT_GFX_MEOWTH", 9, 9,
+            obj("LOCALID_STRATA_CLARKS_OXYAENA", "OBJ_EVENT_GFX_SPECIES(OXYAENA)", 9, 9,
                 "StrataClarksFork_EventScript_Oxyaena", movement="MOVEMENT_TYPE_FACE_LEFT",
                 flag=FLAG_ACT4_OXYAENA),
         ],

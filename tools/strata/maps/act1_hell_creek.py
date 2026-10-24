@@ -94,7 +94,7 @@ MAPS = [
         ],
         objects=[
             # The tyrant on the bluff: talking to it starts the same set piece as the triggers.
-            obj("LOCALID_STRATA_RIVER_TYRANT", "OBJ_EVENT_GFX_SPECIES(TYRANTRUM)", _TYRANT_AT[0], _TYRANT_AT[1],
+            obj("LOCALID_STRATA_RIVER_TYRANT", "OBJ_EVENT_GFX_SPECIES(TYRANNOSAUR)", _TYRANT_AT[0], _TYRANT_AT[1],
                 "StrataRiver_EventScript_Tyrannosaur", "MOVEMENT_TYPE_FACE_DOWN", flag="FLAG_UNUSED_0x265",
                 elevation=4),
         ],
@@ -149,15 +149,15 @@ MAPS = [
         ],
         objects=[
             # Three Edmontosaurus grazing, and the Acheroraptor pair stalking them.
-            obj("LOCALID_STRATA_GLADE_HERD_A", "OBJ_EVENT_GFX_SPECIES(TROPIUS)", 9, 9,
+            obj("LOCALID_STRATA_GLADE_HERD_A", "OBJ_EVENT_GFX_SPECIES(EDMONTOSAUR)", 9, 9,
                 "StrataFernGlade_EventScript_Herd", "MOVEMENT_TYPE_FACE_DOWN"),
-            obj("LOCALID_STRATA_GLADE_HERD_B", "OBJ_EVENT_GFX_SPECIES(TROPIUS)", 11, 11,
+            obj("LOCALID_STRATA_GLADE_HERD_B", "OBJ_EVENT_GFX_SPECIES(EDMONTOSAUR)", 11, 11,
                 "StrataFernGlade_EventScript_Herd", "MOVEMENT_TYPE_FACE_LEFT"),
-            obj("LOCALID_STRATA_GLADE_HERD_C", "OBJ_EVENT_GFX_SPECIES(TROPIUS)", 8, 13,
+            obj("LOCALID_STRATA_GLADE_HERD_C", "OBJ_EVENT_GFX_SPECIES(EDMONTOSAUR)", 8, 13,
                 "StrataFernGlade_EventScript_Herd", "MOVEMENT_TYPE_FACE_RIGHT"),
-            obj("LOCALID_STRATA_GLADE_RAPTOR_A", "OBJ_EVENT_GFX_SPECIES(ARCHEN)", 17, 4,
+            obj("LOCALID_STRATA_GLADE_RAPTOR_A", "OBJ_EVENT_GFX_SPECIES(ACHERORAPTOR)", 17, 4,
                 "StrataFernGlade_EventScript_RaptorAmbush", "MOVEMENT_TYPE_FACE_LEFT", flag="FLAG_UNUSED_0x264"),
-            obj("LOCALID_STRATA_GLADE_RAPTOR_B", "OBJ_EVENT_GFX_SPECIES(ARCHEN)", 18, 6,
+            obj("LOCALID_STRATA_GLADE_RAPTOR_B", "OBJ_EVENT_GFX_SPECIES(ACHERORAPTOR)", 18, 6,
                 "StrataFernGlade_EventScript_RaptorAmbush", "MOVEMENT_TYPE_FACE_LEFT", flag="FLAG_UNUSED_0x264"),
         ],
         bgs=[s for _, s in _GLADE_NOTES],

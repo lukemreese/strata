@@ -28,7 +28,7 @@
   "object_events": [
     {
       "local_id": "LOCALID_STRATA_CLARKS_OXYAENA",
-      "graphics_id": "OBJ_EVENT_GFX_MEOWTH",
+      "graphics_id": "OBJ_EVENT_GFX_SPECIES(OXYAENA)",
       "x": 9,
       "y": 9,
       "elevation": 3,

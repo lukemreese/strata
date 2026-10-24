@@ -87,7 +87,7 @@ MAPS = [
             obj("LOCALID_STRATA_CAMP_STUDENT", "OBJ_EVENT_GFX_PICNICKER", 22, 11,
                 "StrataFieldCamp_EventScript_Student", "MOVEMENT_TYPE_LOOK_AROUND"),
             # The camp store: the quartermaster, parked beside the station door.
-            obj("LOCALID_STRATA_CAMP_QUARTERMASTER", "OBJ_EVENT_GFX_WORKER_M", 29, 19,
+            obj("LOCALID_STRATA_CAMP_QUARTERMASTER", "OBJ_EVENT_GFX_EXPERT_F", 29, 19,
                 "StrataFieldCamp_EventScript_Quartermaster", "MOVEMENT_TYPE_FACE_LEFT"),
         ],
         bgs=[
@@ -109,7 +109,7 @@ MAPS = [
         objects=[
             obj("LOCALID_STRATA_MENTOR", "OBJ_EVENT_GFX_SCIENTIST_1", 6, 5,
                 "StrataFieldStation_EventScript_Mentor"),
-            obj("LOCALID_STRATA_RELEARNER", "OBJ_EVENT_GFX_WORKER_F", 9, 3,
+            obj("LOCALID_STRATA_RELEARNER", "OBJ_EVENT_GFX_WOMAN_3", 9, 3,
                 "StrataFieldStation_EventScript_Relearner"),
         ],
         bgs=[
@@ -215,7 +215,7 @@ MAPS = [
         warps=[warp(5, 7, "MAP_STRATA_JORDAN", 2), warp(6, 7, "MAP_STRATA_JORDAN", 2)],
         objects=[
             # Ranger Lucia Ortiz, BLM paleontology / law-enforcement ranger.
-            obj("LOCALID_STRATA_RANGER", "OBJ_EVENT_GFX_POLICEMAN", 5, 4,
+            obj("LOCALID_STRATA_RANGER", "OBJ_EVENT_GFX_MAN_5", 5, 4,
                 "StrataBlmOffice_EventScript_Ranger"),
         ],
         bgs=[

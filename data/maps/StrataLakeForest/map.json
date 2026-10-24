@@ -28,7 +28,7 @@
   "object_events": [
     {
       "local_id": "LOCALID_STRATA_A5_BULL",
-      "graphics_id": "OBJ_EVENT_GFX_SPECIES(RHYPERIOR)",
+      "graphics_id": "OBJ_EVENT_GFX_SPECIES(UINTATHERIUM)",
       "x": 39,
       "y": 62,
       "elevation": 3,

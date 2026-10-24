@@ -28,7 +28,7 @@
   "object_events": [
     {
       "local_id": "LOCALID_STRATA_BW_HERD_A",
-      "graphics_id": "OBJ_EVENT_GFX_SPECIES(MUDBRAY)",
+      "graphics_id": "OBJ_EVENT_GFX_SPECIES(MERYCOIDODON)",
       "x": 24,
       "y": 9,
       "elevation": 3,
@@ -42,7 +42,7 @@
     },
     {
       "local_id": "LOCALID_STRATA_BW_HERD_B",
-      "graphics_id": "OBJ_EVENT_GFX_SPECIES(MUDBRAY)",
+      "graphics_id": "OBJ_EVENT_GFX_SPECIES(MERYCOIDODON)",
       "x": 26,
       "y": 11,
       "elevation": 3,
@@ -56,7 +56,7 @@
     },
     {
       "local_id": "LOCALID_STRATA_BW_HERD_C",
-      "graphics_id": "OBJ_EVENT_GFX_SPECIES(MUDBRAY)",
+      "graphics_id": "OBJ_EVENT_GFX_SPECIES(MERYCOIDODON)",
       "x": 22,
       "y": 12,
       "elevation": 3,

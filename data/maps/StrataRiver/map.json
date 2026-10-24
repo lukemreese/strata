@@ -28,7 +28,7 @@
   "object_events": [
     {
       "local_id": "LOCALID_STRATA_RIVER_TYRANT",
-      "graphics_id": "OBJ_EVENT_GFX_SPECIES(TYRANTRUM)",
+      "graphics_id": "OBJ_EVENT_GFX_SPECIES(TYRANNOSAUR)",
       "x": 33,
       "y": 6,
       "elevation": 4,

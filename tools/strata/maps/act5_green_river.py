@@ -112,7 +112,7 @@ MAPS = [
         objects=[
             # The bull, placeholder sprite borrowed from its battle sprite's species. Hidden
             # (flag set) until the boss line is crossed, see scripts.inc.
-            obj("LOCALID_STRATA_A5_BULL", "OBJ_EVENT_GFX_SPECIES(RHYPERIOR)", 39, 62,
+            obj("LOCALID_STRATA_A5_BULL", "OBJ_EVENT_GFX_SPECIES(UINTATHERIUM)", 39, 62,
                 "StrataLakeForest_EventScript_BullTalk", movement="MOVEMENT_TYPE_FACE_LEFT",
                 flag=BULL_FLAG),
         ],
@@ -188,7 +188,7 @@ MAPS = [
         connections=[connection("left", "MAP_STRATA_BRIDGER_FOREST", 0)],
         objects=[
             # The Patriofelis set piece: a one-time wild battle (flag set once it's over).
-            obj("LOCALID_STRATA_A5_PATRIOFELIS", "OBJ_EVENT_GFX_SPECIES(LITLEO)", 12, 26,
+            obj("LOCALID_STRATA_A5_PATRIOFELIS", "OBJ_EVENT_GFX_SPECIES(PATRIOFELIS)", 12, 26,
                 "StrataOilShale_EventScript_Patriofelis", movement="MOVEMENT_TYPE_LOOK_AROUND",
                 flag=PATRIOFELIS_FLAG),
         ],

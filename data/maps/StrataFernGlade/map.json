@@ -23,7 +23,7 @@
   "object_events": [
     {
       "local_id": "LOCALID_STRATA_GLADE_HERD_A",
-      "graphics_id": "OBJ_EVENT_GFX_SPECIES(TROPIUS)",
+      "graphics_id": "OBJ_EVENT_GFX_SPECIES(EDMONTOSAUR)",
       "x": 9,
       "y": 9,
       "elevation": 3,
@@ -37,7 +37,7 @@
     },
     {
       "local_id": "LOCALID_STRATA_GLADE_HERD_B",
-      "graphics_id": "OBJ_EVENT_GFX_SPECIES(TROPIUS)",
+      "graphics_id": "OBJ_EVENT_GFX_SPECIES(EDMONTOSAUR)",
       "x": 11,
       "y": 11,
       "elevation": 3,
@@ -51,7 +51,7 @@
     },
     {
       "local_id": "LOCALID_STRATA_GLADE_HERD_C",
-      "graphics_id": "OBJ_EVENT_GFX_SPECIES(TROPIUS)",
+      "graphics_id": "OBJ_EVENT_GFX_SPECIES(EDMONTOSAUR)",
       "x": 8,
       "y": 13,
       "elevation": 3,
@@ -65,7 +65,7 @@
     },
     {
       "local_id": "LOCALID_STRATA_GLADE_RAPTOR_A",
-      "graphics_id": "OBJ_EVENT_GFX_SPECIES(ARCHEN)",
+      "graphics_id": "OBJ_EVENT_GFX_SPECIES(ACHERORAPTOR)",
       "x": 17,
       "y": 4,
       "elevation": 3,
@@ -79,7 +79,7 @@
     },
     {
       "local_id": "LOCALID_STRATA_GLADE_RAPTOR_B",
-      "graphics_id": "OBJ_EVENT_GFX_SPECIES(ARCHEN)",
+      "graphics_id": "OBJ_EVENT_GFX_SPECIES(ACHERORAPTOR)",
       "x": 18,
       "y": 6,
       "elevation": 3,

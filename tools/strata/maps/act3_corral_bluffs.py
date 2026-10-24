@@ -78,7 +78,7 @@ MAPS = [
         music="MUS_ROUTE120", map_type="MAP_TYPE_ROUTE", mapsec="MAPSEC_STRATA_LEGUME_THICKET",
         connections=[connection("right", "MAP_STRATA_PALM_FOREST", 10)],
         objects=[
-            obj("LOCALID_STRATA_THICKET_EOCONODON", "OBJ_EVENT_GFX_SPECIES(STOUTLAND)", 10, 9,
+            obj("LOCALID_STRATA_THICKET_EOCONODON", "OBJ_EVENT_GFX_SPECIES(EOCONODON)", 10, 9,
                 "StrataLegumeThicket_EventScript_EoconodonLook", "MOVEMENT_TYPE_FACE_DOWN",
                 flag=a3_flag(4)),
         ],
@@ -112,7 +112,7 @@ MAPS = [
         connections=[connection("left", "MAP_STRATA_PALM_FOREST", -15)],
         objects=[
             # The mini-boss: a Taeniolabis cracking seeds on the flats.
-            obj("LOCALID_STRATA_BLUFFS_TAENIOLABIS", "OBJ_EVENT_GFX_SPECIES(BIDOOF)", 28, 15,
+            obj("LOCALID_STRATA_BLUFFS_TAENIOLABIS", "OBJ_EVENT_GFX_SPECIES(TAENIOLABIS)", 28, 15,
                 "StrataConcretionBluffs_EventScript_Taeniolabis", "MOVEMENT_TYPE_FACE_DOWN",
                 flag=a3_flag(3)),
             # Concretions: round rocks to crack (one-time finds).

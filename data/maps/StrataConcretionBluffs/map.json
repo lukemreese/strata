@@ -23,7 +23,7 @@
   "object_events": [
     {
       "local_id": "LOCALID_STRATA_BLUFFS_TAENIOLABIS",
-      "graphics_id": "OBJ_EVENT_GFX_SPECIES(BIDOOF)",
+      "graphics_id": "OBJ_EVENT_GFX_SPECIES(TAENIOLABIS)",
       "x": 28,
       "y": 15,
       "elevation": 3,

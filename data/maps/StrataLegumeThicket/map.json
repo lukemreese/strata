@@ -23,7 +23,7 @@
   "object_events": [
     {
       "local_id": "LOCALID_STRATA_THICKET_EOCONODON",
-      "graphics_id": "OBJ_EVENT_GFX_SPECIES(STOUTLAND)",
+      "graphics_id": "OBJ_EVENT_GFX_SPECIES(EOCONODON)",
       "x": 10,
       "y": 9,
       "elevation": 3,

@@ -23,7 +23,7 @@
   "object_events": [
     {
       "local_id": "LOCALID_STRATA_WR_ARCHAEOTHERIUM",
-      "graphics_id": "OBJ_EVENT_GFX_SPECIES(PIGNITE)",
+      "graphics_id": "OBJ_EVENT_GFX_SPECIES(ARCHAEOTHERE)",
       "x": 19,
       "y": 26,
       "elevation": 7,

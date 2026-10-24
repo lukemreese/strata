@@ -112,9 +112,9 @@ MAPS = [
             trigger(61, y, "VAR_UNUSED_0x40FE", 0, "StrataSteppe_EventScript_Lions") for y in range(9, 13)
         ],
         objects=[
-            obj("LOCALID_STRATA_STEPPE_LION_A", "OBJ_EVENT_GFX_SPECIES(PYROAR)", _LIONS[0][0], _LIONS[0][1],
+            obj("LOCALID_STRATA_STEPPE_LION_A", "OBJ_EVENT_GFX_SPECIES(PANTHERA)", _LIONS[0][0], _LIONS[0][1],
                 "StrataSteppe_EventScript_Lions", "MOVEMENT_TYPE_FACE_LEFT", flag="FLAG_UNUSED_0x29C"),
-            obj("LOCALID_STRATA_STEPPE_LION_B", "OBJ_EVENT_GFX_SPECIES(PYROAR)", _LIONS[1][0], _LIONS[1][1],
+            obj("LOCALID_STRATA_STEPPE_LION_B", "OBJ_EVENT_GFX_SPECIES(PANTHERA)", _LIONS[1][0], _LIONS[1][1],
                 "StrataSteppe_EventScript_Lions", "MOVEMENT_TYPE_FACE_LEFT", flag="FLAG_UNUSED_0x29C"),
         ],
         # Aenocyon is not wild here (H5: the dire wolf is not a secure record at the cave).

@@ -23,7 +23,7 @@
   "object_events": [
     {
       "local_id": "LOCALID_STRATA_SAVANNA_EPICYON",
-      "graphics_id": "OBJ_EVENT_GFX_SPECIES(HOUNDOUR)",
+      "graphics_id": "OBJ_EVENT_GFX_SPECIES(EPICYON)",
       "x": 15,
       "y": 14,
       "elevation": 3,

@@ -28,7 +28,7 @@
   "object_events": [
     {
       "local_id": "LOCALID_STRATA_PRAIRIE_DOG_A",
-      "graphics_id": "OBJ_EVENT_GFX_SPECIES(SKWOVET)",
+      "graphics_id": "OBJ_EVENT_GFX_SPECIES(CYNOMYS)",
       "x": 42,
       "y": 8,
       "elevation": 3,
@@ -42,7 +42,7 @@
     },
     {
       "local_id": "LOCALID_STRATA_PRAIRIE_DOG_B",
-      "graphics_id": "OBJ_EVENT_GFX_SPECIES(SKWOVET)",
+      "graphics_id": "OBJ_EVENT_GFX_SPECIES(CYNOMYS)",
       "x": 45,
       "y": 12,
       "elevation": 3,
@@ -56,7 +56,7 @@
     },
     {
       "local_id": "LOCALID_STRATA_PRAIRIE_DOG_C",
-      "graphics_id": "OBJ_EVENT_GFX_SPECIES(SKWOVET)",
+      "graphics_id": "OBJ_EVENT_GFX_SPECIES(CYNOMYS)",
       "x": 41,
       "y": 14,
       "elevation": 3,
@@ -70,7 +70,7 @@
     },
     {
       "local_id": "LOCALID_STRATA_PRAIRIE_FERRET",
-      "graphics_id": "OBJ_EVENT_GFX_SPECIES(FURRET)",
+      "graphics_id": "OBJ_EVENT_GFX_SPECIES(MUSTELA)",
       "x": 44,
       "y": 10,
       "elevation": 3,

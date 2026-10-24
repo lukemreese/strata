@@ -258,11 +258,59 @@ def write_map_info():
         f.write("\n".join(lines) + "\n")
 
 
+def emerald_object_graphics():
+    """OBJ_EVENT_GFX_* ids that have graphics in this (Emerald) build.
+
+    Entries inside `#if IS_FRLG` blocks of the pointer table are NULL here, and a
+    NULL graphics info reads garbage every frame and can crash on a field reload.
+    """
+    src = open(path("src/data/object_events/object_event_graphics_info_pointers.h")).read()
+    valid, stack = set(), []
+    for line in src.splitlines():
+        s = line.strip()
+        if s.startswith("#if"):
+            stack.append("IS_FRLG" in s)
+        elif s.startswith("#else") and stack:
+            stack[-1] = not stack[-1] if stack[-1] else stack[-1]
+        elif s.startswith("#endif") and stack:
+            stack.pop()
+        else:
+            m = re.match(r"\[(OBJ_EVENT_GFX_\w+)\]", s)
+            if m and not any(stack):
+                valid.add(m.group(1))
+    return valid
+
+
+def check_object_graphics(maps, strata_species):
+    """Fail on object graphics that would be NULL or a stock Pokemon in the game build."""
+    valid = emerald_object_graphics()
+    errors = []
+    for m in maps:
+        for o in m.get("objects", []):
+            g = o["graphics_id"]
+            sp = re.fullmatch(r"OBJ_EVENT_GFX_SPECIES\((\w+)\)", g)
+            if sp:
+                if sp.group(1) not in strata_species:
+                    errors.append(f"{m['name']}: {g} is a stock species (disabled in the game build); use a Strata species")
+            elif g not in valid:
+                errors.append(f"{m['name']}: {g} has no graphics in the Emerald build (FRLG-only or unknown)")
+    if errors:
+        sys.exit("Bad object graphics:\n  " + "\n  ".join(errors))
+
+
+def strata_species_consts():
+    """Names usable in OBJ_EVENT_GFX_SPECIES(): every species in tools/strata/roster."""
+    sys.path.insert(0, path("tools/strata"))
+    from roster import SPECIES
+    return {(sp.get("const") or sp["name"]).upper() for sp in SPECIES}
+
+
 def main():
     render_dir = sys.argv[sys.argv.index("--render") + 1] if "--render" in sys.argv else None
 
     for m in MAPS:
         prepare_forage(m)
+    check_object_graphics(MAPS, strata_species_consts())
     layouts = load_json("data/layouts/layouts.json")
     by_id = {l["id"]: l for l in layouts["layouts"] if "id" in l}
     for m in MAPS:

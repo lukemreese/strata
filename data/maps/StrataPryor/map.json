@@ -23,7 +23,7 @@
   "object_events": [
     {
       "local_id": "LOCALID_STRATA_PRYOR_HORSE_A",
-      "graphics_id": "OBJ_EVENT_GFX_SPECIES(MUDSDALE)",
+      "graphics_id": "OBJ_EVENT_GFX_SPECIES(EQUUS)",
       "x": 14,
       "y": 12,
       "elevation": 3,
@@ -37,7 +37,7 @@
     },
     {
       "local_id": "LOCALID_STRATA_PRYOR_HORSE_B",
-      "graphics_id": "OBJ_EVENT_GFX_SPECIES(MUDSDALE)",
+      "graphics_id": "OBJ_EVENT_GFX_SPECIES(EQUUS)",
       "x": 18,
       "y": 13,
       "elevation": 3,
@@ -51,7 +51,7 @@
     },
     {
       "local_id": "LOCALID_STRATA_PRYOR_HORSE_C",
-      "graphics_id": "OBJ_EVENT_GFX_SPECIES(MUDSDALE)",
+      "graphics_id": "OBJ_EVENT_GFX_SPECIES(EQUUS)",
       "x": 26,
       "y": 10,
       "elevation": 3,

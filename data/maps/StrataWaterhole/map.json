@@ -23,7 +23,7 @@
   "object_events": [
     {
       "local_id": "LOCALID_STRATA_WATERHOLE_BULL",
-      "graphics_id": "OBJ_EVENT_GFX_SPECIES(RHYDON)",
+      "graphics_id": "OBJ_EVENT_GFX_SPECIES(TELEOCERAS)",
       "x": 22,
       "y": 12,
       "elevation": 3,
@@ -37,7 +37,7 @@
     },
     {
       "local_id": "LOCALID_STRATA_WATERHOLE_COW",
-      "graphics_id": "OBJ_EVENT_GFX_SPECIES(RHYDON)",
+      "graphics_id": "OBJ_EVENT_GFX_SPECIES(TELEOCERAS)",
       "x": 24,
       "y": 12,
       "elevation": 3,
@@ -51,7 +51,7 @@
     },
     {
       "local_id": "LOCALID_STRATA_WATERHOLE_HERD_A",
-      "graphics_id": "OBJ_EVENT_GFX_SPECIES(RHYDON)",
+      "graphics_id": "OBJ_EVENT_GFX_SPECIES(TELEOCERAS)",
       "x": 20,
       "y": 18,
       "elevation": 3,
@@ -65,7 +65,7 @@
     },
     {
       "local_id": "LOCALID_STRATA_WATERHOLE_HERD_B",
-      "graphics_id": "OBJ_EVENT_GFX_SPECIES(RHYDON)",
+      "graphics_id": "OBJ_EVENT_GFX_SPECIES(TELEOCERAS)",
       "x": 26,
       "y": 18,
       "elevation": 3,
@@ -79,7 +79,7 @@
     },
     {
       "local_id": "LOCALID_STRATA_WATERHOLE_CAMEL",
-      "graphics_id": "OBJ_EVENT_GFX_SPECIES(CAMERUPT)",
+      "graphics_id": "OBJ_EVENT_GFX_SPECIES(PROCAMELUS)",
       "x": 19,
       "y": 11,
       "elevation": 3,
