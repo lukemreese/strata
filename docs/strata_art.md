@@ -307,3 +307,42 @@ hours for a new template.
   shells, wing membranes) needs new primitives or textures in its plan. Icons are
   limited by the 6 shared icon palettes: browns fit well, strong blues and reds
   poorly. Overworld end-on views are simple and benefit most from per-plan care.
+
+### Lessons: dinosaur lane (theropod, ornithischian)
+
+- **One kit for both plans.** `plans/theropod.py` holds a dinosaur kit that
+  `plans/ornithischian.py` imports: shapes as data (`("E"|"T"|"P"|"L"|"U"|"R", ...)`)
+  posed by groups (head, jaw, tail bend, limbs about hip/shoulder), `extras` for
+  every identity feature (frill, horns, casque, bill, dome, carapace, club, tail
+  frond), and generic painters (eye, lip, teeth on the gape, claws, scale lattice,
+  feather dashes, dorsal bands, knobs). A new archosaur is mostly a spec.
+- **Primitives worth promoting to core:** `pose`/`Rigid` (rigid transforms of any
+  shape, so lofts and unions can be posed), `Ragged` (edge-only noise in q: feather
+  fluff, frill epoccipitals, osteoderm edges, without disturbing interior shading),
+  limb-attached `parts` (sickle claw), and the projected end view (`Cam`, `end_view`).
+- **End-on views by projection.** The overworld camera looks down at ~45°: an
+  animal facing south has its head low on the screen in front of its chest and its
+  tail rising behind; facing north the tail comes at the viewer. `end_view()`
+  projects the side view's own shapes (`Y = ground - h*kh + depth*kd`), sorts parts
+  by depth (limbs by their hip/shoulder), and mirrors the near limbs, so every spec
+  gets usable south/north frames from its side geometry plus a few widths. What it
+  needs per species: `head_zoom` (chibi heads, 1.2-1.7), `head_shift` (pull a
+  high-held head down in front of the chest, or it reads as a totem pole),
+  `tail_flat`/`tail_side`/`tail_drop` (a raised tail points at the camera; flatten
+  it and swing it to one side). Frills and armour read best end-on; long-necked
+  small bipeds at 32x32 stay the weakest frames.
+- **`Canvas.big` (scale >= 0.8) drops the eye highlight, scales and claws on
+  giants**, whose battle sprites render at 0.76-0.9 to fit 64 px. The kit swaps in a
+  canvas whose `big` follows the spec's own `front`/`back` scale (`fine_details`).
+  A per-render detail flag in core would be cleaner.
+- **Long animals and the 64 px box.** Real proportions make a 12 m tyrannosaur
+  or hadrosaur 64x30. Raise and recurve the tail (it reads as receding), raise the
+  head, tilt the chest up, and let the legs carry the height; check `place()`'s
+  size error and set `front`/`back`/`icon` per species.
+- **Palette budget for feathered species:** a separate 2-shade `wing` ramp (with
+  pale bars painted in the belly colour) is what makes folded wings read against a
+  plumage body; take the shades from `mouth` (1 colour is enough) and paint claws
+  in an existing ramp (`claw_color`).
+- **Lipped theropods:** the jaw sits under the skull at a slightly lower z, so
+  the closed mouth is a contour, not a row of teeth; teeth are painted only on
+  pixels owned by the gape part in frame 2.
