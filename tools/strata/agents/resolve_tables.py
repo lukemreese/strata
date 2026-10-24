@@ -3,7 +3,8 @@
 Rows are keyed by their first cell; when both sides have a row, the longer
 (more detailed) one wins. Order: our rows, with their new rows inserted after
 the last row that precedes them on their side. Non-table hunks are left alone
-(exit 1 if any remain).
+(exit 1 if any remain), unless --union is given: then every remaining hunk keeps
+our lines followed by theirs (for append-only docs such as docs/strata_art.md).
 """
 import re
 import sys
@@ -32,7 +33,7 @@ def merge(ours, theirs):
     return out
 
 
-def main(path):
+def main(path, union=False):
     lines = open(path).read().split("\n")
     result, i, unresolved = [], 0, 0
     while i < len(lines):
@@ -42,6 +43,8 @@ def main(path):
             ours, theirs = lines[i + 1:m], lines[m + 1:e]
             if all(l.lstrip().startswith("|") for l in ours + theirs if l.strip()):
                 result += merge([l for l in ours if l.strip()], [l for l in theirs if l.strip()])
+            elif union:
+                result += ours + theirs
             else:
                 result += lines[i:e + 1]
                 unresolved += 1
@@ -54,5 +57,6 @@ def main(path):
 
 
 if __name__ == "__main__":
-    bad = sum(main(p) for p in sys.argv[1:])
+    union = "--union" in sys.argv
+    bad = sum(main(p, union) for p in sys.argv[1:] if p != "--union")
     sys.exit(1 if bad else 0)

@@ -1,20 +1,21 @@
 #!/bin/bash
 # Usage: merge_act.sh <branch>   (or merge_act.sh --continue after a manual fix)
 # Merge an act branch; generated files are resolved by regenerating, markdown
-# table conflicts by resolve_tables.py.
+# table conflicts by resolve_tables.py (append-only docs such as docs/strata_art.md are
+# union-merged: ours, then theirs).
 cd ~/projects/strata
 BR=$1
 if [ "$BR" != "--continue" ]; then
   git merge --no-edit "$BR" > /tmp/merge.log 2>&1
 fi
 CONFLICTS=$(git diff --name-only --diff-filter=U)
-GEN_RE='^(data/maps/map_groups\.json|data/layouts/|data/maps/[^/]+/map\.json|src/data/wild_encounters\.json|include/constants/strata_maps\.h|src/data/strata_map_eras\.h|src/data/heal_locations|data/event_scripts\.s|include/constants/heal_locations|src/data/region_map/region_map_sections\.json|include/constants/layouts)'
+GEN_RE='^(data/maps/map_groups\.json|data/layouts/|data/maps/[^/]+/map\.json|src/data/wild_encounters\.json|include/constants/strata_maps\.h|src/data/strata_map_eras\.h|src/data/heal_locations|data/event_scripts\.s|include/constants/heal_locations|src/data/region_map/region_map_sections\.json|include/constants/layouts|src/data/graphics/strata_pokemon\.h|src/data/pokemon/species_info/strata_families\.h|src/data/pokemon/level_up_learnsets/strata\.h|include/constants/(species|pokedex|cries)\.h|sound/cry_tables\.inc|sound/direct_sound_data\.inc|src/data/strata_(diets|species_eras)\.h)'
 OTHER=""
 for f in $CONFLICTS; do
   if echo "$f" | grep -Eq "$GEN_RE"; then
     git checkout --theirs -- "$f" 2>/dev/null || git checkout --ours -- "$f"
     git add "$f"
-  elif echo "$f" | grep -Eq '\.md$' && python3 tools/strata/agents/resolve_tables.py "$f"; then
+  elif echo "$f" | grep -Eq '\.md$' && python3 tools/strata/agents/resolve_tables.py "$f" $(echo "$f" | grep -Eq 'strata_art\.md$' && echo --union); then
     git add "$f"
   else
     OTHER="$OTHER $f"
