@@ -369,3 +369,45 @@ hours for a new template.
 - **Scale per spec by trial:** long tails make side views wide and flat; curl
   the tail up and raise the head before shrinking `front`. `place()` errors give
   the exact overflow (scale × 62/size fixes it in one step).
+
+### Lessons: small lane (small_mammal, rodent_lagomorph, primate, bat)
+
+- **One engine, three plans.** `plans/small_mammal.py` forks the canid side view
+  (`quad_side`, importing canid's helpers read-only) and dispatches per spec: a
+  `torso` list selects the classic Mesodma template (kept byte-identical, and
+  reused for Taeniolabis so the two multituberculates read as one group),
+  anything else the proportion engine. `rodent_lagomorph` and `primate` only
+  import `side`/`overworld`; everything rodent-, rabbit- or primate-like is spec
+  data. The canid end-on `overworld()` works unchanged for all of them.
+- **Primitives worth promoting to core** (all in `plans/small_mammal.py`):
+  `Xf`/`Motion` (a rigid motion: rotate about a pivot *and* move to a new
+  point, with `fwd`/`inv` and `wrap(shape)`; canid's `Turned` only rotates in
+  place), `body.rear` (raise the front half about the rump: sitting squirrel,
+  upright prairie dog; the head counter-rotates to stay level, marks are
+  evaluated in the un-rotated frame so countershading follows the body),
+  `leg.arms` (forearms held at the chest when reared), `leg.hpaw` (separate
+  hind-foot size), `teeth.gnaw` (incisors as a tiny outlined Tube part: orange
+  for rodents, white for lagomorphs and multituberculates), `eye.big` (outline
+  ring + iris + pupil + glint for big primate eyes), `eye.ring`, `tail.bends`
+  (per-segment bends: S-curves, a tail curled over the back), `branch` (a
+  battle-only prop under the feet; dropped in the overworld) and `ow_side`
+  (spec overrides for the overworld walk frames, e.g. a hanging tail held level).
+- **Upright pose: keep `rear` near 55-60 deg.** The rotation is about a pivot
+  at the bottom of the rump, so the shoulder starts above the pivot line;
+  74 deg tipped the body backwards. A large `leg.thigh` swallows the whole
+  lower body once reared: keep it under ~0.8 there.
+- **Marks must name a ramp, not a shade.** `region()` returns a ramp name;
+  `("dark", 1)` in a mark is a KeyError deep in the rasteriser.
+- **The canid pale-lip default makes rodent faces look strapped** (a pale band
+  across the muzzle). For rodents/rabbits add a head mark
+  `dict(on="head", kind="above", line=(0, v, 0), ramp="fur")` to keep the face
+  fur and leave only the chin pale.
+- **Bat wings: one flat `Poly` panel per finger gap, at slightly different z
+  and normals.** The rasteriser's contour pass then draws every finger bone for
+  free and the membrane shades like a pleated sail; claws are tiny outlined
+  Tubes at each tip (Onychonycteris has them on all five fingers). The side
+  view must leave the head clear of the far wing (shift the far wing forward
+  and rotate it up). End-on bat frames need a chibi head (x1.9) and a 1x2 eye
+  with a pale glint, or the face vanishes against dark wings.
+- **Branches eat the colour budget:** a 2-shade bark ramp keeps primates at 15
+  colours with an iris colour.
