@@ -1,4 +1,4 @@
-"""rodent_lagomorph body plan: STUB. Covers rodents and rabbits: gnawing incisors, big hind feet, squirrels, prairie dogs.
+"""rodent_lagomorph body plan: rodents and rabbits.
 
 Species (taxonomy.py):
     ischyromys    Ischyromys (Brule Fm, SD, 0.8 kg)
@@ -7,19 +7,65 @@ Species (taxonomy.py):
     douglassciur  Douglassciurus jeffersoni (Chadron Fm, Flagstaff Rim, WY, 0.3 kg)
     cynomys       Cynomys ludovicianus (Living; MT, 1 kg)
 
-Anatomy and colour notes for the artist:
-Start from small_mammal. Add: rodent incisors (orange enamel on the
-front is real), large hind feet and a sitting/hopping pose for Palaeolagus (no long ears
-like modern jackrabbits: Palaeolagus ears were shorter), bushy tail for Douglassciurus
-(the oldest squirrel; tail the length of the body), Cynomys upright sentinel pose and
-short tail. Agouti browns/greys.
-
-To implement: write side(p, phase=0, step=None) (and overworld(p, view, step),
-optionally back(p, phase)) following plans/small_mammal.py and plans/fish.py, pass
-them to BodyPlan below, and add specs to specs/rodent_lagomorph.py. Read the style guide in
-docs/strata_art.md first.
+Drawn with the small-mammal engine (plans/small_mammal.py, `quad_side`; keys
+documented there and in plans/canid.py). What makes them rodents and rabbits
+is all spec data:
+    teeth.gnaw   the ever-growing upper incisors at the muzzle tip: orange
+                 enamel for rodents (real: iron in the enamel), white for
+                 rabbits (lagomorph enamel is unpigmented)
+    leg.hpaw     long hind feet (rabbit, squirrels)
+    body.rear    raised front: a hunched rabbit, a sitting squirrel, the
+                 upright prairie-dog sentinel (with leg.arms: hands at the chest)
+    tail.bends   the squirrel tail curled up over the back
+Lineages: Paramys -> Ischyromys (ischyromyids) and Douglassciurus -> Cynomys
+(squirrels) share their line's marks: a pale eye ring and orange incisors for
+all rodents; the squirrel line adds a dark-tipped tail and pale flank line.
 """
 
-from ..core.plan import stub
+from ..core.plan import BodyPlan
+from .small_mammal import side, overworld, ENGINE_DEFAULTS
 
-PLAN = stub("rodent_lagomorph", "rodents and rabbits: gnawing incisors, big hind feet, squirrels, prairie dogs")
+FOOTPRINT_RODENT = [  # four slender fingers in front, five toes behind
+    "................",
+    "................",
+    "....#.#..#.#....",
+    "....#.#..#.#....",
+    ".....######.....",
+    ".....######.....",
+    "......####......",
+    "................",
+    "...#.#.#.#.#....",
+    "...#.#.#.#.#....",
+    "....#######.....",
+    "....#######.....",
+    ".....#####......",
+    ".....#####......",
+    "................",
+    "................",
+]
+
+FOOTPRINT_RABBIT = [  # furred soles: long blurred hind prints, small round fore prints
+    "................",
+    "......###.......",
+    ".....#####......",
+    ".....#####......",
+    "......###.......",
+    "................",
+    "....##....##....",
+    "...####..####...",
+    "...####..####...",
+    "...####..####...",
+    "...####..####...",
+    "...####..####...",
+    "....##....##....",
+    "................",
+    "................",
+    "................",
+]
+
+DEFAULTS = dict(ENGINE_DEFAULTS)
+
+PLAN = BodyPlan(
+    "rodent_lagomorph", "rodents and rabbits: gnawing incisors, big hind feet, squirrels, prairie dogs",
+    side=side, overworld=overworld, defaults=DEFAULTS, footprint=FOOTPRINT_RODENT, tracks="TRACKS_FOOT",
+)

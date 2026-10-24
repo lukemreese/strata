@@ -8,6 +8,16 @@ const u8 gMonIcon_Cimolestes[] = INCGFX_U8("graphics/pokemon/strata/cimolestes/i
 #if P_FOOTPRINTS
 const u8 gMonFootprint_Cimolestes[] = INCGFX_U8("graphics/pokemon/strata/cimolestes/footprint.png", ".1bpp");
 #endif //P_FOOTPRINTS
+#if OW_POKEMON_OBJECT_EVENTS
+const u32 gObjectEventPic_Cimolestes[] = INCGFX_COMP("graphics/pokemon/strata/cimolestes/overworld.png", ".4bpp", "-mwidth 4 -mheight 4");
+#if OW_PKMN_OBJECTS_SHARE_PALETTES == FALSE
+const u16 gOverworldPalette_Cimolestes[] = INCGFX_U16("graphics/pokemon/strata/cimolestes/normal.pal", ".gbapal");
+const u16 gShinyOverworldPalette_Cimolestes[] = INCGFX_U16("graphics/pokemon/strata/cimolestes/shiny.pal", ".gbapal");
+#endif //OW_PKMN_OBJECTS_SHARE_PALETTES
+static const struct SpriteFrameImage sPicTable_Cimolestes[] = {
+    overworld_ascending_frames(gObjectEventPic_Cimolestes, 4, 4),
+};
+#endif //OW_POKEMON_OBJECT_EVENTS
 
 const u32 gMonFrontPic_Protictis[] = INCGFX_U32("graphics/pokemon/strata/protictis/anim_front.png", ".4bpp.smol");
 const u16 gMonPalette_Protictis[] = INCGFX_U16("graphics/pokemon/strata/protictis/normal.pal", ".gbapal");
@@ -454,6 +464,16 @@ const u8 gMonIcon_Didelphodon[] = INCGFX_U8("graphics/pokemon/strata/didelphodon
 #if P_FOOTPRINTS
 const u8 gMonFootprint_Didelphodon[] = INCGFX_U8("graphics/pokemon/strata/didelphodon/footprint.png", ".1bpp");
 #endif //P_FOOTPRINTS
+#if OW_POKEMON_OBJECT_EVENTS
+const u32 gObjectEventPic_Didelphodon[] = INCGFX_COMP("graphics/pokemon/strata/didelphodon/overworld.png", ".4bpp", "-mwidth 4 -mheight 4");
+#if OW_PKMN_OBJECTS_SHARE_PALETTES == FALSE
+const u16 gOverworldPalette_Didelphodon[] = INCGFX_U16("graphics/pokemon/strata/didelphodon/normal.pal", ".gbapal");
+const u16 gShinyOverworldPalette_Didelphodon[] = INCGFX_U16("graphics/pokemon/strata/didelphodon/shiny.pal", ".gbapal");
+#endif //OW_PKMN_OBJECTS_SHARE_PALETTES
+static const struct SpriteFrameImage sPicTable_Didelphodon[] = {
+    overworld_ascending_frames(gObjectEventPic_Didelphodon, 4, 4),
+};
+#endif //OW_POKEMON_OBJECT_EVENTS
 
 const u32 gMonFrontPic_Mesodma[] = INCGFX_U32("graphics/pokemon/strata/mesodma/anim_front.png", ".4bpp.smol");
 const u16 gMonPalette_Mesodma[] = INCGFX_U16("graphics/pokemon/strata/mesodma/normal.pal", ".gbapal");
@@ -539,6 +559,16 @@ const u8 gMonIcon_Purgatorius[] = INCGFX_U8("graphics/pokemon/strata/purgatorius
 #if P_FOOTPRINTS
 const u8 gMonFootprint_Purgatorius[] = INCGFX_U8("graphics/pokemon/strata/purgatorius/footprint.png", ".1bpp");
 #endif //P_FOOTPRINTS
+#if OW_POKEMON_OBJECT_EVENTS
+const u32 gObjectEventPic_Purgatorius[] = INCGFX_COMP("graphics/pokemon/strata/purgatorius/overworld.png", ".4bpp", "-mwidth 4 -mheight 4");
+#if OW_PKMN_OBJECTS_SHARE_PALETTES == FALSE
+const u16 gOverworldPalette_Purgatorius[] = INCGFX_U16("graphics/pokemon/strata/purgatorius/normal.pal", ".gbapal");
+const u16 gShinyOverworldPalette_Purgatorius[] = INCGFX_U16("graphics/pokemon/strata/purgatorius/shiny.pal", ".gbapal");
+#endif //OW_PKMN_OBJECTS_SHARE_PALETTES
+static const struct SpriteFrameImage sPicTable_Purgatorius[] = {
+    overworld_ascending_frames(gObjectEventPic_Purgatorius, 4, 4),
+};
+#endif //OW_POKEMON_OBJECT_EVENTS
 
 const u32 gMonFrontPic_Loxolophus[] = INCGFX_U32("graphics/pokemon/strata/loxolophus/anim_front.png", ".4bpp.smol");
 const u16 gMonPalette_Loxolophus[] = INCGFX_U16("graphics/pokemon/strata/loxolophus/normal.pal", ".gbapal");
@@ -548,8 +578,18 @@ const u8 gMonIcon_Loxolophus[] = INCGFX_U8("graphics/pokemon/strata/loxolophus/i
 #if P_FOOTPRINTS
 const u8 gMonFootprint_Loxolophus[] = INCGFX_U8("graphics/pokemon/strata/loxolophus/footprint.png", ".1bpp");
 #endif //P_FOOTPRINTS
+#if OW_POKEMON_OBJECT_EVENTS
+const u32 gObjectEventPic_Loxolophus[] = INCGFX_COMP("graphics/pokemon/strata/loxolophus/overworld.png", ".4bpp", "-mwidth 4 -mheight 4");
+#if OW_PKMN_OBJECTS_SHARE_PALETTES == FALSE
+const u16 gOverworldPalette_Loxolophus[] = INCGFX_U16("graphics/pokemon/strata/loxolophus/normal.pal", ".gbapal");
+const u16 gShinyOverworldPalette_Loxolophus[] = INCGFX_U16("graphics/pokemon/strata/loxolophus/shiny.pal", ".gbapal");
+#endif //OW_PKMN_OBJECTS_SHARE_PALETTES
+static const struct SpriteFrameImage sPicTable_Loxolophus[] = {
+    overworld_ascending_frames(gObjectEventPic_Loxolophus, 4, 4),
+};
+#endif //OW_POKEMON_OBJECT_EVENTS
 
-const u32 gMonFrontPic_Carsioptych[] = INCGFX_U32("graphics/pokemon/strata/carsioptych/front.png", ".4bpp.smol");
+const u32 gMonFrontPic_Carsioptych[] = INCGFX_U32("graphics/pokemon/strata/carsioptych/anim_front.png", ".4bpp.smol");
 const u16 gMonPalette_Carsioptych[] = INCGFX_U16("graphics/pokemon/strata/carsioptych/normal.pal", ".gbapal");
 const u32 gMonBackPic_Carsioptych[] = INCGFX_U32("graphics/pokemon/strata/carsioptych/back.png", ".4bpp.smol");
 const u16 gMonShinyPalette_Carsioptych[] = INCGFX_U16("graphics/pokemon/strata/carsioptych/shiny.pal", ".gbapal");
@@ -557,6 +597,16 @@ const u8 gMonIcon_Carsioptych[] = INCGFX_U8("graphics/pokemon/strata/carsioptych
 #if P_FOOTPRINTS
 const u8 gMonFootprint_Carsioptych[] = INCGFX_U8("graphics/pokemon/strata/carsioptych/footprint.png", ".1bpp");
 #endif //P_FOOTPRINTS
+#if OW_POKEMON_OBJECT_EVENTS
+const u32 gObjectEventPic_Carsioptych[] = INCGFX_COMP("graphics/pokemon/strata/carsioptych/overworld.png", ".4bpp", "-mwidth 4 -mheight 4");
+#if OW_PKMN_OBJECTS_SHARE_PALETTES == FALSE
+const u16 gOverworldPalette_Carsioptych[] = INCGFX_U16("graphics/pokemon/strata/carsioptych/normal.pal", ".gbapal");
+const u16 gShinyOverworldPalette_Carsioptych[] = INCGFX_U16("graphics/pokemon/strata/carsioptych/shiny.pal", ".gbapal");
+#endif //OW_PKMN_OBJECTS_SHARE_PALETTES
+static const struct SpriteFrameImage sPicTable_Carsioptych[] = {
+    overworld_ascending_frames(gObjectEventPic_Carsioptych, 4, 4),
+};
+#endif //OW_POKEMON_OBJECT_EVENTS
 
 const u32 gMonFrontPic_Taeniolabis[] = INCGFX_U32("graphics/pokemon/strata/taeniolabis/anim_front.png", ".4bpp.smol");
 const u16 gMonPalette_Taeniolabis[] = INCGFX_U16("graphics/pokemon/strata/taeniolabis/normal.pal", ".gbapal");
@@ -566,6 +616,16 @@ const u8 gMonIcon_Taeniolabis[] = INCGFX_U8("graphics/pokemon/strata/taeniolabis
 #if P_FOOTPRINTS
 const u8 gMonFootprint_Taeniolabis[] = INCGFX_U8("graphics/pokemon/strata/taeniolabis/footprint.png", ".1bpp");
 #endif //P_FOOTPRINTS
+#if OW_POKEMON_OBJECT_EVENTS
+const u32 gObjectEventPic_Taeniolabis[] = INCGFX_COMP("graphics/pokemon/strata/taeniolabis/overworld.png", ".4bpp", "-mwidth 4 -mheight 4");
+#if OW_PKMN_OBJECTS_SHARE_PALETTES == FALSE
+const u16 gOverworldPalette_Taeniolabis[] = INCGFX_U16("graphics/pokemon/strata/taeniolabis/normal.pal", ".gbapal");
+const u16 gShinyOverworldPalette_Taeniolabis[] = INCGFX_U16("graphics/pokemon/strata/taeniolabis/shiny.pal", ".gbapal");
+#endif //OW_PKMN_OBJECTS_SHARE_PALETTES
+static const struct SpriteFrameImage sPicTable_Taeniolabis[] = {
+    overworld_ascending_frames(gObjectEventPic_Taeniolabis, 4, 4),
+};
+#endif //OW_POKEMON_OBJECT_EVENTS
 
 const u32 gMonFrontPic_Eoconodon[] = INCGFX_U32("graphics/pokemon/strata/eoconodon/anim_front.png", ".4bpp.smol");
 const u16 gMonPalette_Eoconodon[] = INCGFX_U16("graphics/pokemon/strata/eoconodon/normal.pal", ".gbapal");
@@ -603,6 +663,16 @@ const u8 gMonIcon_Teilhardina[] = INCGFX_U8("graphics/pokemon/strata/teilhardina
 #if P_FOOTPRINTS
 const u8 gMonFootprint_Teilhardina[] = INCGFX_U8("graphics/pokemon/strata/teilhardina/footprint.png", ".1bpp");
 #endif //P_FOOTPRINTS
+#if OW_POKEMON_OBJECT_EVENTS
+const u32 gObjectEventPic_Teilhardina[] = INCGFX_COMP("graphics/pokemon/strata/teilhardina/overworld.png", ".4bpp", "-mwidth 4 -mheight 4");
+#if OW_PKMN_OBJECTS_SHARE_PALETTES == FALSE
+const u16 gOverworldPalette_Teilhardina[] = INCGFX_U16("graphics/pokemon/strata/teilhardina/normal.pal", ".gbapal");
+const u16 gShinyOverworldPalette_Teilhardina[] = INCGFX_U16("graphics/pokemon/strata/teilhardina/shiny.pal", ".gbapal");
+#endif //OW_PKMN_OBJECTS_SHARE_PALETTES
+static const struct SpriteFrameImage sPicTable_Teilhardina[] = {
+    overworld_ascending_frames(gObjectEventPic_Teilhardina, 4, 4),
+};
+#endif //OW_POKEMON_OBJECT_EVENTS
 
 const u32 gMonFrontPic_Diacodexis[] = INCGFX_U32("graphics/pokemon/strata/diacodexis/anim_front.png", ".4bpp.smol");
 const u16 gMonPalette_Diacodexis[] = INCGFX_U16("graphics/pokemon/strata/diacodexis/normal.pal", ".gbapal");
@@ -621,6 +691,16 @@ const u8 gMonIcon_Hyopsodus[] = INCGFX_U8("graphics/pokemon/strata/hyopsodus/ico
 #if P_FOOTPRINTS
 const u8 gMonFootprint_Hyopsodus[] = INCGFX_U8("graphics/pokemon/strata/hyopsodus/footprint.png", ".1bpp");
 #endif //P_FOOTPRINTS
+#if OW_POKEMON_OBJECT_EVENTS
+const u32 gObjectEventPic_Hyopsodus[] = INCGFX_COMP("graphics/pokemon/strata/hyopsodus/overworld.png", ".4bpp", "-mwidth 4 -mheight 4");
+#if OW_PKMN_OBJECTS_SHARE_PALETTES == FALSE
+const u16 gOverworldPalette_Hyopsodus[] = INCGFX_U16("graphics/pokemon/strata/hyopsodus/normal.pal", ".gbapal");
+const u16 gShinyOverworldPalette_Hyopsodus[] = INCGFX_U16("graphics/pokemon/strata/hyopsodus/shiny.pal", ".gbapal");
+#endif //OW_PKMN_OBJECTS_SHARE_PALETTES
+static const struct SpriteFrameImage sPicTable_Hyopsodus[] = {
+    overworld_ascending_frames(gObjectEventPic_Hyopsodus, 4, 4),
+};
+#endif //OW_POKEMON_OBJECT_EVENTS
 
 const u32 gMonFrontPic_Coryphodon[] = INCGFX_U32("graphics/pokemon/strata/coryphodon/anim_front.png", ".4bpp.smol");
 const u16 gMonPalette_Coryphodon[] = INCGFX_U16("graphics/pokemon/strata/coryphodon/normal.pal", ".gbapal");
@@ -648,6 +728,16 @@ const u8 gMonIcon_Onychonycter[] = INCGFX_U8("graphics/pokemon/strata/onychonyct
 #if P_FOOTPRINTS
 const u8 gMonFootprint_Onychonycter[] = INCGFX_U8("graphics/pokemon/strata/onychonycter/footprint.png", ".1bpp");
 #endif //P_FOOTPRINTS
+#if OW_POKEMON_OBJECT_EVENTS
+const u32 gObjectEventPic_Onychonycter[] = INCGFX_COMP("graphics/pokemon/strata/onychonycter/overworld.png", ".4bpp", "-mwidth 4 -mheight 4");
+#if OW_PKMN_OBJECTS_SHARE_PALETTES == FALSE
+const u16 gOverworldPalette_Onychonycter[] = INCGFX_U16("graphics/pokemon/strata/onychonycter/normal.pal", ".gbapal");
+const u16 gShinyOverworldPalette_Onychonycter[] = INCGFX_U16("graphics/pokemon/strata/onychonycter/shiny.pal", ".gbapal");
+#endif //OW_PKMN_OBJECTS_SHARE_PALETTES
+static const struct SpriteFrameImage sPicTable_Onychonycter[] = {
+    overworld_ascending_frames(gObjectEventPic_Onychonycter, 4, 4),
+};
+#endif //OW_POKEMON_OBJECT_EVENTS
 
 const u32 gMonFrontPic_Heliobatis[] = INCGFX_U32("graphics/pokemon/strata/heliobatis/anim_front.png", ".4bpp.smol");
 const u16 gMonPalette_Heliobatis[] = INCGFX_U16("graphics/pokemon/strata/heliobatis/normal.pal", ".gbapal");
@@ -695,6 +785,16 @@ const u8 gMonIcon_Notharctus[] = INCGFX_U8("graphics/pokemon/strata/notharctus/i
 #if P_FOOTPRINTS
 const u8 gMonFootprint_Notharctus[] = INCGFX_U8("graphics/pokemon/strata/notharctus/footprint.png", ".1bpp");
 #endif //P_FOOTPRINTS
+#if OW_POKEMON_OBJECT_EVENTS
+const u32 gObjectEventPic_Notharctus[] = INCGFX_COMP("graphics/pokemon/strata/notharctus/overworld.png", ".4bpp", "-mwidth 4 -mheight 4");
+#if OW_PKMN_OBJECTS_SHARE_PALETTES == FALSE
+const u16 gOverworldPalette_Notharctus[] = INCGFX_U16("graphics/pokemon/strata/notharctus/normal.pal", ".gbapal");
+const u16 gShinyOverworldPalette_Notharctus[] = INCGFX_U16("graphics/pokemon/strata/notharctus/shiny.pal", ".gbapal");
+#endif //OW_PKMN_OBJECTS_SHARE_PALETTES
+static const struct SpriteFrameImage sPicTable_Notharctus[] = {
+    overworld_ascending_frames(gObjectEventPic_Notharctus, 4, 4),
+};
+#endif //OW_POKEMON_OBJECT_EVENTS
 
 const u32 gMonFrontPic_Uintatherium[] = INCGFX_U32("graphics/pokemon/strata/uintatherium/anim_front.png", ".4bpp.smol");
 const u16 gMonPalette_Uintatherium[] = INCGFX_U16("graphics/pokemon/strata/uintatherium/normal.pal", ".gbapal");
@@ -805,6 +905,16 @@ const u8 gMonIcon_Ischyromys[] = INCGFX_U8("graphics/pokemon/strata/ischyromys/i
 #if P_FOOTPRINTS
 const u8 gMonFootprint_Ischyromys[] = INCGFX_U8("graphics/pokemon/strata/ischyromys/footprint.png", ".1bpp");
 #endif //P_FOOTPRINTS
+#if OW_POKEMON_OBJECT_EVENTS
+const u32 gObjectEventPic_Ischyromys[] = INCGFX_COMP("graphics/pokemon/strata/ischyromys/overworld.png", ".4bpp", "-mwidth 4 -mheight 4");
+#if OW_PKMN_OBJECTS_SHARE_PALETTES == FALSE
+const u16 gOverworldPalette_Ischyromys[] = INCGFX_U16("graphics/pokemon/strata/ischyromys/normal.pal", ".gbapal");
+const u16 gShinyOverworldPalette_Ischyromys[] = INCGFX_U16("graphics/pokemon/strata/ischyromys/shiny.pal", ".gbapal");
+#endif //OW_PKMN_OBJECTS_SHARE_PALETTES
+static const struct SpriteFrameImage sPicTable_Ischyromys[] = {
+    overworld_ascending_frames(gObjectEventPic_Ischyromys, 4, 4),
+};
+#endif //OW_POKEMON_OBJECT_EVENTS
 
 const u32 gMonFrontPic_Protohippus[] = INCGFX_U32("graphics/pokemon/strata/protohippus/anim_front.png", ".4bpp.smol");
 const u16 gMonPalette_Protohippus[] = INCGFX_U16("graphics/pokemon/strata/protohippus/normal.pal", ".gbapal");
@@ -999,6 +1109,16 @@ const u8 gMonIcon_Cynomys[] = INCGFX_U8("graphics/pokemon/strata/cynomys/icon.pn
 #if P_FOOTPRINTS
 const u8 gMonFootprint_Cynomys[] = INCGFX_U8("graphics/pokemon/strata/cynomys/footprint.png", ".1bpp");
 #endif //P_FOOTPRINTS
+#if OW_POKEMON_OBJECT_EVENTS
+const u32 gObjectEventPic_Cynomys[] = INCGFX_COMP("graphics/pokemon/strata/cynomys/overworld.png", ".4bpp", "-mwidth 4 -mheight 4");
+#if OW_PKMN_OBJECTS_SHARE_PALETTES == FALSE
+const u16 gOverworldPalette_Cynomys[] = INCGFX_U16("graphics/pokemon/strata/cynomys/normal.pal", ".gbapal");
+const u16 gShinyOverworldPalette_Cynomys[] = INCGFX_U16("graphics/pokemon/strata/cynomys/shiny.pal", ".gbapal");
+#endif //OW_PKMN_OBJECTS_SHARE_PALETTES
+static const struct SpriteFrameImage sPicTable_Cynomys[] = {
+    overworld_ascending_frames(gObjectEventPic_Cynomys, 4, 4),
+};
+#endif //OW_POKEMON_OBJECT_EVENTS
 
 const u32 gMonFrontPic_Avisaurus[] = INCGFX_U32("graphics/pokemon/strata/avisaurus/anim_front.png", ".4bpp.smol");
 const u16 gMonPalette_Avisaurus[] = INCGFX_U16("graphics/pokemon/strata/avisaurus/normal.pal", ".gbapal");
@@ -1027,6 +1147,16 @@ const u8 gMonIcon_Paramys[] = INCGFX_U8("graphics/pokemon/strata/paramys/icon.pn
 #if P_FOOTPRINTS
 const u8 gMonFootprint_Paramys[] = INCGFX_U8("graphics/pokemon/strata/paramys/footprint.png", ".1bpp");
 #endif //P_FOOTPRINTS
+#if OW_POKEMON_OBJECT_EVENTS
+const u32 gObjectEventPic_Paramys[] = INCGFX_COMP("graphics/pokemon/strata/paramys/overworld.png", ".4bpp", "-mwidth 4 -mheight 4");
+#if OW_PKMN_OBJECTS_SHARE_PALETTES == FALSE
+const u16 gOverworldPalette_Paramys[] = INCGFX_U16("graphics/pokemon/strata/paramys/normal.pal", ".gbapal");
+const u16 gShinyOverworldPalette_Paramys[] = INCGFX_U16("graphics/pokemon/strata/paramys/shiny.pal", ".gbapal");
+#endif //OW_PKMN_OBJECTS_SHARE_PALETTES
+static const struct SpriteFrameImage sPicTable_Paramys[] = {
+    overworld_ascending_frames(gObjectEventPic_Paramys, 4, 4),
+};
+#endif //OW_POKEMON_OBJECT_EVENTS
 
 const u32 gMonFrontPic_Oxyaena[] = INCGFX_U32("graphics/pokemon/strata/oxyaena/anim_front.png", ".4bpp.smol");
 const u16 gMonPalette_Oxyaena[] = INCGFX_U16("graphics/pokemon/strata/oxyaena/normal.pal", ".gbapal");
@@ -1055,6 +1185,16 @@ const u8 gMonIcon_Omomys[] = INCGFX_U8("graphics/pokemon/strata/omomys/icon.png"
 #if P_FOOTPRINTS
 const u8 gMonFootprint_Omomys[] = INCGFX_U8("graphics/pokemon/strata/omomys/footprint.png", ".1bpp");
 #endif //P_FOOTPRINTS
+#if OW_POKEMON_OBJECT_EVENTS
+const u32 gObjectEventPic_Omomys[] = INCGFX_COMP("graphics/pokemon/strata/omomys/overworld.png", ".4bpp", "-mwidth 4 -mheight 4");
+#if OW_PKMN_OBJECTS_SHARE_PALETTES == FALSE
+const u16 gOverworldPalette_Omomys[] = INCGFX_U16("graphics/pokemon/strata/omomys/normal.pal", ".gbapal");
+const u16 gShinyOverworldPalette_Omomys[] = INCGFX_U16("graphics/pokemon/strata/omomys/shiny.pal", ".gbapal");
+#endif //OW_PKMN_OBJECTS_SHARE_PALETTES
+static const struct SpriteFrameImage sPicTable_Omomys[] = {
+    overworld_ascending_frames(gObjectEventPic_Omomys, 4, 4),
+};
+#endif //OW_POKEMON_OBJECT_EVENTS
 
 const u32 gMonFrontPic_Hyrachyus[] = INCGFX_U32("graphics/pokemon/strata/hyrachyus/anim_front.png", ".4bpp.smol");
 const u16 gMonPalette_Hyrachyus[] = INCGFX_U16("graphics/pokemon/strata/hyrachyus/normal.pal", ".gbapal");
@@ -1111,6 +1251,16 @@ const u8 gMonIcon_Palaeolagus[] = INCGFX_U8("graphics/pokemon/strata/palaeolagus
 #if P_FOOTPRINTS
 const u8 gMonFootprint_Palaeolagus[] = INCGFX_U8("graphics/pokemon/strata/palaeolagus/footprint.png", ".1bpp");
 #endif //P_FOOTPRINTS
+#if OW_POKEMON_OBJECT_EVENTS
+const u32 gObjectEventPic_Palaeolagus[] = INCGFX_COMP("graphics/pokemon/strata/palaeolagus/overworld.png", ".4bpp", "-mwidth 4 -mheight 4");
+#if OW_PKMN_OBJECTS_SHARE_PALETTES == FALSE
+const u16 gOverworldPalette_Palaeolagus[] = INCGFX_U16("graphics/pokemon/strata/palaeolagus/normal.pal", ".gbapal");
+const u16 gShinyOverworldPalette_Palaeolagus[] = INCGFX_U16("graphics/pokemon/strata/palaeolagus/shiny.pal", ".gbapal");
+#endif //OW_PKMN_OBJECTS_SHARE_PALETTES
+static const struct SpriteFrameImage sPicTable_Palaeolagus[] = {
+    overworld_ascending_frames(gObjectEventPic_Palaeolagus, 4, 4),
+};
+#endif //OW_POKEMON_OBJECT_EVENTS
 
 const u32 gMonFrontPic_Douglassciur[] = INCGFX_U32("graphics/pokemon/strata/douglassciur/anim_front.png", ".4bpp.smol");
 const u16 gMonPalette_Douglassciur[] = INCGFX_U16("graphics/pokemon/strata/douglassciur/normal.pal", ".gbapal");
@@ -1120,6 +1270,16 @@ const u8 gMonIcon_Douglassciur[] = INCGFX_U8("graphics/pokemon/strata/douglassci
 #if P_FOOTPRINTS
 const u8 gMonFootprint_Douglassciur[] = INCGFX_U8("graphics/pokemon/strata/douglassciur/footprint.png", ".1bpp");
 #endif //P_FOOTPRINTS
+#if OW_POKEMON_OBJECT_EVENTS
+const u32 gObjectEventPic_Douglassciur[] = INCGFX_COMP("graphics/pokemon/strata/douglassciur/overworld.png", ".4bpp", "-mwidth 4 -mheight 4");
+#if OW_PKMN_OBJECTS_SHARE_PALETTES == FALSE
+const u16 gOverworldPalette_Douglassciur[] = INCGFX_U16("graphics/pokemon/strata/douglassciur/normal.pal", ".gbapal");
+const u16 gShinyOverworldPalette_Douglassciur[] = INCGFX_U16("graphics/pokemon/strata/douglassciur/shiny.pal", ".gbapal");
+#endif //OW_PKMN_OBJECTS_SHARE_PALETTES
+static const struct SpriteFrameImage sPicTable_Douglassciur[] = {
+    overworld_ascending_frames(gObjectEventPic_Douglassciur, 4, 4),
+};
+#endif //OW_POKEMON_OBJECT_EVENTS
 
 const u32 gMonFrontPic_Hypohippus[] = INCGFX_U32("graphics/pokemon/strata/hypohippus/anim_front.png", ".4bpp.smol");
 const u16 gMonPalette_Hypohippus[] = INCGFX_U16("graphics/pokemon/strata/hypohippus/normal.pal", ".gbapal");
