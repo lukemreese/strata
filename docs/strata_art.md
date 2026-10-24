@@ -307,3 +307,31 @@ hours for a new template.
   shells, wing membranes) needs new primitives or textures in its plan. Icons are
   limited by the 6 shared icon palettes: browns fit well, strong blues and reds
   poorly. Overworld end-on views are simple and benefit most from per-plan care.
+
+### Lessons: bird lane (bird_ground, bird_flying, crane_raptor)
+
+- **One bird template for three plans.** `plans/bird_ground.py` holds `bird_model()` and the
+  end-on `overworld()`; `crane_raptor` imports both unchanged and `bird_flying` adds a spread
+  wing, a perch and a `back()` view. A bird is almost entirely data: body ellipses, a neck Tube,
+  head ellipses, beak Tubes, legs (hip, ankle, foot, toes), plus generic `regions`, `extra` and
+  `marks` lists (below), so a new bird species rarely needs plan code.
+- **Head + neck as one smooth Union with `line=False`.** A separate neck part draws a collar line
+  where it meets the head and the breast; fusing them (and skipping the contour) gives the
+  continuous bird silhouette. A head turn rotates the head about `neck_pivot`; `neck.bend`
+  lets the middle of a long S-neck follow only part of it.
+- **Beaks as tapering Tubes** (upper over lower) shade much better than polygons, and a gape is
+  just the lower Tube rotated about the hinge: the upper's darkest shade becomes the mouth line.
+- **Generic data-driven extras worth promoting to core:** `regions` (first-match rules: below/
+  above a line, inside an ellipse, left/right of x, per part group) for countershading and
+  patches; `extra` parts (ellipse/tube/poly, attached to head/wing/tail transforms, optionally
+  only in frame 1: fans, air sacs, wattles, crests); `marks` (polylines, single pixels, discs or
+  shade lines in model coordinates, per transform and frame). `Pose` bundles the frame-2 point
+  transforms (head, jaw, wing, tail) so parts and painters stay attached.
+- **End-on views of tall animals:** shorten the legs end-on (`ow_end.leg_len` ~0.7) and drop the
+  head (`head_dy`) rather than shrinking the whole bird; otherwise long-legged birds exceed 32 px
+  or turn into poles. `ow.length` below the mass default helps cranes fit the west frame.
+- **Display poses make great frame 2s:** turkey strut (fan as an `extra` ellipse only in frame 1,
+  tail tips as arc `marks`), sage-grouse lek (spiky fan, puffed ruff, air sacs), raptor mantling.
+- **Small dark birds need an eye ring** (`eye_ring`) or the eye vanishes in a dark head. Pale
+  "teeth" pixels on a closed snout read as a second eye at 1x: show them only when gaping.
+- Icons: grey-browns land on the orange/grey shared icon palettes; acceptable, not great.

@@ -1,22 +1,35 @@
-"""crane_raptor body plan: STUB. Covers long-legged waders and raptorial birds: cranes, presbyornithid ducks, vultures.
+"""crane_raptor body plan: long-legged waders and raptorial birds in side view
+(presbyornithid ducks, cranes, vultures).
 
 Species (taxonomy.py):
     presbyornis   Presbyornis (Green River Fm, WY, 2.5 kg)
     balearica     Balearica exigua (Ashfall, NE, 3.5 kg)
     anchigyps     Anchigyps voorhiesi (Ashfall, NE, 5 kg)
 
-Anatomy and colour notes for the artist:
-Tall birds: Presbyornis (long-legged duck with a duck bill on a
-flamingo/stilt body), Balearica exigua (crowned crane relative: a crest is a
-plausible guess), Anchigyps (Old-World-style vulture: bare head is plausible for a
-scavenger, hooked beak, broad wings). Long legs as Tubes, neck as a Tube.
-
-To implement: write side(p, phase=0, step=None) (and overworld(p, view, step),
-optionally back(p, phase)) following plans/small_mammal.py and plans/fish.py, pass
-them to BodyPlan below, and add specs to specs/crane_raptor.py. Read the style guide in
-docs/strata_art.md first.
+The geometry is the shared bird template of plans/bird_ground.py (`bird_model`,
+`overworld`; read its docstring for every key). What differs here is in the
+specs: long necks as multi-point Tubes (`neck.bend` makes the middle of an
+S-neck follow a head turn only partly), bare lower tibiae (`tibia_ramp="leg"`),
+crests and bare faces as `extra` parts, and wing `regions` (on="wing") for the
+crane's white coverts and the vulture's dark primaries. Long legs swing less in
+the walk cycle (walk_swing 14).
 """
 
-from ..core.plan import stub
+from ..core.plan import BodyPlan
+from .bird_ground import DEFAULTS as BIRD_DEFAULTS, FOOTPRINT_BIRD, bird_model, overworld as bird_overworld
 
-PLAN = stub("crane_raptor", "long-legged waders and raptorial birds: cranes, presbyornithid ducks, vultures")
+DEFAULTS = dict(BIRD_DEFAULTS, walk_swing=14, body_k=0.2)
+
+
+def side(p, phase=0, step=None):
+    return bird_model(p, phase, step)
+
+
+def overworld(p, view, step):
+    return bird_overworld(p, view, step)
+
+
+PLAN = BodyPlan(
+    "crane_raptor", "long-legged waders and raptorial birds: cranes, presbyornithid ducks, vultures",
+    side=side, overworld=overworld, defaults=DEFAULTS, footprint=FOOTPRINT_BIRD, tracks="TRACKS_FOOT",
+)
