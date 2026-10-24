@@ -307,3 +307,34 @@ hours for a new template.
   shells, wing membranes) needs new primitives or textures in its plan. Icons are
   limited by the 6 shared icon palettes: browns fit well, strong blues and reds
   poorly. Overworld end-on views are simple and benefit most from per-plan care.
+
+### Lessons: aqua lane (fish, ray, croc_champsosaur, turtle)
+
+- **Top-down views from one 3D-ish model.** `Ground(shape, yaw, fs, h)` in
+  `plans/turtle.py` draws any shape on a tilted ground plane (plan coords u right,
+  v forward; yaw turns about the vertical, fs = sin(camera elevation), h lifts it).
+  Shading, contours and outline work unchanged. One `topdown()` function then gives
+  the back sprite (yaw ~25, head away and right), the south frame (yaw 180) and
+  the north frame (yaw 0). The ray uses it for every view, the battle front too.
+  Candidate for core.
+- **`Rotated(shape, pivot, deg)`** (`plans/croc_champsosaur.py`): turn any shape
+  about a pivot. A separate lower-jaw part rotated by it gives a gape in frame 2,
+  and the head/jaw contour is the mouth line for free. Candidate for core.
+- **Long, low animals:** a straight croc tail makes a 64x12 sprite. Curling the tail
+  forward along the ground on the near side (lower on screen, drawn nearer than
+  the legs) halves the width, so the animal renders ~30% larger and reads better.
+  Tail bands defined along the tail path (fractions), not by x, survive the curl.
+- **Ellipse angles:** positive angle lowers the *right* end (clockwise on screen).
+  For a head facing left, a snout that slopes down needs a negative angle.
+- **Small heads (10-14 px):** paint the eye as an explicit 2x2 iris in a dark ring
+  with a 1-px pupil; a disc-based eye at r < 2 px turns into a cross. Don't paint
+  a mouth line on top of a jaw contour (it doubles to 2 px).
+- **Painted points must land inside the shape:** `cv.set` only draws on opaque
+  pixels, so an eye placed exactly on a Loft's top edge silently disappears.
+- **Flat discs:** a ray disc with the default dome (`flat=0.5`) reads as a ball.
+  Use `flat=0.2` plus a separate, contoured body hump, a pale underside lip offset
+  below the disc, and painted radial fin rays.
+- **Lineages by knobs:** the snapper line is one geometry with scalar knobs
+  (dome, keel, head, hook, tail, crest); each species only changes a few numbers,
+  so descendants stay visibly related. Darker, olive turtle ramps fit the shared
+  icon palettes poorly (they land on tan/brown); acceptable for brown animals.
