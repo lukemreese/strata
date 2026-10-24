@@ -11,7 +11,8 @@ Run everything from `~/projects/strata` (see the strata-shell skill for how).
 
 | Source | Generator | Writes |
 |---|---|---|
-| `tools/strata/roster/` (species, per act; new species append to `part3.py`) | `gen_species.py` | species/pokedex/cries splices, `strata_families.h`, `strata_diets.h`, `strata_species_eras.h` |
+| `tools/strata/sprites/` (body plans + species specs) | `gen_sprite.py` | `graphics/pokemon/strata/<name>/` art + `CUSTOM` (run before `gen_species.py`) |
+| `tools/strata/roster/` (species, per act; new species append to `part3.py`) | `gen_species.py` | species/pokedex/cries splices, `strata_families.h` (incl. `OVERWORLD` for own art), `strata_pokemon.h`, `strata_diets.h`, `strata_species_eras.h` |
 | `tools/strata/gen_tilesets.py` (era palette variants) | itself | tileset palettes, `strata_headers.h`, `strata_era_art.h` |
 | `tools/strata/maps/` (per-act modules) | `gen_maps.py` | layouts, `map.json`s, `map_groups.json`, encounters, `strata_maps.h`, `strata_map_eras.h`, heal locations, `event_scripts.s` includes |
 
@@ -39,6 +40,8 @@ After a merge, rerun all three; a clean tree afterwards means generated files ar
   them. Anything that depends on stock species (e.g. their overworld sprites) can pass tests and
   still break the game.
 - Inline test scripts can't see C enums; set vars from C.
+- Never run a generator while `make`/`make check` is running in the same worktree: it rewrites
+  headers mid-build (even with identical content the timestamps change) and can poison the run.
 
 ## Debug ROM for playtesting
 

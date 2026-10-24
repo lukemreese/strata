@@ -28,16 +28,34 @@ description: Adding or changing Strata species and their art — roster rules, s
   minScore)`, `DESCENT_END`; per-era extinction lists; `sEraLevelFloor`). Branch thresholds must stay
   above the knockout cap (24).
 
-## Art pipeline
+## Art pipeline (`tools/strata/sprites/`, CLI `gen_sprite.py`)
 
-- `tools/strata/gen_sprite.py` draws original pixel art from parametric body plans and writes the
-  exact formats in `graphics/pokemon/strata/<name>/` (2-frame front, back, normal + variant
-  palettes with index 0 transparent, icon in one of the 6 shared icon palettes, footprint) plus a
-  `CUSTOM` marker. `gen_species.py` keeps CUSTOM folders and reads their measured sizes/offsets.
-  Docs: `docs/strata_art.md`.
-- Species without CUSTOM art still use the `borrow=` stock placeholder. That must reach zero.
-- Creature map objects use `OBJ_EVENT_GFX_SPECIES(<species>)`; until a species has overworld
-  sprite data they render as the substitute placeholder.
+Read `docs/strata_art.md` first: package layout, taxonomy table, formats and the **style guide**
+(the quality bar: profile + 3/4 cues for fronts, ramps, outlines, 1×/3× judging, science of colour).
+
+- `sprites/core/` is the plan-independent machinery (rasteriser, palettes, writers, previews);
+  `sprites/taxonomy.py` is the one species → body-plan table (20 plans, checked against the roster
+  on every run); `sprites/plans/<plan>.py` is a parametric template and `sprites/specs/<plan>.py`
+  holds its species data. Working templates: `fish` (Knightia), `small_mammal` (Mesodma); the other
+  18 are stubs whose docstrings list species and anatomy. **An artist agent owns its plans' two
+  files only**; changes to `core/` or `taxonomy.py` go through the lead.
+- Commands (repo root):
+  `gen_sprite.py <folder ...> | --plan NAME | --all [--preview DIR]`,
+  `--contact OUT.png` (every species' front + overworld on one sheet, borrowed ones framed red),
+  `--borrowed [--strict]` (art status; strict exits 1 while any stock sprite remains),
+  `--plans` (taxonomy and suggested lanes). Then `gen_species.py`, then `make`.
+- Each species gets battle front/back, palettes, icon, footprint, `overworld.png` (6 frames:
+  south, south step, north, north step, west, west step; 32×32, 64×64 over 1 t) and `CUSTOM`
+  (presentation fields + `@overworld` line). `gen_species.py` turns that into `overworldData`,
+  so `OBJ_EVENT_GFX_SPECIES(<species>)` map objects show the creature; species without own art
+  still show the substitute placeholder.
+- Species without CUSTOM art still use the `borrow=` stock placeholder: must reach zero. When
+  `--borrowed` says 0, set `ART_STRICT = True` in `gen_species.py` (then any borrowed sprite is an
+  `#error` and the build fails; `--strict-art` tries it for one run). Cries are all still borrowed;
+  the plan (procedural synthesis per body plan) is in the doc.
+- Refactors of the core must keep existing art byte-identical (`cmp` the PNG/pal files against a
+  copy taken before) unless the change is a deliberate improvement you looked at.
 - Era battle-background and grass-overlay palettes come from `gen_tilesets.py` transforms, selected
   by the current map's era in `src/strata_art.c`.
-- Always look at the output (`Read` the PNG at 1× and 3×) before committing art.
+- Always look at the output (`Read` the `_sheet`, `_battle` and `_ow` previews; 1× and 3×) before
+  committing art, and compare with plan-mates on the contact sheet.

@@ -5,3 +5,4 @@
 .backPicSize = MON_COORDS_SIZE(64, 40),
 .backPicYOffset = 15,
 .iconPalIndex = 2,
+@overworld SIZE_32x32 SHADOW_SIZE_S TRACKS_FOOT south+north+west

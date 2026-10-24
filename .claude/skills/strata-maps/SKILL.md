@@ -42,6 +42,9 @@ Read `docs/strata_outline.md` (plan per act, §2) and `docs/strata_design.md` (a
   starter screen once.
 - Creatures: `OBJ_EVENT_GFX_SPECIES(<STRATA_SPECIES>)` naming the animal it represents, never a
   stock species (stock species are disabled in the game build, and the user wants no stock art).
+  It shows the species' own overworld sheet once `gen_sprite.py` has drawn it (see the
+  strata-species-art skill); until then the engine's substitute placeholder. No map change needed
+  when the art lands.
 - `gen_maps.py` refuses both mistakes; don't work around the check.
 
 ## Encounters, forage, habitat

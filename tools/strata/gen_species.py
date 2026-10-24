@@ -17,7 +17,12 @@ Writes:
                                               for the tests and the Codex
   graphics/pokemon/strata/<name>/            sprites copied from the borrowed species, unless the
                                               folder has a CUSTOM marker (own art from gen_sprite.py,
-                                              whose presentation fields override the borrowed ones)
+                                              whose presentation fields override the borrowed ones;
+                                              its overworld.png + `@overworld` line become the
+                                              species' overworldData, so OBJ_EVENT_GFX_SPECIES map
+                                              objects show it). Borrowed species get no overworld
+                                              sprite (substitute placeholder). ART_STRICT /
+                                              --strict-art: fail on any borrowed sprite.
   sound/direct_sound_samples/cries/strata_<name>.wav   cry copied from the borrowed species
 
 Strata species own copies of everything they borrow, so they keep working when
@@ -65,6 +70,13 @@ BORROWED_FIELDS = [
     ".enemyMonElevation", ".backPicSize", ".backPicYOffset", ".backAnimId", ".iconPalIndex", "SHADOW(",
 ]
 GRAPHIC_FILES = ["anim_front.png", "front.png", "back.png", "normal.pal", "shiny.pal", "icon.png", "footprint.png"]
+
+# No-stock-art ratchet. While False, species without their own art (no CUSTOM
+# marker from gen_sprite.py) get the `borrow=` stock sprites as a placeholder.
+# Set it to True once `gen_sprite.py --borrowed` reports 0: from then on any
+# borrowed sprite makes this script fail and puts an #error into
+# strata_families.h, so the build fails too. `--strict-art` turns it on for one run.
+ART_STRICT = False
 
 
 def die(msg):
@@ -185,6 +197,20 @@ def custom_art(sp):
         return None
     with open(path) as f:
         return [l.strip() for l in f if l.strip().startswith(".")]
+
+
+def custom_overworld(sp):
+    """(size, shadow, tracks) from the CUSTOM marker's `@overworld` line if the
+    species has its own overworld sheet (overworld.png), else None. Species
+    without one show the engine's substitute placeholder on the map."""
+    folder = os.path.join(ROOT, "graphics/pokemon/strata", folder_name(sp))
+    if not os.path.exists(os.path.join(folder, "CUSTOM")) or not os.path.exists(os.path.join(folder, "overworld.png")):
+        return None
+    with open(os.path.join(folder, "CUSTOM")) as f:
+        line = next((l.split() for l in f if l.startswith("@overworld")), None)
+    if not line or line[1] not in ("SIZE_32x32", "SIZE_64x64"):
+        die(f"{sp['name']}: CUSTOM has overworld.png but no valid @overworld line; rerun gen_sprite.py")
+    return line[1], line[2], line[3]
 
 
 def apply_overrides(fields, overrides):
@@ -316,6 +342,20 @@ def gen_graphics(sp, files):
         out += ["#if P_FOOTPRINTS",
                 f'const u8 gMonFootprint_{sym}[] = INCGFX_U8("{folder}/footprint.png", ".1bpp");',
                 "#endif //P_FOOTPRINTS"]
+    ow = custom_overworld(sp)
+    if ow:
+        tiles = 4 if ow[0] == "SIZE_32x32" else 8
+        out += ["#if OW_POKEMON_OBJECT_EVENTS",
+                f'const u32 gObjectEventPic_{sym}[] = INCGFX_COMP("{folder}/overworld.png", ".4bpp", '
+                f'"-mwidth {tiles} -mheight {tiles}");',
+                "#if OW_PKMN_OBJECTS_SHARE_PALETTES == FALSE",
+                f'const u16 gOverworldPalette_{sym}[] = INCGFX_U16("{folder}/normal.pal", ".gbapal");',
+                f'const u16 gShinyOverworldPalette_{sym}[] = INCGFX_U16("{folder}/shiny.pal", ".gbapal");',
+                "#endif //OW_PKMN_OBJECTS_SHARE_PALETTES",
+                f"static const struct SpriteFrameImage sPicTable_{sym}[] = {{",
+                f"    overworld_ascending_frames(gObjectEventPic_{sym}, {tiles}, {tiles}),",
+                "};",
+                "#endif //OW_POKEMON_OBJECT_EVENTS"]
     return out
 
 
@@ -371,6 +411,9 @@ def gen_species_info(sp, files):
     o.append(f"        .iconSprite = gMonIcon_{sym},")
     overrides = custom_art(sp)
     if overrides is None:
+        if ART_STRICT:
+            o.append(f'#error "SPECIES_{const} still uses borrowed stock sprites (borrow={sp["borrow"]}): '
+                     f'add a spec to tools/strata/sprites/specs/ and run gen_sprite.py"')
         o.append(f"        // Placeholder presentation borrowed from SPECIES_{sp['borrow'].upper()}")
         o.extend(borrowed)
     else:
@@ -378,6 +421,17 @@ def gen_species_info(sp, files):
         o.extend(apply_overrides(borrowed, overrides))
     if "footprint.png" in files:
         o.append(f"        FOOTPRINT({sym})")
+    ow = custom_overworld(sp)
+    if ow:  # own overworld sheet (gen_sprite.py); without one the map shows the substitute placeholder
+        o += ["        OVERWORLD(",
+              f"            sPicTable_{sym},",
+              f"            {ow[0]},",
+              f"            {ow[1]},",
+              f"            {ow[2]},",
+              "            sAnimTable_Following,",
+              f"            gOverworldPalette_{sym},",
+              f"            gShinyOverworldPalette_{sym}",
+              "        )"]
     o.append(f"        .levelUpLearnset = s{sym}LevelUpLearnset,")
     o.append("    },")
     return o
@@ -415,6 +469,9 @@ def splice(path, tag, lines):
 
 
 def main():
+    global ART_STRICT
+    if "--strict-art" in sys.argv[1:]:
+        ART_STRICT = True
     names = set()
     for sp in SPECIES:
         validate(sp)
@@ -437,6 +494,10 @@ def main():
         info += gen_species_info(sp, files) + [""]
         learnsets += gen_learnset(sp)
         graphics += gen_graphics(sp, files) + [""]
+    borrowed = [sp["name"] for sp in SPECIES if custom_art(sp) is None]
+    info[1:1] = [f"// Own art: {len(SPECIES) - len(borrowed)} of {len(SPECIES)} species. Borrowed stock sprites "
+                 f"(placeholders, must reach 0; `python3 tools/strata/gen_sprite.py --borrowed`): {len(borrowed)}.",
+                 ""]
 
     splice("include/constants/species.h", "SPECIES", species_enum)
     splice("include/constants/pokedex.h", "SPECIES", natdex_enum)
@@ -453,6 +514,11 @@ def main():
     for sp in SPECIES:
         stats, bst = base_stats(sp)
         print(f"{sp['name']:<13} BST {bst:3}  " + " ".join(f"{k}:{stats[k]:3}" for k in STAT_KEYS))
+    print(f"own art: {len(SPECIES) - len(borrowed)}/{len(SPECIES)}, borrowed stock sprites: {len(borrowed)}")
+    if ART_STRICT and borrowed:
+        die(f"ART_STRICT: {len(borrowed)} species still use borrowed stock sprites: {', '.join(borrowed)}")
+    if not ART_STRICT and not borrowed:
+        print("gen_species: every species has its own art; set ART_STRICT = True")
 
 
 if __name__ == "__main__":

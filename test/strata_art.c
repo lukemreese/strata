@@ -1,9 +1,11 @@
 #include "global.h"
 #include "battle_environment.h"
 #include "event_object_movement.h"
+#include "pokemon.h"
 #include "strata_art.h"
 #include "test/test.h"
 #include "constants/battle.h"
+#include "constants/event_objects.h"
 #include "constants/field_effects.h"
 #include "constants/map_groups.h"
 #include "constants/strata.h"
@@ -49,3 +51,38 @@ TEST("Grass field effects in a recoloured era use that era's palette")
     SetMap(MAP_STRATA_PRAIRIE);
     EXPECT(Strata_GetFieldEffectPalette(stock) == stock);
 }
+
+// Own creature art (tools/strata/sprites, gen_sprite.py -> gen_species.py).
+
+#if OW_POKEMON_OBJECT_EVENTS
+TEST("Strata species with an overworld sheet use it for map objects")
+{
+    enum Species species = SPECIES_NONE;
+    const struct ObjectEventGraphicsInfo *info;
+    u32 i;
+    for (i = SPECIES_CUSTOM_START + 1; i < SPECIES_CUSTOM_END; i++)
+    {
+        PARAMETRIZE { species = i; }
+    }
+    info = &gSpeciesInfo[species].overworldData;
+    if (info->tileTag != TAG_NONE)
+        return; // no own overworld sheet yet: the engine shows the substitute placeholder
+    EXPECT(SpeciesToGraphicsInfo(species, FALSE, FALSE) == info);
+    EXPECT(info->images != NULL);
+    EXPECT(info->anims == sAnimTable_Following);
+    EXPECT_EQ(info->paletteTag, OBJ_EVENT_PAL_TAG_DYNAMIC);
+    EXPECT(info->width == 32 || info->width == 64);
+    EXPECT_EQ(info->width, info->height);
+#if OW_PKMN_OBJECTS_SHARE_PALETTES == FALSE
+    EXPECT(gSpeciesInfo[species].overworldPalette != NULL);
+    EXPECT(gSpeciesInfo[species].overworldShinyPalette != NULL);
+#endif
+}
+
+TEST("The pilot creatures have their own overworld sprites")
+{
+    EXPECT(SpeciesToGraphicsInfo(SPECIES_MESODMA, FALSE, FALSE) != &gSpeciesInfo[SPECIES_NONE].overworldData);
+    EXPECT(SpeciesToGraphicsInfo(SPECIES_KNIGHTIA, FALSE, FALSE) != &gSpeciesInfo[SPECIES_NONE].overworldData);
+    EXPECT_EQ(SpeciesToGraphicsInfo(SPECIES_MESODMA, FALSE, FALSE)->width, 32);
+}
+#endif

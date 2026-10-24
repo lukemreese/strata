@@ -27,6 +27,8 @@ Only one-liners with no `$`, quotes or parentheses are safe inline.
 - `pkill -f '<pattern>'` inside `bash -c` matches its own command line and kills itself. Put it
   in a script file, or use a pattern that can't match the script.
 - `/tmp` doesn't persist between calls; keep scripts in `~` or the Windows temp folder.
+- bash reads a script while it runs: don't rewrite `~/<task>_x.sh` while a background run of it
+  is still going; use a second name (`<task>_y.sh`) for anything you run meanwhile.
 - Builds and full test runs take minutes, longer when other agents build at the same time. Run
   them with `run_in_background: true` (or a long timeout) and wait for the completion
   notice rather than polling.

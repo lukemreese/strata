@@ -233,6 +233,16 @@ const u8 gMonIcon_Mesodma[] = INCGFX_U8("graphics/pokemon/strata/mesodma/icon.pn
 #if P_FOOTPRINTS
 const u8 gMonFootprint_Mesodma[] = INCGFX_U8("graphics/pokemon/strata/mesodma/footprint.png", ".1bpp");
 #endif //P_FOOTPRINTS
+#if OW_POKEMON_OBJECT_EVENTS
+const u32 gObjectEventPic_Mesodma[] = INCGFX_COMP("graphics/pokemon/strata/mesodma/overworld.png", ".4bpp", "-mwidth 4 -mheight 4");
+#if OW_PKMN_OBJECTS_SHARE_PALETTES == FALSE
+const u16 gOverworldPalette_Mesodma[] = INCGFX_U16("graphics/pokemon/strata/mesodma/normal.pal", ".gbapal");
+const u16 gShinyOverworldPalette_Mesodma[] = INCGFX_U16("graphics/pokemon/strata/mesodma/shiny.pal", ".gbapal");
+#endif //OW_PKMN_OBJECTS_SHARE_PALETTES
+static const struct SpriteFrameImage sPicTable_Mesodma[] = {
+    overworld_ascending_frames(gObjectEventPic_Mesodma, 4, 4),
+};
+#endif //OW_POKEMON_OBJECT_EVENTS
 
 const u32 gMonFrontPic_Champsosaur[] = INCGFX_U32("graphics/pokemon/strata/champsosaur/anim_front.png", ".4bpp.smol");
 const u16 gMonPalette_Champsosaur[] = INCGFX_U16("graphics/pokemon/strata/champsosaur/normal.pal", ".gbapal");
@@ -386,6 +396,16 @@ const u8 gMonIcon_Knightia[] = INCGFX_U8("graphics/pokemon/strata/knightia/icon.
 #if P_FOOTPRINTS
 const u8 gMonFootprint_Knightia[] = INCGFX_U8("graphics/pokemon/strata/knightia/footprint.png", ".1bpp");
 #endif //P_FOOTPRINTS
+#if OW_POKEMON_OBJECT_EVENTS
+const u32 gObjectEventPic_Knightia[] = INCGFX_COMP("graphics/pokemon/strata/knightia/overworld.png", ".4bpp", "-mwidth 4 -mheight 4");
+#if OW_PKMN_OBJECTS_SHARE_PALETTES == FALSE
+const u16 gOverworldPalette_Knightia[] = INCGFX_U16("graphics/pokemon/strata/knightia/normal.pal", ".gbapal");
+const u16 gShinyOverworldPalette_Knightia[] = INCGFX_U16("graphics/pokemon/strata/knightia/shiny.pal", ".gbapal");
+#endif //OW_PKMN_OBJECTS_SHARE_PALETTES
+static const struct SpriteFrameImage sPicTable_Knightia[] = {
+    overworld_ascending_frames(gObjectEventPic_Knightia, 4, 4),
+};
+#endif //OW_POKEMON_OBJECT_EVENTS
 
 const u32 gMonFrontPic_Notharctus[] = INCGFX_U32("graphics/pokemon/strata/notharctus/anim_front.png", ".4bpp.smol");
 const u16 gMonPalette_Notharctus[] = INCGFX_U16("graphics/pokemon/strata/notharctus/normal.pal", ".gbapal");
