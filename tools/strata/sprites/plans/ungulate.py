@@ -1,4 +1,5 @@
-"""ungulate body plan: STUB. Covers slender even-toed ungulates: early artiodactyls, ruminants, pronghorns, camels, oreodonts, sheep.
+"""ungulate body plan: slender even-toed ungulates: early artiodactyls,
+ruminants, pronghorns, camels, oreodonts, sheep.
 
 Species (taxonomy.py):
     diacodexis    Diacodexis ilicis (Willwood Fm, WY, 2 kg)
@@ -11,20 +12,65 @@ Species (taxonomy.py):
     merycoidodon  Merycoidodon (Brule Fm, SD, 100 kg)
     ovis          Ovis canadensis (Natural Trap Cave, WY, 100 kg)
 
-Anatomy and colour notes for the artist:
-Slender even-toed: Diacodexis (rabbit-sized, long hind legs), Leptomeryx
-(chevrotain-like, no antlers), Cosoryx (merycodont: forked antler-like horns),
-Antilocapra (pronghorn: real colours known, white rump and throat bands), camels
-(Poebrotherium small and gazelle-like; Procamelus and Camelops long-necked, NO hump is
-the cautious choice), Merycoidodon (oreodont: pig-like head on a sheep-like body),
-Ovis canadensis (bighorn: curled horns, real colours).
-
-To implement: write side(p, phase=0, step=None) (and overworld(p, view, step),
-optionally back(p, phase)) following plans/small_mammal.py and plans/fish.py, pass
-them to BodyPlan below, and add specs to specs/ungulate.py. Read the style guide in
-docs/strata_art.md first.
+Drawn with the hoofed-mammal engine in plans/equid.py (`side`, `overworld`;
+its docstring lists the spec keys). The sub-builds are proportions, foot type
+(`leg.foot`: cloven hooves for the ruminants, sheep and oreodont, broad pads
+for Procamelus and Camelops) and the `horns` list: forked bony horns for
+Cosoryx, the pronged black sheaths of the pronghorn, the bighorn's curls
+(`kind="curl"`, a tapering spiral with annulation rings), and Merycoidodon's
+canine tusks (a short white `path` at the lip). Lineage looks:
+    camel line   Poebrotherium -> Procamelus -> Camelops: tan coat, pale
+                 muzzle and belly, small rounded ears, long neck growing
+                 longer and more upright, cloven hooves turning into pads
+    pronghorns   Cosoryx (a merycodont stand-in) -> Antilocapra: cinnamon
+                 back, white belly and rump patch, horns on the brow
 """
 
-from ..core.plan import stub
+from ..core.plan import BodyPlan
+from .equid import side, overworld, DEFAULTS as HOOF_DEFAULTS
 
-PLAN = stub("ungulate", "slender even-toed ungulates: early artiodactyls, ruminants, pronghorns, camels, oreodonts, sheep")
+FOOTPRINT_CLOVEN = [  # two crescent halves of a cloven hoof
+    "................",
+    "................",
+    "................",
+    "......#..#......",
+    ".....##..##.....",
+    ".....##..##.....",
+    "....###..###....",
+    "....###..###....",
+    "....###..###....",
+    "....###..###....",
+    ".....##..##.....",
+    "................",
+    "................",
+    "................",
+    "................",
+    "................",
+]
+
+FOOTPRINT_PAD = [  # camels: two toes on a broad soft pad
+    "................",
+    "................",
+    "......#..#......",
+    ".....##..##.....",
+    "....#########...",
+    "...###########..",
+    "...###########..",
+    "...###########..",
+    "....#########...",
+    ".....#######....",
+    "................",
+    "................",
+    "................",
+    "................",
+    "................",
+    "................",
+]
+
+DEFAULTS = dict(HOOF_DEFAULTS)
+DEFAULTS["leg"] = dict(HOOF_DEFAULTS["leg"], foot="cloven")
+
+PLAN = BodyPlan(
+    "ungulate", "slender even-toed ungulates: early artiodactyls, ruminants, pronghorns, camels, oreodonts, sheep",
+    side=side, overworld=overworld, defaults=DEFAULTS, footprint=FOOTPRINT_CLOVEN, tracks="TRACKS_FOOT",
+)

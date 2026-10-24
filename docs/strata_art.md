@@ -515,3 +515,42 @@ hours for a new template.
 - **Shiny palettes of greys:** a grey with a slight blue cast turns purple under a
   small hue shift; move it to brown with a large shift (~120 deg) plus saturation,
   and check pale ramps separately (they are warm and must not get the same shift).
+### Lessons: hoof lane (equid + ungulate)
+
+- **One hoofed-mammal engine for 16 species.** `plans/equid.py` builds horses,
+  ruminants, camels, an oreodont and a sheep from proportions; `plans/ungulate.py`
+  only swaps the default foot (`cloven`) and footprints. It imports `Facet`,
+  `Path`, `paint`, `tail_points` and the colour-mark rules from `plans/canid.py`
+  read-only. Ungulate legs need more joints than paws: elbow, carpus, cannon,
+  fetlock, pastern, hoof (a 4-point `Facet` with a sloped toe wall), and a hind
+  leg with a forward stifle and a high hock. The hock angle is the strongest
+  "hoofed animal" cue at 1x.
+- **Primitives worth promoting to core** (in `plans/equid.py`): `Xf` (any shape
+  placed by forward/inverse transforms; `XfPath` keeps `frac`), a head built in
+  its own frame (cranium at the origin, face pointing left) and placed by
+  `head_frame()` with a face angle, so long faces carried nose-down, horns, ears
+  and head marks all follow one rigid transform; horn specs whose offsets are
+  given world-oriented (`_local_vec`) so authors think "up" not "up in head
+  space"; `kind="curl"` horns (a tapering spiral with annulation rings via
+  `Path.frac`); manes as a `Path` offset along the dorsal normal of a
+  multi-point neck; side toes as small hoof facets behind the main hoof; the
+  `dorsal` (stripe following the sampled topline), `bars` (leg barring) and
+  `rump` mark kinds; `paw` action (near foreleg raised from elbow and knee).
+- **Lineage by evolving numbers, not new code.** The horse table in
+  `specs/equid.py` changes leg/chest ratio, back arch (`sag` < 0 and a high
+  rump), toes (4/3 -> 3 on the ground -> 3 raised -> 1), face length and jaw
+  depth, and mane size; shared marks (mealy muzzle, dark mane/tail hair, darker
+  lower legs) and forest dapples that fade out make the series read as one line.
+- **Toe count needs contrast:** hooves in a pale horn grey against dark socks,
+  side toes offset well behind the main hoof; with dark hooves on dark socks the
+  side toes vanish at 1x.
+- **End-on hoofed views:** a long face (length from `ml/cr`) over a chest wider
+  than the head, forelegs at ±0.6 chest width with shoulder ellipses, and the
+  far pair of legs *between* the near ones, darker and with feet higher (they
+  are farther away). Putting the far legs outside made a rectangle that read
+  as a robe. Horns need their own end-view shapes (`end` point lists; a "C" per
+  side for curls); tall horns overflow 32 px, so shorten the legs (`ow_end.legs`)
+  and horns (`ow_end.horn`) rather than the head.
+- **Eyes on dark or busy heads:** an eye placed on the forehead line merges
+  with the outline; keep it ~0.1-0.3 cranium radii above the centre and give it
+  a pale `ring` (bighorn's real eye ring; oreodont).
