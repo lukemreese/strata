@@ -307,3 +307,38 @@ hours for a new template.
   shells, wing membranes) needs new primitives or textures in its plan. Icons are
   limited by the 6 shared icon palettes: browns fit well, strong blues and reds
   poorly. Overworld end-on views are simple and benefit most from per-plan care.
+
+### Lessons: carn lane (canid + carnivoran)
+
+- **One proportion-driven engine for 17 quadrupeds.** `plans/canid.py` builds the
+  whole animal from ~40 numbers (body length/depths, leg height and digitigrady,
+  head cranium/muzzle/jaw, ear, tail) instead of hand-placed ellipses;
+  `plans/carnivoran.py` reuses `side`/`overworld` with different specs (cats,
+  bear, weasels, creodonts). New quadrupeds (ungulates, hyenas) could start here.
+- **Primitives worth promoting to core** (all in `plans/canid.py`): `Facet`
+  (a convex polygon with a ridge, so ears, sabres and claws shade like low
+  pyramids instead of flat plates), `Turned` (any shape rotated about a pivot:
+  posing a whole head or jaw without rebuilding it), `Path` (a Tube that knows
+  the fraction along it: tail tips, rings), `paint(cv, shape, colour, owner)`
+  (fill a shape restricted to one part's pixels: inner ears), and colour
+  `marks` (first-match rules per part group: ellipses, half-planes, spot
+  lattices, stripes, tail rings/tips, socks) evaluated in head-local
+  coordinates so they follow the head when it turns.
+- **Muzzles are tapered tubes**, not ellipses: an ellipse muzzle reads as a
+  duck bill. The lower jaw is its own part just behind the head (z below), so
+  the head's contour line *is* the mouth line, and the gape frame is a jaw
+  rotation about the hinge plus a skin-coloured triangle in the gap.
+- **End-on overworld views in head units.** Sizing the south/north views from
+  the side proportions gave tall leg-columns with tiny heads. Instead size
+  everything in U = cranium radius × ~1.9 (×2.4 for tiny long-bodied species),
+  shorten the legs, put the face (eyes 1×2 px, a 2-px nose, a pale muzzle oval)
+  over the chest and the ears big; north = rump, hind legs, hanging tail with
+  its tip mark, the back of the head and ears.
+- **Lineage look by shared marks, not shared colours:** pale lips/throat/chest,
+  dark ear tips, a tear streak and a dark tail tip on every dog-line species,
+  with forest spots/rings fading out generation by generation (Protictis →
+  Miacis → Hesperocyon → Leptocyon), reads as one family even across very
+  different palettes (coyote, swift fox, dire wolf, Epicyon).
+- **Scale per spec by trial:** long tails make side views wide and flat; curl
+  the tail up and raise the head before shrinking `front`. `place()` errors give
+  the exact overflow (scale × 62/size fixes it in one step).
