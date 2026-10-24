@@ -22,6 +22,12 @@ run at once. Put Python in a `.py` file next to it and run it from the script.
 
 Only one-liners with no `$`, quotes or parentheses are safe inline.
 
+From the Git Bash tool (`Bash`) simple commands also work as
+`export MSYS_NO_PATHCONV=1; wsl -d Ubuntu -- bash -c 'cd ~/projects/<wt> && <cmd>'`, but any
+heredoc or inline script containing backslashes (`\n`, `\p`, regexes) arrives with the
+backslashes halved. Write such Python/C/shell with the Write tool to a file (the Windows temp or
+scratchpad folder, reachable as `/mnt/c/Users/lukem/AppData/Local/Temp/...`) and run that.
+
 ## Traps
 
 - `pkill -f '<pattern>'` inside `bash -c` matches its own command line and kills itself. Put it

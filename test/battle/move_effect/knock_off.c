@@ -588,7 +588,7 @@ SINGLE_BATTLE_TEST("Knock Off remove items that can change the form of the Knock
     } SCENE {
         if (item == ITEM_MASTER_BALL)
         {
-            MESSAGE("Malamar knocked off the opposing Wobbuffet's Master Ball!");
+            MESSAGE("Malamar knocked off the opposing Wobbuffet's Master Capsule!");
         } else {
             MESSAGE("Malamar knocked off the opposing Wobbuffet's Malamarite!");
         }

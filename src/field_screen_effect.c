@@ -62,8 +62,8 @@ static void Task_StairWarp(u8);
 static void ForceStairsMovement(u32, s16*, s16*);
 
 // Strata: every respawn point is the field station.
-static const u8 sText_PlayerScurriedToCenter[] = _("{PLAYER} scurried back to the field\nstation, protecting the exhausted and\nfainted POKéMON from further harm…\p");
-static const u8 sText_PlayerScurriedBackHome[] = _("{PLAYER} scurried back home, protecting\nthe exhausted and fainted POKéMON from\nfurther harm…\p");
+static const u8 sText_PlayerScurriedToCenter[] = _("{PLAYER} scurried back to the field\nstation, protecting the exhausted and\nfainted animal from further harm…\p");
+static const u8 sText_PlayerScurriedBackHome[] = _("{PLAYER} scurried back home, protecting\nthe exhausted and fainted animal from\nfurther harm…\p");
 static const u8 sText_PlayerRegroupCenter[] = _("{PLAYER} scurried back to the field\nstation, to regroup and reconsider the\nbattle strategy…\p");
 static const u8 sText_PlayerRegroupHome[] = _("{PLAYER} scurried back home, to regroup\nand reconsider the battle strategy…\p");
 

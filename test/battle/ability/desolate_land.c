@@ -235,7 +235,7 @@ SINGLE_BATTLE_TEST("Desolate Land can be replaced by Delta Stream")
         TURN { MOVE(opponent, MOVE_CELEBRATE, gimmick: GIMMICK_MEGA); }
     } SCENE {
         ABILITY_POPUP(opponent, ABILITY_DELTA_STREAM);
-        MESSAGE("Mysterious strong winds are protecting Flying-type Pokémon!");
+        MESSAGE("Mysterious strong winds are protecting Flying-type animals!");
     } THEN {
         EXPECT(gBattleWeather & B_WEATHER_STRONG_WINDS);
     }

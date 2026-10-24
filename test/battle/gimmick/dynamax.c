@@ -953,13 +953,13 @@ SINGLE_BATTLE_TEST("Dynamax: G-Max Steelsurge sets up sharp steel")
     } SCENE {
         // turn 1
         MESSAGE("Copperajah used G-Max Steelsurge!");
-        MESSAGE("Sharp-pointed pieces of steel started floating around the opposing Pokémon!");
+        MESSAGE("Sharp-pointed pieces of steel started floating around the opposing animals!");
         // turn 2
         MESSAGE("2 sent out Hatterene!");
         MESSAGE("The sharp steel bit into the opposing Hatterene!");
         // turn 4
         MESSAGE("The opposing Hatterene used Defog!");
-        MESSAGE("The pieces of steel surrounding the opposing Pokémon disappeared!");
+        MESSAGE("The pieces of steel surrounding the opposing animals disappeared!");
     } THEN {
         EXPECT_MUL_EQ(opponent->maxHP, Q_4_12(0.75), opponent->hp);
     }
@@ -1278,7 +1278,7 @@ DOUBLE_BATTLE_TEST("Dynamax: G-Max Wildfire sets a field effect that damages non
     } SCENE {
         // turn 1
         MESSAGE("Charizard used G-Max Wildfire!");
-        MESSAGE("The opposing Pokémon were surrounded by fire!");
+        MESSAGE("The opposing animals were surrounded by fire!");
         MESSAGE("The opposing Wobbuffet is burning up within G-Max Wildfire's flames!");
         HP_BAR(opponentLeft, captureDamage: &damage);
         MESSAGE("The opposing Wynaut is burning up within G-Max Wildfire's flames!");

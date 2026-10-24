@@ -472,7 +472,7 @@ DOUBLE_BATTLE_TEST("Commander Tatsugiri faints from Perish Song if it heard the 
         TURN {}
     } SCENE {
         ANIMATION(ANIM_TYPE_MOVE, MOVE_PERISH_SONG, opponentLeft);
-        MESSAGE("All Pokémon that heard the song will faint in three turns!");
+        MESSAGE("All animals that heard the song will faint in three turns!");
         ABILITY_POPUP(playerRight, ABILITY_COMMANDER);
         MESSAGE("Tatsugiri was swallowed by Dondozo and became Dondozo's commander!");
     } THEN {

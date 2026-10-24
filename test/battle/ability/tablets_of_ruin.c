@@ -19,7 +19,7 @@ SINGLE_BATTLE_TEST("Tablets of Ruin reduces Attack if opposing mon's ability doe
         TURN { MOVE(opponent, MOVE_SCRATCH); }
     } SCENE {
         ABILITY_POPUP(player, ABILITY_TABLETS_OF_RUIN);
-        MESSAGE("Wo-Chien's Tablets of Ruin weakened the Attack of all surrounding Pokémon!");
+        MESSAGE("Wo-Chien's Tablets of Ruin weakened the Attack of all surrounding animals!");
         ANIMATION(ANIM_TYPE_MOVE, MOVE_SCRATCH, opponent);
         HP_BAR(player, captureDamage: &damage[0]);
         ANIMATION(ANIM_TYPE_MOVE, MOVE_ENTRAINMENT, player);
@@ -48,7 +48,7 @@ SINGLE_BATTLE_TEST("Tablets of Ruin's message displays correctly after all battl
         MESSAGE("Go! Wo-Chien!");
         MESSAGE("2 sent out Wobbuffet!");
         ABILITY_POPUP(player, ABILITY_TABLETS_OF_RUIN);
-        MESSAGE("Wo-Chien's Tablets of Ruin weakened the Attack of all surrounding Pokémon!");
+        MESSAGE("Wo-Chien's Tablets of Ruin weakened the Attack of all surrounding animals!");
     }
 }
 
@@ -70,6 +70,6 @@ SINGLE_BATTLE_TEST("Tablets of Ruin's message displays correctly after all battl
         SEND_IN_MESSAGE("Wobbuffet");
         MESSAGE("2 sent out Wo-Chien!");
         ABILITY_POPUP(opponent, ABILITY_TABLETS_OF_RUIN);
-        MESSAGE("The opposing Wo-Chien's Tablets of Ruin weakened the Attack of all surrounding Pokémon!");
+        MESSAGE("The opposing Wo-Chien's Tablets of Ruin weakened the Attack of all surrounding animals!");
     }
 }

@@ -15,7 +15,7 @@ SINGLE_BATTLE_TEST("Jaw Lock traps both opponents")
         TURN { MOVE(player, MOVE_JAW_LOCK); }
     } SCENE {
         ANIMATION(ANIM_TYPE_MOVE, MOVE_JAW_LOCK, player);
-        MESSAGE("Neither Pokémon can run away!");
+        MESSAGE("Neither animal can run away!");
     } THEN { // Can't find good way to test trapping
         EXPECT(opponent->volatiles.escapePrevention);
         EXPECT(player->volatiles.escapePrevention);

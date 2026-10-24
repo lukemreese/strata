@@ -10,7 +10,8 @@ description: Adding or changing Strata species and their art — roster rules, s
 - **No stock Pokémon anywhere**: no borrowed stock sprites, cries or overworld sprites in the
   shipped game, and the creatures are never called "Pokémon" (in game text, docs or replies).
   Strata's words: animals, specimens, lineages, reconstructions, Codex. Treat any remaining
-  "POKéMON"/"Poké Ball"/stock sprite as a bug.
+  "POKéMON"/"Poké Ball"/stock sprite as a bug. The vocabulary table and the safe way to change
+  stock strings are in the strata-text skill.
 - Science first: real genera, sites and dates; flag uncertainty in dex text and field notes.
 
 ## Roster

@@ -61,7 +61,7 @@ SINGLE_BATTLE_TEST("SetStartingStatus messages work as intended")
             MESSAGE("The dimensions were twisted!");
             break;
         case STARTING_STATUS_MAGIC_ROOM_TEMPORARY:
-            MESSAGE("A bizarre area was created in which Pokémon's held items lose their effects!");
+            MESSAGE("A bizarre area was created in which animals' held items lose their effects!");
             break;
         case STARTING_STATUS_WONDER_ROOM_TEMPORARY:
             MESSAGE("A bizarre area was created in which Defense and Sp. Def stats are swapped!");
@@ -95,7 +95,7 @@ SINGLE_BATTLE_TEST("SetStartingStatus messages work as intended")
             MESSAGE("Pointed stones dug into the opposing Wobbuffet!");
             break;
         case STARTING_STATUS_SHARP_STEEL_OPPONENT:
-            MESSAGE("Sharp-pointed pieces of steel started floating around the opposing Pokémon!");
+            MESSAGE("Sharp-pointed pieces of steel started floating around the opposing animals!");
             MESSAGE("The sharp steel bit into the opposing Wobbuffet!");
             break;
         case STARTING_STATUS_WEATHER_SUN_TEMPORARY:
@@ -160,7 +160,7 @@ SINGLE_BATTLE_TEST("SetStartingStatus messages work as intended")
             MESSAGE("The pointed stones disappeared from the opposing side!");
             break;
         case STARTING_STATUS_SHARP_STEEL_OPPONENT:
-            MESSAGE("The pieces of steel surrounding the opposing Pokémon disappeared!");
+            MESSAGE("The pieces of steel surrounding the opposing animals disappeared!");
             break;
         }
 

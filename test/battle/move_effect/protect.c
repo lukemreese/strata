@@ -458,10 +458,10 @@ SINGLE_BATTLE_TEST("Protect: Multi-hit moves don't hit a protected target and fa
             } else if (move == MOVE_SPIKY_SHIELD) {
                 HP_BAR(player);
             }
-            MESSAGE("The Pokémon was hit 2 times!");
-            MESSAGE("The Pokémon was hit 3 times!");
-            MESSAGE("The Pokémon was hit 4 times!");
-            MESSAGE("The Pokémon was hit 5 times!");
+            MESSAGE("The animal was hit 2 times!");
+            MESSAGE("The animal was hit 3 times!");
+            MESSAGE("The animal was hit 4 times!");
+            MESSAGE("The animal was hit 5 times!");
         }
     }
 }

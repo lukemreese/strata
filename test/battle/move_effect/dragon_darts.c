@@ -16,7 +16,7 @@ SINGLE_BATTLE_TEST("Dragon Darts strikes twice")
     } SCENE {
         ANIMATION(ANIM_TYPE_MOVE, MOVE_DRAGON_DARTS, player);
         ANIMATION(ANIM_TYPE_MOVE, MOVE_DRAGON_DARTS, player);
-        NOT MESSAGE("The Pokémon was hit 2 time(s)!");
+        NOT MESSAGE("The animal was hit 2 time(s)!");
     }
 }
 
