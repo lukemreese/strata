@@ -76,7 +76,7 @@ GRAPHIC_FILES = ["anim_front.png", "front.png", "back.png", "normal.pal", "shiny
 # Set it to True once `gen_sprite.py --borrowed` reports 0: from then on any
 # borrowed sprite makes this script fail and puts an #error into
 # strata_families.h, so the build fails too. `--strict-art` turns it on for one run.
-ART_STRICT = False
+ART_STRICT = True
 
 
 def die(msg):
