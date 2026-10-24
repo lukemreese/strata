@@ -34,6 +34,9 @@ DEFAULTS = dict(
     scutes=None,           # dict(x0, x1, step, inset): ventral keel scutes
     caudal_rays=None,      # dict(x, v, root, reach)
     dorsal_rays=None,      # dict(x0, x1, n, lean, h, dh)
+    ganoid=None,           # dict(period, min_level): diamond lattice of ganoid scales (gars)
+    spots=None,            # [(x, y)]: dark spots in the `spot` ramp (body and fins)
+    teeth=None,            # dict(x0, x1, step, y, open_y): pale teeth along a long jaw, in `accent`
     ow=dict(tracks="TRACKS_NONE"),
 )
 
@@ -103,6 +106,29 @@ def side(p, phase=0, step=None):
                     if (v in cv.pal.index["back"][1:] and py % 2 == 0 and (px + py) % 4 == 0
                             and cv.pal.ramp_of[v][1] < 3):
                         cv.shade(px, py, -1)
+        if big and p["ganoid"]:  # rhombic ganoid scales: a diagonal lattice on the lit shades
+            g = p["ganoid"]
+            n, lo = g["period"], g.get("min_level", 2)
+            for py in range(cv.h):
+                for px in range(cv.w):
+                    v = cv.idx[py][px]
+                    rl = cv.pal.ramp_of.get(v)
+                    if rl and rl[0] in ("back", "flank") and rl[1] >= lo and \
+                            ((px + py) % n == 0 or (px - py) % n == 0):
+                        cv.shade(px, py, -1)
+        if big and p["spots"]:
+            for q in p["spots"]:
+                cv.set(*cv.pt(*q), "spot")
+        if big and p["teeth"]:
+            t = p["teeth"]
+            x = t["x0"]
+            while x < t["x1"]:
+                if phase:
+                    cv.set(*cv.pt(x, t["open_y"][0] + (x - t["x0"]) * t["open_y"][2]), "accent")
+                    cv.set(*cv.pt(x + t["step"] / 2, t["open_y"][1] - (x - t["x0"]) * t["open_y"][3]), "accent")
+                else:
+                    cv.set(*cv.pt(x, t["y"] + (x - t["x0"]) * t.get("slope", 0.0)), "accent")
+                x += t["step"]
         m = p["mouth"]
         if phase and big:  # frame 2 gapes
             for a, b in m["open"]:
