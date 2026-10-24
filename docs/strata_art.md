@@ -479,3 +479,39 @@ hours for a new template.
   with a pale glint, or the face vanishes against dark wings.
 - **Branches eat the colour budget:** a 2-shade bark ramp keeps primates at 15
   colours with an iris colour.
+
+### Lessons: giant lane (hoofed_giant, rhino_brontothere, proboscidean)
+
+- **One giant engine for ten species.** `plans/hoofed_giant.py` adapts the canid
+  quadruped (it imports `Facet`, `Turned`, `Path`, `paint` and `_mark` from
+  `plans/canid.py` read-only) for graviportal and unguligrade animals: pillar legs
+  ending in a hoof wedge or a nailed pad, ungulate leaf ears or flat `round` flaps,
+  head `lumps` merged into the skull (domes, brows, a raised occiput, a concave rhino
+  nasal), and a pale lip/chin by default. `rhino_brontothere` and `proboscidean`
+  only change defaults; everything species-specific is data.
+- **Data-driven `extras` carry identity:** horns, knobs, sabres, tusks, flanges,
+  trunks, beards and hair skirts are tubes, ellipses, facets or polygons attached to
+  the head, the jaw (they follow the gape) or the body, with an optional darker far
+  copy (`far=(du, dv)`), a coloured tip (`tip=(frac, ramp)`), a frame-2 override
+  (`alt`, e.g. the mammoth's raised trunk) and, in the end views, `mirror=True` pairs
+  in head units. Worth promoting with the bird lane's `extra`.
+- **Primitives worth promoting to core:** `Pillow` (any polygon, convex or not,
+  shaded as a cushion by signed distance) and `fringe_points` (a polygon whose lower
+  edge is a row of ragged locks: musk-ox skirt, bison beard and chaps; give a lower
+  edge as "top" and negative depth for an upward bristle mane). A vertical
+  strand texture (`hair`) on chosen ramps reads as long hair at 1x.
+- **Place head extras from landmarks, not by eye.** Head-space coordinates move
+  whenever `cr`, `ml` or `mtilt` change; printing the muzzle tip, mouth line, hinge
+  and chin per spec (a 20-line script around `rig()`/`head_shapes()`) made tusks and
+  horns land on the first try.
+- **Rhinos read as tapirs or horses until the skull is right:** head carried low,
+  a raised occiput lump, a slight nasal lump (concave profile), small low eyes set
+  back, and tall tube ears at the back of the skull. Then a horn or knob sells it.
+- **End views of giants:** ears out sideways read as ungulates, upright
+  (`ear_angle` ~30) as rhinos; a pale muzzle disc reads as a bear, so rhinos get a
+  fur muzzle with a small pale lip. Paired knobs, tusks and horns need mirrored
+  extras; a 64x64 sheet wants `end_zoom` ~1.4 or the south view looks small beside
+  the 44-56 px profile. Dark-faced animals (bison) need `head_inner="outline"`.
+- **Shiny palettes of greys:** a grey with a slight blue cast turns purple under a
+  small hue shift; move it to brown with a large shift (~120 deg) plus saturation,
+  and check pale ramps separately (they are warm and must not get the same shift).
