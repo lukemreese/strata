@@ -642,7 +642,7 @@ static const struct MenuAction MultichoiceList_FrontierRules[] =
     {COMPOUND_STRING("TWO STYLES")},
     {COMPOUND_STRING("LV. 50")},
     {COMPOUND_STRING("OPEN LEVEL")},
-    {COMPOUND_STRING("{PKMN} TYPE & NO.")},
+    {COMPOUND_STRING("ANIMAL TYPE & NO.")},
     {COMPOUND_STRING("HOLD ITEMS")},
     {gText_Exit},
 };
@@ -672,7 +672,7 @@ static const struct MenuAction MultichoiceList_BattleArenaRules[] =
 static const struct MenuAction MultichoiceList_BattleTowerRules[] =
 {
     {COMPOUND_STRING("TOWER INFO")},
-    {COMPOUND_STRING("BATTLE {PKMN}")},
+    {COMPOUND_STRING("BATTLE ANIMAL")},
     {COMPOUND_STRING("BATTLE SALON")},
     {COMPOUND_STRING("MULTI-LINK")},
     {gText_Exit},
@@ -713,7 +713,7 @@ static const struct MenuAction MultichoiceList_BattlePalaceRules[] =
 
 static const struct MenuAction MultichoiceList_BattlePyramidRules[] =
 {
-    {COMPOUND_STRING("PYRAMID: POKéMON")},
+    {COMPOUND_STRING("PYRAMID: ANIMAL")},
     {COMPOUND_STRING("PYRAMID: TRAINERS")},
     {COMPOUND_STRING("PYRAMID: MAZE")},
     {COMPOUND_STRING("BATTLE BAG")},
@@ -724,7 +724,7 @@ static const struct MenuAction MultichoiceList_BattlePikeRules[] =
 {
     {COMPOUND_STRING("POKéNAV AND BAG")},
     {COMPOUND_STRING("HELD ITEMS")},
-    {COMPOUND_STRING("POKéMON ORDER")},
+    {COMPOUND_STRING("ANIMAL ORDER")},
     {gText_Exit},
 };
 
@@ -1314,7 +1314,7 @@ const u8 *const gStdStrings[] =
     [STDSTRING_TOUGH2] = COMPOUND_STRING("TOUGH"),
     [STDSTRING_ITEMS] = COMPOUND_STRING("ITEMS"),
     [STDSTRING_KEYITEMS] = COMPOUND_STRING("KEY ITEMS"),
-    [STDSTRING_POKEBALLS] = COMPOUND_STRING("POKé BALLS"),
+    [STDSTRING_POKEBALLS] = COMPOUND_STRING("CAPSULES"),
     [STDSTRING_TMHMS] = COMPOUND_STRING("TMs & HMs"),
     [STDSTRING_BERRIES] = COMPOUND_STRING("BERRIES"),
     [STDSTRING_SINGLE] = COMPOUND_STRING("SINGLE"),

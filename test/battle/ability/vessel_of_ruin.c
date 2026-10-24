@@ -19,7 +19,7 @@ SINGLE_BATTLE_TEST("Vessel of Ruin reduces Sp. Atk if opposing mon's ability doe
         TURN { MOVE(opponent, MOVE_WATER_GUN); }
     } SCENE {
         ABILITY_POPUP(player, ABILITY_VESSEL_OF_RUIN);
-        MESSAGE("Ting-Lu's Vessel of Ruin weakened the Sp. Atk of all surrounding Pokémon!");
+        MESSAGE("Ting-Lu's Vessel of Ruin weakened the Sp. Atk of all surrounding animals!");
         ANIMATION(ANIM_TYPE_MOVE, MOVE_WATER_GUN, opponent);
         HP_BAR(player, captureDamage: &damage[0]);
         ANIMATION(ANIM_TYPE_MOVE, MOVE_ENTRAINMENT, player);
@@ -48,7 +48,7 @@ SINGLE_BATTLE_TEST("Vessel of Ruin's message displays correctly after all battle
         MESSAGE("Go! Ting-Lu!");
         MESSAGE("2 sent out Wobbuffet!");
         ABILITY_POPUP(player, ABILITY_VESSEL_OF_RUIN);
-        MESSAGE("Ting-Lu's Vessel of Ruin weakened the Sp. Atk of all surrounding Pokémon!");
+        MESSAGE("Ting-Lu's Vessel of Ruin weakened the Sp. Atk of all surrounding animals!");
     }
 }
 
@@ -70,7 +70,7 @@ SINGLE_BATTLE_TEST("Vessel of Ruin's message displays correctly after all battle
         SEND_IN_MESSAGE("Wobbuffet");
         MESSAGE("2 sent out Ting-Lu!");
         ABILITY_POPUP(opponent, ABILITY_VESSEL_OF_RUIN);
-        MESSAGE("The opposing Ting-Lu's Vessel of Ruin weakened the Sp. Atk of all surrounding Pokémon!");
+        MESSAGE("The opposing Ting-Lu's Vessel of Ruin weakened the Sp. Atk of all surrounding animals!");
     }
 }
 
@@ -115,7 +115,7 @@ SINGLE_BATTLE_TEST("Vessel of Ruin is still active if removed by Mold Breaker + 
         TURN { MOVE(opponent, MOVE_WATER_GUN); }
     } SCENE {
         ABILITY_POPUP(player, ABILITY_VESSEL_OF_RUIN);
-        MESSAGE("Ting-Lu's Vessel of Ruin weakened the Sp. Atk of all surrounding Pokémon!");
+        MESSAGE("Ting-Lu's Vessel of Ruin weakened the Sp. Atk of all surrounding animals!");
         ANIMATION(ANIM_TYPE_MOVE, MOVE_WATER_GUN, opponent);
         HP_BAR(player, captureDamage: &damage[0]);
         ANIMATION(ANIM_TYPE_MOVE, MOVE_ENTRAINMENT, opponent);

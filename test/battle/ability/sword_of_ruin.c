@@ -19,7 +19,7 @@ SINGLE_BATTLE_TEST("Sword of Ruin reduces Defense if opposing mon's ability does
         TURN { MOVE(player, MOVE_SCRATCH); }
     } SCENE {
         ABILITY_POPUP(player, ABILITY_SWORD_OF_RUIN);
-        MESSAGE("Chien-Pao's Sword of Ruin weakened the Defense of all surrounding Pokémon!");
+        MESSAGE("Chien-Pao's Sword of Ruin weakened the Defense of all surrounding animals!");
         ANIMATION(ANIM_TYPE_MOVE, MOVE_SCRATCH, player);
         HP_BAR(opponent, captureDamage: &damage[0]);
         ANIMATION(ANIM_TYPE_MOVE, MOVE_ROLE_PLAY, opponent);
@@ -48,7 +48,7 @@ SINGLE_BATTLE_TEST("Sword of Ruin's message displays correctly after all battler
         MESSAGE("Go! Chien-Pao!");
         MESSAGE("2 sent out Wobbuffet!");
         ABILITY_POPUP(player, ABILITY_SWORD_OF_RUIN);
-        MESSAGE("Chien-Pao's Sword of Ruin weakened the Defense of all surrounding Pokémon!");
+        MESSAGE("Chien-Pao's Sword of Ruin weakened the Defense of all surrounding animals!");
     }
 }
 
@@ -70,7 +70,7 @@ SINGLE_BATTLE_TEST("Sword of Ruin's message displays correctly after all battler
         SEND_IN_MESSAGE("Wobbuffet");
         MESSAGE("2 sent out Chien-Pao!");
         ABILITY_POPUP(opponent, ABILITY_SWORD_OF_RUIN);
-        MESSAGE("The opposing Chien-Pao's Sword of Ruin weakened the Defense of all surrounding Pokémon!");
+        MESSAGE("The opposing Chien-Pao's Sword of Ruin weakened the Defense of all surrounding animals!");
     }
 }
 
@@ -99,7 +99,7 @@ DOUBLE_BATTLE_TEST("Sword of Ruin increases damage taken by special moves in Won
             TURN { MOVE(playerRight, move, target: opponentLeft); }
     } SCENE {
         ABILITY_POPUP(playerLeft, ABILITY_SWORD_OF_RUIN);
-        MESSAGE("Chien-Pao's Sword of Ruin weakened the Defense of all surrounding Pokémon!");
+        MESSAGE("Chien-Pao's Sword of Ruin weakened the Defense of all surrounding animals!");
         ANIMATION(ANIM_TYPE_MOVE, move, playerRight);
         HP_BAR(opponentLeft, captureDamage: &results[i].damage);
     } FINALLY {
@@ -128,13 +128,13 @@ SINGLE_BATTLE_TEST("Sword of Ruin doesn't activate when dragged out by Mold Brea
         {
             NONE_OF {
                 ABILITY_POPUP(player, ABILITY_SWORD_OF_RUIN);
-                MESSAGE("Chien-Pao's Sword of Ruin weakened the Defense of all surrounding Pokémon!");
+                MESSAGE("Chien-Pao's Sword of Ruin weakened the Defense of all surrounding animals!");
             }
         }
         else
         {
             ABILITY_POPUP(player, ABILITY_SWORD_OF_RUIN);
-            MESSAGE("Chien-Pao's Sword of Ruin weakened the Defense of all surrounding Pokémon!");
+            MESSAGE("Chien-Pao's Sword of Ruin weakened the Defense of all surrounding animals!");
         }
     }
 }
@@ -155,7 +155,7 @@ DOUBLE_BATTLE_TEST("Sword of Ruin's Defense reduction is not ignored by Mold Bre
         TURN { MOVE(opponentLeft, MOVE_SCRATCH, target: playerRight); }
     } SCENE {
         ABILITY_POPUP(playerLeft, ABILITY_SWORD_OF_RUIN);
-        MESSAGE("Chien-Pao's Sword of Ruin weakened the Defense of all surrounding Pokémon!");
+        MESSAGE("Chien-Pao's Sword of Ruin weakened the Defense of all surrounding animals!");
         ANIMATION(ANIM_TYPE_MOVE, MOVE_SCRATCH, opponentLeft);
         HP_BAR(playerRight, captureDamage: &results[i].damage);
     } FINALLY {
@@ -180,7 +180,7 @@ DOUBLE_BATTLE_TEST("Sword of Ruin's Defense reduction is ignored by Gastro Acid"
         TURN { MOVE(opponentRight, move, target: playerLeft); MOVE(opponentLeft, MOVE_SCRATCH, target: playerRight); }
     } SCENE {
         ABILITY_POPUP(playerLeft, ABILITY_SWORD_OF_RUIN);
-        MESSAGE("Chien-Pao's Sword of Ruin weakened the Defense of all surrounding Pokémon!");
+        MESSAGE("Chien-Pao's Sword of Ruin weakened the Defense of all surrounding animals!");
         ANIMATION(ANIM_TYPE_MOVE, move, opponentRight);
         ANIMATION(ANIM_TYPE_MOVE, MOVE_SCRATCH, opponentLeft);
         HP_BAR(playerRight, captureDamage: &results[i].damage);

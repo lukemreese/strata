@@ -74,7 +74,7 @@ SINGLE_BATTLE_TEST("Covert Cloak does not block primary effects")
                 MESSAGE("The opposing Skarmory fell straight down!");
                 break;
             case MOVE_JAW_LOCK:
-                MESSAGE("Neither Pokémon can run away!");
+                MESSAGE("Neither animal can run away!");
                 break;
             case MOVE_PAY_DAY:
                 MESSAGE("Coins were scattered everywhere!");

@@ -79,10 +79,10 @@ GHOST_BATTLE_TEST("Ghost battle: player cannot capture ghost (no Silph Scope)")
         TURN { USE_ITEM(player, ITEM_POKE_BALL, WITH_RNG(RNG_BALLTHROW_SHAKE, MAX_u16)); }
         TURN { USE_ITEM(player, ITEM_MASTER_BALL); }
     } SCENE {
-        MESSAGE("You used Poké Ball!");
-        MESSAGE("It dodged your thrown Poké Ball! This Pokémon can't be caught!");
-        MESSAGE("You used Master Ball!");
-        MESSAGE("It dodged your thrown Poké Ball! This Pokémon can't be caught!");
+        MESSAGE("You used Specimen Capsule!");
+        MESSAGE("It dodged your thrown capsule! This animal can't be caught!");
+        MESSAGE("You used Master Capsule!");
+        MESSAGE("It dodged your thrown capsule! This animal can't be caught!");
     }
 }
 
@@ -99,9 +99,9 @@ GHOST_BATTLE_TEST("Ghost battle: player cannot capture ghost (Marowak)")
         TURN { USE_ITEM(player, ITEM_POKE_BALL, WITH_RNG(RNG_BALLTHROW_SHAKE, MAX_u16)); }
         TURN { USE_ITEM(player, ITEM_MASTER_BALL); }
     } SCENE {
-        MESSAGE("You used Poké Ball!");
-        MESSAGE("It dodged your thrown Poké Ball! This Pokémon can't be caught!");
-        MESSAGE("You used Master Ball!");
-        MESSAGE("It dodged your thrown Poké Ball! This Pokémon can't be caught!");
+        MESSAGE("You used Specimen Capsule!");
+        MESSAGE("It dodged your thrown capsule! This animal can't be caught!");
+        MESSAGE("You used Master Capsule!");
+        MESSAGE("It dodged your thrown capsule! This animal can't be caught!");
     }
 }

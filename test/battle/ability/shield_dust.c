@@ -70,7 +70,7 @@ SINGLE_BATTLE_TEST("Shield Dust does not block primary effects")
                 MESSAGE("The opposing Vivillon fell straight down!");
                 break;
             case MOVE_JAW_LOCK:
-                MESSAGE("Neither Pokémon can run away!");
+                MESSAGE("Neither animal can run away!");
                 break;
             case MOVE_PAY_DAY:
                 MESSAGE("Coins were scattered everywhere!");

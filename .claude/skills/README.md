@@ -18,5 +18,6 @@ actionable.
 | `strata-build-test` | Generators, build, tests and their pitfalls, debug ROM |
 | `strata-maps` | Maps, scripts, act content, flags, object graphics |
 | `strata-species-art` | Roster, lineages, sprites, no-stock-Pokémon rule |
+| `strata-text` | Vocabulary (no "Pokémon" in player text) and changing stock strings against the tests and width checks |
 | `strata-playtest` | mGBA testing, debug menu, crash hunting |
 | `strata-parallel-agents` | Splitting work across subagents and merging it |

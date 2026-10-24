@@ -1,8 +1,40 @@
-# Pokémon Strata: Game Design Document (draft v0.1)
+# Strata: Game Design Document (draft v0.1)
 
-> Working title. A Pokémon Essentials fan game set in the North American West,
-> running from the last days of the dinosaurs to the present. Every creature is a
-> real, fossil-documented animal.
+> Working title. A science-grounded romhack of pokeemerald-expansion set in the
+> North American West, running from the last days of the dinosaurs to the present.
+> Every creature is a real, fossil-documented animal.
+
+---
+
+## 0. Vocabulary
+
+The creatures are **never called "Pokémon"** anywhere the player can see. Strata's words are
+animals, specimens, lineages, reconstructions and the Codex. These are the terms the game
+text uses (the first pass over stock text was done with `tools/strata/terms.py`):
+
+| Stock term | Strata term | Where it shows |
+|---|---|---|
+| POKéMON (the creature) | **ANIMAL** in menu labels (`ANIMAL INFO`, `WITHDRAW ANIMAL`), **animal / animals** in prose; in battle it is the creature's own name | summary screen, storage, party prompts, item and move text, field messages |
+| the party ("POKéMON" in the start menu) | **TEAM** | start menu, battle command menu (`Battle Bag Team Run`), "the TEAM LIST" |
+| POKéDEX | **CODEX** | start menu, search help, FIELD CARD |
+| Poké Ball | **Specimen Capsule** (item name), "capsule" in prose | bag, shop, battle messages |
+| Great / Ultra / Master / ... Ball | Great / Ultra / Master / ... **Capsule** | bag, shop |
+| POKé BALLS pocket | **CAPSULES** | bag pocket header |
+| POKéMON CENTER | **FIELD STATION** | heal sign, nurse text, region map |
+| POKé MART | **CAMP STORE** | sign, healing text |
+| TRAINER (opponent class) | **RESEARCHER** (class name; the fight is a peer review) | battle intro |
+| PC / BILL'S PC | **STATION PC** (done earlier) | PC menu |
+| TRAINER CARD | **FIELD CARD** (done earlier) | start menu |
+| POKéNAV | **FIELD LOG** | start menu (not shown in Strata) |
+| species category "Cimolestid POKéMON" | **Cimolestid**, no suffix | Codex entry, starter label |
+| Poké Flute / Poké Doll / Poké Toy / Poké Radar | Bone Flute / Decoy Doll / Decoy Toy / Field Radar | items |
+| HOENN, badges | THE WEST, act (done earlier) | region, story |
+
+Style: ALL CAPS only for menu labels and proper nouns the stock text already capitalised
+(CODEX, TEAM, FIELD STATION, CAMP STORE, CAPSULES); sentences use lower case ("an animal",
+"wild animals"). Keep the original line breaks and box widths: `animal` is shorter than
+`Pokémon`, so a rewrite never needs more room. `test/text.c` checks item names and
+descriptions and every battle string against the real box widths.
 
 ---
 
@@ -28,7 +60,7 @@ past → present means **climbing up the stratigraphic column**. Each act is
 a rock layer the player "reconstructs" and then enters.
 
 - A HUD shows the current layer and age (e.g. `HELL CREEK FM · 66.04 Ma`).
-- The Pokédex becomes the **Field Codex**. Each entry gives the real fossil site,
+- The stock dex becomes the **Field Codex**. Each entry gives the real fossil site,
   age, body mass, diet and the evidence behind the reconstruction.
 - Ages are written in **Ma** (millions of years ago) and **ka** (thousands of years ago).
 
@@ -75,7 +107,7 @@ largest extinction in the epilogue is the one humans were present for.
 | Hell Creek Badlands | present | Route 111 desert | K-Pg boundary clay; Dale's tutorial dig (3 survey stakes, `FLAG_STRATA_DIG_*`); BLM boundary on the south edge (needs `FLAG_STRATA_BLM_PERMIT`); no encounters |
 | Sand Arroyo | present | Route 111 desert rows 74–100 (joins the badlands) | BLM land: the poached pit, a broken jacket, spoil and tire tracks |
 | Lindqvist Ranch | present | Route 117 | Bea; Kessler and a crew hand (until Act 1 is done); the Pair under a tarp (`FLAG_STRATA_SAW_PAIR`) |
-| Jordan | present | Fallarbor Town (tent and Pokémon Center removed) | General store (Mart), café (House 2, heals), BLM field office (Lanette's house; Ranger Ortiz gives the permit after Act 2); the highway west leads to the prairie in the epilogue |
+| Jordan | present | Fallarbor Town (tent and healing building removed) | General store (Mart), café (House 2, heals), BLM field office (Lanette's house; Ranger Ortiz gives the permit after Act 2); the highway west leads to the prairie in the epilogue |
 | Levee Forest | 66.04 Ma | Route 119 south | Arrival point; south edge returns to camp; east side opens into the Fern Glade; 3 field notes; *Avisaurus* at the forest edge |
 | River Channel | 66.04 Ma | Route 119 middle | The tyrannosaur waits on the bluff (survival set piece); the ejecta streaks end the act and the rig pulls you out |
 | Backswamp | 66.04 Ma | Route 120 marsh | Gar, champsosaurs, crocodylians, *Emarginachelys*; field notes on the detritus food web |
@@ -132,7 +164,7 @@ connected edges and reports any trigger, sign or edge the player can't reach on 
 changes. Known gaps: battle backgrounds and the tall-grass overlay sprite keep
 their stock colours.
 
-**No gym badges**, so `B_OBEDIENCE_MECHANICS` is GEN_7: the player's own Pokémon
+**No gym badges**, so `B_OBEDIENCE_MECHANICS` is GEN_7: the player's own animals
 always obey (Gen 8+ rules would make anything caught above Lv 10 disobey forever).
 
 ## 4. Starter lineages: three modes of evolution
@@ -253,12 +285,12 @@ scripts should use the same two macros; a double boss gets the boost on its left
 ### Field station services
 
 The Field Station has the services the player needs between acts: two desk computers
-at (3, 1) and (4, 1) open the stock PC menu (Pokémon storage, the player's item PC), a
+at (3, 1) and (4, 1) open the stock PC menu (animal storage, the player's item PC), a
 cot at (1..2, 4) heals the party, and the station tech Wren at (9, 3) re-teaches level-up
 moves for free (party and PC mons). Dr. Halvorsen still heals on talk. The intro sets
 `FLAG_STRATA_EXP_SHARE` (= `I_EXP_SHARE_FLAG`), so the whole party shares experience.
-The camp quartermaster (Marge, at (29, 19) in Hell Creek Camp) runs the store: Poké Ball
-and Potion, plus Great Ball and Super Potion once act 3 is done and Hyper Potion once
+The camp quartermaster (Marge, at (29, 19) in Hell Creek Camp) runs the store: Specimen Capsule
+and Potion, plus Great Capsule and Super Potion once act 3 is done and Hyper Potion once
 act 6 is done.
 
 ## 7. Systems
@@ -266,7 +298,7 @@ act 6 is done.
 ### 7.1 Lineage descent (replaces evolution)
 - Evolution by level is turned off. Species have **no** `Evolutions=` lines in PBS.
 - New PBS file `PBS/lineages.txt` maps `ancestor → [descendant candidates + conditions]`.
-- On an era jump, every Pokémon in the party and PC is processed:
+- On an era jump, every animal in the party and PC is processed:
   1. Read its **selection pressures** (see 7.2).
   2. Pick the best-fitting descendant for the new era.
   3. If no descendant fits the new era → **extinction check**.
@@ -275,7 +307,7 @@ act 6 is done.
   learned moves where they still make sense.
 
 ### 7.2 Selection pressures (tracked per lineage)
-Hidden counters stored on each Pokémon. The game has no contests, so the six `u8`
+Hidden counters stored on each animal. The game has no contests, so the six `u8`
 contest stats in `struct BoxPokemon` (`cool`, `beauty`, `cute`, `smart`, `tough`,
 `sheen`) are repurposed as pressure counters. They are already saved for both the
 party and the PC boxes.
@@ -480,13 +512,13 @@ Keep the standard 18 types for compatibility, but assign them by ecology.
   and levels, the boss fights, the era level floor and the expected starter-line party,
   with stat totals at level, and flags gaps (`--strict` exits 1 on any flag). Run it after
   any roster, encounter or boss change.
-- **Placeholder art and cries** are copied from a similar stock Pokémon (`borrow`)
+- **Placeholder art and cries** are copied from a similar stock species (`borrow`)
   into `graphics/pokemon/strata/` and `sound/direct_sound_samples/cries/strata_*`.
-  Strata species therefore never depend on the stock Pokémon, which are disabled in
+  Strata species therefore never depend on the stock species, which are disabled in
   the game build. They stay enabled in the test build for the expansion's tests.
 - **Known limitation:** the weight field is 16-bit (max 6,553.5 kg), so the masses of
   *Tyrannosaurus*, *Triceratops* and *Ankylosaurus* are clamped. Widen the field and
-  the Pokédex weight display before the Codex work.
+  the dex weight display before the Codex work.
 
 ## 8. Scientific integrity rules
 
@@ -517,14 +549,14 @@ Keep the standard 18 types for compatibility, but assign them by ecology.
     map and item hooks
   - `extinction.c`: per-era filters, converting extinct lineages into fossil items
   - Era clock: per-act time ratio on top of the existing fake RTC
-  - Field Codex: rework of the Pokédex screens (the expansion's HGSS-style dex is a good base)
+  - Field Codex: rework of the stock dex screens (the expansion's HGSS-style dex is a good base)
 - **Data:** species in `src/data/pokemon/species_info/`. Turn level evolutions off and
-  replace the real Pokémon with our creatures in reused species slots, cutting unused ones
+  replace the stock species with our creatures in reused species slots, cutting unused ones
   via `include/config/species_enabled.h`.
 - **GBA constraints:**
   - Battle sprites are 64×64 with 16-colour palettes, plus small 32×32 icons.
   - ROM limit is 32 MB, which is plenty for ~8 copies of the region map.
-  - Save space is tight, so there is no per-Pokémon data beyond the repurposed fields.
+  - Save space is tight, so there is no per-animal data beyond the repurposed fields.
 - **Art:** every creature needs original sprites (front/back/icon). This is the biggest
   production cost; see the open questions below.
 

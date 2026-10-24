@@ -82,11 +82,10 @@ int Intl_GetListMenuWidth(const struct ListMenuTemplate *listMenu)
     return finalWidth;
 }
 
+// Strata: the category stands alone ("Cimolestid"), with no "POKéMON" after it.
 void CopyMonCategoryText(enum Species species, u8 *dest)
 {
-    u8 *str = StringCopy(dest, GetSpeciesCategory(species));
-    *str = CHAR_SPACE;
-    StringCopy(str + 1, gText_Pokemon);
+    StringCopy(dest, GetSpeciesCategory(species));
 }
 
 u8 *GetStringClearToWidth(u8 *dest, int fontId, const u8 *str, int totalStringWidth)
