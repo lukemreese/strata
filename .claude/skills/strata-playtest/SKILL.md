@@ -18,6 +18,14 @@ before overwriting the ROM. Set an old save aside (rename to `.sav.old`) instead
 - Text is slow: ~1.8–2.5 s per box. Pressing A too early skips to the end of the box; extra A
   presses can land on a YES/NO prompt.
 - Batch predictable sequences (`computer_batch`) and screenshot at 0.4–0.5 scale; zoom on the text box.
+- If another app (e.g. Edge) is in front, `open_application mGBA` brings mGBA forward but also opens
+  a second, empty mGBA window; ignore it and click the window running the game.
+- A long batch that assumes a menu state drifts badly if one press is missed (you end up deep in the
+  team menu). After any menu batch, screenshot before continuing, and back out with several B presses.
+- Turn encounters off (debug menu) before walking anywhere you aren't testing battles; tall grass
+  near the Act 1 arrival triggers a battle every few steps.
+- A new game takes ~3 minutes of input (intro + station). Save a state right after it (slot 1) and
+  reuse it; save states don't survive a rebuilt ROM, so rebuild only between test sessions.
 
 ## Save states (huge time saver)
 
