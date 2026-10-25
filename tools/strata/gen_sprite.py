@@ -9,8 +9,9 @@ Usage (from the repo root):
     python3 tools/strata/gen_sprite.py --contact OUT.png [--scale N]
                                                            every roster species' front sprite on one PNG
     python3 tools/strata/gen_sprite.py --borrowed [--strict]
-                                                           art status; --strict exits 1 if any species
-                                                           still uses borrowed stock sprites
+                                                           art and cry status; --strict exits 1 if any
+                                                           species still uses a borrowed stock sprite
+                                                           or cry (cries: gen_cry.py)
     python3 tools/strata/gen_sprite.py --plans             the body-plan table (species per plan, lanes)
 
 Writes graphics/pokemon/strata/<folder>/ (anim_front, back, normal/shiny pal, icon,

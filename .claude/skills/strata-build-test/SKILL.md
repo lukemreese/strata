@@ -12,6 +12,7 @@ Run everything from `~/projects/strata` (see the strata-shell skill for how).
 | Source | Generator | Writes |
 |---|---|---|
 | `tools/strata/sprites/` (body plans + species specs) | `gen_sprite.py` | `graphics/pokemon/strata/<name>/` art + `CUSTOM` (run before `gen_species.py`) |
+| `tools/strata/cries/specs.py` (call program per species) | `gen_cry.py` | `sound/direct_sound_samples/cries/strata_<folder>.wav` + `strata_cries.txt` (run before `gen_species.py`) |
 | `tools/strata/roster/` (species, per act; new species append to `part3.py`) | `gen_species.py` | species/pokedex/cries splices, `strata_families.h` (incl. `OVERWORLD` for own art), `strata_pokemon.h`, `strata_diets.h`, `strata_species_eras.h` |
 | `tools/strata/gen_tilesets.py` (era palette variants) | itself | tileset palettes, `strata_headers.h`, `strata_era_art.h` |
 | `tools/strata/maps/` (per-act modules) | `gen_maps.py` | layouts, `map.json`s, `map_groups.json`, encounters, `strata_maps.h`, `strata_map_eras.h`, heal locations, `event_scripts.s` includes |

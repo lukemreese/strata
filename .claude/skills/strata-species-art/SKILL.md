@@ -1,6 +1,6 @@
 ---
 name: strata-species-art
-description: Adding or changing Strata species and their art — roster rules, stat formula, lineages and extinctions, script-generated sprites, and the no-stock-Pokémon rule. Use for any species, lineage, sprite or terminology work.
+description: Adding or changing Strata species, their art and cries — roster rules, stat formula, lineages and extinctions, script-generated sprites, procedural cries, and the no-stock-Pokémon rule. Use for any species, lineage, sprite, cry or terminology work.
 ---
 
 # Strata species and art
@@ -43,17 +43,33 @@ Read `docs/strata_art.md` first: package layout, taxonomy table, formats and the
 - Commands (repo root):
   `gen_sprite.py <folder ...> | --plan NAME | --all [--preview DIR]`,
   `--contact OUT.png` (every species' front + overworld on one sheet, borrowed ones framed red),
-  `--borrowed [--strict]` (art status; strict exits 1 while any stock sprite remains),
+  `--borrowed [--strict]` (art and cry status; strict exits 1 while any stock sprite or cry remains),
   `--plans` (taxonomy and suggested lanes). Then `gen_species.py`, then `make`.
 - Each species gets battle front/back, palettes, icon, footprint, `overworld.png` (6 frames:
   south, south step, north, north step, west, west step; 32×32, 64×64 over 1 t) and `CUSTOM`
   (presentation fields + `@overworld` line). `gen_species.py` turns that into `overworldData`,
   so `OBJ_EVENT_GFX_SPECIES(<species>)` map objects show the creature; species without own art
   still show the substitute placeholder.
-- Species without CUSTOM art still use the `borrow=` stock placeholder: must reach zero. When
-  `--borrowed` says 0, set `ART_STRICT = True` in `gen_species.py` (then any borrowed sprite is an
-  `#error` and the build fails; `--strict-art` tries it for one run). Cries are all still borrowed;
-  the plan (procedural synthesis per body plan) is in the doc.
+- Species without CUSTOM art would get the `borrow=` stock sprites; `ART_STRICT = True` in
+  `gen_species.py` makes that an `#error` (build fails). Same for cries with `CRY_STRICT`.
+
+## Cries (`tools/strata/cries/`, CLI `gen_cry.py`; doc: strata_art.md "Cries")
+
+- Every species has an original procedural cry: `cries/specs.py` gives each a basis note
+  (living / relative / speculative / silent) and a call program from `voices.CALLS` (squeak,
+  yip, howl, growl, roar, whinny, bleat, hum, bellow, trumpet, gobble, boom, honk, hiss, ticks,
+  ...). Pitch and formants come from mass and body plan; a lineage motif keeps relatives related.
+- A new species needs a `specs.py` entry (gen_cry fails otherwise), then `gen_cry.py <folder>`,
+  `gen_species.py`, `make`. Commit the wav with `strata_cries.txt` (the hash marker
+  gen_species checks); a hand-edited or stale wav counts as borrowed and breaks the build.
+- Output: 8-bit mono 13379 Hz wav, 0.35-1.6 s, signature sound in the first 0.3 s (doubles
+  cut cries there). wav2agb DPCM-compresses it: loud highs and noise overload the deltas.
+- You can't listen: run `gen_cry.py --report DIR` (Windows temp) and `Read` the lane
+  spectrogram sheets and `cries_summary.txt` (loudness -11 ± 1 K-weighted, no clipping, DC
+  ~0, not in the closest-pairs list, byte-identical, wav2agb cross-check). `--check` verifies
+  the wavs on disk are reproducible.
+- Loudness is K-weighted on purpose: A-weighting made booms saturate into buzzes.
+- Dinosaur calls are speculative closed-mouth booms, hisses and honks (not roars); say so.
 - Refactors of the core must keep existing art byte-identical (`cmp` the PNG/pal files against a
   copy taken before) unless the change is a deliberate improvement you looked at.
 - Era battle-background and grass-overlay palettes come from `gen_tilesets.py` transforms, selected

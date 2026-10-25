@@ -76,7 +76,7 @@ reason:
 | R-b | The model runs forward only, chaining each layer from the one below. | The rig moves up only. Earlier layers close. |
 | R-c | **Data anchors:** at each layer the model must match the record. A lineage the record says is gone cannot persist. | Extinction filters are fixed. The player can't save *Tyrannosaurus*. |
 | R-d | What the record leaves open (which branch a lineage takes) is set by the conditions you put it under. | Selection pressures steer descents (it's a scenario run, not history rewritten). |
-| R-e | Unknowns are best guesses: colour, calls, behaviour. | Codex "inferred" tags, borrowed cries, and the "?" shimmer on low-confidence areas (flavour). |
+| R-e | Unknowns are best guesses: colour, calls, behaviour. | Codex "inferred" tags, speculative cries, and the "?" shimmer on low-confidence areas (flavour). |
 | R-f | Confidence depends on preservation. Lagerstätten (Green River) render sharply. Thin layers (impact winter) are sparse. | Encounter variety and map size per act. |
 | R-g | People are reconstructed **only as traces** (tools, butchery marks), never as characters. That is both an epistemic limit and an ethical choice. | No Clovis NPCs in Act 8 (§2.9). |
 | R-h | Injuries in the model are simulated. A full loss is a "model divergence", and the rig drops you back at the station. | Whiteout respawns at the Field Station (already built). |
@@ -664,7 +664,7 @@ The player must always be able to see *what they are steering*.
 | Item icons | ~15 (field kit, waders, forage ×7, fossil case, capsules) | 24×24 4bpp | stock | 3 |
 | UI | Codex pages, rig forecast window, lineage chart labels, region map, popup | BG tiles | stock | 2 |
 | Title | done (`gen_title.py`) | none | done | none |
-| Cries | 87 | direct-sound samples | borrowed stock | 5: keep borrowed. Later: procedural cries via a script; archosaurs get closed-mouth "booms", which is a speculative hypothesis and labelled so ⚠ |
+| Cries | 87 | direct-sound samples (8-bit 13379 Hz, DPCM) | done (`gen_cry.py`, procedural per body plan) | none. Archosaurs get closed-mouth "booms", hisses and honks: a speculative hypothesis, labelled so in `cries/specs.py` ⚠ |
 | Music | per era | m4a | Hoenn tracks | 5: keep. Retag per era for mood |
 
 ### 4.2 Production approach
