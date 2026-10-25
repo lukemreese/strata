@@ -1,11 +1,19 @@
 ---
 name: strata-playtest
-description: Playtesting Strata in mGBA with computer use — launching, input timing, save states, the debug menu (warps, story var, no-collision), and catching crashes with mGBA's log viewer, a watchpoint and addr2line. Use when asked to test or reproduce something in game.
+description: Playtesting Strata in mGBA with computer use — launching, input timing, save states, the debug menu (warps, story var, no-collision), and catching crashes with mGBA's log viewer, a watchpoint and addr2line. Use only for what the scripted harness (strata-autotest skill) can't do.
 ---
 
 # Playtesting Strata in mGBA
 
-Build a debug ROM first (strata-build-test skill). mGBA: `C:\Program Files\mGBA\mGBA.exe`.
+**Prefer the scripted harness** (strata-autotest skill): `make -j8 playtest`, then
+`python3 tools/strata/playtest/run.py <scenario>` runs headless at ~50x speed, boots straight into
+any map/story/party, and leaves screenshots, a log and crash PCs to Read. A new game takes ~5 s
+there instead of ~3 minutes of GUI input. Use the GUI only for what the harness can't do: judging
+animation, music and feel over time, or exploring when you don't yet know what to script. Even
+then, `pokeemerald-playtest.gba` is a ready debug ROM (DEBUG in the start menu, collision and
+encounter toggles) and its `.elf` maps crash addresses.
+
+Build a debug ROM first (`make -j8 playtest`, or the recipe in the strata-build-test skill). mGBA: `C:\Program Files\mGBA\mGBA.exe`.
 ROMs and saves: `C:\Projects\pokemon-custom\build\` (`strata-debug.gba` + `.sav`). Close mGBA
 before overwriting the ROM. Set an old save aside (rename to `.sav.old`) instead of deleting it.
 

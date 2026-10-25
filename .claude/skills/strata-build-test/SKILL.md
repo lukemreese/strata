@@ -45,6 +45,10 @@ After a merge, rerun all three; a clean tree afterwards means generated files ar
 
 ## Debug ROM for playtesting
 
+`make -j8 playtest` builds `pokeemerald-playtest.gba/.elf` in its own object dir with the debug
+start-menu entry, the no-collision/no-encounter flags and the scripted-test hooks (strata-autotest
+skill), without touching configs or the normal build. The manual recipe below still works.
+
 Temporarily set three configs, build, keep the ROM and ELF, then restore with `git checkout`:
 
 ```bash

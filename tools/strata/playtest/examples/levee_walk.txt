@@ -1,0 +1,11 @@
+# Line DSL example: run with
+#   python3 tools/strata/playtest/run.py tools/strata/playtest/examples/levee_walk.txt
+# One harness.Game method per line; key=value for keyword arguments.
+quickstart MAP_STRATA_LEVEE 18 30 story=2 era=1 party=SPECIES_CIMOLESTES:12
+screenshot arrival
+expect_map MAP_STRATA_LEVEE
+expect_var VAR_STRATA_STORY 2
+walk up 3
+screenshot after_walk
+party
+tasks

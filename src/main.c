@@ -24,6 +24,7 @@
 #include "main.h"
 #include "trainer_hill.h"
 #include "test_runner.h"
+#include "strata_playtest.h"
 #include "constants/rgb.h"
 
 static void VBlankIntr(void);
@@ -136,6 +137,9 @@ void AgbMainLoop(void)
     for (;;)
     {
         ReadKeys();
+#if STRATA_PLAYTEST
+        StrataPlaytest_Poll();
+#endif
 
         if (gSoftResetDisabled == FALSE
          && JOY_HELD_RAW(A_BUTTON)
