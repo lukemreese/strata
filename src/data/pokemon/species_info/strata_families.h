@@ -1110,7 +1110,7 @@
         .natDexNum = NATIONAL_DEX_TYRANNOSAUR,
         .categoryName = _("Tyrant King"),
         .height = 123,
-        .weight = 65535, // TODO: real mass 8000 kg exceeds the u16 weight field
+        .weight = 65535, // real mass 8000 kg exceeds the u16 field (battle clamp); the Codex uses strata_codex.h
         .description = COMPOUND_STRING(
             "The apex predator of Hell Creek. Its\n"
             "bite was the strongest of any land\n"
@@ -1176,7 +1176,7 @@
         .natDexNum = NATIONAL_DEX_TRICERATOPS,
         .categoryName = _("Horned Face"),
         .height = 85,
-        .weight = 65535, // TODO: real mass 9000 kg exceeds the u16 weight field
+        .weight = 65535, // real mass 9000 kg exceeds the u16 field (battle clamp); the Codex uses strata_codex.h
         .description = COMPOUND_STRING(
             "The most common large dinosaur of Hell\n"
             "Creek. Bite marks on its frill show\n"
@@ -1728,7 +1728,7 @@
         .natDexNum = NATIONAL_DEX_MESODMA,
         .categoryName = _("Multituber"),
         .height = 1,
-        .weight = 0,
+        .weight = 1,
         .description = COMPOUND_STRING(
             "A tiny, rodent-like multituberculate\n"
             "that gnawed seeds and fruit. Its\n"
@@ -1991,7 +1991,7 @@
         .natDexNum = NATIONAL_DEX_PURGATORIUS,
         .categoryName = _("Stem Primate"),
         .height = 2,
-        .weight = 0,
+        .weight = 1,
         .description = COMPOUND_STRING(
             "A tiny tree climber with nimble\n"
             "ankles, close to the ancestor of all\n"
@@ -2402,7 +2402,7 @@
         .natDexNum = NATIONAL_DEX_TEILHARDINA,
         .categoryName = _("True Primate"),
         .height = 1,
-        .weight = 0,
+        .weight = 1,
         .description = COMPOUND_STRING(
             "One of the earliest true primates, a\n"
             "mouse-sized tree dweller. Primates\n"
@@ -2735,7 +2735,7 @@
         .natDexNum = NATIONAL_DEX_ONYCHONYCTER,
         .categoryName = _("Claw Bat"),
         .height = 1,
-        .weight = 0,
+        .weight = 1,
         .description = COMPOUND_STRING(
             "One of the oldest bats. It could fly,\n"
             "and still had claws on every finger.\n"
@@ -2881,7 +2881,7 @@
         .natDexNum = NATIONAL_DEX_KNIGHTIA,
         .categoryName = _("Herring"),
         .height = 2,
-        .weight = 0,
+        .weight = 1,
         .description = COMPOUND_STRING(
             "A small herring that swam in vast\n"
             "schools. Whole schools died at once\n"
@@ -4286,7 +4286,7 @@
         .natDexNum = NATIONAL_DEX_MAMMUTHUS,
         .categoryName = _("Mammoth"),
         .height = 45,
-        .weight = 65535, // TODO: real mass 9000 kg exceeds the u16 weight field
+        .weight = 65535, // real mass 9000 kg exceeds the u16 field (battle clamp); the Codex uses strata_codex.h
         .description = COMPOUND_STRING(
             "The Columbian mammoth, taller than an\n"
             "African elephant. It grazed the\n"

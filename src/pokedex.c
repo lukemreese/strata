@@ -23,6 +23,7 @@
 #include "scanline_effect.h"
 #include "sound.h"
 #include "sprite.h"
+#include "strata_codex.h"
 #include "string_util.h"
 #include "strings.h"
 #include "task.h"
@@ -162,7 +163,9 @@ static void PrintSearchParameterTitle(u32, const u8 *);
 static void ClearSearchParameterBoxText(void);
 
 // const rom data
-#include "data/pokemon/pokedex_orders.h"
+// Strata: the Codex lists Strata species only, so it sorts with its own generated orders
+// (tools/strata/gen_species.py) instead of the stock pokedex_orders.h.
+#include "data/strata_pokedex_orders.h"
 
 static const struct OamData sOamData_ScrollBar =
 {
@@ -685,7 +688,7 @@ static const u8 sText_TenDashes[] = _("----------");
 static const u8 sText_UnkHeight[] = _("{CLEAR_TO 12}??'??”");
 static const u8 sText_UnkHeightMetric[] = _("???.? m");
 static const u8 sText_UnkWeight[] = _("????.? lbs.");
-static const u8 sText_UnkWeightMetric[] = _("???.? kg.");
+static const u8 sText_UnkWeightMetric[] = _("???.? kg");
 static const u8 sText_PokedexRegistration[] = _("CODEX registration completed.");
 static const u8 sText_HTHeight[] = _("HT");
 static const u8 sText_WTWeight[] = _("WT");
@@ -4293,6 +4296,31 @@ static void PrintOwnedMonMeasurements(enum Species species)
     PrintOwnedMonWeight(species);
 }
 
+// Strata: metric entries come from the exact mass and length in strata_codex.h, so a 50 g
+// animal reads "50 g" and an 8 t one "8,000 kg" (the species_info fields round to 0.1 kg and
+// 0.1 m, and cap at 6553.5 kg). Imperial keeps the stock conversion.
+static u8 *ConvertSpeciesHeightToString(enum Species species, u32 height)
+{
+    u8 *heightString;
+
+    if (UNITS == UNITS_IMPERIAL)
+        return ConvertMonHeightToString(height);
+    heightString = Alloc(WEIGHT_HEIGHT_STR_MEM);
+    Strata_WriteLength(heightString, Strata_GetSpeciesLengthCm(species));
+    return heightString;
+}
+
+static u8 *ConvertSpeciesWeightToString(enum Species species, u32 weight)
+{
+    u8 *weightString;
+
+    if (UNITS == UNITS_IMPERIAL)
+        return ConvertMonWeightToString(weight);
+    weightString = Alloc(WEIGHT_HEIGHT_STR_MEM);
+    Strata_WriteMass(weightString, Strata_GetSpeciesMassGrams(species));
+    return weightString;
+}
+
 static void PrintOwnedMonHeight(enum Species species)
 {
     u32 height = GetSpeciesHeight(species);
@@ -4301,7 +4329,7 @@ static void PrintOwnedMonHeight(enum Species species)
     u32 x = GetMeasurementTextPositions(DEX_MEASUREMENT_X);
     u32 yTop = GetMeasurementTextPositions(DEX_Y_TOP);
 
-    heightString = ConvertMonHeightToString(height);
+    heightString = ConvertSpeciesHeightToString(species, height);
 
     PrintInfoScreenText(heightString, x, yTop);
     Free(heightString);
@@ -4322,7 +4350,7 @@ static void PrintOwnedMonWeight(enum Species species)
     u32 x = GetMeasurementTextPositions(DEX_MEASUREMENT_X);
     u32 yBottom = GetMeasurementTextPositions(DEX_Y_BOTTOM);
 
-    weightString = ConvertMonWeightToString(weight);
+    weightString = ConvertSpeciesWeightToString(species, weight);
 
     PrintInfoScreenText(weightString, x, yBottom);
     Free(weightString);

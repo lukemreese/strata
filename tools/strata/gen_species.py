@@ -15,6 +15,12 @@ Writes:
   src/data/strata_diets.h                     sSpeciesDiets (roster `diet`), for knockout pressure
   src/data/strata_species_eras.h              sStrataSpeciesEras (`first_era`, `last_era`, `focal`),
                                               for the tests and the Codex
+  include/constants/pokedex.h                 the Codex (regional dex) order and size, between
+                                              BEGIN/END STRATA CODEX[ COUNT]: sorted by first era,
+                                              then roster order (see codex_order())
+  src/data/strata_codex.h                     sStrataMeasurements: exact mass (g) and length (cm)
+                                              for the Codex's metric display
+  src/data/strata_pokedex_orders.h            Codex sort orders: A to Z, heaviest, tallest
   graphics/pokemon/strata/<name>/            sprites copied from the borrowed species, unless the
                                               folder has a CUSTOM marker (own art from gen_sprite.py,
                                               whose presentation fields override the borrowed ones;
@@ -328,6 +334,81 @@ def gen_species_eras():
     return o
 
 
+def codex_order():
+    """Species in Codex order (the number is the 1-based position).
+
+    Rule: by first era (the act the species first exists in), then by roster order.
+    Roster order puts the starter lines first, then the act's own species, then later
+    additions, so the three starter animals of Hell Creek are 001-003. Stock species are
+    not in the Codex. The numbers are derived, not stored: a new species slots into its
+    era and everything after it moves up one (saves are indexed by National number, which
+    never changes, so no save is affected)."""
+    return sorted(SPECIES, key=lambda sp: (ERAS.index(sp["first_era"]), SPECIES.index(sp)))
+
+
+def gen_codex_splices():
+    """Lines for the BEGIN/END STRATA CODEX and CODEX COUNT splices in constants/pokedex.h."""
+    order = codex_order()
+    macro = ["#define FOREACH_STRATA_CODEX_ORDER(F) \\"]
+    macro += [f"    F({const_name(sp)}) \\" for sp in order[:-1]]
+    macro.append(f"    F({const_name(order[-1])})")
+    count = [f"#define HOENN_DEX_COUNT (HOENN_DEX_{const_name(order[-1])} + 1)"]
+    return macro, count
+
+
+def gen_measurements():
+    """sStrataMeasurements: exact mass and length for the Codex.
+
+    The species_info `weight` field is a u16 in hectograms (max 6553.5 kg, 0.1 kg steps)
+    and `height` is in decimeters: too coarse for a 30 g animal and too small for an
+    8 t one. Battle keeps using them (no battle bracket is affected by the clamp); the
+    Codex shows these exact values, metric."""
+    o = [GENERATED.rstrip("\n"),
+         "// Exact body mass (grams) and length (centimeters) of each Strata species, from the roster's",
+         "// `mass` and `length`, for the Codex (src/strata_codex.c). Indexed by",
+         "// species - SPECIES_CUSTOM_START - 1. Stock species have none (the Codex does not list them).",
+         "struct StrataMeasurements",
+         "{",
+         "    u32 massGrams;",
+         "    u16 lengthCm;",
+         "};",
+         "",
+         "static const struct StrataMeasurements sStrataMeasurements[] =",
+         "{"]
+    width = max(len(const_name(sp)) for sp in SPECIES) + len("[SPECIES_ - SPECIES_CUSTOM_START - 1]")
+    for sp in SPECIES:
+        grams, cm = round(sp["mass"] * 1000), round(sp["length"] * 100)
+        if grams < 1 or cm < 1 or grams > 0xFFFFFFFF or cm > 0xFFFF:
+            die(f"{sp['name']}: mass {sp['mass']} kg / length {sp['length']} m do not fit the Codex fields")
+        idx = f"[SPECIES_{const_name(sp)} - SPECIES_CUSTOM_START - 1]"
+        o.append(f"    {idx:<{width}} = {{ {grams}, {cm} }},")
+    o.append("};")
+    return o
+
+
+def gen_dex_orders():
+    """The Codex's three sort orders, replacing the stock tables (which list stock species only)."""
+    order = {sp["name"]: i for i, sp in enumerate(codex_order())}
+
+    def listing(name, comment, sp_list):
+        o = [comment, f"const u16 {name}[] =", "{"]
+        o += [f"    NATIONAL_DEX_{const_name(sp)}," for sp in sp_list]
+        o += ["};", ""]
+        return o
+
+    o = [GENERATED.rstrip("\n"),
+         "// Codex sort orders (Strata species only; the stock tables in pokedex_orders.h are unused).",
+         "// Entries are National numbers; pokedex.c skips unseen/uncaught ones and prints the Codex number.",
+         ""]
+    o += listing("gPokedexOrder_Alphabetical", "// A to Z by in-game name.",
+                 sorted(SPECIES, key=lambda sp: (sp["name"].lower(), order[sp["name"]])))
+    o += listing("gPokedexOrder_Weight", "// Lightest to heaviest by exact body mass (listed in reverse for HEAVIEST).",
+                 sorted(SPECIES, key=lambda sp: (sp["mass"], order[sp["name"]])))
+    o += listing("gPokedexOrder_Height", "// Shortest to tallest by body length (listed in reverse for TALLEST).",
+                 sorted(SPECIES, key=lambda sp: (sp["length"], order[sp["name"]])))
+    return o[:-1]
+
+
 def gen_graphics(sp, files):
     sym, folder = symbol_name(sp), f"graphics/pokemon/strata/{folder_name(sp)}"
     front = "anim_front.png" if "anim_front.png" in files else "front.png"
@@ -366,10 +447,12 @@ def gen_species_info(sp, files):
     borrowed = borrowed_fields(block, stock_symbol(block, sp["borrow"]), sym)
     top = max(STAT_KEYS, key=lambda k: stats[k])
     ev = 1 if bst < 350 else 2 if bst < 500 else 3
-    weight = round(sp["mass"] * 10)
+    weight = max(1, round(sp["mass"] * 10))  # hectograms; 0 would be weightless in battle
     weight_note = ""
     if weight > MAX_WEIGHT_HG:
-        weight_note = f" // TODO: real mass {sp['mass']:g} kg exceeds the u16 weight field"
+        # Battle only compares weights against brackets far below this (the Codex shows the
+        # exact mass from src/data/strata_codex.h), so the clamp is harmless.
+        weight_note = f" // real mass {sp['mass']:g} kg exceeds the u16 field (battle clamp); the Codex uses strata_codex.h"
         weight = MAX_WEIGHT_HG
     abilities = list(sp["abilities"]) + ["NONE"] * (3 - len(sp["abilities"]))
     dex = wrap_dex(sp)
@@ -501,6 +584,9 @@ def main():
 
     splice("include/constants/species.h", "SPECIES", species_enum)
     splice("include/constants/pokedex.h", "SPECIES", natdex_enum)
+    codex_macro, codex_count = gen_codex_splices()
+    splice("include/constants/pokedex.h", "CODEX", codex_macro)
+    splice("include/constants/pokedex.h", "CODEX COUNT", codex_count)
     splice("include/constants/cries.h", "CRIES", cry_enum)
     splice("sound/cry_tables.inc", "CRY_TABLE", cry_table)
     splice("sound/cry_tables.inc", "CRY_TABLE_REVERSE", cry_table_reverse)
@@ -510,6 +596,8 @@ def main():
     write("src/data/graphics/strata_pokemon.h", graphics)
     write("src/data/strata_diets.h", gen_diets())
     write("src/data/strata_species_eras.h", gen_species_eras())
+    write("src/data/strata_codex.h", gen_measurements())
+    write("src/data/strata_pokedex_orders.h", gen_dex_orders())
 
     for sp in SPECIES:
         stats, bst = base_stats(sp)

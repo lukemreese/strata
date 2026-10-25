@@ -19,6 +19,14 @@ description: Adding or changing Strata species and their art — roster rules, s
 - `tools/strata/roster/` per act; aggregator `__init__.py` documents every field. **Order rule:**
   new species are always appended (`part3.py` or a new `partN.py` at the end of `PARTS`). Never
   insert or reorder: species IDs, dex numbers and saves depend on order.
+- **Codex numbers are derived** (`codex_order()` in `gen_species.py`): sorted by `first_era`,
+  then roster position, written into `pokedex.h` (`FOREACH_STRATA_CODEX_ORDER`,
+  `HOENN_DEX_COUNT`). The player only sees these (001-087); the National number is just the
+  save-flag index, so appending keeps saves valid while a new species shifts later Codex
+  numbers. A species needs a correct `first_era`, `mass` (kg) and `length` (m): the Codex
+  shows mass and length exactly and metric (`50 g`, `2.2 kg`, `9,000 kg`, `10 cm`, `1.5 m`)
+  from `src/data/strata_codex.h`, not from the u16 `weight`/`height` fields. Details in
+  `docs/strata_design.md` 7.8.
 - Names ≤ 12 chars (genus, else informal form, else a morpheme cut). Category ≤ 12 chars. Dex text
   wraps at 38 chars, 4 lines (the generator enforces it).
 - Stats: `BST = 340 + 50·log10(kg)`, clamped 250–600, +40 for `focal=True` (every species a starter

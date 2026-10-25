@@ -92,10 +92,10 @@ void EnableNationalPokedex(void)
 
 bool32 IsNationalPokedexEnabled(void)
 {
-    if (gSaveBlock2Ptr->pokedex.nationalMagic == 0xDA && VarGet(VAR_NATIONAL_DEX) == 0x302 && FlagGet(FLAG_SYS_NATIONAL_DEX))
-        return TRUE;
-    else
-        return FALSE;
+    // Strata has one dex, the Codex: the regional order generated from the roster, numbered
+    // 001-087. The stock National Dex (Strata species at No1051 and up) is never unlocked,
+    // whatever an old save's flags say. Seen/caught flags are still indexed by National number.
+    return FALSE;
 }
 
 bool32 IsMysteryEventEnabled(void)

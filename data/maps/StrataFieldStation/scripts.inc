@@ -22,7 +22,6 @@ StrataFieldStation_EventScript_Intro::
 	setflag FLAG_SYS_POKEDEX_GET
 	setflag FLAG_SYS_B_DASH
 	setflag FLAG_STRATA_EXP_SHARE
-	special EnableNationalPokedex
 	setrespawn HEAL_LOCATION_STRATA_FIELD_CAMP
 	setvar VAR_STRATA_STORY, 1
 	msgbox StrataFieldStation_Text_Codex, MSGBOX_DEFAULT

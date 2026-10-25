@@ -38,8 +38,11 @@ Every species is a real, fossil-documented (or living) animal. Fields:
 =============================================================================
 ORDER RULE: NEW SPECIES ARE ALWAYS APPENDED AT THE END OF THE GLOBAL LIST.
 =============================================================================
-A species' position in SPECIES is its species ID and its National Dex number,
-and every generated splice (species.h, pokedex.h, cries) follows it. The list is
+A species' position in SPECIES is its species ID and its National Dex number (the
+index of its seen/caught save flags; the player never sees it), and every generated
+splice (species.h, pokedex.h, cries) follows it. The number the player sees is the
+Codex number, derived by gen_species.py: first_era, then position in this list. The
+list is
 the concatenation of the modules in PARTS, in that order. The existing modules
 hold the species that already exist, grouped by act, but their order is frozen:
 do not insert, remove or reorder species in them (editing a species' fields in

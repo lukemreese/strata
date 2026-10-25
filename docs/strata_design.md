@@ -516,9 +516,49 @@ Keep the standard 18 types for compatibility, but assign them by ecology.
   into `graphics/pokemon/strata/` and `sound/direct_sound_samples/cries/strata_*`.
   Strata species therefore never depend on the stock species, which are disabled in
   the game build. They stay enabled in the test build for the expansion's tests.
-- **Known limitation:** the weight field is 16-bit (max 6,553.5 kg), so the masses of
-  *Tyrannosaurus*, *Triceratops* and *Ankylosaurus* are clamped. Widen the field and
-  the dex weight display before the Codex work.
+- **Weight field limit:** `weight` in species_info is a u16 in hectograms (max 6,553.5 kg),
+  so the masses of *Tyrannosaurus*, *Triceratops*, *Ankylosaurus* and *Mammuthus* are clamped
+  there. Battle only compares weights with brackets far below the clamp, so it keeps that
+  field (stock tests assert its hectogram values). The Codex does not use it: see 7.8.
+
+### 7.8 The Codex (numbers and units)
+
+The Codex is the expansion's regional dex, filled with Strata species. The stock National
+Dex never unlocks (`IsNationalPokedexEnabled()` is always false, so an old save that had it
+set behaves the same), so there is one dex and it lists only Strata animals.
+
+- **Order:** Codex number = position in the list sorted by `first_era`, then roster order
+  (`codex_order()` in `tools/strata/gen_species.py`). The roster puts the starter lines
+  first, then the act's own animals, then later additions, so the three Hell Creek starter
+  animals are 001-003 and the Epilogue animals come last. `gen_species.py` writes the order
+  into `include/constants/pokedex.h` (`FOREACH_STRATA_CODEX_ORDER`, which
+  `FOREACH_SPECIES_IN_HOENN_DEX_ORDER` expands to) and the size into `HOENN_DEX_COUNT`. A new
+  species slots into its era and every later animal moves up one. The numbers are derived,
+  not stored: seen/caught flags stay indexed by National number (species order), which never
+  changes, so saves are unaffected.
+- **Where the number shows:** the Codex list and its A to Z / HEAVIEST / LIGHTEST / TALLEST /
+  SMALLEST orders and search results (`CreateMonDexNum`), the entry page and the registration
+  screen after a capture (`PrintMonInfo`: regional number when the National Dex is off), and
+  the summary screen (`SpeciesToPokedexNum`, which returns 0xFFFF, so no number, for an
+  animal outside the Codex). The sort tables are generated too
+  (`src/data/strata_pokedex_orders.h`); the stock `pokedex_orders.h` is no longer compiled.
+- **Units:** `UNITS` is `UNITS_METRIC`. The entry page reads exact mass (g) and length (cm)
+  from `src/data/strata_codex.h` (generated from the roster) through `src/strata_codex.c`:
+
+  | Value | Shown | Rule |
+  |---|---|---|
+  | *Mesodma* 0.05 kg | `50 g` | under 1 kg: grams |
+  | *Vulpes* 2.2 kg | `2.2 kg` | under 100 kg: one decimal |
+  | *Equus* 300 kg | `300 kg` | from 100 kg: whole kg |
+  | *Mammuthus* 9000 kg | `9,000 kg` | thousands comma |
+  | above 99,999 kg | `99,999+ kg` | display cap |
+  | length 0.1 m | `10 cm` | under 1 m: cm; otherwise `1.5 m`, `12.3 m`, cap `999.9+ m` |
+
+  Stock species fall back to their species_info fields (hectograms, decimeters). The
+  strings stay under 64 px so they clear the footprint (`test/strata_codex.c` measures every
+  species). `weight` is never 0 (minimum 1 hg) so tiny animals are not weightless in battle.
+- **Tests:** `test/strata_codex.c` (unique 001-087 numbers, no stock species, era order,
+  sort orders, unit formatting for tiny, normal and clamped values, widths).
 
 ## 8. Scientific integrity rules
 
@@ -549,7 +589,7 @@ Keep the standard 18 types for compatibility, but assign them by ecology.
     map and item hooks
   - `extinction.c`: per-era filters, converting extinct lineages into fossil items
   - Era clock: per-act time ratio on top of the existing fake RTC
-  - Field Codex: rework of the stock dex screens (the expansion's HGSS-style dex is a good base)
+  - Field Codex: the stock dex screens as a single Strata-only dex with metric units (see 7.8)
 - **Data:** species in `src/data/pokemon/species_info/`. Turn level evolutions off and
   replace the stock species with our creatures in reused species slots, cutting unused ones
   via `include/config/species_enabled.h`.
