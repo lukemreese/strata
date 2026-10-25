@@ -554,3 +554,68 @@ hours for a new template.
 - **Eyes on dark or busy heads:** an eye placed on the forehead line merges
   with the outline; keep it ~0.1-0.3 cranium radii above the centre and give it
   a pale `ring` (bighorn's real eye ring; oreodont).
+
+## Item art: the specimen capsule (`tools/strata/sprites/items/`, `gen_item_art.py`)
+
+**Rule: no Poke Ball is drawn anywhere the player can see.** The capsule items
+(Specimen, Great, Ultra, Master, ... Capsule) are the field rig's portable
+sample canisters: a squat upright cylinder in 3/4 view with a gunmetal lid, a
+metal bail handle on top, a bright latch over the lid seam, a status light on
+the lid and a body in the tier colour with the tier marking. Flat top, straight
+sides and a handle keep it from reading as a ball at any size.
+
+```bash
+python3 tools/strata/gen_item_art.py                  # every asset (idempotent; then make)
+python3 tools/strata/gen_item_art.py balls item_icons # only some groups (--list names them)
+python3 tools/strata/gen_item_art.py --review OUT.png [--before REF]   # stock vs new, side by side
+```
+
+| Module | Contents |
+|---|---|
+| `capsule.py` | `capsule(r, e, side, lid, handle, lift, marking, beam)` draws a role grid at any size (`SIZE_16/24/32`); `tiny()` is the hand-made 7x7 for 8x8 tiles |
+| `tiers.py` | `TIERS`: body/lid/stripe/light colours and marking per capsule (designed: Specimen khaki + label, Great slate + orange band, Ultra graphite + hazard band, Master ceramic + violet lid + gold double band, Premier, Heal cross, Safari olive; the rest recolours) |
+| `grid.py` | role grids (`outline`, `shear`, `place`, `to_index`), indexed PNG reader/8-bit writer |
+| `targets.py` | one writer per asset group, keeping stock sizes, frame layouts and shared palettes |
+| `scenes.py` | full-screen BGs cut into deduplicated tiles + tilemap: starter field case, cave-transition capsule |
+| `review.py` | the review sheet (stock from git, default: the commit before this package) |
+
+Roles (`o`, `b0..b3` body, `l0..l2` lid, `m0/m1` metal, `s0/s1` marking, `led`,
+`in`/`glow` open interior) become palette indices per target: free palettes get
+the tier's 15 colours; shared palettes get a fixed role -> index map
+(`fixed(...)` fills missing shades).
+
+**What is replaced (129 files):**
+
+| Group | Files | Palette |
+|---|---|---|
+| `balls` | `graphics/balls/<key>.png` x28: closed / open / wide open (thrown capsule, capture wobble, send-out, summary, intro release), plus `balls/open.png`, which `LoadBallGfx()` copies over frame 2 of nine sheets (drawn in the role -> index layout all tier palettes share) | tier |
+| `item_icons` | `items/icons/<key>_ball.png` x28 + `icon_palettes/*_ball.pal` x27 (Timer uses Repeat's palette, so their colours match) | tier |
+| `overworld` | `object_events/pics/misc/ball_<key>.png` x28: `ball_poke` is the item on the map (`OBJ_EVENT_GFX_ITEM_BALL`) | `ball_poke`: shared NPC_3; others tier |
+| `battle_hud` | `battle_interface/ball_display.png` (team row: ok / empty / fainted / status light red), `ball_caught_indicator.png` | stock (health-bar / healthbox palettes) |
+| `baton_pass` | `battle_anims/sprites/pokeball.png` | tier |
+| `party_menu` | `party_menu/pokeball.png` (slot: closed, open = selected), `pokeball_small.png` (Cancel/Confirm) | shared, tier |
+| `bag` | `bag/rotating_ball.png` (pocket spinner) and the pocket badge in `bag/menu.png` (line art) | tier / stock |
+| `codex` | `pokedex/caught_ball.png` | stock Codex BG |
+| `heal_machine` | `field_effects/pics/pokeball_glow.png` + `.pal` (flash indices 2, 3, 5, 6, 8 kept) | own |
+| `transition_capsule` | `battle_transitions/pokeball.png` (trainer-battle rolling capsules) + `field_effects/palettes/pokeball.pal` (indices 1-14 now the capsule colours; the other reachable users only draw index 15) | shared |
+| `starter_selection` | `starter_choose/pokeball_selection.png`: still / lean left / lean right (sheared), hand kept | tier |
+| `scenes` | `starter_choose/tiles.png` + `birch_bag.bin`: an open olive field case with three empty wells replaces Birch's bag (bank 0; grass tiles untouched); `battle_transitions/big_pokeball.png` + `_map.bin` (cave transition) | own bank / shared |
+
+**Left on purpose:** stock art nothing in Strata reaches: Battle Frontier
+(`battle_frontier/factory_screen/pokeball*`, `frontier_pass/card_ball_filled.bin`),
+the skipped intro (`intro/scene_3/pokeball*`), trade, roulette, slot machine,
+PokéNav (`pokenav/*/pokeball*`), FRLG credits and fame checker, the unused
+`battle_anims/sprites/baton_pass_ball.png` (`B_NEW_BATON_PASS_BALL_PARTICLE` is
+FALSE), `party_menu` blanks, `pokedex/noball_unused.png`, the decoration-menu
+ball icons in `interface/menu_info.png` (Secret Base / player's room), PC box
+wallpapers, and Poké Ball emblems in the stock Pokémon Center/Mart tilesets
+(Strata's field station has its own heal cot and no heal machine; the glow
+sprite was replaced anyway). Redraw any of them if it becomes reachable.
+
+**Lessons.** Draw item art as role grids so one drawing serves free and shared
+palettes. Check every stock file's palette owner before redrawing (healthbox
+elements are copied into healthbox tiles; the battle status row's palette is
+the health bar's; the party small icon uses the big icon's palette). A
+procedural cylinder reads from 13 px wide upward; below that (8x8 tiles) a
+hand-drawn 7x7 template is clearer. Full-screen BGs: dedupe tiles with flips
+and reuse only slots the other layer does not use.
