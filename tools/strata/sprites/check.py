@@ -4,10 +4,13 @@
     borrowed  no CUSTOM: gen_species.py copies the `borrow=` stock sprites
     spec      a spec exists in specs/<plan>.py (gen_sprite.py can draw it)
     ow        overworld views: south+north+west, side-only, or none
-Cries are all still borrowed (`borrow=`); see docs/strata_art.md, "Cries".
+Cries: original if gen_cry.py generated them (cries/manifest.py), else the
+`borrow=` stock cry; see docs/strata_art.md, "Cries".
 """
 
 import os
+
+from cries import manifest as cry_manifest
 
 from .core.paths import species_dir
 
@@ -30,8 +33,9 @@ def art_status(roster, specs, species_plan, plans):
 
 
 def report(status, plan_order, strict=False):
-    """Prints the per-plan table; returns the number of borrowed species."""
+    """Prints the per-plan table; returns the number of borrowed sprites + cries."""
     borrowed = [s for s in status if not s["custom"]]
+    _, borrowed_cries, stale_cries = cry_manifest.status([s["folder"] for s in status])
     print(f"{'plan':<18} {'own':>4} {'borrowed':>8}  status")
     for plan in plan_order:
         members = [s for s in status if s["plan"] == plan]
@@ -48,7 +52,10 @@ def report(status, plan_order, strict=False):
         if s["custom"] and s["ow"] != "south+north+west":
             print(f"  {s['folder']}: overworld {s['ow']}")
     print(f"borrowed stock sprites: {len(borrowed)} of {len(status)} species")
-    print(f"borrowed stock cries:   {len(status)} of {len(status)} species (no original cries yet)")
-    if strict and borrowed:
-        print("STRICT: every species needs its own art")
-    return len(borrowed)
+    print(f"borrowed stock cries:   {len(borrowed_cries)} of {len(status)} species"
+          + (f" ({', '.join(borrowed_cries)})" if borrowed_cries else ""))
+    if stale_cries:
+        print(f"  cries changed since gen_cry.py wrote them (rerun it): {', '.join(stale_cries)}")
+    if strict and (borrowed or borrowed_cries):
+        print("STRICT: every species needs its own art and cry")
+    return len(borrowed) + len(borrowed_cries)

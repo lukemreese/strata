@@ -512,10 +512,12 @@ Keep the standard 18 types for compatibility, but assign them by ecology.
   and levels, the boss fights, the era level floor and the expected starter-line party,
   with stat totals at level, and flags gaps (`--strict` exits 1 on any flag). Run it after
   any roster, encounter or boss change.
-- **Placeholder art and cries** are copied from a similar stock species (`borrow`)
-  into `graphics/pokemon/strata/` and `sound/direct_sound_samples/cries/strata_*`.
-  Strata species therefore never depend on the stock species, which are disabled in
-  the game build. They stay enabled in the test build for the expansion's tests.
+- **Art and cries are original:** `gen_sprite.py` draws every species and `gen_cry.py`
+  synthesises every cry (docs/strata_art.md). The `borrow` stock species only supplies
+  leftover presentation fields; its sprites and cry would be copied in as placeholders,
+  but `ART_STRICT`/`CRY_STRICT` in `gen_species.py` make that a build error. Strata
+  species never depend on the stock species, which are disabled in the game build and
+  stay enabled in the test build for the expansion's tests.
 - **Weight field limit:** `weight` in species_info is a u16 in hectograms (max 6,553.5 kg),
   so the masses of *Tyrannosaurus*, *Triceratops*, *Ankylosaurus* and *Mammuthus* are clamped
   there. Battle only compares weights with brackets far below the clamp, so it keeps that

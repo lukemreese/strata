@@ -60,9 +60,9 @@ each transform.
 ## P1: creature sprites (`tools/strata/sprites/`, `gen_sprite.py`)
 
 **Rule: every creature is original art.** No stock sprite, overworld sprite or
-cry ships in the final game. Until a species has its own art, `gen_species.py`
-copies the `borrow=` stock sprites as a placeholder; that count must reach zero
-(see *Borrowed art*, below).
+cry ships in the final game. Without its own art or cry, `gen_species.py` would
+copy the `borrow=` stock sprites or cry as a placeholder; both counts are zero and
+strict mode makes a new one a build error (see *Borrowed art* and *Cries*, below).
 
 ### Commands
 
@@ -158,7 +158,8 @@ a `sPicTable_<Sym>` in `strata_pokemon.h` and an `OVERWORLD(...)` block with
 real data, so every `OBJ_EVENT_GFX_SPECIES(<SPECIES>)` map object (bosses, herds,
 set pieces in `tools/strata/maps/`) shows the creature. Species without an
 overworld sheet still get the engine's substitute placeholder (itself stock art:
-another reason to reach zero). Animation, shadow and cry are still borrowed.
+another reason to reach zero). Animation and shadow are still borrowed; cries are
+original (*Cries*, below).
 
 ### Borrowed art (strict mode)
 
@@ -172,30 +173,6 @@ another reason to reach zero). Animation, shadow and cry are still borrowed.
   reminder then. From then on a borrowed sprite breaks the build.
 - `test/strata_art.c` checks that every Strata species with an overworld sheet
   wires it up (pic table, `sAnimTable_Following`, dynamic palette, both palettes).
-
-### Cries (still borrowed; to do)
-
-All 87 cries are copied from the `borrow=` species. Proposal for an original
-solution: `tools/strata/gen_cry.py`, a procedural synthesiser writing the format the
-cries already use (8-bit mono 10512 Hz WAV, `sound/direct_sound_samples/cries/
-strata_<name>.wav`), with a `CRY` marker that `gen_species.py` respects the way it
-respects `CUSTOM`. One vocal model per body plan, scaled by body size:
-
-- **Mammals:** source–filter. A glottal pulse train with F0 falling with mass
-  (roughly F0 ∝ mass^-0.4: squeaks for Mesodma, grunts and bellows for Bison),
-  formants from vocal-tract length (∝ skull length), and a contour per plan:
-  yip/bark/howl (canids), growl/roar (cats, bears), bleat (ungulates), whinny
-  (equids), trumpet + rumble (mammoth), chitter (rodents, primates).
-- **Birds:** a two-voice syrinx: two independent FM sinusoids with trills;
-  gobbles and booms for galliforms (Centrocercus air-sac pops), croaks for cranes.
-- **Archosaurs and turtles:** closed-mouth booming (low-frequency, as in crocodiles
-  and ostriches; the cautious reconstruction for dinosaurs, Riede et al. 2016),
-  hisses as filtered noise, jaw claps. Hadrosaur crest resonance is a low formant.
-- **Fish and rays:** swim-bladder drumming pulses (living drums/croakers) and splashes.
-- **Bats:** an FM sweep pitched down into the audible range.
-
-Each cry is a few parameters in the species spec (`cry=dict(...)`), so it can live
-in the same spec files. Not implemented yet.
 
 ### How a sprite is made
 
@@ -619,3 +596,110 @@ the health bar's; the party small icon uses the big icon's palette). A
 procedural cylinder reads from 13 px wide upward; below that (8x8 tiles) a
 hand-drawn 7x7 template is clearer. Full-screen BGs: dedupe tiles with flips
 and reuse only slots the other layer does not use.
+## Cries (`tools/strata/cries/`, `gen_cry.py`)
+
+Every species has an original, procedurally synthesised cry; no stock cry ships.
+Python stdlib only, seeded per species (`zlib.crc32`, never `hash()`), so a re-run
+is byte-identical (`gen_cry.py --check`).
+
+```
+tools/strata/gen_cry.py          CLI: [<folder> ...] | --check | --report DIR
+tools/strata/cries/dsp.py        sources, filters, envelopes, mixing
+tools/strata/cries/voices.py     Voice (anatomy, lineage motif) + the call library (CALLS)
+tools/strata/cries/specs.py      CRIES: per species a basis note and a call program
+tools/strata/cries/build.py      render, master, wav bytes; lineage roots from lineages.h
+tools/strata/cries/analysis.py   DPCM simulation, loudness, FFT, spectrogram sheets
+tools/strata/cries/manifest.py   strata_cries.txt: the original-cry marker
+```
+
+Order: `gen_cry.py`, then `gen_species.py`, then `make`.
+
+### Format
+
+- `sound/direct_sound_samples/cries/strata_<folder>.wav`: 8-bit unsigned mono PCM
+  at **13379 Hz**, the m4a mixer rate (`src/m4a.c`) and the rate of most stock cries
+  (no resampling in the mixer; Nyquist 6.7 kHz). The build converts it with
+  `wav2agb -b -c -l 1 --no-pad` (`audio_rules.mk`) to a 4-bit DPCM `.bin`: 64-sample
+  blocks, a raw first sample, then deltas from {0, ±1, ±4, ±9, ±16, ±25, ±36, ±49, -64},
+  about 0.52 bytes per sample. Big jumps (high, loud frequencies, noise) overload the
+  deltas, so the mastering low-passes at 5.6 kHz and the report measures the decoded
+  signal, not the wav.
+- Length 0.35-1.6 s (enforced; total about 74 s, ~0.5 MB of ROM for all 87). The
+  engine plays ~3.5 s in normal mode but only about the first 0.3 s in double battles
+  (`CRY_MODE_DOUBLES`), so each program puts its signature sound first.
+- Marker: `strata_cries.txt` (same folder) lists each generated wav with its SHA-1.
+  `gen_species.py` keeps a listed wav whose hash matches and otherwise copies the
+  `borrow=` stock cry, which `CRY_STRICT = True` turns into an `.error` in
+  `sound/direct_sound_data.inc` plus a failed script (`--strict-cries` for one run).
+  `gen_sprite.py --borrowed` reports borrowed cries next to sprites; `--strict`
+  fails on either.
+
+### Synthesis
+
+A `Voice` derives the anatomy from the roster: F0 = f(1 kg) · mass^-e per body plan
+(mammals scale roughly as mass^-0.4, Fletcher 2004; the exponents are compressed to
+0.12-0.35 and F0 clamped to 55-3800 Hz so a 40 g bat and a 9 t mammoth both stay
+audible), vocal-tract length L ∝ mass^(1/3) times a plan factor (long horse and camel
+faces, trunks, crane tracheas), and uniform-tube formants F_n = (2n−1)·c/4L. A lineage
+motif seeded by the lineage root in `src/data/lineages.h` (rhythm, contour skew,
+vibrato rate, brightness, pitch) is shared along each line; a species seed adds small
+pitch and timing offsets. Calls (`voices.CALLS`) are built from four primitives:
+
+- `voiced`: source-filter voice. A band-limited glottal pulse train (closed-form
+  geometric harmonic series, so nothing aliases) with jitter, shimmer, subharmonics
+  (period doubling for growls), amplitude modulation (trills, gobbles, purrs) and
+  breath noise, through parallel formant band-passes that can move (mouth opening).
+- `noise`: filtered noise bands (hiss, snort, huff, splash); `tone`: sine harmonics on
+  an FM contour (whistles, squeaks, bat sweeps); `click`: damped sinusoid + tick
+  (jaw pops, knocks, swim-bladder ticks, bubbles that rise in pitch).
+
+| Plan | Calls (basis) |
+|---|---|
+| small mammals, rodents, primates | squeaks, chitter, trills, whistles, wail (shrews, mice, squirrels, prairie-dog jump-yip, tarsiers, lemurs); rabbit: foot thumps + squeal |
+| bat | FM sweeps slowed ~10× into the audible band, accelerating like a feeding buzz, + social squeaks (whether *Onychonycteris* echolocated is debated) |
+| canids | yips, barks, howl with vibrato (coyote yip-howl, wolf howl, fox barks); *Epicyon*: growl + rising hyena-style whoop |
+| carnivorans | growls (subharmonics, pulsing), hissing snarl, lion roar + grunts, cheetah/puma chirp, bear growl + huff + jaw pops, ferret dooking |
+| equids | whinny with biphonation: a high tremulous F0 over an independent low G0, the call falling (Briefer et al. 2015); nicker, snort |
+| ungulates | bleat ("baa": mouth opening, vibrato + tremolo), camelid hum (*Poebrotherium*) → hum + groan → gurgling groan (*Camelops*), deer snort/bark |
+| hoofed giants, rhinos, mammoth | bellows, pig grunts, hippo-like honk series, huffs, snorts; elephant trumpet (brassy, fluttering) + rumble (real rumbles are infrasonic; the fundamental is kept at the audible floor) |
+| ground birds, cranes, flyers | chick peeps, clucks, turkey gobble, sage-grouse strut (coos, swish, pop-whistle-pop), duck quack, crane "ga-roo" bugle + gular boom, vulture hiss/grunt, a two-voice trill |
+| theropods, ornithischians | **speculative**: closed-mouth booms, hisses, hoots (crocodylian/bird bracket, Riede et al. 2016), hadrosaur and ankylosaur nasal honks, grunts; the pachycephalosaur knock is its dome, not its voice |
+| crocs, turtles | crocodylian growl-bellow + hiss, choristodere jaw clap + hiss, snapping-turtle hiss + snap, tortoise grunts |
+| fish, ray | herring "fast repetitive ticks" (swim-bladder air, Wilson et al. 2004), gar air gulp + bubbles; the stingray is silent: a splash |
+
+Each entry in `specs.py` carries a basis: `living` (recorded calls of the species or
+genus), `relative` (living relatives or analogues), `speculative` (no comparable living
+anatomy) or `silent`. Treat the speculative ones like reconstructed colour: a plausible
+guess, said so in the Codex.
+
+### Mastering and the listening proxy
+
+Mastering (`build.master`): 45 Hz high-pass, 5.6 kHz low-pass, short fades, then
+normalisation to **-11 dB** K-weighted gated loudness (ITU-R BS.1770 curve, frames
+within 15 dB of the loudest) with a look-ahead limiter at 0.9 of full scale; voices that
+still fall short (low pulse trains have a high crest factor) get gentle tanh saturation
+and a DC-removing high-pass; finally the 8-bit + DPCM round trip is simulated and the
+level corrected on the decoded signal. Stock cries measure -16..-3 (median -8) on the
+same scale; ours sit at -11 ± 1. A-weighting was tried first and rejected: it penalises
+bass so much that booms had to be saturated into buzzes.
+
+Nobody on the team can listen from the CLI, so `gen_cry.py --report DIR` is the check:
+
+- `cries_lane<N>_<plans>.png`: per artist lane, each species' decoded waveform (red
+  where it clips) over a log-frequency spectrogram (50 Hz-6.7 kHz, ticks at 100 Hz,
+  1 kHz, 5 kHz). Look at them (`Read`) after any change: contours, harmonics and
+  rhythm should read as the call named in the label.
+- `cries_summary.txt`: per species duration, designed F0 range, measured spectral-peak
+  range, peak level, clipped samples, DC, loudness, DPCM SNR, `.bin` bytes and whether
+  the render is byte-identical to the wav on disk; then totals, the stock-loudness
+  comparison, the closest-sounding pairs (feature distance over band energies,
+  envelope and length: check that no two species are near-duplicates) and a
+  cross-check that wav2agb's real `.bin` decodes to exactly the simulated samples.
+
+### Adding or changing a cry
+
+1. Add or edit the species' entry in `cries/specs.py` (`gen_cry.py` fails if the
+   roster and `CRIES` disagree). Reuse a call from `voices.CALLS` or add one there.
+2. `python3 tools/strata/gen_cry.py <folder>`, then `--report DIR` and look at the
+   lane sheet and summary (loudness on target, no clipping, not a near-duplicate).
+3. `gen_species.py`, `make`, and commit the wav and `strata_cries.txt` together.
