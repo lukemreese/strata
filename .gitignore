@@ -66,3 +66,7 @@ tools/aif2pcm/aif2pcm
 *.smolTM
 __pycache__
 .map_version
+
+# Strata playtest harness (tools/strata/playtest): the runner binary and the constants cache
+tools/strata/playtest/runner/strata-runner
+*.playtest_constants.json
