@@ -1,6 +1,6 @@
 ---
 name: strata-species-art
-description: Adding or changing Strata species and their art — roster rules, stat formula, lineages and extinctions, script-generated sprites, and the no-stock-Pokémon rule. Use for any species, lineage, sprite or terminology work.
+description: Adding or changing Strata species and their art — roster rules, stat formula, lineages and extinctions, script-generated sprites, item (capsule) art, and the no-stock-Pokémon rule. Use for any species, lineage, sprite, item-art or terminology work.
 ---
 
 # Strata species and art
@@ -68,3 +68,25 @@ Read `docs/strata_art.md` first: package layout, taxonomy table, formats and the
   by the current map's era in `src/strata_art.c`.
 - Always look at the output (`Read` the `_sheet`, `_battle` and `_ow` previews; 1× and 3×) before
   committing art, and compare with plan-mates on the contact sheet.
+
+## Item art: the specimen capsule (`tools/strata/sprites/items/`, CLI `gen_item_art.py`)
+
+Every place the game draws a Poké Ball draws a capsule (a canister with a bail handle, latch and
+status light): battle balls + `balls/open.png`, bag icons, the map item, team row and caught mark,
+party menu, bag spinner and pocket badge, Codex caught mark, heal machine, both battle
+transitions, starter choice (capsules + an open field case instead of Birch's bag).
+`docs/strata_art.md` "Item art" has the file table and what is left on purpose.
+
+- Regenerate: `python3 tools/strata/gen_item_art.py` (all; idempotent), or groups
+  (`--list`); then `make`. Colours/markings per capsule: `tiers.py`; shapes: `capsule.py`;
+  per-file layout: `targets.py`. Review: `gen_item_art.py --review OUT.png` (stock from git
+  vs new) and `Read` it.
+- Drawings are role grids (`o`, `b0..b3`, `l0..l2`, `m0/m1`, `s0/s1`, `led`, `in`, `glow`);
+  shared palettes get a fixed role -> index map instead of new colours. Before redrawing a
+  stock file, find who else uses its palette (healthbox elements use the healthbox palette;
+  the status row's palette is the health bar's; party small icon uses the big icon's).
+- All tier palettes must keep one role -> index layout: `LoadBallGfx()` pastes the shared
+  `balls/open.png` over frame 2 of nine ball sheets.
+- A new capsule item: add a `TIERS` entry keyed by the stock ball name, run the generator.
+- New stock art with a ball in it: add a writer to `targets.TARGETS` and a row to
+  `review.assets()`.
