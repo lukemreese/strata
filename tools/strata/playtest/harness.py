@@ -115,7 +115,8 @@ class Constants:
 
     HEADERS = ["global.h", "constants/map_groups.h", "constants/species.h", "constants/items.h",
                "constants/flags.h", "constants/vars.h", "constants/strata.h", "constants/event_objects.h",
-               "constants/battle.h", "strata_forecast.h", "constants/strata_act_flags.h", "constants/item.h"]
+               "constants/battle.h", "strata_forecast.h", "constants/strata_act_flags.h", "constants/item.h",
+               "constants/opponents.h"]
 
     def __init__(self, cache_path):
         self.cache_path = cache_path
@@ -784,6 +785,18 @@ class Game:
     def item_count(self, item):
         self._command("COUNT_ITEM", [self.const(item)])
         return self.st["value"]
+
+    def trainer_defeated(self, trainer):
+        """Whether a trainer's defeat flag (TRAINER_FLAGS_START + id) is set."""
+        return self.flag(f"(TRAINER_FLAGS_START + {trainer})")
+
+    def money(self):
+        """The player's money: SaveBlock1.money is stored XOR the SaveBlock2 encryption key."""
+        c = self.const
+        sb1 = self.read("gSaveBlock1Ptr", 4)
+        sb2 = self.read("gSaveBlock2Ptr", 4)
+        return (self.read(sb1 + c("__builtin_offsetof(struct SaveBlock1, money)"), 4)
+                ^ self.read(sb2 + c("__builtin_offsetof(struct SaveBlock2, encryptionKey)"), 4))
 
     # -------------------------------------------------------------- outputs
     def screenshot(self, name, advance=True):

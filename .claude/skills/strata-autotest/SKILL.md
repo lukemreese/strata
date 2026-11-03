@@ -58,6 +58,7 @@ checks, screenshots with map and position, emulator errors, warnings, crash PC/L
 | `battle_smoke` | Levee tall grass with encounters on: wild battle, capsule throws (R = last used ball), Codex registration page; asserts the catch |
 | `grass_battles` | One map per era with encounter grass (Acts 1-5: ferns, palms, herbs, horsetails; `--map` to pick): the overlay around the legs, the battle's entry wall (`_battle_intro`) and background, then run |
 | `act_tour` | Every Strata map: arrival, each `OBJ_EVENT_GFX_SPECIES` creature up close, every edge (a tile walkable on both sides of the seam) and warp; asserts each lands on the right map |
+| `peer_review_smoke` | Camp at story 3 (act 1 done): checks the researcher gating flags, talks to Arlo, plays the peer review (Lv 100 starters), checks the 432 prize and defeat flag, then gets the survey stipend from Halvorsen (5 entries x 175) |
 | `boss_1` .. `boss_8`, `boss_all` | Quick-start beside the act's boss line, walk onto it, play the script and every battle (three Lv 100 starters), assert `STORY_ACT_DONE` |
 | `watchdog_selftest` | Forces a freeze and a bad jump; both must be caught |
 | `extinction_smoke` | Act 1 done with dinosaurs in the team and PC: rig to the impact winter, the loss list (a shot per message), fossil flags, then START > BAG > KEY ITEMS > Fossil Case > a fossil's label |
@@ -92,6 +93,10 @@ DSL: `quickstart MAP_X 10 20 story=2 era=1 party=SPECIES_A:12,SPECIES_B:10 flags
 counter, amount). Giving more mons than the TEAM holds sends them to the PC. `g.const` evaluates
 any C expression over the harness headers (e.g. `offsetof(struct RigForecast, expectedSpecies)`),
 which with `g.read` reads game structs.
+
+Python helpers for trainers and money: `g.trainer_defeated('TRAINER_X')` (the flag at `TRAINER_FLAGS_START` + id) and
+`g.money()` (decrypts `SaveBlock1.money`). Trainer battles use `g.battle('fight')` as well; `g.talk()` returns
+`'battle'` once the intro text ends.
 
 Useful state: `g.st` (map, x, y, story, era, inBattle, scriptActive, fieldLocked, fadeActive,
 callbacks), `g.cb2()` (main callback name), `g.tasks()` (active task function names: menus show

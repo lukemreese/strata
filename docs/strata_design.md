@@ -102,7 +102,7 @@ largest extinction in the epilogue is the one humans were present for.
 
 | Map | Era | Layout source (placeholder) | Notes |
 |---|---|---|---|
-| Hell Creek Camp | present | Route 111 north | Hub; field station door at (26, 18); Theo, Josie, Marge's store; ranch road west to the Lindqvist Ranch |
+| Hell Creek Camp | present | Route 111 north | Hub; field station door at (26, 18); Theo (four peer reviews), Josie, Marge's store, the ornithologist and mammalogist (visiting researchers); ranch road west to the Lindqvist Ranch |
 | Field Station | present | Birch's lab | STRATA rig at (10–11, 7); mentor Dr. Halvorsen; respawn point; PC, cot, relearner Wren, rig-rules notes |
 | Hell Creek Badlands | present | Route 111 desert | K-Pg boundary clay; Dale's tutorial dig (3 survey stakes, `FLAG_STRATA_DIG_*`); BLM boundary on the south edge (needs `FLAG_STRATA_BLM_PERMIT`); no encounters |
 | Sand Arroyo | present | Route 111 desert rows 74–100 (joins the badlands) | BLM land: the poached pit, a broken jacket, spoil and tire tracks |
@@ -144,7 +144,7 @@ largest extinction in the epilogue is the one humans were present for.
 | Montana Prairie | today | Route 102 | Epilogue; open once the present layer is loaded, via the highway west of Jordan. Prairie-dog town and a one-time black-footed ferret encounter (`FLAG_STRATA_EPI_FERRET_MET`), swift fox, sage-grouse, bison, pronghorn; 4 field notes; the Interpretive Center is the building in the east half (door warp); east edge opens to the Breaks, south edge to the Pryor Mountains |
 | Missouri Breaks | today | Route 114 top (river, badlands ground; house, berry plots and bridge removed) | Epilogue; water habitat: *Chelydra*, *Lepisosteus*, *Ovis*, *Meleagris*; 3 field notes (the same Hell Creek rock eroding today) |
 | Pryor Mountains | today | Route 112 south (red limestone plateau, stairs, lowland) | Epilogue, optional; feral *Equus* (3 visible horses), pronghorn, *Ovis*, sage-grouse; 3 field notes |
-| Interpretive Center | today | Lilycove Museum 1F | Epilogue; the Pair in the round case, paleoart murals of the layers, Halvorsen (final peer review hook for C13), Josie, Bea, Dale, Theo; stairs up |
+| Interpretive Center | today | Lilycove Museum 1F | Epilogue; the Pair in the round case, paleoart murals of the layers, Halvorsen (the final peer review, Lv 50-55), Josie, Bea, Dale, Theo; stairs up |
 | Hall of Lost Lineages | today | Lilycove Museum 2F | Epilogue; five cases (one plaque per extinction filter: K-Pg, Paleocene recovery, Eocene-Oligocene, Miocene grassland, Ice Age) and two statues (end-Pleistocene; the case not written yet). Generic until F4 adds fossil flags |
 
 The present-day hub sits outside time: returning to camp does not change `VAR_STRATA_ERA`.
@@ -292,6 +292,66 @@ moves for free (party and PC mons). Dr. Halvorsen still heals on talk. The intro
 The camp quartermaster (Marge, at (29, 19) in Hell Creek Camp) runs the store: Specimen Capsule
 and Potion, plus Great Capsule and Super Potion once act 3 is done and Hyper Potion once
 act 6 is done.
+
+### Peer review and the stipend (C13)
+
+Humans battle only in the present day, framed as **peer review**: two people pit their
+reconstructions against each other. All present-day trainers are class RESEARCHER and
+fight when talked to (no line of sight); each is one battle, no rematches. Their data is
+`src/data/trainers_strata.party` (generated into `trainers_strata.h`, included by `src/data.c`
+after the stock trainers), their trainer IDs are in `include/constants/opponents.h`.
+Because every trainer owns a flag and the flag range is fixed, the 15 Strata trainers reuse
+the slots of stock trainers nothing refers to (RED, LEAF, the two placeholders, AMY & LIV 3
+and GINA & MIA 2) plus the nine spare ones.
+
+**Teams** use only species that exist by the act just finished (`first_era`), at levels between the
+next layer's era floor and the act's expected party level, IV 15 (a wild catch's average), the last
+four level-up moves, `AI: Basic Trainer`. Pics are stock human trainer pics. `balance.py` prints a
+"Peer review" table (each animal's stat total against the expected party median) and flags
+`REVIEW OVERTUNED` (an animal over 115% of it, 125% for Halvorsen) and `REVIEW WEAK`.
+
+| Trainer | Where | Unlocks | Team (Lv) | Prize |
+|---|---|---|---|---|
+| Theo #0 | Hell Creek Camp | starter chosen | the next starter in the cycle mammal, bird, turtle (Cimolestes / Asteriornis / Emarginachel) 5 | 200 |
+| ARLO, ornithologist | Hell Creek Camp (22, 8) | act 1 done | Avisaurus 7, Anzu 8, Asteriornis 9 | 432 |
+| PRIYA, palynologist | Lindqvist Ranch (33, 8) | act 2 done | Mesodma 13, Champsosaur 14, Emarginachel 15 | 720 |
+| TOMAS, mammalogist | Hell Creek Camp (26, 8) | act 3 done | Taeniolabis 18, Loxolophus 19, Protictis 20 | 960 |
+| Theo #1 | Hell Creek Camp | act 3 done | Champsosaur 19, Loxolophus 20, Protictis 21 | 840 |
+| INGRID, isotope geochemist | Field Station (11, 4) | act 4 done | Sifrhippus 24, Hyopsodus 25, Coryphodon 26 | 1248 |
+| KEOLA, ichthyologist | Lindqvist Ranch, stock pond (19, 12) | act 5 done | Knightia 30, Heliobatis 31, Lepisosteus 32, Presbyornis 32 | 1536 |
+| OSKAR, ichnologist | Jordan (13, 10) | act 6 done | Stylemys 36, Merycoidodon 37, Mesohippus 38 | 1824 |
+| Theo #2 | Hell Creek Camp | act 6 done | Stylemys 36, Leptomeryx 37, Mesohippus 38, Hesperocyon 39 | 1560 |
+| HOLLIS, volcanologist | Jordan (3, 13) | act 7 done | Balearica 43, Hypohippus 44, Procamelus 44 | 2112 |
+| ASHA, Quaternary ecologist | Lindqvist Ranch (53, 10) | act 8 done | Equus 47, Antilocapra 48, Camelops 49, Ovibos 50 | 2400 |
+| Theo #3 | Hell Creek Camp | act 8 done | double battle with Josie's pair: Canis 47, Meleagris 48, Ovis 49, Equus 50 | 4000 |
+| Dr. Halvorsen | Interpretive Center | epilogue (`FLAG_STRATA_EPI_PEER_REVIEW_DONE`) | Chelydra 50, Teleoceras 51, Epicyon 52, Uintatherium 53, Arctodus 54, Tyrannosaur 55 | 3080 |
+
+**Unlocking.** Researcher N hides under `FLAG_TEMP_N` until `VAR_STRATA_STORY >= STORY_ACT_DONE(N)`;
+every hub map calls `special Strata_HideLockedReviewers` when it loads (`src/strata_review.c`).
+Each leaves a field note after the fight (their act's insight) and a one-line reminder
+afterwards. Theo offers the earliest review the player hasn't had, so none is missed; his
+arc runs from "how do we know that?" to "the model is wrong, but it's useful" (#3, which is
+also what he tells the player in the Interpretive Center). Halvorsen asks first (YES/NO)
+and sets the flag on a win; the player can come back until then.
+
+**Prizes** are the stock formula: 4 x the last animal's level x the class multiplier
+(`gTrainerClasses`: researchers 12, Theo 10, Halvorsen 14; a double battle pays twice).
+Against the camp store (Specimen Capsule 200, Great 600, Potion 200, Super 700, Hyper 1500): a
+first researcher is worth two capsules, the act 8 one a little over three Hyper Potions.
+
+**Survey stipend** (the renewable income): talking to Dr. Halvorsen in the Field Station pays
+`special Strata_PayStipend`: every Codex "caught" entry since the last payment
+(`VAR_STRATA_STIPEND_COUNT`) at **150 + 25 per act finished** (150 at the start, 350 once the Ice
+Age is done). The starter doesn't count (`Strata_StipendBaseline` in the intro). Fully
+completing the Codex (87 entries) is worth about 21,000 (the rate rises as acts are done); peer review adds about 21,000.
+That keeps capsules (200 each) affordable at 2 to 3 per new species without making money
+free, since most of it comes from catching and from fighting.
+
+### Hub flags
+
+Present-day content has no act of its own. Its section at the end of
+`include/constants/strata_act_flags.h` holds `FLAG_STRATA_HUB_BASE` (0x2AC..0x2B3, one used:
+`FLAG_STRATA_HUB_STIPEND_TOLD`) and `VAR_STRATA_STIPEND_COUNT` (0x40DB).
 
 ## 7. Systems
 

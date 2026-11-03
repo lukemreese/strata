@@ -3,8 +3,13 @@
 @ src/strata_acts.c, which also holds Dr. Halvorsen's lines for each stage.
 
 StrataFieldStation_MapScripts::
+	map_script MAP_SCRIPT_ON_TRANSITION, StrataFieldStation_OnTransition
 	map_script MAP_SCRIPT_ON_FRAME_TABLE, StrataFieldStation_OnFrame
 	.byte 0
+
+StrataFieldStation_OnTransition:
+	special Strata_HideLockedReviewers
+	end
 
 StrataFieldStation_OnFrame:
 	map_script_2 VAR_STRATA_STORY, 0, StrataFieldStation_EventScript_Intro
@@ -14,6 +19,8 @@ StrataFieldStation_EventScript_Intro::
 	lockall
 	msgbox StrataFieldStation_Text_Welcome, MSGBOX_DEFAULT
 	special ChooseStarter
+	@ The starter is a gift, not a find: the survey stipend starts counting after it.
+	special Strata_StipendBaseline
 	msgbox StrataFieldStation_Text_Lineages, MSGBOX_DEFAULT
 	call Strata_EventScript_AskDeepTimeMode
 	msgbox StrataFieldStation_Text_Capsules, MSGBOX_DEFAULT
@@ -40,8 +47,99 @@ StrataFieldStation_EventScript_Mentor::
 	@ Saves from before the gear existed get it here.
 	checkitem ITEM_WADERS
 	call_if_eq VAR_RESULT, FALSE, StrataFieldStation_EventScript_LateWaterGear
+	call StrataFieldStation_EventScript_Stipend
 	release
 	end
+
+@ The survey stipend (docs/strata_design.md, "Peer review"): money for every Codex entry the
+@ player has caught since the last payment, 150 each at the start and 25 more per act done.
+@ special Strata_PayStipend leaves the entries in {STR_VAR_1}, the rate in {STR_VAR_2} and the
+@ total in {STR_VAR_3}.
+StrataFieldStation_EventScript_Stipend::
+	special Strata_PayStipend
+	goto_if_ne VAR_RESULT, 0, StrataFieldStation_EventScript_StipendPaid
+	goto_if_set FLAG_STRATA_HUB_STIPEND_TOLD, StrataFieldStation_EventScript_StipendNone
+	setflag FLAG_STRATA_HUB_STIPEND_TOLD
+	msgbox StrataFieldStation_Text_StipendExplain, MSGBOX_DEFAULT
+	return
+
+StrataFieldStation_EventScript_StipendPaid::
+	playse SE_SHOP
+	goto_if_set FLAG_STRATA_HUB_STIPEND_TOLD, StrataFieldStation_EventScript_StipendPaidTold
+	setflag FLAG_STRATA_HUB_STIPEND_TOLD
+	msgbox StrataFieldStation_Text_StipendExplain, MSGBOX_DEFAULT
+StrataFieldStation_EventScript_StipendPaidTold::
+	msgbox StrataFieldStation_Text_StipendPaid, MSGBOX_DEFAULT
+	return
+
+StrataFieldStation_EventScript_StipendNone::
+	msgbox StrataFieldStation_Text_StipendNone, MSGBOX_DEFAULT
+	return
+
+@ The isotope geochemist (act 4): a visiting researcher, one battle.
+StrataFieldStation_EventScript_Ingrid::
+	lock
+	faceplayer
+	trainerbattle_single TRAINER_STRATA_REVIEW_ACT4, StrataFieldStation_Text_IngridIntro, StrataFieldStation_Text_IngridDefeat, StrataFieldStation_EventScript_IngridWon
+	msgbox StrataFieldStation_Text_IngridAfter, MSGBOX_DEFAULT
+	release
+	end
+
+StrataFieldStation_EventScript_IngridWon::
+	msgbox StrataFieldStation_Text_IngridNote, MSGBOX_DEFAULT
+	releaseall
+	end
+
+StrataFieldStation_Text_StipendExplain:
+	.string "DR. HALVORSEN: One more thing. The\n"
+	.string "consortium pays a survey stipend.\p"
+	.string "Every new species in your CODEX,\n"
+	.string "caught and logged, earns the\l"
+	.string "camp a payment. It's yours for\l"
+	.string "supplies.\p"
+	.string "It grows with every layer the rig\n"
+	.string "finishes. Funding follows results.$"
+
+StrataFieldStation_Text_StipendPaid:
+	.string "DR. HALVORSEN: {STR_VAR_1} new CODEX entries\n"
+	.string "since last time, at ¥{STR_VAR_2} each.\p"
+	.string "{PLAYER} received ¥{STR_VAR_3} from the\n"
+	.string "survey stipend.$"
+
+StrataFieldStation_Text_StipendNone:
+	.string "DR. HALVORSEN: No new CODEX entries\n"
+	.string "since the last stipend. Catch and\l"
+	.string "log something new, and the\l"
+	.string "consortium pays.$"
+
+StrataFieldStation_Text_IngridIntro:
+	.string "INGRID: I read tooth enamel with a\n"
+	.string "mass spectrometer. The carbon in it\l"
+	.string "says what an animal ate, and what\l"
+	.string "the air was like.\p"
+	.string "Your PETM run has a carbon spike\n"
+	.string "in it, doesn't it? Peer review:\l"
+	.string "your reconstruction against my\l"
+	.string "numbers.$"
+
+StrataFieldStation_Text_IngridDefeat:
+	.string "INGRID: Your animals are the right\n"
+	.string "sizes for a hot world. Good.$"
+
+StrataFieldStation_Text_IngridNote:
+	.string "INGRID: Field note.\p"
+	.string "At the PETM, carbon came out over\n"
+	.string "thousands of years and the world\l"
+	.string "warmed by several degrees.\p"
+	.string "Today we're adding carbon roughly\n"
+	.string "ten times faster, give or take.\l"
+	.string "Check the paper; I'm careful about\l"
+	.string "the number, not the direction.$"
+
+StrataFieldStation_Text_IngridAfter:
+	.string "INGRID: The horses shrank in the\n"
+	.string "heat, too. Heat leaves a body-size\l"
+	.string "signature in the teeth.$"
 
 StrataFieldStation_EventScript_LateWaterGear::
 	msgbox StrataFieldStation_Text_WaterGear, MSGBOX_DEFAULT

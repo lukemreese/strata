@@ -8,7 +8,134 @@ StrataLindqvistRanch_MapScripts::
 
 StrataLindqvistRanch_OnTransition:
 	call_if_ge VAR_STRATA_STORY, STORY_ACT_DONE(ERA_HELL_CREEK), StrataLindqvistRanch_EventScript_KesslerGone
+	special Strata_HideLockedReviewers
 	end
+
+@ Visiting researchers (peer review, C13): the palynologist (act 2), the ichthyologist at the
+@ stock pond (act 5) and the Quaternary ecologist (act 8). One battle each.
+StrataLindqvistRanch_EventScript_Priya::
+	lock
+	faceplayer
+	trainerbattle_single TRAINER_STRATA_REVIEW_ACT2, StrataLindqvistRanch_Text_PriyaIntro, StrataLindqvistRanch_Text_PriyaDefeat, StrataLindqvistRanch_EventScript_PriyaWon
+	msgbox StrataLindqvistRanch_Text_PriyaAfter, MSGBOX_DEFAULT
+	release
+	end
+
+StrataLindqvistRanch_EventScript_PriyaWon::
+	msgbox StrataLindqvistRanch_Text_PriyaNote, MSGBOX_DEFAULT
+	releaseall
+	end
+
+StrataLindqvistRanch_EventScript_Keola::
+	lock
+	faceplayer
+	trainerbattle_single TRAINER_STRATA_REVIEW_ACT5, StrataLindqvistRanch_Text_KeolaIntro, StrataLindqvistRanch_Text_KeolaDefeat, StrataLindqvistRanch_EventScript_KeolaWon
+	msgbox StrataLindqvistRanch_Text_KeolaAfter, MSGBOX_DEFAULT
+	release
+	end
+
+StrataLindqvistRanch_EventScript_KeolaWon::
+	msgbox StrataLindqvistRanch_Text_KeolaNote, MSGBOX_DEFAULT
+	releaseall
+	end
+
+StrataLindqvistRanch_EventScript_Asha::
+	lock
+	faceplayer
+	trainerbattle_single TRAINER_STRATA_REVIEW_ACT8, StrataLindqvistRanch_Text_AshaIntro, StrataLindqvistRanch_Text_AshaDefeat, StrataLindqvistRanch_EventScript_AshaWon
+	msgbox StrataLindqvistRanch_Text_AshaAfter, MSGBOX_DEFAULT
+	release
+	end
+
+StrataLindqvistRanch_EventScript_AshaWon::
+	msgbox StrataLindqvistRanch_Text_AshaNote, MSGBOX_DEFAULT
+	releaseall
+	end
+
+StrataLindqvistRanch_Text_PriyaIntro:
+	.string "PRIYA: Palynologist. I count pollen\n"
+	.string "and spores: dust, basically, from\l"
+	.string "the bottom of a lake.\p"
+	.string "Right above the boundary clay my\n"
+	.string "counts go strange. Your impact\l"
+	.string "winter run should show it too.\p"
+	.string "Let's compare. Peer review.$"
+
+StrataLindqvistRanch_Text_PriyaDefeat:
+	.string "PRIYA: Your animals fit my spore\n"
+	.string "counts better than I expected.$"
+
+StrataLindqvistRanch_Text_PriyaNote:
+	.string "PRIYA: Field note: the fern spike.\p"
+	.string "Just above the boundary clay, fern\n"
+	.string "spores jump to nearly everything\l"
+	.string "and flowering-plant pollen falls\l"
+	.string "away.\p"
+	.string "Ferns are first back after a\n"
+	.string "disaster. Forests took a long\l"
+	.string "time to return.$"
+
+StrataLindqvistRanch_Text_PriyaAfter:
+	.string "PRIYA: A spike of fern spores marks\n"
+	.string "a disaster zone. Volcanic slopes\l"
+	.string "today show the same pattern.$"
+
+StrataLindqvistRanch_Text_KeolaIntro:
+	.string "KEOLA: Ichthyologist. Fish, mostly\n"
+	.string "dead ones: the best-preserved fish\l"
+	.string "in the world.\p"
+	.string "Green River limestone keeps every\n"
+	.string "scale and fin. Your rig rendered\l"
+	.string "it sharp, didn't it?\p"
+	.string "Peer review: my fossils against\n"
+	.string "your reconstruction.$"
+
+StrataLindqvistRanch_Text_KeolaDefeat:
+	.string "KEOLA: Your reconstruction held. I\n"
+	.string "have a whole drawer of herring\l"
+	.string "that agree.$"
+
+StrataLindqvistRanch_Text_KeolaNote:
+	.string "KEOLA: Field note.\p"
+	.string "The lake layers are seasonal: one\n"
+	.string "pale band a year, like tree rings.\p"
+	.string "A mass die-off of fish is one band\n"
+	.string "thick. That's how we know it was\l"
+	.string "one bad year, not a slow decline.$"
+
+StrataLindqvistRanch_Text_KeolaAfter:
+	.string "KEOLA: Count the bands. Each pair\n"
+	.string "of layers is a year. The rock keeps\l"
+	.string "a calendar.$"
+
+StrataLindqvistRanch_Text_AshaIntro:
+	.string "ASHA: Quaternary ecologist: the\n"
+	.string "last two million years. I study\l"
+	.string "what the Ice Age left standing.\p"
+	.string "Mammoths, giant bears, lions, and\n"
+	.string "then, within a few thousand years,\l"
+	.string "almost none of them.\p"
+	.string "Peer review: your last layer\n"
+	.string "against my survey data.$"
+
+StrataLindqvistRanch_Text_AshaDefeat:
+	.string "ASHA: Your survivors are the right\n"
+	.string "survivors. I'll cite that.$"
+
+StrataLindqvistRanch_Text_AshaNote:
+	.string "ASHA: Field note.\p"
+	.string "The big animals vanished while the\n"
+	.string "climate changed and while people\l"
+	.string "arrived. We don't know how much\l"
+	.string "each one mattered.\p"
+	.string "The honest answer is both, with\n"
+	.string "error bars. I distrust anyone with\l"
+	.string "a single cause.$"
+
+StrataLindqvistRanch_Text_AshaAfter:
+	.string "ASHA: Bison, pronghorn, wolves.\n"
+	.string "Everything out on the prairie today\l"
+	.string "made it through the last filter.$"
 
 StrataLindqvistRanch_EventScript_KesslerGone::
 	setflag FLAG_TEMP_1F

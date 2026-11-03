@@ -489,8 +489,8 @@
 #define TRAINER_AMY_AND_LIV_2               482
 #define TRAINER_GINA_AND_MIA_1              483
 #define TRAINER_MIU_AND_YUKI                484
-#define TRAINER_AMY_AND_LIV_3               485
-#define TRAINER_GINA_AND_MIA_2              486
+#define TRAINER_STRATA_THEO_ACT0_TURTLE     485 // Strata: see the block at TRAINER_STRATA_REVIEW_ACT1
+#define TRAINER_STRATA_THEO_ACT0_MAMMAL     486
 #define TRAINER_AMY_AND_LIV_4               487
 #define TRAINER_AMY_AND_LIV_5               488
 #define TRAINER_AMY_AND_LIV_6               489
@@ -855,16 +855,30 @@
 #define TRAINER_MARIELA                     848
 #define TRAINER_ALVARO                      849
 #define TRAINER_EVERETT                     850
-#define TRAINER_RED                         851
-#define TRAINER_LEAF                        852
-#define TRAINER_BRENDAN_PLACEHOLDER         853
-#define TRAINER_MAY_PLACEHOLDER             854
+// Strata peer-review trainers (src/data/trainers_strata.party, docs/strata_design.md, "Peer review").
+// Every trainer owns a flag in TRAINER_FLAGS_START..END, and MAX_TRAINERS_COUNT fixes that range, so
+// Strata took the slots of stock trainers that nothing in the build refers to (RED, LEAF, the Brendan
+// and May placeholders, and the AMY & LIV 3 and GINA & MIA 2 rematches, at 485 and 486 above), plus
+// the nine spare slots after them (855..863).
+#define TRAINER_STRATA_REVIEW_ACT1          851 // The visiting researcher of each act, 1 to 8
+#define TRAINER_STRATA_REVIEW_ACT2          852
+#define TRAINER_STRATA_REVIEW_ACT3          853
+#define TRAINER_STRATA_REVIEW_ACT4          854
+#define TRAINER_STRATA_REVIEW_ACT5          855
+#define TRAINER_STRATA_REVIEW_ACT6          856
+#define TRAINER_STRATA_REVIEW_ACT7          857
+#define TRAINER_STRATA_REVIEW_ACT8          858
+#define TRAINER_STRATA_THEO_ACT3            859 // Theo Okafor's later peer reviews
+#define TRAINER_STRATA_THEO_ACT6            860
+#define TRAINER_STRATA_THEO_ACT8            861 // a double battle with Josie
+#define TRAINER_STRATA_HALVORSEN            862 // the final peer review, in the epilogue
+#define TRAINER_STRATA_THEO_ACT0_BIRD       863 // Theo's first review: the starter after yours (this one has the bird)
 
 // NOTE: Because each Trainer uses a flag to determine when they are defeated, there is only space for 9 additional trainers before trainer flag space overflows
 //       More space can be made by shifting flags around in constants/flags.h or changing how trainer flags are handled
 //       MAX_TRAINERS_COUNT can be increased but will take up additional saveblock space
 
-#define TRAINERS_COUNT_EMERALD     855
+#define TRAINERS_COUNT_EMERALD     864
 #define MAX_TRAINERS_COUNT_EMERALD 864
 
 #if IS_FRLG

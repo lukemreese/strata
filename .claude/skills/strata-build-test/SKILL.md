@@ -44,6 +44,9 @@ After a merge, rerun all three; a clean tree afterwards means generated files ar
   them. Anything that depends on stock species (e.g. their overworld sprites) can pass tests and
   still break the game.
 - Inline test scripts can't see C enums; set vars from C.
+- Battle tests use their own `gTrainers` (`test/battle/trainer_control.party`), so the real Strata trainers are
+  read by including the generated `../src/data/trainers_strata.h` into a local array (`test/strata_review.c`).
+  `EXPECT_*` can't take a bit-field (`Trainer.partySize`, `.battleType`): copy it to a `u32` first.
 - Never run a generator while `make`/`make check` is running in the same worktree: it rewrites
   headers mid-build (even with identical content the timestamps change) and can poison the run.
 
