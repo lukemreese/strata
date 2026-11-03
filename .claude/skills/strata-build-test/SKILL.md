@@ -27,6 +27,9 @@ After a merge, rerun all three; a clean tree afterwards means generated files ar
 - `make check -j16` runs ~6000 tests. Required: **0 FAILED**. 18 KNOWN_FAILING, 9 EXPECT_FAILING
   and one "Tests resume after CRASH" are stock. Filter with `TESTS='<name prefix>'`.
 - Strata tests: `test/lineage*.c`, `test/selection.c`, `test/strata_*.c`.
+- `test/strata_forecast.c` compares the rig forecast with the real load for generated teams. If
+  you change `Lineage_AdvanceToEra` (order of descent, extinction, floor, refill), change
+  `Forecast_Lineage`/`Forecast_Rig` in `src/strata_forecast.c` the same way.
 
 ## Test pitfalls (each cost real time once)
 

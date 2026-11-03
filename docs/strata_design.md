@@ -435,6 +435,50 @@ runs lower on purpose and doesn't count.
 | Trap Cave (Ice Age) | 46–51 | 43 |
 | Epilogue | 48–53 | 45 |
 
+### 7.3a Feedback: rig forecast and pressure chart
+The player sees what they are steering before it happens (`src/strata_forecast.c`;
+outline §3.4, roadmap F1/F2).
+
+**Rig forecast (F1).** When the rig would load the next layer (`RIG_NEXT`), after
+Halvorsen's warning and before the YES/NO, `special Strata_RigForecast` (+ `waitstate`)
+opens a scrolling list (the expansion's list menu, 5 rows) over a 3-line detail window:
+
+| Row | Detail when selected |
+|---|---|
+| `FORECAST: <layer name>` (header) | |
+| `Cimolestes → Protictis   Lv12` | "Default descent: no branch reached." / "Open-country branch: OPEN 96/96." / "Its one descendant in the record." |
+| `Mesodma: no change   Lv31` | "No descent in this layer (stasis)." and the next layer that changes it |
+| `Borealosuch: will not survive` (red) | "Extinct in the record: the lineage ends." / "Becomes X, which dies out." |
+| `PC: 34 animals   3 lost` | "12 descend, 19 no change, 3 lost." / "Lost: Gastornis and 2 more." / who joins an emptied TEAM |
+
+Each TEAM row's detail also lists the branches it didn't take ("Epicyon if ANIMAL
+reaches 64 (now 41).", or "…outscored (100)." when a higher branch wins) and the
+level-floor raise ("Raised to the era floor: Lv35 → Lv37."). The window waits 12
+frames before taking input, so the A that closed the message can't skip it; A or B
+closes it. Saying NO leaves time to bank lineages in the PC (which gains no pressure)
+or feed forage, then ask the rig again.
+
+The forecast is a dry run of `Lineage_AdvanceToEra` with lineage's public API, era by
+era: descend (counters reset on a descent), extinction filter on the result, level
+floor; plus the empty-TEAM refill (first surviving PC animal in box order, else the
+gift survivor). The target era comes from `Strata_GetRigTargetEra`, which
+`Strata_RigLoadNext` also uses. `test/strata_forecast.c` holds it to the real load:
+128 generated teams and PCs across every rig load and multi-era jumps, compared slot
+by slot (species, level, losses, refill), plus branch, extinction, PC-count, refill
+and window-width tests. The last forecast is kept in `gStrataRigForecast` (the harness
+compares it with the TEAM after the load).
+
+**Pressure chart (F2).** TEAM menu → an animal → **LINEAGE** (after SUMMARY; field
+menu only). A full-screen chart: a title band (species, level, TEAM slot), one bar per
+counter (FOREST, OPEN, WATER, PLANT, ANIMAL, HEAT; 0–255, colour per pressure), a black
+marker at each threshold of the next descent's branches with `now/threshold` beside
+it, and below: "Next change: <layer>", the default descendant, and each branch's state
+(on course / "X if OPEN reaches 96 (now 50)." / outscored); or "Dies out by <layer>",
+or "No change ahead in the record." Up/Down pages through the TEAM; A/B returns to the
+TEAM menu on the last animal viewed (as the summary screen does). Branch names are
+shown whether or not the Codex has them (the outline's "only once discovered" gate is
+not built).
+
 ### 7.4 Clock
 - pokeemerald-expansion has a fake RTC (`OW_USE_FAKE_RTC`, `OW_ALTERED_TIME_RATIO`
   in `include/config/overworld.h`) that runs on play time. Extend it so the ratio

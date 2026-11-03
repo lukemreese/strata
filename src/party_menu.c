@@ -81,6 +81,7 @@
 #include "constants/party_menu.h"
 #include "constants/rgb.h"
 #include "constants/songs.h"
+#include "strata_forecast.h"
 
 enum {
     MENU_SUMMARY,
@@ -111,6 +112,7 @@ enum {
     MENU_CATALOG_MOWER,
     MENU_CHANGE_FORM,
     MENU_CHANGE_ABILITY,
+    MENU_LINEAGE, // Strata: the pressure chart (src/strata_forecast.c)
     MENU_FIELD_MOVES
 };
 
@@ -483,6 +485,7 @@ static void CursorCb_CatalogFan(u8);
 static void CursorCb_CatalogMower(u8);
 static void CursorCb_ChangeForm(u8);
 static void CursorCb_ChangeAbility(u8);
+static void CursorCb_Lineage(u8);
 void TryItemHoldFormChange(struct Pokemon *mon, s8 slotId, enum BattleTrainer trainer);
 static void ShowMoveSelectWindow(u8 slot);
 static void Task_HandleWhichMoveInput(u8 taskId);
@@ -2954,10 +2957,14 @@ static void SetPartyMonFieldSelectionActions(struct Pokemon *mons, u8 slotId)
 
     sPartyMenuInternal->numActions = 0;
     AppendToList(sPartyMenuInternal->actions, &sPartyMenuInternal->numActions, MENU_SUMMARY);
+    AppendToList(sPartyMenuInternal->actions, &sPartyMenuInternal->numActions, MENU_LINEAGE);
 
     // Add field moves to action list
     for (i = 0; i < MAX_MON_MOVES; i++)
     {
+        // Leave room for SWITCH, ITEM and CANCEL (LINEAGE takes a slot).
+        if (sPartyMenuInternal->numActions >= ARRAY_COUNT(sPartyMenuInternal->actions) - 3)
+            break;
         for (j = 0; j != FIELD_MOVES_COUNT; j++)
         {
             if (!FieldMove_IsVisible(j))
@@ -3161,6 +3168,20 @@ static void CB2_ShowPokemonSummaryScreen(void)
     {
         ShowPokemonSummaryScreen(SUMMARY_MODE_NORMAL, gParties[B_TRAINER_PLAYER], gPartyMenu.slotId, gPartiesCount[B_TRAINER_PLAYER] - 1, CB2_ReturnToPartyMenuFromSummaryScreen);
     }
+}
+
+// Strata: the pressure chart for the selected TEAM animal (F2). It returns the
+// way the summary screen does.
+static void CB2_ShowStrataPressureChart(void)
+{
+    ShowStrataPressureChart(gPartyMenu.slotId, CB2_ReturnToPartyMenuFromSummaryScreen);
+}
+
+static void CursorCb_Lineage(u8 taskId)
+{
+    PlaySE(SE_SELECT);
+    sPartyMenuInternal->exitCallback = CB2_ShowStrataPressureChart;
+    Task_ClosePartyMenu(taskId);
 }
 
 void CB2_ReturnToPartyMenuFromSummaryScreen(void)

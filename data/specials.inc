@@ -644,5 +644,6 @@ gSpecials::
 	def_special Strata_SpecialUpgradeFishingKit
 	def_special Strata_RigQuery
 	def_special Strata_RigLoadNext
+	def_special Strata_RigForecast
 	def_special Strata_SpecialGetCurrentAct
 	def_special Strata_BufferMentorText

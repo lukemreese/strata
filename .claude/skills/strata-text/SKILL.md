@@ -31,7 +31,12 @@ the stock text already capitalised; prose is lower case ("an animal", "wild anim
    `make check TESTS='Item names'` and `TESTS='Battle strings'` after touching them. `animal`
    is shorter than `Pokémon`, so rewrites only get narrower; a longer name such as "Specimen
    Capsule" is what to measure.
-5. Menu text that must stay a fixed width uses `{CLEAR_TO n}` (battle menu `Battle Bag Team Run`);
+5. Text built at runtime (rig forecast, pressure chart: `src/strata_forecast.c`) switches to
+   `FONT_NARROW` when a line is too wide (`Forecast_FitFont`), and `test/strata_forecast.c`
+   formats every species x era x pressure case and checks the widths. Follow that pattern for new
+   generated text. `{COLOR RED}` is palette index 4 (shadow 5): a custom palette must keep those
+   slots red (the chart's does) or the colour code shows the wrong colour.
+6. Menu text that must stay a fixed width uses `{CLEAR_TO n}` (battle menu `Battle Bag Team Run`);
    keep those offsets.
 
 ## Species category

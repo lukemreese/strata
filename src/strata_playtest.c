@@ -27,6 +27,7 @@
 #include "pokemon.h"
 #include "script.h"
 #include "script_pokemon_util.h"
+#include "selection.h"
 #include "sound.h"
 #include "sprite.h"
 #include "string_util.h"
@@ -168,6 +169,11 @@ static u32 RunCommand(void)
         return TRUE;
     case PT_CMD_COUNT_ITEM:
         gStrataPlaytestStatus.value = CountTotalItemQuantityInBag(args[0]);
+        return TRUE;
+    case PT_CMD_ADD_PRESSURE:
+        if (args[0] >= PARTY_SIZE || args[1] >= PRESSURE_COUNT)
+            return FALSE;
+        Selection_AddPressure(&gParties[B_TRAINER_PLAYER][args[0]], args[1], args[2]);
         return TRUE;
     case PT_CMD_READ_PARTY:
     {

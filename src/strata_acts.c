@@ -3,6 +3,7 @@
 #include "lineage.h"
 #include "strata_acts.h"
 #include "string_util.h"
+#include "strings.h"
 #include "text.h"
 #include "constants/battle_ai.h"
 #include "constants/flags.h"
@@ -179,6 +180,29 @@ u32 Strata_GetRigState(void)
     return RIG_NEXT;
 }
 
+// The era the rig loads next (Strata_RigLoadNext, and the forecast before it), or
+// ERA_COUNT if it has nothing to load.
+u32 Strata_GetRigTargetEra(void)
+{
+    switch (Strata_GetRigState())
+    {
+    case RIG_FIRST:
+        return ERA_HELL_CREEK;
+    case RIG_NEXT:
+        return Strata_GetCurrentAct() + 1;
+    default:
+        return ERA_COUNT;
+    }
+}
+
+// What the rig calls `era`'s layer ("Denver Fm, 65.7-65.4 Ma"), or an empty string.
+const u8 *Strata_GetLayerName(u32 era)
+{
+    if (era >= ERA_COUNT || sLayerNames[era] == NULL)
+        return gText_EmptyString2;
+    return sLayerNames[era];
+}
+
 // special Strata_RigQuery
 // Output: VAR_RESULT = RIG_*
 //         STR_VAR_1  = name of the layer the rig would load
@@ -203,14 +227,9 @@ void Strata_RigQuery(void)
 // Output: as special Strata_AdvanceEra (VAR_0x8005 = mons lost, STR_VAR_1/2).
 void Strata_RigLoadNext(void)
 {
-    u32 state = Strata_GetRigState();
-    u32 act;
+    u32 act = Strata_GetRigTargetEra();
 
-    if (state == RIG_FIRST)
-        act = ERA_HELL_CREEK;
-    else if (state == RIG_NEXT)
-        act = Strata_GetCurrentAct() + 1;
-    else
+    if (act >= ERA_COUNT)
         return;
 
     gSpecialVar_0x8004 = act;

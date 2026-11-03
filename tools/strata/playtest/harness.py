@@ -45,7 +45,8 @@ LAYOUT_FIELDS = ["printerNext", "printerState", "printerActiveByte", "printerAct
 MAGIC = 0x54505453
 
 CMD = {"QUICKSTART": 1, "SET_VAR": 2, "SET_FLAG": 3, "WARP": 4, "RUN_SCRIPT": 5, "GIVE_MON": 6,
-       "GIVE_ITEM": 7, "HEAL": 8, "READ_PARTY": 9, "GET_VAR": 10, "GET_FLAG": 11, "COUNT_ITEM": 12}
+       "GIVE_ITEM": 7, "HEAL": 8, "READ_PARTY": 9, "GET_VAR": 10, "GET_FLAG": 11, "COUNT_ITEM": 12,
+       "ADD_PRESSURE": 13}
 OPT = {"no_encounters": 1, "no_collision": 2, "instant_text": 4, "no_battle_anim": 8, "female": 16}
 PT_MAX_ITEMS, PT_MAX_VARS, PT_MAX_FLAGS = 16, 24, 48
 
@@ -114,7 +115,7 @@ class Constants:
 
     HEADERS = ["global.h", "constants/map_groups.h", "constants/species.h", "constants/items.h",
                "constants/flags.h", "constants/vars.h", "constants/strata.h", "constants/event_objects.h",
-               "constants/battle.h"]
+               "constants/battle.h", "strata_forecast.h"]
 
     def __init__(self, cache_path):
         self.cache_path = cache_path
@@ -665,6 +666,10 @@ class Game:
 
     def heal(self):
         self._command("HEAL")
+
+    def add_pressure(self, slot, pressure, amount):
+        """Raise a TEAM animal's selection pressure counter (PRESSURE_FOREST ... PRESSURE_HEAT)."""
+        self._command("ADD_PRESSURE", [int(slot), self.const(pressure), int(amount)])
 
     def party(self):
         self._command("READ_PARTY")

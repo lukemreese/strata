@@ -27,6 +27,7 @@ enum StrataPlaytestCmd
     PT_CMD_GET_VAR,    // value = VarGet(args[0])
     PT_CMD_GET_FLAG,   // value = FlagGet(args[0])
     PT_CMD_COUNT_ITEM, // value = how many of item args[0] are in the bag
+    PT_CMD_ADD_PRESSURE, // args[0] = party slot, args[1] = enum SelectionPressure, args[2] = amount
 };
 
 // PT_CMD_QUICKSTART options

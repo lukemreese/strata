@@ -59,6 +59,8 @@ checks, screenshots with map and position, emulator errors, warnings, crash PC/L
 | `act_tour` | Every Strata map: arrival, each `OBJ_EVENT_GFX_SPECIES` creature up close, every edge (a tile walkable on both sides of the seam) and warp; asserts each lands on the right map |
 | `boss_1` .. `boss_8`, `boss_all` | Quick-start beside the act's boss line, walk onto it, play the script and every battle (three Lv 100 starters), assert `STORY_ACT_DONE` |
 | `watchdog_selftest` | Forces a freeze and a bad jump; both must be caught |
+| `forecast_smoke` | Field station after act 6, mixed TEAM (pressures set) + PC: rig -> forecast window, every row, A, YES; asserts the TEAM after the load equals `gStrataRigForecast` |
+| `pressure_chart_smoke` | TEAM menu -> LINEAGE: the pressure chart for each TEAM animal (Up/Down), B back to the TEAM menu on the last one viewed |
 
 ## Writing a scenario
 
@@ -84,7 +86,10 @@ DSL: `quickstart MAP_X 10 20 story=2 era=1 party=SPECIES_A:12,SPECIES_B:10 flags
 `press A`, `hold UP 30`, `wait 60`, `walk up 3`, `wait_text`, `advance 2`, `talk`,
 `screenshot name`, `expect_map MAP_X`, `expect_var VAR_X 2`, `expect_flag FLAG_X`,
 `expect_pos 10 12`, `warp MAP_X 5 5`, `set_var`, `set_flag`, `give_mon`, `give_item`, `heal`,
-`run_script <ScriptLabel>`, `party`, `tasks`.
+`run_script <ScriptLabel>`, `party`, `tasks`, `add_pressure 0 PRESSURE_OPEN 64` (TEAM slot,
+counter, amount). Giving more mons than the TEAM holds sends them to the PC. `g.const` evaluates
+any C expression over the harness headers (e.g. `offsetof(struct RigForecast, expectedSpecies)`),
+which with `g.read` reads game structs.
 
 Useful state: `g.st` (map, x, y, story, era, inBattle, scriptActive, fieldLocked, fadeActive,
 callbacks), `g.cb2()` (main callback name), `g.tasks()` (active task function names: menus show
@@ -117,3 +122,10 @@ animations off; pass `encounters=True`, `collision=False`, `instant_text=False`,
 - When a scenario's status is `error`, the traceback is in `log.txt`: a harness/scenario bug.
 - Don't run a generator or `make` in the worktree while a scenario reads the ELF.
 - Rebuild the playtest ROM after pulling changes: the runner reads `pokeemerald-playtest.gba`.
+- `talk()` returns `menu` as soon as any menu-like task exists, and the harness samples between
+  frames, so a special that builds a big window can be caught half-way (its list task up, its
+  own task not yet). Wait for your own task: `g.wait_until(lambda: "Task_X" in g.tasks(), ...)`.
+- The TEAM menu ignores A for a moment after its fade ends: press, poll ~40 frames for
+  `Task_HandleSelectionMenuInput`, retry (see `pressure_chart_smoke`).
+- Start-menu entries vary (debug entry, flags): read `sCurrentStartMenuActions` and find the
+  action you want (`open_team_menu` in `scenarios.py`).

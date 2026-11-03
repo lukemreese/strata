@@ -56,6 +56,11 @@ StrataFieldStation_EventScript_Rig::
 	goto_if_eq VAR_RESULT, RIG_FIRST, StrataFieldStation_EventScript_RigFirst
 	@ RIG_NEXT: one-way, and the extinction filter applies.
 	msgbox StrataFieldStation_Text_NextWarning, MSGBOX_DEFAULT
+	@ The forecast (src/strata_forecast.c): what the load does to each lineage.
+	msgbox StrataFieldStation_Text_Forecast, MSGBOX_DEFAULT
+	closemessage
+	special Strata_RigForecast
+	waitstate
 	msgbox StrataFieldStation_Text_LoadLayer, MSGBOX_YESNO
 	goto_if_eq VAR_RESULT, NO, StrataFieldStation_EventScript_RigCancel
 	playse SE_M_EXPLOSION
@@ -223,6 +228,10 @@ StrataFieldStation_Text_NextWarning:
 	.string "us for good.\p"
 	.string "And any lineage that can't survive\n"
 	.string "the change won't come with you.$"
+
+StrataFieldStation_Text_Forecast:
+	.string "STRATA RIG: Running the forecast\n"
+	.string "for every lineage you carry…$"
 
 StrataFieldStation_Text_LoadLayer:
 	.string "STRATA RIG: {STR_VAR_1}.\n"

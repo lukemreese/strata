@@ -25,7 +25,8 @@ def expand(name):
     if name == "boss_all":
         return [f"boss_{a}" for a in range(1, 9)]
     if name == "all":
-        return ["watchdog_selftest", "new_game_smoke", "battle_smoke", "act_tour"] + [f"boss_{a}" for a in range(1, 9)]
+        return ["watchdog_selftest", "new_game_smoke", "battle_smoke", "forecast_smoke", "pressure_chart_smoke",
+                "act_tour"] + [f"boss_{a}" for a in range(1, 9)]
     if name in REGISTRY or name.endswith(".txt") or re.fullmatch(r"boss_[1-8]", name):
         return [name]
     raise SystemExit(f"unknown scenario {name} (try --list)")
@@ -342,3 +343,133 @@ def boss(g, args, act):
     g.check(battles >= 1, f"the boss script started a battle ({battles})")
     g.screenshot("after_boss")
     g.expect_var("VAR_STRATA_STORY", 2 * act + 1)
+
+
+# ---------------------------------------------------------------------------
+# Rig forecast (F1) and pressure chart (F2): src/strata_forecast.c
+
+# A White River TEAM (act 6 done) of mixed fates for the Ashfall load, with counters set so
+# every kind of line shows: default descent with a branch close, a branch taken, a heat
+# branch out of reach, an extinction, stasis, and the rhino's open-country branch.
+FORECAST_TEAM = [("SPECIES_HESPEROCYON", 35), ("SPECIES_MESOHIPPUS", 33), ("SPECIES_PROTOCHELYD", 34),
+                 ("SPECIES_ISCHYROMYS", 32), ("SPECIES_GALLINULOID", 34), ("SPECIES_SUBHYRACODON", 30)]
+FORECAST_PRESSURES = [(0, "PRESSURE_MEAT_DIET", 41), (1, "PRESSURE_FOREST", 70), (2, "PRESSURE_HEAT", 100),
+                      (4, "PRESSURE_OPEN", 50), (5, "PRESSURE_OPEN", 64)]
+FORECAST_PC = [("SPECIES_HYAENODON", 33), ("SPECIES_PALAEOLAGUS", 31), ("SPECIES_POEBROTHERE", 32),
+               ("SPECIES_LEPISOSTEUS", 30)]
+RIG_STAND = (10, 8)  # below the rig console (signs at (10, 7) and (11, 7), facing north)
+
+
+def forecast_quickstart(g, act=6):
+    g.quickstart("MAP_STRATA_FIELD_STATION", *RIG_STAND, story=2 * act + 1, era=act, party=FORECAST_TEAM)
+    for slot, pressure, amount in FORECAST_PRESSURES:
+        g.add_pressure(slot, pressure, amount)
+    for species, level in FORECAST_PC:
+        g.give_mon(species, level)  # the TEAM is full: these go to the PC
+
+
+def read_forecast(g):
+    """The TEAM gStrataRigForecast expects after the load: [(species, level)]."""
+    c = g.const
+    base = g.sym["gStrataRigForecast"]
+    n = g.read(base, 1, c("offsetof(struct RigForecast, expectedCount)"))
+    sp = c("offsetof(struct RigForecast, expectedSpecies)")
+    lv = c("offsetof(struct RigForecast, expectedLevel)")
+    return [(g.read(base, 2, sp + 2 * i), g.read(base, 1, lv + i)) for i in range(n)]
+
+
+@scenario
+def forecast_smoke(g, args):
+    """Field station rig after act 6: the forecast window (every row), then YES; the TEAM
+    after the load must be what the forecast said."""
+    forecast_quickstart(g)
+    g.screenshot("at_rig")
+    g.face("up")
+    g.press("A")
+    r = g.talk()
+    # Building the window takes the game a few frames.
+    g.wait_until(lambda: "Task_RigForecast" in g.tasks(), 120, "the forecast window")
+    g.check(r == "menu" and "Task_RigForecast" in g.tasks(), f"the forecast window opened (talk={r}, tasks={g.tasks()})")
+    g.wait(10)
+    expected = read_forecast(g)
+    g.log(f"forecast expects TEAM {expected}")
+    g.screenshot("forecast_first")
+    rows = len(FORECAST_TEAM) + 1
+    for i in range(1, rows):
+        g.press("DOWN", 4, 8)
+        g.screenshot(f"forecast_row_{i + 1}")
+    g.press("DOWN", 4, 8)  # stays on the PC row
+    for i in range(rows):
+        g.press("UP", 4, 4)
+    g.screenshot("forecast_back_to_top")
+    g.press("A", 4, 10)
+    g.check("Task_RigForecast" not in g.tasks(), "A closed the forecast")
+    r = g.talk()
+    g.check(r == "menu" and any("YesNo" in t for t in g.tasks()), f"the load YES/NO follows (tasks={g.tasks()})")
+    g.screenshot("load_yes_no")
+    g.press("A", 4, 10)  # YES
+    r = g.talk(stop_at_menu=False, timeout=12000)
+    g.wait_overworld()
+    g.screenshot("after_load")
+    g.expect_var("VAR_STRATA_ERA", 7)
+    party = [(m["species"], m["level"]) for m in g.party()]
+    g.log(f"TEAM after the load {party}")
+    g.check(party == expected, f"the TEAM after the load is the forecast ({party} vs {expected})")
+    want = {"SPECIES_LEPTOCYON", "SPECIES_HYPOHIPPUS", "SPECIES_CHELYDRA", "SPECIES_GALLINULOID", "SPECIES_APHELOPS"}
+    g.check(sorted(s for s, _ in party) == sorted(g.const(s) for s in want),
+            "Leptocyon, Hypohippus, Chelydra, Gallinuloid and Aphelops; Ischyromys lost")
+
+
+def open_team_menu(g):
+    """START -> TEAM; returns once the party menu takes input."""
+    g.wait_overworld()
+    g.press("START", 4, 20)
+    n = g.read("sNumStartMenuActions", 1)
+    actions = [g.read("sCurrentStartMenuActions", 1, i) for i in range(n)]
+    team = actions.index(1)  # MENU_ACTION_POKEMON (src/start_menu.c)
+    g.screenshot("start_menu")
+    for _ in range(team):
+        g.press("DOWN", 4, 4)
+    g.press("A", 4, 10)
+    g.wait_until(lambda: "Task_HandleChooseMonInput" in g.tasks(), 600, "the TEAM menu")
+
+
+@scenario
+def pressure_chart_smoke(g, args):
+    """TEAM menu -> LINEAGE on a steered animal: the pressure chart, paging through the TEAM, and back."""
+    forecast_quickstart(g)
+    open_team_menu(g)
+    g.wait_until(lambda: not g.st["fadeActive"], 300, "the TEAM menu fade")
+    g.screenshot("team_menu")
+    # The TEAM menu takes a moment after its fade before it reads A: retry.
+    def options_open():
+        return "Task_HandleSelectionMenuInput" in g.tasks()
+    for _ in range(5):
+        g.press("A", 4, 4)
+        for _ in range(20):
+            if options_open():
+                break
+            g.wait(2)
+        if options_open():
+            break
+    g.wait_until(lambda: "Task_HandleSelectionMenuInput" in g.tasks(), 300, "the animal's options")
+    g.screenshot("team_options")
+    g.press("DOWN", 4, 4)  # SUMMARY, LINEAGE, ...
+    g.press("A", 4, 4)
+    g.wait_until(lambda: g.cb2() == "CB2_PressureChart" and not g.st["fadeActive"], 600, "the pressure chart")
+    g.screenshot("chart_hesperocyon")
+    for name in ["mesohippus", "protochelyd", "ischyromys", "gallinuloid", "subhyracodon"]:
+        g.press("DOWN", 4, 8)
+        g.screenshot(f"chart_{name}")
+    g.press("DOWN", 4, 8)
+    g.screenshot("chart_wraps_to_first")
+    g.press("UP", 4, 8)
+    g.check(g.read("sChart", 4) != 0, "the chart is still up")
+    g.press("B", 4, 10)
+    g.wait_until(lambda: "Task_HandleSelectionMenuInput" in g.tasks() and not g.st["fadeActive"], 900,
+                 "the TEAM menu again")
+    g.screenshot("back_in_team_menu")
+    g.check(g.read("gLastViewedMonIndex", 1) == 5, "the TEAM menu returns on the last animal viewed")
+    g.check(g.read("sChart", 4) == 0, "the chart freed its memory")
+    g.press("B", 4, 20)
+    g.screenshot("team_menu_cursor")
