@@ -473,6 +473,8 @@ def pressure_chart_smoke(g, args):
     g.check(g.read("sChart", 4) == 0, "the chart freed its memory")
     g.press("B", 4, 20)
     g.screenshot("team_menu_cursor")
+
+
 def fossil_slot(species):
     """Fossil slot of a species: its row in src/data/strata_fossils.h (append-only)."""
     import os
