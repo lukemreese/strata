@@ -57,7 +57,7 @@ Habitat, light and forage (details in common.py, next to HABITATS):
     both, even habitat=None.
   - forage=[forage(x, y, item), ...]: 3-6 spots per map, up to 15. Each heals a mon
     20 HP and adds +12 PLANT (fern frond, palm fruit, legume pod, seed head, browse)
-    or ANIMAL (larvae, carrion) pressure when eaten; ~6 of one kind push a lineage
+    or MEAT (larvae, carrion) pressure when eaten; ~6 of one kind push a lineage
     past a branch threshold (64). Hidden by default (face the tile, press A);
     visible=True for an item ball. Spots get the temp flags FLAG_TEMP_11..1F
     (FORAGE_FLAGS) in list order, so forage regrows on every map load; map scripts

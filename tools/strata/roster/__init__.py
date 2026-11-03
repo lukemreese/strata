@@ -30,7 +30,7 @@ Every species is a real, fossil-documented (or living) animal. Fields:
             beyond its extinction (src/data/lineages.h).
   diet      "HERBIVORE" (default), "OMNIVORE" or "CARNIVORE" (vertebrate prey,
             fish or insects make up most of the diet). Only animal eaters gain
-            ANIMAL pressure from knockouts. Generated into src/data/strata_diets.h.
+            MEAT pressure from knockouts. Generated into src/data/strata_diets.h.
   types     Ecological types; see docs/strata_design.md §7.6.
   borrow    Stock Pokémon whose sprites/cry are used as placeholders.
   notes     Caveats for the Codex: stand-ins, debated placements.

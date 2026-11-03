@@ -11,6 +11,8 @@ Capsule** (prose: capsule; pocket `CAPSULES`), POKéMON CENTER = **FIELD STATION
 **CAMP STORE**, POKéDEX = **CODEX**, opponent class = **RESEARCHER**, POKéNAV = **FIELD LOG**,
 species category has **no** " POKéMON" suffix. ALL CAPS only for labels and the proper nouns
 the stock text already capitalised; prose is lower case ("an animal", "wild animals").
+Because `ANIMAL` means the creature, don't reuse it for anything else: the meat-diet pressure
+(`PRESSURE_MEAT_DIET`) is labelled **MEAT**, next to PLANT.
 
 ## Changing stock text
 

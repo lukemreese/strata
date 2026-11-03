@@ -240,7 +240,7 @@ TEST("The forecast reports how close each branch is")
     EXPECT_EQ(hints[0].state, HINT_BELOW_THRESHOLD);
     EXPECT_EQ(Forecast_FormatDetail(&f, lines), 3);
     EXPECT_EQ(StringCompare(lines[0], COMPOUND_STRING("Default descent: no branch reached.")), 0);
-    EXPECT_EQ(StringCompare(lines[1], COMPOUND_STRING("Epicyon if ANIMAL reaches 64 (now 41).")), 0);
+    EXPECT_EQ(StringCompare(lines[1], COMPOUND_STRING("Epicyon if MEAT reaches 64 (now 41).")), 0);
     EXPECT_EQ(StringCompare(lines[2], COMPOUND_STRING("Raised to the era floor: {LV}35 {RIGHT_ARROW} {LV}37.")), 0);
 
     pressures[PRESSURE_MEAT_DIET] = 64;

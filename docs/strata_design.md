@@ -387,7 +387,7 @@ party and the PC boxes.
 | OPEN (`beauty`) | Anywhere on a map tagged `habitat="open"`; on untagged maps, tall grass | +1 per 32 steps | n/a |
 | WATER (`cute`) | Surfing/wading; **standing next to surfable water** (shore); anywhere on a map tagged `habitat="water"`; hooking a fish | +1 per 32 steps; +2 per fish hooked (whole party) | n/a |
 | PLANT (`smart`) | Eating plant forage: Fern Frond, Palm Fruit, Legume Pod, Seed Head, Browse | +12 per item (one mon) | n/a |
-| ANIMAL (`tough`, `PRESSURE_MEAT_DIET`) | Eating animal forage: Larvae, Carrion; knocking out a foe with a move, **only for carnivores/omnivores** (roster `diet`, generated into `src/data/strata_diets.h`) | +12 per item; +1 per KO, KOs stop at 24 | n/a |
+| MEAT (`tough`, `PRESSURE_MEAT_DIET`) | Eating animal forage: Larvae, Carrion; knocking out a foe with a move, **only for carnivores/omnivores** (roster `diet`, generated into `src/data/strata_diets.h`) | +12 per item; +1 per KO, KOs stop at 24 | n/a |
 | HEAT (`sheen`) | Era climate (`sEraHeat`) | 0–2 per tick | n/a |
 
 - **Habitat order:** water (surfing, water tiles, shores) beats the map's tag, and the
@@ -536,7 +536,7 @@ compares it with the TEAM after the load).
 
 **Pressure chart (F2).** TEAM menu → an animal → **LINEAGE** (after SUMMARY; field
 menu only). A full-screen chart: a title band (species, level, TEAM slot), one bar per
-counter (FOREST, OPEN, WATER, PLANT, ANIMAL, HEAT; 0–255, colour per pressure), a black
+counter (FOREST, OPEN, WATER, PLANT, MEAT, HEAT; 0–255, colour per pressure), a black
 marker at each threshold of the next descent's branches with `now/threshold` beside
 it, and below: "Next change: <layer>", the default descendant, and each branch's state
 (on course / "X if OPEN reaches 96 (now 50)." / outscored); or "Dies out by <layer>",
