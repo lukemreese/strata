@@ -646,3 +646,7 @@ gSpecials::
 	def_special Strata_RigLoadNext
 	def_special Strata_SpecialGetCurrentAct
 	def_special Strata_BufferMentorText
+	def_special Strata_BufferLoss
+	def_special Strata_PushFossilList
+	def_special Strata_BufferFossil
+	def_special Strata_BufferHallCase

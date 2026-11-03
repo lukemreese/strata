@@ -114,7 +114,7 @@ class Constants:
 
     HEADERS = ["global.h", "constants/map_groups.h", "constants/species.h", "constants/items.h",
                "constants/flags.h", "constants/vars.h", "constants/strata.h", "constants/event_objects.h",
-               "constants/battle.h"]
+               "constants/battle.h", "constants/strata_act_flags.h", "constants/item.h"]
 
     def __init__(self, cache_path):
         self.cache_path = cache_path

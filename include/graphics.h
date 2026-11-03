@@ -1364,6 +1364,8 @@ extern const u32 gItemIcon_EjectPack[];
 extern const u16 gItemIconPalette_EjectPack[];
 extern const u32 gItemIcon_HeavyDutyBoots[];
 extern const u16 gItemIconPalette_HeavyDutyBoots[];
+extern const u32 gItemIcon_FossilCase[];
+extern const u16 gItemIconPalette_FossilCase[];
 extern const u32 gItemIcon_BlunderPolicy[];
 extern const u16 gItemIconPalette_BlunderPolicy[];
 extern const u32 gItemIcon_RoomService[];

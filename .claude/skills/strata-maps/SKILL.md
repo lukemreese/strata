@@ -27,6 +27,10 @@ Read `docs/strata_outline.md` (plan per act, §2) and `docs/strata_design.md` (a
 - `VAR_STRATA_STORY`: 0 new game, 1 starter chosen, act N = `STORY_IN_ACT(N)` (2N) in the act and
   `STORY_ACT_DONE(N)` (2N+1) once its boss is done, 18 epilogue (`include/constants/strata.h`).
   The rig (`src/strata_acts.c`) only loads the next layer after `STORY_ACT_DONE`.
+- Fossils and Gentle Deep Time have their own section at the end of `strata_act_flags.h`
+  (`FLAG_STRATA_FOSSIL_BASE` 0x493 + 64 slots, `FLAG_STRATA_GENTLE_DEEP_TIME`; 0x4D4..0x4E5 are
+  still free, inside the saved flag array: new flags there cost no save space). Scripts read
+  fossils through specials (`Strata_BufferHallCase`, `Strata_PushFossilList`), not by flag name.
 - Each act owns 8 save flags and one var in `include/constants/strata_act_flags.h`
   (`FLAG_STRATA_ACTn_BASE + 0..7`, `VAR_STRATA_ACTn`). Define names only in your act's section.
   The header is included by `data/map_events.s`, so the names work in map data too.

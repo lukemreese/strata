@@ -112,4 +112,17 @@
 // (4..7 are free.) There is no epilogue var: the story value 18 is the epilogue.
 
 
+// ---- Fossils and the Gentle Deep Time option (F4, S4) -------------
+// Not per act: owned by src/strata_fossils.c. FLAG_UNUSED_0x493..0x4D3 in flags.h, inside the
+// saved flag array, so they cost no save space. (0x4D4..0x4E5 are still free.)
+// One flag per lineage that can be lost to an extinction filter: fossil slot i of
+// sStrataFossils (src/data/strata_fossils.h, append-only) is FLAG_STRATA_FOSSIL_BASE + i,
+// set when the rig drops a party or PC animal of that species. Use Fossil_Has(species) in C.
+#define FLAG_STRATA_FOSSIL_BASE   0x493
+#define STRATA_FOSSIL_FLAG_COUNT  64
+// Chosen at new game (Halvorsen's question): a lost animal is replaced at the same level by a
+// related survivor (S4). The fossil is still recorded. Default (clear): the strict record.
+#define FLAG_STRATA_GENTLE_DEEP_TIME (FLAG_STRATA_FOSSIL_BASE + STRATA_FOSSIL_FLAG_COUNT)
+
+
 #endif // GUARD_CONSTANTS_STRATA_ACT_FLAGS_H

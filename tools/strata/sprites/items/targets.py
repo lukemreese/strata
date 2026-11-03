@@ -290,6 +290,12 @@ def starter_selection(written):
     save(rel, stack(*[to_index(f, m) for f in frames], hand), pal.colors, written)
 
 
+def key_items(written):
+    """graphics/items/icons/fossil_case.png + its palette: the Fossil Case (key_items.py)."""
+    from . import key_items as K
+    K.fossil_case(written, path)
+
+
 def scenes(written):
     from . import scenes as S
     S.starter_case(written)
@@ -300,7 +306,7 @@ TARGETS = [
     ("balls", balls), ("item_icons", item_icons), ("overworld", overworld), ("battle_hud", battle_hud),
     ("baton_pass", baton_pass), ("party_menu", party_menu), ("bag", bag), ("codex", codex),
     ("heal_machine", heal_machine), ("transition_capsule", transition_capsule),
-    ("starter_selection", starter_selection), ("scenes", scenes),
+    ("starter_selection", starter_selection), ("scenes", scenes), ("key_items", key_items),
 ]
 
 

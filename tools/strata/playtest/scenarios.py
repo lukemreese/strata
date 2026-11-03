@@ -25,7 +25,8 @@ def expand(name):
     if name == "boss_all":
         return [f"boss_{a}" for a in range(1, 9)]
     if name == "all":
-        return ["watchdog_selftest", "new_game_smoke", "battle_smoke", "act_tour"] + [f"boss_{a}" for a in range(1, 9)]
+        return ["watchdog_selftest", "new_game_smoke", "battle_smoke", "act_tour", "extinction_smoke"] \
+            + [f"boss_{a}" for a in range(1, 9)]
     if name in REGISTRY or name.endswith(".txt") or re.fullmatch(r"boss_[1-8]", name):
         return [name]
     raise SystemExit(f"unknown scenario {name} (try --list)")
@@ -342,3 +343,113 @@ def boss(g, args, act):
     g.check(battles >= 1, f"the boss script started a battle ({battles})")
     g.screenshot("after_boss")
     g.expect_var("VAR_STRATA_STORY", 2 * act + 1)
+
+
+# ---------------------------------------------------------------------------
+def fossil_slot(species):
+    """Fossil slot of a species: its row in src/data/strata_fossils.h (append-only)."""
+    import os
+    text = open(os.path.join(world.ROOT, "src/data/strata_fossils.h")).read()
+    rows = re.findall(r"\{ (SPECIES_\w+),", text)
+    return rows.index(species)
+
+
+def play_script(g, prefix, max_shots=40):
+    """Press through a script's text and menus (A: default answers), a screenshot per box,
+    until the field is free again (after any warp)."""
+    shots, t0 = 0, g.frame
+    while True:
+        if g.frame - t0 > 60 * 60 * 3:
+            raise TestFailure(f"{prefix}: script still running after 3 game minutes (tasks={g.tasks()})")
+        if g.text_waiting():
+            if shots < max_shots:
+                g.screenshot(f"{prefix}_{shots:02d}")
+                shots += 1
+            g.press("A", 2, 4)
+            continue
+        if g.menu_open() and not g.text_active():
+            g.screenshot(f"{prefix}_menu_{shots:02d}")
+            shots += 1
+            g.press("A", 4, 20)
+            continue
+        if not g.st["scriptActive"] and not g.st["fieldLocked"] and g.cb2() == "CB2_Overworld" \
+                and not g.st["fadeActive"] and not g.text_active():
+            return shots
+        g.step(2, 0)
+
+
+@scenario
+def extinction_smoke(g, args):
+    """Act 1 done with doomed dinosaurs in the team and PC: load the impact winter at the rig,
+    read the loss list, then open the Fossil Case from the bag."""
+    party = [("SPECIES_CIMOLESTES", 14), ("SPECIES_TYRANNOSAUR", 14), ("SPECIES_TRICERATOPS", 13),
+             ("SPECIES_ANZU", 12), ("SPECIES_AVISAURUS", 12), ("SPECIES_EMARGINACHEL", 12)]
+    # Story 3 = STORY_ACT_DONE(1): the rig offers the next layer (RIG_NEXT).
+    g.quickstart("MAP_STRATA_FIELD_STATION", 10, 8, story=3, era="ERA_HELL_CREEK", party=party,
+                 items=[("ITEM_POKE_BALL", 5)])
+    # The team is full, so these two go to the PC.
+    g.give_mon("SPECIES_EDMONTOSAUR", 12)
+    g.give_mon("SPECIES_EDMONTOSAUR", 11)
+    g.face("up")
+    g.screenshot("at_rig")
+    g.press("A")
+    play_script(g, "rig")
+    g.expect_map("MAP_STRATA_LEVEE_WINTER")
+    g.expect_var("VAR_STRATA_STORY", 4)
+    party_after = g.party()
+    g.log(f"party after {party_after}")
+    g.check(len(party_after) == 2, f"two survivors left in the team ({len(party_after)})")
+    base = g.const("FLAG_STRATA_FOSSIL_BASE")
+    for sp in ("SPECIES_TYRANNOSAUR", "SPECIES_TRICERATOPS", "SPECIES_ANZU", "SPECIES_AVISAURUS",
+               "SPECIES_EDMONTOSAUR"):
+        g.check(g.flag(base + fossil_slot(sp)), f"fossil flag for {sp}")
+    g.check(not g.flag(base + fossil_slot("SPECIES_ANKYLOSAURUS")), "no fossil for a lineage never carried")
+    g.check(g.item_count("ITEM_FOSSIL_CASE") == 1, "the Fossil Case was given")
+
+    # START -> BAG -> KEY ITEMS -> Fossil Case -> USE.
+    g.press("START", 4, 30)
+    actions = [g.read("sCurrentStartMenuActions", 1, i) for i in range(g.read("sNumStartMenuActions", 1))]
+    bag = 2  # MENU_ACTION_BAG: a private enum in src/start_menu.c (POKEDEX, POKEMON, BAG, ...)
+    g.check(bag in actions, f"the start menu has the bag ({actions})")
+    for _ in range(actions.index(bag) - g.read("sStartMenuCursorPos", 1)):
+        g.press("DOWN", 4, 8)
+    g.screenshot("start_menu")
+    g.press("A", 4, 10)
+    g.wait_until(lambda: "Bag" in g.cb2() or "BagMenu" in g.cb2(), 600, "the bag", keys=0)
+    g.wait(60)
+    key_pocket = g.const("POCKET_KEY_ITEMS")
+    for _ in range(8):
+        if g.read("gBagPosition", 1, 5) == key_pocket:
+            break
+        g.press("RIGHT", 4, 30)
+    g.wait(30)
+    g.screenshot("bag_key_items")
+    g.check(g.read("gBagPosition", 1, 5) == key_pocket, "the bag is on the KEY ITEMS pocket")
+    g.press("A", 4, 20)
+    g.screenshot("bag_item_menu")
+    g.press("A", 4, 20)  # USE
+    g.wait_until(lambda: g.cb2() == "CB2_Overworld" and g.st["scriptActive"], 1200, "the Fossil Case script")
+    g.wait_until(lambda: g.menu_open(), 600, "the fossil list")
+    g.wait(30)
+    g.screenshot("fossil_case_list")
+    g.press("DOWN", 4, 20)
+    g.screenshot("fossil_case_list_2")
+    g.press("A", 4, 10)
+    g.wait_until(g.text_waiting, 600, "a fossil label")
+    g.screenshot("fossil_label")
+    g.press("A", 2, 4)
+    g.wait_until(g.text_waiting, 600, "the fossil label's reason")
+    g.screenshot("fossil_label_reason")
+    # The label runs over a few boxes; A through them back to the list.
+    t0 = g.frame
+    while not (g.menu_open() and not g.text_active()):
+        if g.frame - t0 > 1200:
+            raise TestFailure("the fossil list did not come back after the label")
+        if g.text_waiting():
+            g.press("A", 2, 4)
+        else:
+            g.step(2, 0)
+    g.wait(10)
+    g.press("B", 4, 20)
+    g.wait_until(lambda: not g.st["scriptActive"] and not g.st["fieldLocked"], 600, "the case to close")
+    g.screenshot("after_case")

@@ -104,5 +104,8 @@ transitions, starter choice (capsules + an open field case instead of Birch's ba
 - All tier palettes must keep one role -> index layout: `LoadBallGfx()` pastes the shared
   `balls/open.png` over frame 2 of nine ball sheets.
 - A new capsule item: add a `TIERS` entry keyed by the stock ball name, run the generator.
+- Other Strata key-item icons (not capsules): letter grids with their own palette in
+  `key_items.py`, target group `key_items` (the Fossil Case: `graphics/items/icons/fossil_case.png`
+  + `icon_palettes/fossil_case.pal`, `INCGFX` lines at the end of `src/data/graphics/items.h`).
 - New stock art with a ball in it: add a writer to `targets.TARGETS` and a row to
   `review.assets()`.
