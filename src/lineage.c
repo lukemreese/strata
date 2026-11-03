@@ -6,6 +6,7 @@
 #include "pokemon_storage_system.h"
 #include "random.h"
 #include "selection.h"
+#include "strata_fossils.h"
 #include "string_util.h"
 #include "text.h"
 #include "constants/vars.h"
@@ -226,11 +227,36 @@ static void ApplyLevelFloor(enum StrataEra era)
 static EWRAM_DATA u16 sExtinctionCount = 0;
 static EWRAM_DATA u16 sFirstExtinctSpecies = SPECIES_NONE;
 
-// Returns TRUE if the stored mon's lineage doesn't survive into `era`. The caller
-// removes it.
-static bool32 IsBoxMonExtinct(struct BoxPokemon *boxMon, enum StrataEra era)
+// Gentle Deep Time (S4): the lost mon becomes a related survivor, as if it had descended
+// into it: level, personality, OT, IVs and EVs carry over; it gets the survivor's own
+// level-up moves for that level, and its pressures reset.
+static void ReplaceBoxMonWithRelative(struct BoxPokemon *boxMon, enum Species relative)
 {
-    enum Species species;
+    enum Species lost = GetBoxMonData(boxMon, MON_DATA_SPECIES);
+    u32 i, level = GetLevelFromBoxMonExp(boxMon);
+    u16 none = MOVE_NONE;
+    u8 noPp = 0;
+
+    SetBoxMonData(boxMon, MON_DATA_SPECIES, &relative);
+    KeepBoxMonLevel(boxMon, level);
+    RenameBoxMonIfDefault(boxMon, lost, relative);
+    Selection_ResetBoxMonPressures(boxMon);
+    for (i = 0; i < MAX_MON_MOVES; i++)
+    {
+        SetBoxMonData(boxMon, MON_DATA_MOVE1 + i, &none);
+        SetBoxMonData(boxMon, MON_DATA_PP1 + i, &noPp);
+    }
+    GiveBoxMonInitialMoveset(boxMon);
+    GetSetPokedexFlag(SpeciesToNationalPokedexNum(relative), FLAG_SET_SEEN);
+    GetSetPokedexFlag(SpeciesToNationalPokedexNum(relative), FLAG_SET_CAUGHT);
+}
+
+// Applies `era`'s extinction filter to one stored mon. A lost lineage is counted and
+// recorded as a fossil (src/strata_fossils.c). Returns TRUE if the caller must remove
+// the mon; in Gentle Deep Time a related survivor takes its place instead.
+static bool32 FilterBoxMon(struct BoxPokemon *boxMon, enum StrataEra era, bool32 inParty)
+{
+    enum Species species, relative = SPECIES_NONE;
 
     if (!GetBoxMonData(boxMon, MON_DATA_SANITY_HAS_SPECIES) || GetBoxMonData(boxMon, MON_DATA_IS_EGG))
         return FALSE;
@@ -239,7 +265,13 @@ static bool32 IsBoxMonExtinct(struct BoxPokemon *boxMon, enum StrataEra era)
         return FALSE;
     if (sExtinctionCount++ == 0)
         sFirstExtinctSpecies = species;
-    return TRUE;
+    if (Fossil_IsGentle())
+        relative = Fossil_GetGentleReplacement(species);
+    Fossil_RecordLoss(boxMon, era, inParty, relative);
+    if (relative == SPECIES_NONE)
+        return TRUE;
+    ReplaceBoxMonWithRelative(boxMon, relative);
+    return FALSE;
 }
 
 // An extinction can't leave the player with no party: bring a survivor from the
@@ -282,8 +314,12 @@ static void ApplyExtinctions(enum StrataEra era)
 
     for (i = 0; i < PARTY_SIZE; i++)
     {
-        if (IsBoxMonExtinct(&gParties[B_TRAINER_PLAYER][i].box, era))
-            ZeroMonData(&gParties[B_TRAINER_PLAYER][i]);
+        struct Pokemon *mon = &gParties[B_TRAINER_PLAYER][i];
+        enum Species before = GetMonData(mon, MON_DATA_SPECIES);
+        if (FilterBoxMon(&mon->box, era, TRUE))
+            ZeroMonData(mon);
+        else if (GetMonData(mon, MON_DATA_SPECIES) != before)
+            CalculateMonStats(mon);
     }
     CompactPartySlots();
     CalculatePlayerPartyCount();
@@ -293,7 +329,7 @@ static void ApplyExtinctions(enum StrataEra era)
         for (boxPos = 0; boxPos < IN_BOX_COUNT; boxPos++)
         {
             struct BoxPokemon *boxMon = GetBoxedMonPtr(boxId, boxPos);
-            if (IsBoxMonExtinct(boxMon, era))
+            if (FilterBoxMon(boxMon, era, FALSE))
                 ZeroBoxMonData(boxMon);
         }
     }
@@ -311,6 +347,7 @@ u32 Lineage_AdvanceToEra(enum StrataEra targetEra)
 
     sExtinctionCount = 0;
     sFirstExtinctSpecies = SPECIES_NONE;
+    Fossil_ResetLosses();
     if (targetEra >= ERA_COUNT)
         targetEra = ERA_COUNT - 1;
 

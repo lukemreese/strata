@@ -15,6 +15,8 @@ StrataFieldStation_EventScript_Intro::
 	msgbox StrataFieldStation_Text_Welcome, MSGBOX_DEFAULT
 	special ChooseStarter
 	msgbox StrataFieldStation_Text_Lineages, MSGBOX_DEFAULT
+	call Strata_EventScript_AskDeepTimeMode
+	msgbox StrataFieldStation_Text_Capsules, MSGBOX_DEFAULT
 	giveitem ITEM_POKE_BALL, 5
 	msgbox StrataFieldStation_Text_WaterGear, MSGBOX_DEFAULT
 	call Strata_EventScript_GiveWaterGear
@@ -66,12 +68,8 @@ StrataFieldStation_EventScript_Rig::
 	playse SE_M_EXPLOSION
 	special Strata_RigLoadNext
 	goto_if_eq VAR_0x8005, 0, StrataFieldStation_EventScript_NoLosses
-	goto_if_eq VAR_0x8005, 1, StrataFieldStation_EventScript_OneLoss
-	msgbox StrataFieldStation_Text_ManyLosses, MSGBOX_DEFAULT
-	goto StrataFieldStation_EventScript_AfterLoad
-
-StrataFieldStation_EventScript_OneLoss::
-	msgbox StrataFieldStation_Text_OneLoss, MSGBOX_DEFAULT
+	@ Every lost animal and why (data/scripts/strata_fossils.inc).
+	call Strata_EventScript_ShowLosses
 	goto StrataFieldStation_EventScript_AfterLoad
 
 StrataFieldStation_EventScript_NoLosses::
@@ -198,7 +196,9 @@ StrataFieldStation_Text_Lineages:
 	.string "Populations do, over generations.\p"
 	.string "When the rig moves up to a younger\n"
 	.string "layer, your partner's lineage moves\l"
-	.string "with it, shaped by how it lived.\p"
+	.string "with it, shaped by how it lived.$"
+
+StrataFieldStation_Text_Capsules:
 	.string "Here, take some specimen capsules.$"
 
 StrataFieldStation_Text_WaterGear:
@@ -240,21 +240,6 @@ StrataFieldStation_Text_LoadLayer:
 StrataFieldStation_Text_EnterLayer:
 	.string "STRATA RIG: {STR_VAR_1}.\n"
 	.string "Enter the reconstruction?$"
-
-StrataFieldStation_Text_ManyLosses:
-	.string "The rig shudders as the new layer\n"
-	.string "loads…\p"
-	.string "{STR_VAR_1} and {STR_VAR_2} other\n"
-	.string "specimens could not survive. Their\l"
-	.string "lineages end here.\p"
-	.string "That is what extinction means.$"
-
-StrataFieldStation_Text_OneLoss:
-	.string "The rig shudders as the new layer\n"
-	.string "loads…\p"
-	.string "{STR_VAR_1} could not survive. Its\n"
-	.string "lineage ends here.\p"
-	.string "That is what extinction means.$"
 
 StrataFieldStation_Text_NoLosses:
 	.string "The rig shudders as the new layer\n"

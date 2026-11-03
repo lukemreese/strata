@@ -14243,6 +14243,25 @@ const struct ItemInfo gItemsInfo[] =
         .iconPalette = gItemIconPalette_HeavyDutyBoots,
     },
 
+    // Strata: the fossils of the lineages lost to extinction (src/strata_fossils.c).
+    // Icon drawn by tools/strata/gen_item_art.py (key_items).
+    [ITEM_FOSSIL_CASE] =
+    {
+        .name = ITEM_NAME("Fossil Case"),
+        .pluralName = ITEM_PLURAL_NAME("Fossil Cases"),
+        .price = 0,
+        .description = COMPOUND_STRING(
+            "Fossils of every\n"
+            "lineage the record\n"
+            "took from you."),
+        .importance = 1,
+        .pocket = POCKET_KEY_ITEMS,
+        .type = ITEM_USE_FIELD,
+        .fieldUseFunc = ItemUseOutOfBattle_FossilCase,
+        .iconPic = gItemIcon_FossilCase,
+        .iconPalette = gItemIconPalette_FossilCase,
+    },
+
     [ITEM_DOWSING_MACHINE] =
     {
         .name = ITEM_NAME("Dowsing Machine"),

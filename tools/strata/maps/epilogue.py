@@ -15,8 +15,10 @@ The epilogue, west to east and north to south:
 
     Interpretive Center 1F: the Pair on display, Halvorsen (the final peer review:
                             hook for C13), staff and visitors.
-    Hall of Lost Lineages (2F): one plaque per extinction filter of src/data/lineages.h.
-                            Hook for F4/S3: per-lineage plaques from the fossil flags.
+    Hall of Lost Lineages (2F): one plaque per extinction filter of src/data/lineages.h;
+                            each lists the player's own lost lineages from the fossil flags
+                            (F4, special Strata_BufferHallCase), or every lineage of that
+                            filter when the player lost none there.
 
 There is no boss and no epilogue var. Act state lives in the flags below
 (FLAG_STRATA_EPI_*, include/constants/strata_act_flags.h; map events name them by

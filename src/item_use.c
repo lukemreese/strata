@@ -858,6 +858,19 @@ void ItemUseOutOfBattle_StrataForage(u8 taskId)
     SetUpItemUseCallback(taskId);
 }
 
+// Strata: the Fossil Case closes the bag and runs its list on the field.
+static void Task_OpenFossilCase(u8 taskId)
+{
+    ScriptContext_SetupScript(Strata_EventScript_FossilCase);
+    DestroyTask(taskId);
+}
+
+void ItemUseOutOfBattle_FossilCase(u8 taskId)
+{
+    sItemUseOnFieldCB = Task_OpenFossilCase;
+    SetUpItemUseOnFieldCallback(taskId);
+}
+
 void ItemUseOutOfBattle_AbilityCapsule(u8 taskId)
 {
     gItemUseCB = ItemUseCB_AbilityCapsule;

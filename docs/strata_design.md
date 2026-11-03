@@ -401,8 +401,14 @@ party and the PC boxes.
   `src/lineage.c`, filters in `src/data/lineages.h`). Filters run after that era's
   descents, so a lineage that descends into a survivor escapes. If the party would
   be left empty, a PC survivor is brought out, or a small survivor joins.
-- Planned: the lost lineage becomes a **fossil item** for the Codex.
-- Difficulty option: "Gentle Deep Time" (extinct lineages respawn as a related survivor).
+- Every lost lineage becomes a **fossil** (`src/strata_fossils.c`): a save flag per lineage
+  (`FLAG_STRATA_FOSSIL_BASE` + its row in `src/data/strata_fossils.h`), listed by the
+  **Fossil Case** key item and by the Hall of Lost Lineages plaques in the epilogue.
+- After a jump the rig lists every loss, one message each: who (team animals by nickname,
+  PC animals counted per species) and why that filter took it (one reason per lineage).
+- Difficulty option **Gentle Deep Time**, chosen at new game (default: strict): a lost mon
+  is replaced at the same level by a related survivor (its moves for that level, fresh
+  pressures); the fossil is still recorded.
 
 #### Era level floor
 A descendant arrives as a mature adult of its era. After each era's descents and

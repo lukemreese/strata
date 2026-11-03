@@ -1062,6 +1062,8 @@ enum __attribute__((packed)) Item
     ITEM_BROWSE = 879,
     ITEM_LARVAE = 880,
     ITEM_CARRION = 881,
+    // Strata: lists the lineages the player lost to extinction (src/strata_fossils.c).
+    ITEM_FOSSIL_CASE = 882,
 
     ITEMS_COUNT,
     ITEM_FIELD_ARROW = ITEMS_COUNT,

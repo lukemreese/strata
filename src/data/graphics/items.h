@@ -2112,3 +2112,7 @@ const u16 gItemIconPalette_SwapSnack[] = INCGFX_U16("graphics/items/icon_palette
 
 const u32 gItemIcon_TwiceSpicedRadish[] = INCGFX_U32("graphics/items/icons/twice_spiced_radish.png", ".4bpp.smol");
 const u16 gItemIconPalette_TwiceSpicedRadish[] = INCGFX_U16("graphics/items/icon_palettes/twice_spiced_radish.pal", ".gbapal");
+
+// Strata
+const u32 gItemIcon_FossilCase[] = INCGFX_U32("graphics/items/icons/fossil_case.png", ".4bpp.smol");
+const u16 gItemIconPalette_FossilCase[] = INCGFX_U16("graphics/items/icon_palettes/fossil_case.pal", ".gbapal");

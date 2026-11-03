@@ -557,13 +557,21 @@ The player must always be able to see *what they are steering*.
 
 ### 3.5 Extinction feedback, Fossil Case, and Codex
 
-- **Fossil items:** when a lineage is lost, set `FLAG_STRATA_FOSSIL_<species>` (one flag
-  per species). Save cost is 87 flags, from the unused flag range. A key item, the **Fossil
-  Case**, lists them (custom list menu) with "extinct by ~X Ma, carried by you from Act N".
-  In the epilogue they fill the **Hall of Lost Lineages** (one sign/plaque per flag).
-- **Extinction message:** the current message names only the first loss plus a count.
-  Replace it with a list menu of all losses and each one's era of last appearance. Show the
-  Codex entry for one if the player picks it.
+- ✅ **Fossil flags (F4):** when a party or PC animal is lost, its lineage's fossil flag is
+  set: `FLAG_STRATA_FOSSIL_BASE + slot`, slot = its row in the append-only
+  `sStrataFossils` (`src/data/strata_fossils.h`, 52 rows, one per species in an extinction
+  list). 64 flags reserved from the unused block 0x493.. (inside the saved flag array, so
+  **no extra save space**). The era isn't stored: it is the filter that drops the species.
+  "Carried from Act N" is not recorded.
+- ✅ **Fossil Case (F4):** key item (`ITEM_FOSSIL_CASE`, own icon from `gen_item_art.py
+  key_items`), given by Halvorsen after the first loss. From the bag it opens a scrolling
+  list (species, filter age, the animal's icon); A shows "lost in ... X Ma" and the reason.
+- ✅ **Extinction message (F4):** after a jump the rig says how many animals were lost, then
+  one message per loss: the team animal by nickname and species, PC losses grouped per
+  species ("3 Triceratops in the PC"), each with a one-sentence reason from the fossil table
+  (24 entries, the rest summed up). Opening the Codex entry from the list is not done.
+- ✅ **Hall of Lost Lineages:** each filter plaque shows the player's own lost lineages from
+  that filter (`special Strata_BufferHallCase`), or the generic list if none.
 - **Codex** (rename the Pokédex; base it on the expansion's HGSS dex): pages for **Entry**
   (full genus, site, age, mass with "est." flag, dex text), **Evidence** (what the
   reconstruction is based on: bones / teeth only / tracks; from the roster `notes` field), and
@@ -573,10 +581,13 @@ The player must always be able to see *what they are steering*.
 - **Research case (Act 7 side quest):** Halvorsen's museum pitch needs N Codex entries with
   *Evidence* logged (from catching, or finding a field-note item in each map). Rewards: the
   epilogue museum display grows with your count; the stipend pays per entry (§3.6).
-- **Gentle Deep Time** (an option at new game: "Strict record / Gentle record"): in Gentle, a
-  lost mon is replaced at the same level by a surviving relative from a small table
-  (`sGentleReplacement[]`, e.g. Epicyon → Canis, Teleoceras → Bison, Gastornis → Meleagris).
-  The fossil is still awarded. Store it in a flag. Default: Strict.
+- ✅ **Gentle Deep Time (S4)** (asked at new game, after the starter: "Strict record / Gentle
+  record", A on Strict): in Gentle, a lost mon is replaced at the same level by a surviving
+  relative (the `gentle` column of `sStrataFossils`: every dinosaur → *Asteriornis*, the
+  surviving bird line; Epicyon → Canis; rhinos and three-toed horses → Equus; Gastornis →
+  Gallinuloid; where nothing related survives, the nearest ecological stand-in, commented).
+  It gets the relative's own moves for its level; the fossil is still awarded.
+  `FLAG_STRATA_GENTLE_DEEP_TIME`; default Strict. Can't be changed later.
 
 ### 3.6 Healing, items, economy
 
@@ -789,7 +800,7 @@ Ordered by leverage ÷ risk. Tasks inside a milestone can run in parallel unless
 | F1 | Rig forecast special + list menu before `RIG_NEXT` | M | R1 | SYS |
 | F2 | Pressure chart (relabelled condition graph) from the party menu, with branch hints | M | R1 | SYS |
 | F3 | Descent scene via the evolution scene for party mons | M | none | SYS |
-| F4 | Extinction list message + Fossil Case + fossil flags | M | none | SYS |
+| F4 | ✅ **Done.** Extinction list message (one message per loss with its reason) + Fossil Case key item + fossil flags (no extra save space), Hall plaques per player (§3.5); `test/strata_fossils.c`, harness `extinction_smoke` | M | none | SYS |
 | F5 | Map popup age/window line. Hook: add an `age=` string key per map and a `const u8 *age` field to `struct StrataMapInfo` (`include/strata_map.h`, written by `write_map_info` in `gen_maps.py`), then print it in `map_name_popup.c` | S | R4 | SYS |
 | F6 | ✅ **Done** with R4. `light=` overrides the clock in `UpdateTimeOfDay`; `none` turns tinting off (`MapHasNaturalLight`) | S | R4 | SYS |
 | F7 | Lineage resilience (IV raise per era survived) | S | none | SYS |
@@ -805,7 +816,7 @@ Ordered by leverage ÷ risk. Tasks inside a milestone can run in parallel unless
 | C7 | ✅ **Done** (Act 5, `act5_green_river.py`). Four maps: Bridger Shore (the old map, boss on its beach; the *Uintatherium* bull now charges in along the shore), Fossil Lake (Route 103; mass-mortality scene, a labelled hypothesis), Bridger Forest (Route 116; *Omomys*, *Paramys*, *Notharctus*), Oil-Shale Cliffs (Route 115 canyon; *Patriofelis* set piece Lv 32). *Hyrachyus* on the shore. Champsosaur dropped from Act 5 (M3). 13 field notes, 20 forage spots | M | R0, R3, R4, C1 | CON |
 | C6 | ✅ **Done (Act 4).** Bighorn PETM: Red Beds + Polecat Bench, Willwood Swamp, Clarks Fork Crossing (ring of 4 maps, `act4_bighorn.py`); 19 forage spots, 12 field notes, *Paramys* and *Oxyaena* placed; *Oxyaena* set piece at the Clarks Fork gravel bar; Coryphodon boss as a wild double with a calf (single-mon fallback); fishing kit becomes the Good kit after the boss; H7 rate figure in a Polecat Bench sign. Flags `FLAG_STRATA_ACT4_*`, `VAR_STRATA_ACT4` | M | R0, R3, R4, C1 | CON |
 | C11 | ✅ **Done** (with C9). Act 7 pre-ash / ash map pairs: each of the 4 Ashfall maps is built twice from one footprint (clear = `*_oligocene` palettes plus plain grass swaps and `WEATHER_SHADE`; ash = stock Fallarbor ash tiles and `WEATHER_VOLCANIC_ASH`). The Teleoceras script fades out and warps into the ash Waterhole; the ash maps only connect to each other. No new palette variant was needed | M | C9, palettes (A1) | CON |
-| C12 | ✅ **Done** (Hall generic). Prairie extended (ferret/fox/grouse placed, 4 notes, Center door), Missouri Breaks, Pryor Mountains, Interpretive Center 1F (the Pair, Halvorsen peer-review hook for C13) and the Hall of Lost Lineages (one plaque per extinction filter). Follow-up: **F4** fossil flags, so the Hall lists the player's own lost lineages (hook: `StrataInterpretive2F` case scripts) | M | F4 | CON |
+| C12 | ✅ **Done** (Hall generic). Prairie extended (ferret/fox/grouse placed, 4 notes, Center door), Missouri Breaks, Pryor Mountains, Interpretive Center 1F (the Pair, Halvorsen peer-review hook for C13) and the Hall of Lost Lineages (one plaque per extinction filter). ✅ With F4 the plaques list the player's own lost lineages | M | F4 | CON |
 | C13 | Peer-review trainers (8 researchers + Theo ×4 + Halvorsen) and the stipend special | M | R8 | CON + SYS |
 | C14 | Codex pages (Evidence, Lineage via the HGSS evolution page) + weight widening | L | F8 | SYS |
 
@@ -816,7 +827,7 @@ Ordered by leverage ÷ risk. Tasks inside a milestone can run in parallel unless
 | S1 | `VAR_STRATA_SUBPLOT` + quest log strings + all camp interludes (§1.5) | L | C2, C13 | CON + TXT |
 | S2 | Halvorsen lines rewritten per story × subplot (extend `sMentorLines`) | M | S1 | TXT |
 | S3 | Act 8 Colby coda + epilogue ending + credits up the column (lineage fates from the fossil flags) | M | C10, C12, F4 | CON |
-| S4 | Gentle Deep Time option | S | F4 | SYS |
+| S4 | ✅ **Done.** Gentle Deep Time option (new-game question, `FLAG_STRATA_GENTLE_DEEP_TIME`, relatives in `sStrataFossils`, §3.5) | S | F4 | SYS |
 
 ### M4: Art (starts in parallel with M0)
 

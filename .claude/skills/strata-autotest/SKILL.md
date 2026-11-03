@@ -59,6 +59,7 @@ checks, screenshots with map and position, emulator errors, warnings, crash PC/L
 | `act_tour` | Every Strata map: arrival, each `OBJ_EVENT_GFX_SPECIES` creature up close, every edge (a tile walkable on both sides of the seam) and warp; asserts each lands on the right map |
 | `boss_1` .. `boss_8`, `boss_all` | Quick-start beside the act's boss line, walk onto it, play the script and every battle (three Lv 100 starters), assert `STORY_ACT_DONE` |
 | `watchdog_selftest` | Forces a freeze and a bad jump; both must be caught |
+| `extinction_smoke` | Act 1 done with dinosaurs in the team and PC: rig to the impact winter, the loss list (a shot per message), fossil flags, then START > BAG > KEY ITEMS > Fossil Case > a fossil's label |
 | `forecast_smoke` | Field station after act 6, mixed TEAM (pressures set) + PC: rig -> forecast window, every row, A, YES; asserts the TEAM after the load equals `gStrataRigForecast` |
 | `pressure_chart_smoke` | TEAM menu -> LINEAGE: the pressure chart for each TEAM animal (Up/Down), B back to the TEAM menu on the last one viewed |
 
@@ -129,3 +130,10 @@ animations off; pass `encounters=True`, `collision=False`, `instant_text=False`,
   `Task_HandleSelectionMenuInput`, retry (see `pressure_chart_smoke`).
 - Start-menu entries vary (debug entry, flags): read `sCurrentStartMenuActions` and find the
   action you want (`open_team_menu` in `scenarios.py`).
+- Parallel agents share the default output folder (and its `summary.json`): pass
+  `--out /mnt/c/Projects/pokemon-custom/build/harness_<lane>` so runs don't overwrite each other.
+- PC mons: `give_mon` after a full 6-mon quick-start party sends them to the PC.
+- Menus by memory, not by guessing the cursor: the start menu is `sCurrentStartMenuActions`/
+  `sNumStartMenuActions`/`sStartMenuCursorPos` (BAG is action 2), the bag pocket is byte 5 of
+  `gBagPosition`. Static EWRAM symbols resolve like globals. `FLAG_STRATA_*` and `POCKET_*`
+  resolve too (`constants/strata_act_flags.h`, `constants/item.h` are in `Constants.HEADERS`).
