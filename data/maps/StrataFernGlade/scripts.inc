@@ -1,5 +1,5 @@
 @ Act 1: the Fern Glade, east of the Levee. Open ground of ferns and low flowering
-@ plants (the "grass" is not grass), a grazing Edmontosaurus herd, and the last tree-
+@ plants (the tall-grass tiles are drawn as ferns), a grazing Edmontosaurus herd, and the last tree-
 @ perching birds. A pair of Acheroraptor stalk the herd and ambush anyone who walks in.
 StrataFernGlade_MapScripts::
 	.byte 0
@@ -81,7 +81,14 @@ StrataFernGlade_Text_NoteHerd:
 
 StrataFernGlade_Text_NoteFerns:
 	.string "FIELD NOTE: Glade cover\p"
-	.string "What looks like tall grass is mostly\n"
-	.string "ferns and low flowering plants.\p"
+	.string "The cover here is ferns and low\n"
+	.string "flowering herbs, not grass.\p"
+	.string "Grasses did exist. Their silica\n"
+	.string "bodies (phytoliths) turn up in\l"
+	.string "dinosaur dung from India of about\l"
+	.string "this age.\p"
+	.string "Here, pollen and leaves suggest\n"
+	.string "they were rare. Open grassland is\l"
+	.string "still over 30 million years away.\p"
 	.string "Ferns do well in open, sunny gaps.\n"
 	.string "Remember them for later.$"

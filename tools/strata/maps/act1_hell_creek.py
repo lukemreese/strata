@@ -66,7 +66,7 @@ MAPS = [
     dict(
         id="MAP_STRATA_LEVEE", name="StrataLevee", era="ERA_HELL_CREEK",
         habitat="forest", light="day", forage=[forage(6, 20, "FERN_FROND"), forage(34, 12, "LARVAE"), forage(28, 4, "PALM_FRUIT")],
-        crop=LEVEE_CROP, patches=LEVEE_PATCHES + [p for p, _ in _LEVEE_NOTES],
+        crop=hell_creek(LEVEE_CROP), patches=LEVEE_PATCHES + [p for p, _ in _LEVEE_NOTES],
         music="MUS_ROUTE119", map_type="MAP_TYPE_ROUTE",
         mapsec="MAPSEC_STRATA_LEVEE",
         connections=[connection("up", "MAP_STRATA_RIVER"), connection("right", "MAP_STRATA_FERN_GLADE", GLADE_OFFSET)],
@@ -83,7 +83,7 @@ MAPS = [
     dict(
         id="MAP_STRATA_RIVER", name="StrataRiver", era="ERA_HELL_CREEK",
         habitat="water", light="day", forage=[forage(27, 15, "CARRION"), forage(34, 19, "FERN_FROND")],
-        crop=RIVER_CROP, patches=RIVER_PATCHES + [p for p, _ in _RIVER_NOTES], swap=RIVER_SWAP,
+        crop=hell_creek(RIVER_CROP), patches=RIVER_PATCHES + [p for p, _ in _RIVER_NOTES], swap=RIVER_SWAP,
         music="MUS_ROUTE119", map_type="MAP_TYPE_ROUTE",
         mapsec="MAPSEC_STRATA_RIVER",
         connections=[connection("down", "MAP_STRATA_LEVEE"), connection("up", "MAP_STRATA_BACKSWAMP")],
@@ -115,7 +115,7 @@ MAPS = [
     dict(
         id="MAP_STRATA_BACKSWAMP", name="StrataBackswamp", era="ERA_HELL_CREEK",
         habitat="forest", light="day", forage=[forage(28, 12, "FERN_FROND"), forage(5, 2, "LARVAE"), forage(22, 4, "BROWSE")],
-        crop=BACKSWAMP_CROP, patches=[p for p, _ in _SWAMP_NOTES],
+        crop=hell_creek(BACKSWAMP_CROP), patches=[p for p, _ in _SWAMP_NOTES],
         music="MUS_ROUTE120", map_type="MAP_TYPE_ROUTE",
         mapsec="MAPSEC_STRATA_BACKSWAMP",
         connections=[connection("down", "MAP_STRATA_RIVER")],
@@ -138,7 +138,7 @@ MAPS = [
         habitat="open", light="day",
         forage=[forage(9, 3, "FERN_FROND"), forage(18, 12, "FERN_FROND"), forage(3, 16, "BROWSE"),
                 forage(15, 8, "FERN_FROND"), forage(10, 17, "CARRION")],
-        crop=dict(**{"from": "LAYOUT_ROUTE120"}, rect=(18, 41, 22, 20)),
+        crop=hell_creek(dict(**{"from": "LAYOUT_ROUTE120"}, rect=(18, 41, 22, 20))),
         patches=[p for p, _ in _GLADE_NOTES],
         music="MUS_ROUTE120", map_type="MAP_TYPE_ROUTE",
         mapsec="MAPSEC_STRATA_FERN_GLADE",

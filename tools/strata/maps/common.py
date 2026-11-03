@@ -48,6 +48,14 @@ RIVER_PATCHES = [
 RIVER_SWAP = {0x271: 0x270}                                   # secret-base shrub -> plain shrub
 BACKSWAMP_CROP = dict(**{"from": "LAYOUT_ROUTE120"}, rect=(0, 25, 40, 17))
 IMPACT_WINTER_TILESETS = ("gTileset_GeneralWinter", "gTileset_FortreeWinter")
+# Era ground cover (tools/strata/gen_era_tiles.py): before grasslands the Hoenn grass and
+# lawn are redrawn as each era's undergrowth and ground (Hell Creek: fern brakes, leaf
+# litter; impact winter: dead ferns, ash). Same metatiles and behaviours.
+HELL_CREEK_TILESETS = ("gTileset_GeneralHellCreek", "gTileset_FortreeHellCreek")
+
+
+def hell_creek(crop):
+    return dict(**crop, tilesets=HELL_CREEK_TILESETS)
 
 
 def winter(crop):

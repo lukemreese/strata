@@ -81,7 +81,14 @@ Read `docs/strata_art.md` first: package layout, taxonomy table, formats and the
 - Refactors of the core must keep existing art byte-identical (`cmp` the PNG/pal files against a
   copy taken before) unless the change is a deliberate improvement you looked at.
 - Era battle-background and grass-overlay palettes come from `gen_tilesets.py` transforms, selected
-  by the current map's era in `src/strata_art.c`.
+  by the current map's era in `src/strata_art.c`. Acts 1-5 also have their own ground-cover art
+  (`gen_era_tiles.py`: tileset tiles, grass overlay frames, grass battle backgrounds and entry
+  walls), drawn in palette roles from code. Tile-art lessons: judge at 1x (thin vertical
+  strokes read as grass; arcs with leaflets read as ferns, radiating rays with dark folds as
+  palm fans, wide blades as herbs); recolour shared colours exactly (the lawn ramp plus the
+  tree-shadow teal) in every palette instead of redrawing every edge tile; keep 8x8 tiles
+  that other metatiles reuse (flipped) self-contained; a battle entry-anim tile 0 must stay
+  empty (the tilemap uses it for blank space); wrap entry walls horizontally only.
 - Always look at the output (`Read` the `_sheet`, `_battle` and `_ow` previews; 1× and 3×) before
   committing art, and compare with plan-mates on the contact sheet.
 

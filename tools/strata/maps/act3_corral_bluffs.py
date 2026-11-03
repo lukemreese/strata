@@ -27,6 +27,12 @@ def a3_flag(n):
     return f"0x{0x274 + n:X}"
 
 
+# Era ground cover (gen_era_tiles.py): fan-palm and cycad-like seedlings for the tall
+# grass, early legume shrubs for the long grass, bare soil and litter for the lawn.
+CORRAL_RUSTBORO = ("gTileset_GeneralCorralBluffs", "gTileset_RustboroCorralBluffs")
+CORRAL_FORTREE = ("gTileset_GeneralCorralBluffs", "gTileset_FortreeCorralBluffs")
+
+
 # A wooden signpost (General tileset 0x01B, impassable) for a field note. The generator
 # draws every other stock signpost as plain ground, so a note's tile is patched in.
 def signpost(x, y):
@@ -42,7 +48,7 @@ MAPS = [
         habitat="forest", light="day",
         forage=[forage(6, 10, "PALM_FRUIT"), forage(20, 18, "PALM_FRUIT"),
                 forage(44, 6, "PALM_FRUIT"), forage(8, 30, "FERN_FROND"), forage(40, 34, "LARVAE")],
-        crop=dict(**{"from": "LAYOUT_PETALBURG_WOODS"}, rect=(0, 0, 48, 44)),
+        crop=dict(**{"from": "LAYOUT_PETALBURG_WOODS"}, rect=(0, 0, 48, 44), tilesets=CORRAL_RUSTBORO),
         patches=[
             dict(rect=(13, 0, 3, 5), same_as=(13, 6)),    # north opening: up to the creek
             dict(rect=(0, 16, 4, 2), same_as=(4, 16)),    # west opening: the thicket
@@ -73,7 +79,7 @@ MAPS = [
         habitat="forest", light="day",
         forage=[forage(8, 20, "LEGUME_POD"), forage(16, 26, "LEGUME_POD"), forage(5, 30, "LEGUME_POD"),
                 forage(20, 15, "LARVAE"), forage(3, 8, "FERN_FROND"), forage(12, 9, "CARRION")],
-        crop=dict(**{"from": "LAYOUT_ROUTE120"}, rect=(15, 26, 25, 33)),
+        crop=dict(**{"from": "LAYOUT_ROUTE120"}, rect=(15, 26, 25, 33), tilesets=CORRAL_FORTREE),
         patches=[signpost(21, 24), signpost(14, 11), signpost(8, 10)],
         music="MUS_ROUTE120", map_type="MAP_TYPE_ROUTE", mapsec="MAPSEC_STRATA_LEGUME_THICKET",
         connections=[connection("right", "MAP_STRATA_PALM_FOREST", 10)],
@@ -100,7 +106,7 @@ MAPS = [
         habitat="open", light="day",
         forage=[forage(10, 6, "LEGUME_POD"), forage(5, 15, "BROWSE"), forage(24, 17, "LARVAE"), forage(44, 10, "CARRION"),
                 forage(30, 12, "LEGUME_POD")],
-        crop=dict(**{"from": "LAYOUT_ROUTE116"}, rect=(0, 0, 60, 20)),
+        crop=dict(**{"from": "LAYOUT_ROUTE116"}, rect=(0, 0, 60, 20), tilesets=CORRAL_RUSTBORO),
         patches=[
             dict(rect=(36, 5, 5, 4), same_as=(38, 11)),    # the house -> bare ground
             dict(rect=(37, 9, 3, 2), same_as=(38, 11)),    # its flower beds
@@ -138,7 +144,7 @@ MAPS = [
         habitat="water", light="day",
         forage=[forage(5, 6, "FERN_FROND"), forage(14, 3, "PALM_FRUIT"), forage(14, 9, "BROWSE"),
                 forage(10, 18, "LARVAE"), forage(21, 13, "CARRION")],
-        crop=dict(**{"from": "LAYOUT_ROUTE119"}, rect=(0, 54, 40, 25)),
+        crop=dict(**{"from": "LAYOUT_ROUTE119"}, rect=(0, 54, 40, 25), tilesets=CORRAL_FORTREE),
         patches=[
             dict(rect=(16, 12, 6, 2), same_as=(10, 12)),   # a path down to the water
             signpost(8, 21), signpost(12, 12), signpost(19, 12),

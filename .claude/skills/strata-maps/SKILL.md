@@ -15,8 +15,15 @@ Read `docs/strata_outline.md` (plan per act, §2) and `docs/strata_design.md` (a
 - Maps are crops of stock Hoenn layouts (`crop=dict(from=LAYOUT_..., rect=...)`) with
   `patches=[dict(rect=..., like=(x, y) | metatile=0x... | tiles=... | same_as=...)]` and `swap={}`.
   The generator already swaps secret-base spots and dead signposts.
-- Era variants reuse a layout with palette-only tilesets from `gen_tilesets.py` (General and
-  Fallarbor have PETM/Oligocene/ice-age variants; other tilesets have none yet).
+- Era variants reuse a layout with era tilesets from `gen_tilesets.py` (`VARIANTS`; set with
+  `crop=dict(..., tilesets=(primary, secondary))`). **Every Act 1-5 map must use its era's
+  ground-cover variants** (`hell_creek()` in common.py, `winter()`, `CORRAL_*`, `PETM_TILESETS`,
+  `GREEN_RIVER_*`): the stock tall grass, long grass and lawn are anachronistic before the
+  Oligocene. They redraw grass as ferns, palms, herbs, horsetails and the lawn as litter/soil
+  (`gen_era_tiles.py`, docs/strata_art.md "Era ground cover"); behaviours are unchanged, so
+  place encounter areas with the usual grass metatiles. A new secondary tileset in those acts
+  needs a `<base>_<ground>` variant (palette-only is enough unless it has its own grass).
+  Acts 6-8 keep grass (Oligocene/Miocene/ice-age palette variants).
 - Scripts are hand-written: `data/maps/<Map>/scripts.inc`. `gen_maps.py` adds the
   `event_scripts.s` include for new maps.
 - Tools: `maprender.py map LAYOUT_ID out.png`, `maprender.py catalog <primary> <secondary> out.png`,
