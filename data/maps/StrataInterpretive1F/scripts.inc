@@ -2,9 +2,9 @@
 @ summer crew found) in the round case, paleoart murals of the layers the player climbed, and the
 @ cast: Halvorsen, Josie, Bea, Dale and Theo. The stairs lead up to the Hall of Lost Lineages.
 @
-@ C13 (peer-review trainers): Halvorsen's final peer review (Lv 55: Tyrannosaur, Uintatherium,
-@ Epicyon, Arctodus, Teleoceras, Chelydra) goes in StrataInterpretive1F_EventScript_Halvorsen, then
-@ setflag FLAG_STRATA_EPI_PEER_REVIEW_DONE. S3 (ending text, credits) can hook the same script.
+@ C13 (peer-review trainers): Halvorsen's final peer review (Lv 50-55: Chelydra, Teleoceras,
+@ Epicyon, Uintatherium, Arctodus, Tyrannosaur) is in StrataInterpretive1F_EventScript_Halvorsen,
+@ which then sets FLAG_STRATA_EPI_PEER_REVIEW_DONE. S3 (ending text, credits) can hook the same script.
 @ Light story hooks only: the present-day wrap-up (Kessler, the museum specimen) is S1/S3.
 StrataInterpretive1F_MapScripts::
 	.byte 0
@@ -14,8 +14,15 @@ StrataInterpretive1F_EventScript_Halvorsen::
 	faceplayer
 	goto_if_set FLAG_STRATA_EPI_PEER_REVIEW_DONE, StrataInterpretive1F_EventScript_HalvorsenAfter
 	msgbox StrataInterpretive1F_Text_HalvorsenIntro, MSGBOX_DEFAULT
-	@ C13: the final peer review goes here (trainerbattle against Halvorsen, Lv 55),
-	@ then: setflag FLAG_STRATA_EPI_PEER_REVIEW_DONE, goto StrataInterpretive1F_EventScript_HalvorsenAfter
+	msgbox StrataInterpretive1F_Text_HalvorsenReady, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, StrataInterpretive1F_EventScript_HalvorsenLater
+	@ The final peer review (C13): the classics, Lv 50-55 (src/data/trainers_strata.party).
+	trainerbattle_no_intro TRAINER_STRATA_HALVORSEN, StrataInterpretive1F_Text_HalvorsenDefeat
+	setflag FLAG_STRATA_EPI_PEER_REVIEW_DONE
+	goto StrataInterpretive1F_EventScript_HalvorsenAfter
+
+StrataInterpretive1F_EventScript_HalvorsenLater::
+	msgbox StrataInterpretive1F_Text_HalvorsenLater, MSGBOX_DEFAULT
 	release
 	end
 
@@ -100,6 +107,20 @@ StrataInterpretive1F_Text_HalvorsenIntro:
 	.string "reconstructions side by side. Mine\l"
 	.string "are the classics. Yours are the\l"
 	.string "survivors.$"
+
+StrataInterpretive1F_Text_HalvorsenReady:
+	.string "Shall we?$"
+
+StrataInterpretive1F_Text_HalvorsenLater:
+	.string "Take your time. The Pair isn't\n"
+	.string "going anywhere. That's rather the\l"
+	.string "point.$"
+
+StrataInterpretive1F_Text_HalvorsenDefeat:
+	.string "Well argued. Your survivors\n"
+	.string "outlasted my classics.\p"
+	.string "That doesn't make them the truth.\n"
+	.string "It makes them a good hypothesis.$"
 
 StrataInterpretive1F_Text_HalvorsenAfter:
 	.string "Two reconstructions, side by side,\n"

@@ -2,7 +2,94 @@
 @ café, and the BLM field office (Ranger Ortiz). The highway west leads to the
 @ prairie once the present layer is loaded (the epilogue).
 StrataJordan_MapScripts::
+	map_script MAP_SCRIPT_ON_TRANSITION, StrataJordan_OnTransition
 	.byte 0
+
+StrataJordan_OnTransition:
+	special Strata_HideLockedReviewers
+	end
+
+@ Visiting researchers (peer review, C13): the ichnologist (act 6) and the volcanologist
+@ (act 7). One battle each.
+StrataJordan_EventScript_Oskar::
+	lock
+	faceplayer
+	trainerbattle_single TRAINER_STRATA_REVIEW_ACT6, StrataJordan_Text_OskarIntro, StrataJordan_Text_OskarDefeat, StrataJordan_EventScript_OskarWon
+	msgbox StrataJordan_Text_OskarAfter, MSGBOX_DEFAULT
+	release
+	end
+
+StrataJordan_EventScript_OskarWon::
+	msgbox StrataJordan_Text_OskarNote, MSGBOX_DEFAULT
+	releaseall
+	end
+
+StrataJordan_EventScript_Hollis::
+	lock
+	faceplayer
+	trainerbattle_single TRAINER_STRATA_REVIEW_ACT7, StrataJordan_Text_HollisIntro, StrataJordan_Text_HollisDefeat, StrataJordan_EventScript_HollisWon
+	msgbox StrataJordan_Text_HollisAfter, MSGBOX_DEFAULT
+	release
+	end
+
+StrataJordan_EventScript_HollisWon::
+	msgbox StrataJordan_Text_HollisNote, MSGBOX_DEFAULT
+	releaseall
+	end
+
+StrataJordan_Text_OskarIntro:
+	.string "OSKAR: Ichnology: I study tracks,\n"
+	.string "burrows and bite marks. What the\l"
+	.string "animals did, not the animals.\p"
+	.string "A bone can be moved. A track stays\n"
+	.string "where it was made. The White River\l"
+	.string "trackways are the real record.\p"
+	.string "Peer review: your animals against\n"
+	.string "my footprints.$"
+
+StrataJordan_Text_OskarDefeat:
+	.string "OSKAR: You move the way the tracks\n"
+	.string "say. Good.$"
+
+StrataJordan_Text_OskarNote:
+	.string "OSKAR: Field note.\p"
+	.string "A trace fossil is a behaviour.\n"
+	.string "A burrow is a burrow, whoever dug\l"
+	.string "it. A trackway shows speed, and\l"
+	.string "company.\p"
+	.string "Parallel tracks mean a herd, all\n"
+	.string "heading the same way.$"
+
+StrataJordan_Text_OskarAfter:
+	.string "OSKAR: Bones tell you what lived\n"
+	.string "there. Tracks tell you what it was\l"
+	.string "doing.$"
+
+StrataJordan_Text_HollisIntro:
+	.string "HOLLIS: Volcanologist. The ash at\n"
+	.string "Ashfall blew in from a vent over\l"
+	.string "1,600 kilometres away, and it\l"
+	.string "buried a waterhole.\p"
+	.string "Your run sat under that haze,\n"
+	.string "didn't it? Let's compare\l"
+	.string "reconstructions. Peer review.$"
+
+StrataJordan_Text_HollisDefeat:
+	.string "HOLLIS: Your animals handled the\n"
+	.string "ash better than my models do.$"
+
+StrataJordan_Text_HollisNote:
+	.string "HOLLIS: Field note.\p"
+	.string "Nothing died in the eruption.\n"
+	.string "They died weeks later, slowly, at\l"
+	.string "the water, breathing fine ash.\p"
+	.string "Small animals went first, rhinos\n"
+	.string "last. The bones lie in that order.$"
+
+StrataJordan_Text_HollisAfter:
+	.string "HOLLIS: A thin ash fall, far from\n"
+	.string "the vent. Still enough to end a\l"
+	.string "waterhole.$"
 
 StrataJordan_EventScript_Highway::
 	lockall

@@ -638,6 +638,9 @@ gSpecials::
 	def_special UpdateTrainerCardPhotoIcons
 	def_special StickerManGetBragFlags
 	def_special CheckAddCoins
+	def_special Strata_HideLockedReviewers
+	def_special Strata_PayStipend
+	def_special Strata_StipendBaseline
 	def_special Strata_AdvanceEra
 	def_special Strata_AddPressure
 	def_special Strata_GiveWaterGear

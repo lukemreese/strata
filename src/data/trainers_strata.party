@@ -1,0 +1,363 @@
+/*
+Strata's peer-review trainers: the visiting researchers (one per act), Theo Okafor's
+peer reviews and Dr. Halvorsen's final one. Humans only battle in the present day, framed
+as peer review: two people pit their reconstructions against each other.
+
+Included by src/data.c after trainers.party (generated into src/data/trainers_strata.h by
+trainerproc, see trainer_rules.mk). The trainer IDs are in include/constants/opponents.h.
+
+Design (docs/strata_design.md, "Peer review"):
+  - Teams are species the player has met by the act just finished (first_era of every species
+    is at most that act: test/strata_review.c checks it), at levels between the next layer's era
+    floor and the act's expected party level, so a party that finished the act can win. The last
+    animal sets the prize: money is 4 x its level x the class multiplier (battle_main.c: 12 for
+    the visiting researchers, 10 for Theo, 14 for Halvorsen).
+  - IVs are 15 everywhere: the average of a wild catch, which balance.py uses.
+  - No held items and no set moves: every animal uses the last four moves it learns by its level.
+*/
+
+/* --------------------------------------------------------------------------- */
+/* Theo Okafor, peer review #0 (present day, starter chosen): one animal at Lv 5, the starter */
+/* after yours in the cycle mammal -> bird -> turtle -> mammal. Which trainer Theo is depends */
+/* on VAR_STARTER_MON (data/maps/StrataFieldCamp/scripts.inc). */
+/* --------------------------------------------------------------------------- */
+
+=== TRAINER_STRATA_THEO_ACT0_BIRD ===
+Name: THEO
+Class: Rival
+Pic: Cooltrainer M
+Gender: Male
+Music: Intense
+Double Battle: No
+AI: Basic Trainer
+
+SPECIES_ASTERIORNIS
+Level: 5
+IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
+
+=== TRAINER_STRATA_THEO_ACT0_TURTLE ===
+Name: THEO
+Class: Rival
+Pic: Cooltrainer M
+Gender: Male
+Music: Intense
+Double Battle: No
+AI: Basic Trainer
+
+SPECIES_EMARGINACHEL
+Level: 5
+IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
+
+=== TRAINER_STRATA_THEO_ACT0_MAMMAL ===
+Name: THEO
+Class: Rival
+Pic: Cooltrainer M
+Gender: Male
+Music: Intense
+Double Battle: No
+AI: Basic Trainer
+
+SPECIES_CIMOLESTES
+Level: 5
+IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
+
+/* --------------------------------------------------------------------------- */
+/* Theo, peer reviews #1 (Corral Bluffs done), #2 (White River done) and #3 (Ice Age done, */
+/* a double battle: Josie lends him a second pair). */
+/* --------------------------------------------------------------------------- */
+
+=== TRAINER_STRATA_THEO_ACT3 ===
+Name: THEO
+Class: Rival
+Pic: Cooltrainer M
+Gender: Male
+Music: Intense
+Double Battle: No
+AI: Basic Trainer
+
+SPECIES_CHAMPSOSAUR
+Level: 19
+IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
+
+SPECIES_LOXOLOPHUS
+Level: 20
+IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
+
+SPECIES_PROTICTIS
+Level: 21
+IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
+
+=== TRAINER_STRATA_THEO_ACT6 ===
+Name: THEO
+Class: Rival
+Pic: Cooltrainer M
+Gender: Male
+Music: Intense
+Double Battle: No
+AI: Basic Trainer
+
+SPECIES_STYLEMYS
+Level: 36
+IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
+
+SPECIES_LEPTOMERYX
+Level: 37
+IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
+
+SPECIES_MESOHIPPUS
+Level: 38
+IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
+
+SPECIES_HESPEROCYON
+Level: 39
+IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
+
+=== TRAINER_STRATA_THEO_ACT8 ===
+Name: THEO
+Class: Rival
+Pic: Cooltrainer M
+Gender: Male
+Music: Intense
+Double Battle: Yes
+AI: Basic Trainer
+
+SPECIES_CANIS
+Level: 47
+IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
+
+SPECIES_MELEAGRIS
+Level: 48
+IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
+
+SPECIES_OVIS
+Level: 49
+IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
+
+SPECIES_EQUUS
+Level: 50
+IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
+
+/* --------------------------------------------------------------------------- */
+/* The visiting researchers, one per act, who set up at the hub once the act is done. */
+/* --------------------------------------------------------------------------- */
+
+/* Act 1, Hell Creek: the ornithologist. */
+=== TRAINER_STRATA_REVIEW_ACT1 ===
+Name: ARLO
+Class: Pkmn Trainer 1
+Pic: Bird Keeper
+Gender: Male
+Music: Cool
+Double Battle: No
+AI: Basic Trainer
+
+SPECIES_AVISAURUS
+Level: 7
+IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
+
+SPECIES_ANZU
+Level: 8
+IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
+
+SPECIES_ASTERIORNIS
+Level: 9
+IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
+
+/* Act 2, impact winter: the palynologist. */
+=== TRAINER_STRATA_REVIEW_ACT2 ===
+Name: PRIYA
+Class: Pkmn Trainer 1
+Pic: Aroma Lady
+Gender: Female
+Music: Female
+Double Battle: No
+AI: Basic Trainer
+
+SPECIES_MESODMA
+Level: 13
+IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
+
+SPECIES_CHAMPSOSAUR
+Level: 14
+IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
+
+SPECIES_EMARGINACHEL
+Level: 15
+IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
+
+/* Act 3, Corral Bluffs: the mammalogist. */
+=== TRAINER_STRATA_REVIEW_ACT3 ===
+Name: TOMAS
+Class: Pkmn Trainer 1
+Pic: Pokemon Ranger M
+Gender: Male
+Music: Cool
+Double Battle: No
+AI: Basic Trainer
+
+SPECIES_TAENIOLABIS
+Level: 18
+IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
+
+SPECIES_LOXOLOPHUS
+Level: 19
+IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
+
+SPECIES_PROTICTIS
+Level: 20
+IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
+
+/* Act 4, Bighorn Basin (PETM): the isotope geochemist. */
+=== TRAINER_STRATA_REVIEW_ACT4 ===
+Name: INGRID
+Class: Pkmn Trainer 1
+Pic: Cooltrainer F
+Gender: Female
+Music: Cool
+Double Battle: No
+AI: Basic Trainer
+
+SPECIES_SIFRHIPPUS
+Level: 24
+IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
+
+SPECIES_HYOPSODUS
+Level: 25
+IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
+
+SPECIES_CORYPHODON
+Level: 26
+IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
+
+/* Act 5, Green River: the ichthyologist. */
+=== TRAINER_STRATA_REVIEW_ACT5 ===
+Name: KEOLA
+Class: Pkmn Trainer 1
+Pic: Fisherman
+Gender: Male
+Music: Hiker
+Double Battle: No
+AI: Basic Trainer
+
+SPECIES_KNIGHTIA
+Level: 30
+IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
+
+SPECIES_HELIOBATIS
+Level: 31
+IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
+
+SPECIES_LEPISOSTEUS
+Level: 32
+IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
+
+SPECIES_PRESBYORNIS
+Level: 32
+IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
+
+/* Act 6, White River: the ichnologist (trackways). */
+=== TRAINER_STRATA_REVIEW_ACT6 ===
+Name: OSKAR
+Class: Pkmn Trainer 1
+Pic: Hiker
+Gender: Male
+Music: Hiker
+Double Battle: No
+AI: Basic Trainer
+
+SPECIES_STYLEMYS
+Level: 36
+IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
+
+SPECIES_MERYCOIDODON
+Level: 37
+IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
+
+SPECIES_MESOHIPPUS
+Level: 38
+IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
+
+/* Act 7, Ashfall: the volcanologist. */
+=== TRAINER_STRATA_REVIEW_ACT7 ===
+Name: HOLLIS
+Class: Pkmn Trainer 1
+Pic: Ruin Maniac
+Gender: Male
+Music: Hiker
+Double Battle: No
+AI: Basic Trainer
+
+SPECIES_BALEARICA
+Level: 43
+IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
+
+SPECIES_HYPOHIPPUS
+Level: 44
+IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
+
+SPECIES_PROCAMELUS
+Level: 44
+IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
+
+/* Act 8, Ice Age: the Quaternary ecologist. */
+=== TRAINER_STRATA_REVIEW_ACT8 ===
+Name: ASHA
+Class: Pkmn Trainer 1
+Pic: Pokemon Ranger F
+Gender: Female
+Music: Cool
+Double Battle: No
+AI: Basic Trainer
+
+SPECIES_EQUUS
+Level: 47
+IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
+
+SPECIES_ANTILOCAPRA
+Level: 48
+IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
+
+SPECIES_CAMELOPS
+Level: 49
+IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
+
+SPECIES_OVIBOS
+Level: 50
+IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
+
+/* --------------------------------------------------------------------------- */
+/* Dr. Halvorsen, the final peer review at the Interpretive Center: "the classics". */
+/* --------------------------------------------------------------------------- */
+
+=== TRAINER_STRATA_HALVORSEN ===
+Name: HALVORSEN
+Class: Pkmn Trainer 2
+Pic: Old Man
+Gender: Male
+Music: Intense
+Double Battle: No
+AI: Basic Trainer
+
+SPECIES_CHELYDRA
+Level: 50
+IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
+
+SPECIES_TELEOCERAS
+Level: 51
+IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
+
+SPECIES_EPICYON
+Level: 52
+IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
+
+SPECIES_UINTATHERIUM
+Level: 53
+IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
+
+SPECIES_ARCTODUS
+Level: 54
+IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
+
+SPECIES_TYRANNOSAUR
+Level: 55
+IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe

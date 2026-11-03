@@ -42,6 +42,11 @@ def signpost(x, y, script, facing="BG_EVENT_PLAYER_FACING_ANY"):
     return dict(at=(x, y), tiles=[[SIGNPOST]], collision=1), sign(x, y, script, facing)
 
 
+def reviewer_flag(act):
+    """Hide flag of the visiting researcher of act N: FLAG_TEMP_N (src/strata_review.c)."""
+    return f"FLAG_TEMP_{act:X}"
+
+
 def edge_triggers(x, ys, script):
     """Coord triggers along a map edge (VAR_TEMP_1 == 0: the map's scripts set it to
     1 to open the way)."""
@@ -89,6 +94,12 @@ MAPS = [
             # The camp store: the quartermaster, parked beside the station door.
             obj("LOCALID_STRATA_CAMP_QUARTERMASTER", "OBJ_EVENT_GFX_EXPERT_F", 29, 19,
                 "StrataFieldCamp_EventScript_Quartermaster", "MOVEMENT_TYPE_FACE_LEFT"),
+            # Visiting researchers (peer review, C13): researcher N hides under FLAG_TEMP_N until
+            # act N is done (special Strata_HideLockedReviewers in the map's on-transition script).
+            obj("LOCALID_STRATA_CAMP_ARLO", "OBJ_EVENT_GFX_MAN_1", 22, 8,
+                "StrataFieldCamp_EventScript_Arlo", "MOVEMENT_TYPE_FACE_DOWN", flag=reviewer_flag(1)),
+            obj("LOCALID_STRATA_CAMP_TOMAS", "OBJ_EVENT_GFX_CAMPER", 26, 8,
+                "StrataFieldCamp_EventScript_Tomas", "MOVEMENT_TYPE_FACE_DOWN", flag=reviewer_flag(3)),
         ],
         bgs=[
             sign(13, 6, "StrataFieldCamp_EventScript_CampSign"),
@@ -111,6 +122,9 @@ MAPS = [
                 "StrataFieldStation_EventScript_Mentor"),
             obj("LOCALID_STRATA_RELEARNER", "OBJ_EVENT_GFX_WOMAN_3", 9, 3,
                 "StrataFieldStation_EventScript_Relearner"),
+            # The isotope geochemist (act 4), at the bench beside the rig.
+            obj("LOCALID_STRATA_STATION_INGRID", "OBJ_EVENT_GFX_WOMAN_1", 11, 4,
+                "StrataFieldStation_EventScript_Ingrid", "MOVEMENT_TYPE_FACE_LEFT", flag=reviewer_flag(4)),
         ],
         bgs=[
             sign(10, 7, "StrataFieldStation_EventScript_Rig", "BG_EVENT_PLAYER_FACING_NORTH"),
@@ -178,6 +192,11 @@ MAPS = [
                 "StrataJordan_EventScript_Rancher", "MOVEMENT_TYPE_FACE_LEFT"),
             obj("LOCALID_STRATA_JORDAN_LOCAL", "OBJ_EVENT_GFX_WOMAN_2", 8, 11,
                 "StrataJordan_EventScript_Local", "MOVEMENT_TYPE_WANDER_AROUND"),
+            # Visiting researchers: the ichnologist (act 6) and the volcanologist (act 7).
+            obj("LOCALID_STRATA_JORDAN_OSKAR", "OBJ_EVENT_GFX_MAN_3", 13, 10,
+                "StrataJordan_EventScript_Oskar", "MOVEMENT_TYPE_FACE_DOWN", flag=reviewer_flag(6)),
+            obj("LOCALID_STRATA_JORDAN_HOLLIS", "OBJ_EVENT_GFX_MAN_2", 3, 13,
+                "StrataJordan_EventScript_Hollis", "MOVEMENT_TYPE_FACE_RIGHT", flag=reviewer_flag(7)),
         ],
         bgs=[
             sign(10, 11, "StrataJordan_EventScript_TownSign"),
@@ -243,6 +262,14 @@ MAPS = [
             # One of Kessler's crew, waiting by the gate.
             obj("LOCALID_STRATA_RANCH_HAND", "OBJ_EVENT_GFX_MANIAC", 55, 8,
                 "StrataLindqvistRanch_EventScript_KesslerHand", "MOVEMENT_TYPE_LOOK_AROUND", flag="FLAG_TEMP_1F"),
+            # Visiting researchers: the palynologist (act 2), the ichthyologist (act 5, at the stock
+            # pond) and the Quaternary ecologist (act 8).
+            obj("LOCALID_STRATA_RANCH_PRIYA", "OBJ_EVENT_GFX_WOMAN_4", 33, 8,
+                "StrataLindqvistRanch_EventScript_Priya", "MOVEMENT_TYPE_FACE_DOWN", flag=reviewer_flag(2)),
+            obj("LOCALID_STRATA_RANCH_KEOLA", "OBJ_EVENT_GFX_FISHERMAN", 19, 12,
+                "StrataLindqvistRanch_EventScript_Keola", "MOVEMENT_TYPE_FACE_RIGHT", flag=reviewer_flag(5)),
+            obj("LOCALID_STRATA_RANCH_ASHA", "OBJ_EVENT_GFX_WOMAN_5", 53, 10,
+                "StrataLindqvistRanch_EventScript_Asha", "MOVEMENT_TYPE_FACE_DOWN", flag=reviewer_flag(8)),
         ],
         bgs=[
             sign(49, 5, "StrataLindqvistRanch_EventScript_RanchSign"),

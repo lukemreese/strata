@@ -1,20 +1,126 @@
 @ Hell Creek Camp (present day): the hub. The ranch road runs west to the Lindqvist
 @ Ranch and Jordan; the badlands dig is south; the field station door is east.
+@
+@ Peer review (C13, src/strata_review.c): Theo Okafor's four reviews and two of the visiting
+@ researchers (the ornithologist after act 1, the mammalogist after act 3) are here.
 StrataFieldCamp_MapScripts::
+	map_script MAP_SCRIPT_ON_TRANSITION, StrataFieldCamp_OnTransition
 	.byte 0
 
-@ Theo Okafor, PhD student and the rival. His peer-review battles come with C13.
+StrataFieldCamp_OnTransition:
+	special Strata_HideLockedReviewers
+	end
+
+@ Theo Okafor, PhD student and the rival. Peer review #0 once the starter is chosen (his animal
+@ is the next starter in the cycle mammal -> bird -> turtle), then #1 after Corral Bluffs, #2
+@ after White River and #3 (a double battle with Josie) after the Ice Age. He offers the
+@ earliest review the player hasn't had yet, so none is missed.
 StrataFieldCamp_EventScript_Theo::
 	lock
 	faceplayer
-	goto_if_ge VAR_STRATA_STORY, STORY_ACT_DONE(ERA_HELL_CREEK), StrataFieldCamp_EventScript_TheoLater
+	goto_if_lt VAR_STRATA_STORY, 1, StrataFieldCamp_EventScript_TheoNoStarter
+	goto_if_eq VAR_STARTER_MON, 0, StrataFieldCamp_EventScript_TheoAct0Bird
+	goto_if_eq VAR_STARTER_MON, 1, StrataFieldCamp_EventScript_TheoAct0Turtle
+	goto StrataFieldCamp_EventScript_TheoAct0Mammal
+
+StrataFieldCamp_EventScript_TheoNoStarter::
 	msgbox StrataFieldCamp_Text_TheoAct0, MSGBOX_DEFAULT
 	release
 	end
 
-StrataFieldCamp_EventScript_TheoLater::
+StrataFieldCamp_EventScript_TheoAct0Bird::
+	goto_if_defeated TRAINER_STRATA_THEO_ACT0_BIRD, StrataFieldCamp_EventScript_TheoAct3
+	trainerbattle_single TRAINER_STRATA_THEO_ACT0_BIRD, StrataFieldCamp_Text_Theo0Intro, StrataFieldCamp_Text_Theo0Defeat, StrataFieldCamp_EventScript_TheoWon0
+
+StrataFieldCamp_EventScript_TheoAct0Turtle::
+	goto_if_defeated TRAINER_STRATA_THEO_ACT0_TURTLE, StrataFieldCamp_EventScript_TheoAct3
+	trainerbattle_single TRAINER_STRATA_THEO_ACT0_TURTLE, StrataFieldCamp_Text_Theo0Intro, StrataFieldCamp_Text_Theo0Defeat, StrataFieldCamp_EventScript_TheoWon0
+
+StrataFieldCamp_EventScript_TheoAct0Mammal::
+	goto_if_defeated TRAINER_STRATA_THEO_ACT0_MAMMAL, StrataFieldCamp_EventScript_TheoAct3
+	trainerbattle_single TRAINER_STRATA_THEO_ACT0_MAMMAL, StrataFieldCamp_Text_Theo0Intro, StrataFieldCamp_Text_Theo0Defeat, StrataFieldCamp_EventScript_TheoWon0
+
+StrataFieldCamp_EventScript_TheoWon0::
+	msgbox StrataFieldCamp_Text_Theo0After, MSGBOX_DEFAULT
+	releaseall
+	end
+
+StrataFieldCamp_EventScript_TheoAct3::
+	goto_if_lt VAR_STRATA_STORY, STORY_ACT_DONE(ERA_CORRAL_BLUFFS), StrataFieldCamp_EventScript_TheoIdle0
+	goto_if_defeated TRAINER_STRATA_THEO_ACT3, StrataFieldCamp_EventScript_TheoAct6
+	trainerbattle_single TRAINER_STRATA_THEO_ACT3, StrataFieldCamp_Text_Theo3Intro, StrataFieldCamp_Text_Theo3Defeat, StrataFieldCamp_EventScript_TheoWon3
+
+StrataFieldCamp_EventScript_TheoWon3::
+	msgbox StrataFieldCamp_Text_Theo3After, MSGBOX_DEFAULT
+	releaseall
+	end
+
+StrataFieldCamp_EventScript_TheoAct6::
+	goto_if_lt VAR_STRATA_STORY, STORY_ACT_DONE(ERA_WHITE_RIVER), StrataFieldCamp_EventScript_TheoIdle3
+	goto_if_defeated TRAINER_STRATA_THEO_ACT6, StrataFieldCamp_EventScript_TheoAct8
+	trainerbattle_single TRAINER_STRATA_THEO_ACT6, StrataFieldCamp_Text_Theo6Intro, StrataFieldCamp_Text_Theo6Defeat, StrataFieldCamp_EventScript_TheoWon6
+
+StrataFieldCamp_EventScript_TheoWon6::
+	msgbox StrataFieldCamp_Text_Theo6After, MSGBOX_DEFAULT
+	releaseall
+	end
+
+@ Review #3 is a double battle: Josie lends Theo a second pair, so the player needs two animals.
+StrataFieldCamp_EventScript_TheoAct8::
+	goto_if_lt VAR_STRATA_STORY, STORY_ACT_DONE(ERA_TRAP_CAVE), StrataFieldCamp_EventScript_TheoIdle6
+	goto_if_defeated TRAINER_STRATA_THEO_ACT8, StrataFieldCamp_EventScript_TheoIdle8
+	trainerbattle_double TRAINER_STRATA_THEO_ACT8, StrataFieldCamp_Text_Theo8Intro, StrataFieldCamp_Text_Theo8Defeat, StrataFieldCamp_Text_Theo8NeedTwo, StrataFieldCamp_EventScript_TheoWon8
+
+StrataFieldCamp_EventScript_TheoWon8::
+	msgbox StrataFieldCamp_Text_Theo8After, MSGBOX_DEFAULT
+	releaseall
+	end
+
+StrataFieldCamp_EventScript_TheoIdle0::
 	msgbox StrataFieldCamp_Text_TheoLater, MSGBOX_DEFAULT
 	release
+	end
+
+StrataFieldCamp_EventScript_TheoIdle3::
+	msgbox StrataFieldCamp_Text_TheoIdle3, MSGBOX_DEFAULT
+	release
+	end
+
+StrataFieldCamp_EventScript_TheoIdle6::
+	msgbox StrataFieldCamp_Text_TheoIdle6, MSGBOX_DEFAULT
+	release
+	end
+
+StrataFieldCamp_EventScript_TheoIdle8::
+	msgbox StrataFieldCamp_Text_TheoIdle8, MSGBOX_DEFAULT
+	release
+	end
+
+@ The ornithologist (act 1) and the mammalogist (act 3): visiting researchers, one battle each.
+StrataFieldCamp_EventScript_Arlo::
+	lock
+	faceplayer
+	trainerbattle_single TRAINER_STRATA_REVIEW_ACT1, StrataFieldCamp_Text_ArloIntro, StrataFieldCamp_Text_ArloDefeat, StrataFieldCamp_EventScript_ArloWon
+	msgbox StrataFieldCamp_Text_ArloAfter, MSGBOX_DEFAULT
+	release
+	end
+
+StrataFieldCamp_EventScript_ArloWon::
+	msgbox StrataFieldCamp_Text_ArloNote, MSGBOX_DEFAULT
+	releaseall
+	end
+
+StrataFieldCamp_EventScript_Tomas::
+	lock
+	faceplayer
+	trainerbattle_single TRAINER_STRATA_REVIEW_ACT3, StrataFieldCamp_Text_TomasIntro, StrataFieldCamp_Text_TomasDefeat, StrataFieldCamp_EventScript_TomasWon
+	msgbox StrataFieldCamp_Text_TomasAfter, MSGBOX_DEFAULT
+	release
+	end
+
+StrataFieldCamp_EventScript_TomasWon::
+	msgbox StrataFieldCamp_Text_TomasNote, MSGBOX_DEFAULT
+	releaseall
 	end
 
 @ Josie Lindqvist: undergrad on the crew, and Bea's granddaughter.
@@ -48,6 +154,177 @@ StrataFieldCamp_EventScript_SuperpositionNote::
 StrataFieldCamp_EventScript_ResearcherBoard::
 	msgbox StrataFieldCamp_Text_ResearcherBoard, MSGBOX_SIGN
 	end
+
+StrataFieldCamp_Text_Theo0Intro:
+	.string "THEO: You got the rig running?\n"
+	.string "Good. Then test it.\p"
+	.string "A reconstruction is a hypothesis.\n"
+	.string "It has to hold up against another\l"
+	.string "one.\p"
+	.string "Mine is the next animal in the\n"
+	.string "cycle: mammal, bird, turtle. Same\l"
+	.string "age and size as yours.\p"
+	.string "Peer review. Show me yours.$"
+
+StrataFieldCamp_Text_Theo0Defeat:
+	.string "THEO: Hm. Fine, you won this one.\p"
+	.string "One round isn't evidence.$"
+
+StrataFieldCamp_Text_Theo0After:
+	.string "THEO: Don't get comfortable.\p"
+	.string "Run the rig, and write down\n"
+	.string "everything it gets wrong. I'll be\l"
+	.string "reading your notes.$"
+
+StrataFieldCamp_Text_Theo3Intro:
+	.string "THEO: I read the Corral Bluffs data\n"
+	.string "again. Palms, then legumes, then\l"
+	.string "bigger plant eaters, then the first\l"
+	.string "big predator.\p"
+	.string "The rig got the order right. That\n"
+	.string "could still be luck.\p"
+	.string "So: my reconstruction against\n"
+	.string "yours. If yours is better, show me\l"
+	.string "why.$"
+
+StrataFieldCamp_Text_Theo3Defeat:
+	.string "THEO: …It held.\p"
+	.string "The order of recovery looks right.\n"
+	.string "But 'looks right' isn't a\l"
+	.string "mechanism.$"
+
+StrataFieldCamp_Text_Theo3After:
+	.string "THEO: Peer review isn't about\n"
+	.string "winning. It's about finding the\l"
+	.string "weak point.\p"
+	.string "Keep going up. I'll keep looking\n"
+	.string "for it.$"
+
+StrataFieldCamp_Text_TheoIdle3:
+	.string "THEO: The recovery after the\n"
+	.string "impact is the part I trust most.\p"
+	.string "Everything after that is a longer\n"
+	.string "chain of guesses. Check each link.$"
+
+StrataFieldCamp_Text_Theo6Intro:
+	.string "THEO: The Eocene-Oligocene\n"
+	.string "boundary. I compared your run to\l"
+	.string "the cliff contact, species by\l"
+	.string "species.\p"
+	.string "The losses match. That actually\n"
+	.string "worries me: if it's a toy, it\l"
+	.string "shouldn't be this good.\p"
+	.string "So I'm not here to beat you. I'm\n"
+	.string "here to break it. Ready?$"
+
+StrataFieldCamp_Text_Theo6Defeat:
+	.string "THEO: It held again.\p"
+	.string "Not a diorama, then. A model.\n"
+	.string "It's wrong somewhere. I just\l"
+	.string "haven't found where.$"
+
+StrataFieldCamp_Text_Theo6After:
+	.string "THEO: A model is useful when you\n"
+	.string "know how it's wrong.\p"
+	.string "Don't tell Halvorsen I said that.\n"
+	.string "They'll want it in writing.$"
+
+StrataFieldCamp_Text_TheoIdle6:
+	.string "THEO: Grasslands and ash next,\n"
+	.string "then the Ice Age. Fewer species,\l"
+	.string "bigger animals. Fewer records to\l"
+	.string "check, too.$"
+
+StrataFieldCamp_Text_Theo8Intro:
+	.string "JOSIE: Theo! You promised me a\n"
+	.string "turn. Two reviewers, one\l"
+	.string "reconstruction.\p"
+	.string "THEO: Josie's lent me her pair.\n"
+	.string "Two on two. We'll find every hole\l"
+	.string "in the last layer.\p"
+	.string "JOSIE: I get to be nice. He\n"
+	.string "doesn't.$"
+
+StrataFieldCamp_Text_Theo8Defeat:
+	.string "THEO: The model is wrong.\p"
+	.string "It's wrong in ways we can name,\n"
+	.string "and it's useful anyway. Write that\l"
+	.string "down.\p"
+	.string "JOSIE: …I'm writing it down.$"
+
+StrataFieldCamp_Text_Theo8NeedTwo:
+	.string "THEO: Two on two. You need a second\n"
+	.string "animal that can still fight.$"
+
+StrataFieldCamp_Text_Theo8After:
+	.string "THEO: My thesis proposal says it:\n"
+	.string "the model is wrong, but it's\l"
+	.string "useful.\p"
+	.string "The committee didn't make me cut\n"
+	.string "it. Thanks for the review.$"
+
+StrataFieldCamp_Text_TheoIdle8:
+	.string "THEO: Still asking how we know?\n"
+	.string "Good. Don't stop.\p"
+	.string "Go and see the prairie. That's\n"
+	.string "the one layer we can actually\l"
+	.string "check.$"
+
+StrataFieldCamp_Text_ArloIntro:
+	.string "ARLO: Ornithologist, visiting from\n"
+	.string "the university. I came for the\l"
+	.string "birds in your Hell Creek run.\p"
+	.string "Most birds back then had teeth and\n"
+	.string "clawed wings. Your rig rebuilt\l"
+	.string "them from a few hollow bones.\p"
+	.string "Peer review, then: my notes\n"
+	.string "against your animals.$"
+
+StrataFieldCamp_Text_ArloDefeat:
+	.string "ARLO: Good. Your reconstruction held\n"
+	.string "up where my sketches are guesses.$"
+
+StrataFieldCamp_Text_ArloNote:
+	.string "ARLO: Here's my field note.\p"
+	.string "The birds that came through the\n"
+	.string "impact had toothless beaks, and\l"
+	.string "many fed on the ground, on seeds.\p"
+	.string "Forest birds went down with the\n"
+	.string "forests. Probably. We argue about\l"
+	.string "that a lot.$"
+
+StrataFieldCamp_Text_ArloAfter:
+	.string "ARLO: Seeds on the ground, no\n"
+	.string "teeth. That's my best guess for why\l"
+	.string "any of them made it.\p"
+	.string "Write down the 'best guess' part.$"
+
+StrataFieldCamp_Text_TomasIntro:
+	.string "TOMAS: Mammalogist. Corral Bluffs\n"
+	.string "is my favourite site: palms, then\l"
+	.string "legumes, then big plant eaters,\l"
+	.string "then the first big predator.\p"
+	.string "Every step shows up in the rock.\n"
+	.string "Let's see what your rig did with\l"
+	.string "them. Peer review.$"
+
+StrataFieldCamp_Text_TomasDefeat:
+	.string "TOMAS: Not bad. Small mammals\n"
+	.string "filling empty niches. You played it\l"
+	.string "the way the rock says.$"
+
+StrataFieldCamp_Text_TomasNote:
+	.string "TOMAS: Field note.\p"
+	.string "After the extinction, mammals got\n"
+	.string "much bigger within a million\l"
+	.string "years.\p"
+	.string "Not because they were better. The\n"
+	.string "big dinosaurs were gone, and empty\l"
+	.string "niches fill fast.$"
+
+StrataFieldCamp_Text_TomasAfter:
+	.string "TOMAS: Size isn't destiny. It's\n"
+	.string "whatever the empty niche allows.$"
 
 StrataFieldCamp_Text_TheoAct0:
 	.string "THEO: You're the new field hand?\n"
@@ -101,8 +378,10 @@ StrataFieldCamp_Text_SuperpositionNote:
 StrataFieldCamp_Text_ResearcherBoard:
 	.string "VISITING RESEARCHERS: a bench, a\n"
 	.string "tent and a plug for a laptop.\p"
-	.string "This week: nobody. Next: whoever the\n"
-	.string "grant money brings.$"
+	.string "One visitor comes for each layer\n"
+	.string "the rig finishes. They want a peer\l"
+	.string "review: your animals against their\l"
+	.string "notes. The grant pays for it.$"
 
 StrataFieldCamp_Text_StationSign:
 	.string "FIELD STATION\n"

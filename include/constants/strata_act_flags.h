@@ -112,4 +112,16 @@
 // (4..7 are free.) There is no epilogue var: the story value 18 is the epilogue.
 
 
+// ---- Hub: the present-day camp, Jordan and the ranch (peer review, stipend) --
+// Present-day content has no act of its own, so the hub has this section. Its trainers' defeat
+// flags are the trainer flags (include/constants/opponents.h); the researchers' hide flags are
+// FLAG_TEMP_1..FLAG_TEMP_8 (see src/strata_review.c: researcher k hides while act k isn't done).
+#define FLAG_STRATA_HUB_BASE 0x2AC
+#define VAR_STRATA_STIPEND_COUNT 0x40DB  // Codex "caught" entries Dr. Halvorsen has already paid for
+
+// Dr. Halvorsen has explained the survey stipend (the first time the player asks about it).
+#define FLAG_STRATA_HUB_STIPEND_TOLD  (FLAG_STRATA_HUB_BASE + 0)
+// (1..7 are free.)
+
+
 #endif // GUARD_CONSTANTS_STRATA_ACT_FLAGS_H

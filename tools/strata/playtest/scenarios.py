@@ -25,7 +25,8 @@ def expand(name):
     if name == "boss_all":
         return [f"boss_{a}" for a in range(1, 9)]
     if name == "all":
-        return ["watchdog_selftest", "new_game_smoke", "battle_smoke", "act_tour"] + [f"boss_{a}" for a in range(1, 9)]
+        return ["watchdog_selftest", "new_game_smoke", "battle_smoke", "peer_review_smoke", "act_tour"] \
+            + [f"boss_{a}" for a in range(1, 9)]
     if name in REGISTRY or name.endswith(".txt") or re.fullmatch(r"boss_[1-8]", name):
         return [name]
     raise SystemExit(f"unknown scenario {name} (try --list)")
@@ -145,6 +146,73 @@ def battle_smoke(g, args):
     outcome = g.battle("catch", max_actions=10)
     g.check(outcome == 7, f"the wild animal was caught (outcome {outcome})")
     g.check(len(g.party()) == party_before + 1, "the catch joined the party")
+
+
+# ---------------------------------------------------------------------------
+@scenario
+def peer_review_smoke(g, args):
+    """Camp after Hell Creek: the ornithologist is unlocked, a peer review pays its prize, and
+    Dr. Halvorsen pays the survey stipend for the Codex entries."""
+    story = world.story_for_act(1) + 1   # STORY_ACT_DONE(1) = 3
+    party = [(world.STARTERS[0], 100), (world.STARTERS[1], 100), (world.STARTERS[2], 100)]
+    g.quickstart("MAP_STRATA_FIELD_CAMP", 22, 10, story=story, era=1, party=party,
+                 items=[("ITEM_POKE_BALL", 5)], flags=["FLAG_STRATA_DIG_DONE"])
+    settle(g)
+    g.screenshot("start")
+    # Story gating: act 1's researcher is out, act 3's is still hidden (FLAG_TEMP_N hides researcher N).
+    g.check(not g.flag("FLAG_TEMP_1"), "the act 1 researcher (Arlo) is visible once act 1 is done")
+    g.check(g.flag("FLAG_TEMP_3"), "the act 3 researcher (Tomas) is still hidden")
+    g.check(not g.trainer_defeated("TRAINER_STRATA_REVIEW_ACT1"), "Arlo is not beaten yet")
+
+    # Peer review: Arlo stands at (22, 8).
+    money0 = g.money()
+    g.walk("up", 1)
+    g.check(g.pos() == (22, 9), f"stands below Arlo ({g.pos()})")
+    g.press("A")
+    g.wait(20)
+    g.screenshot("intro")
+    r = g.talk(stop_at_menu=False)
+    g.check(r == "battle", f"Arlo's intro leads to a battle ({r})")
+    outcome = g.battle("fight", max_actions=40)
+    g.check(outcome == 1, f"the peer review was won (outcome {outcome})")
+    g.talk(stop_at_menu=False)
+    g.screenshot("end")
+    g.check(g.trainer_defeated("TRAINER_STRATA_REVIEW_ACT1"), "Arlo's defeat flag is set")
+    prize = g.money() - money0
+    g.check(prize == 4 * 9 * 12, f"the prize is 4 x Lv 9 x 12 = 432 (got {prize})")
+    # Talking again does not start another battle.
+    g.press("A")
+    r = g.talk(stop_at_menu=False)
+    g.check(r == "done" and not g.st["inBattle"], f"a second talk is just talk ({r})")
+
+    # The survey stipend: Halvorsen pays 175 (150 + 25 for the act done) per new Codex entry. The
+    # three starters count as entries (nothing has been paid yet) and so do two new catches.
+    g.give_mon("SPECIES_ANZU", 20)
+    g.give_mon("SPECIES_MESODMA", 20)
+    g.warp("MAP_STRATA_FIELD_STATION", 6, 6)
+    g.face("up")
+    money1 = g.money()
+    g.press("A")
+    shots = 0
+    for _ in range(400):
+        if g.text_waiting():
+            if shots < 14:
+                g.screenshot(f"stipend_{shots}")
+                shots += 1
+            g.press("A", 2, 4)
+            continue
+        if not g.st["scriptActive"] and not g.st["fieldLocked"] and not g.text_active() and g.cb2() == "CB2_Overworld":
+            break
+        g.step(2, 0)
+    paid = g.money() - money1
+    g.check(paid == 5 * 175, f"the stipend pays 5 entries x 175 = 875 (got {paid})")
+    g.expect_flag("FLAG_STRATA_HUB_STIPEND_TOLD")
+    g.expect_var("VAR_STRATA_STIPEND_COUNT", 5)
+    # Nothing new: a second visit pays nothing.
+    g.press("A")
+    g.talk(stop_at_menu=False)
+    g.check(g.money() - money1 == paid, "a second visit pays nothing")
+    g.screenshot("after_stipend")
 
 
 # ---------------------------------------------------------------------------

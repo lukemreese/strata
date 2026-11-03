@@ -57,6 +57,7 @@ checks, screenshots with map and position, emulator errors, warnings, crash PC/L
 | `new_game_smoke` | Real intro from the title: name, field station, starter choice, gear; asserts story 1, one Lv 5 starter, Exp. Share flag, waders, 5 capsules |
 | `battle_smoke` | Levee tall grass with encounters on: wild battle, capsule throws (R = last used ball), Codex registration page; asserts the catch |
 | `act_tour` | Every Strata map: arrival, each `OBJ_EVENT_GFX_SPECIES` creature up close, every edge (a tile walkable on both sides of the seam) and warp; asserts each lands on the right map |
+| `peer_review_smoke` | Camp at story 3 (act 1 done): checks the researcher gating flags, talks to Arlo, plays the peer review (Lv 100 starters), checks the 432 prize and defeat flag, then gets the survey stipend from Halvorsen (5 entries x 175) |
 | `boss_1` .. `boss_8`, `boss_all` | Quick-start beside the act's boss line, walk onto it, play the script and every battle (three Lv 100 starters), assert `STORY_ACT_DONE` |
 | `watchdog_selftest` | Forces a freeze and a bad jump; both must be caught |
 
@@ -85,6 +86,10 @@ DSL: `quickstart MAP_X 10 20 story=2 era=1 party=SPECIES_A:12,SPECIES_B:10 flags
 `screenshot name`, `expect_map MAP_X`, `expect_var VAR_X 2`, `expect_flag FLAG_X`,
 `expect_pos 10 12`, `warp MAP_X 5 5`, `set_var`, `set_flag`, `give_mon`, `give_item`, `heal`,
 `run_script <ScriptLabel>`, `party`, `tasks`.
+
+Python helpers for trainers and money: `g.trainer_defeated('TRAINER_X')` (the flag at `TRAINER_FLAGS_START` + id) and
+`g.money()` (decrypts `SaveBlock1.money`). Trainer battles use `g.battle('fight')` as well; `g.talk()` returns
+`'battle'` once the intro text ends.
 
 Useful state: `g.st` (map, x, y, story, era, inBattle, scriptActive, fieldLocked, fadeActive,
 callbacks), `g.cb2()` (main callback name), `g.tasks()` (active task function names: menus show
