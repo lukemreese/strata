@@ -9,7 +9,7 @@
 // it can beat the default (see Lineage_GetDescendant). DESCENT_MIN_SCORE (64) is
 // a deliberate choice: about three forage items (+12 each, R3) plus some time in
 // the right habitat, or ~2,000 steps (64 ticks) in one habitat. Knockouts alone
-// can't get there: they give ANIMAL pressure only to predators and omnivores and
+// can't get there: they give MEAT pressure only to predators and omnivores and
 // stop at SELECTION_PREY_CAP (24), so the dog line reaches the coyote unless the
 // player feeds it carrion on purpose. Counters reset only when a lineage
 // descends, so each threshold is met over the whole window since the previous

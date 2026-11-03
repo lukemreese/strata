@@ -365,7 +365,7 @@ u32 Forecast_FitFont(const u8 *str, u32 width)
     return GetStringWidth(FONT_NORMAL, str, 0) <= (s32)width ? FONT_NORMAL : FONT_NARROW;
 }
 
-// "Epicyon if ANIMAL reaches 64 (now 41)." and friends.
+// "Epicyon if MEAT reaches 64 (now 41)." and friends.
 static void FormatHint(u8 *dest, const struct BranchHint *hint)
 {
     u8 *end = StringCopy(dest, GetSpeciesName(hint->species));
