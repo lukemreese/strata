@@ -346,7 +346,7 @@ static const u8 *const sBranchNames[PRESSURE_COUNT] =
     [PRESSURE_OPEN]       = COMPOUND_STRING("Open-country"),
     [PRESSURE_WATER]      = COMPOUND_STRING("Water"),
     [PRESSURE_PLANT_DIET] = COMPOUND_STRING("Plant-diet"),
-    [PRESSURE_MEAT_DIET]  = COMPOUND_STRING("Animal-diet"),
+    [PRESSURE_MEAT_DIET]  = COMPOUND_STRING("Meat-diet"),
     [PRESSURE_HEAT]       = COMPOUND_STRING("Heat"),
 };
 

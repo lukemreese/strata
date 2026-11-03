@@ -226,7 +226,7 @@ TEST("The forecast reports how close each branch is")
     u8 lines[FORECAST_DETAIL_LINES][FORECAST_LINE_SIZE];
     u8 pressures[PRESSURE_COUNT] = {0};
 
-    // Hesperocyon at the White River, entering Ashfall: Epicyon needs ANIMAL 64.
+    // Hesperocyon at the White River, entering Ashfall: Epicyon needs MEAT 64.
     pressures[PRESSURE_MEAT_DIET] = 41;
     Forecast_Lineage(SPECIES_HESPEROCYON, 35, pressures, ERA_WHITE_RIVER, ERA_ASHFALL, &f);
     EXPECT_EQ(f.fate, FATE_DESCENDS);
@@ -249,7 +249,7 @@ TEST("The forecast reports how close each branch is")
     Forecast_GetBranchHints(f.decisionSpecies, f.decisionEra, f.pressures, hints);
     EXPECT_EQ(hints[0].state, HINT_TAKEN);
     EXPECT_EQ(Forecast_FormatDetail(&f, lines), 1);
-    EXPECT_EQ(StringCompare(lines[0], COMPOUND_STRING("Animal-diet branch: ANIMAL 64/64.")), 0);
+    EXPECT_EQ(StringCompare(lines[0], COMPOUND_STRING("Meat-diet branch: MEAT 64/64.")), 0);
 
     // Leptocyon steered both ways: the dire wolf's higher counter wins.
     memset(pressures, 0, sizeof(pressures));
