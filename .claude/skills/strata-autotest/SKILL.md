@@ -56,6 +56,7 @@ checks, screenshots with map and position, emulator errors, warnings, crash PC/L
 |---|---|
 | `new_game_smoke` | Real intro from the title: name, field station, starter choice, gear; asserts story 1, one Lv 5 starter, Exp. Share flag, waders, 5 capsules |
 | `battle_smoke` | Levee tall grass with encounters on: wild battle, capsule throws (R = last used ball), Codex registration page; asserts the catch |
+| `grass_battles` | One map per era with encounter grass (Acts 1-5: ferns, palms, herbs, horsetails; `--map` to pick): the overlay around the legs, the battle's entry wall (`_battle_intro`) and background, then run |
 | `act_tour` | Every Strata map: arrival, each `OBJ_EVENT_GFX_SPECIES` creature up close, every edge (a tile walkable on both sides of the seam) and warp; asserts each lands on the right map |
 | `boss_1` .. `boss_8`, `boss_all` | Quick-start beside the act's boss line, walk onto it, play the script and every battle (three Lv 100 starters), assert `STORY_ACT_DONE` |
 | `watchdog_selftest` | Forces a freeze and a bad jump; both must be caught |

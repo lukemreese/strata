@@ -148,6 +148,41 @@ def battle_smoke(g, args):
     g.check(len(g.party()) == party_before + 1, "the catch joined the party")
 
 
+# One map per era with encounter "grass" (Acts 1-5 draw it as undergrowth, gen_era_tiles.py).
+GRASS_MAPS = ["StrataLevee", "StrataLeveeWinter", "StrataPalmForest", "StrataLegumeThicket",
+              "StrataWillwoodSwamp", "StrataPolecatBench", "StrataLakeForest", "StrataWhiteRiver",
+              "StrataGrassland"]
+
+
+@scenario
+def grass_battles(g, args):
+    """Encounter grass of each era: the overlay around the player's legs, the wild battle's
+    entry wall and background, then run. Before grasslands it is ferns, palms, herbs."""
+    names = [n for n in GRASS_MAPS if not args.map or n in args.map]
+    for name in names:
+        mi = world.MapInfo(name)
+        grass = set(t for t in mi.reachable if mi.behavior[t] in ("TALL_GRASS", "LONG_GRASS", "ASHGRASS")
+                    and t not in mi.trigger_tiles and t not in mi.blocked_by_objects)
+        pair = next((t for t in sorted(grass) if (t[0] + 1, t[1]) in grass), None)
+        if pair is None:
+            raise TestFailure(f"{name}: no pair of encounter tiles")
+        g.log(f"=== {name}")
+        quickstart_act(g, mi, pair[0], pair[1], level=50, encounters=True)
+        g.walk("right", 1)
+        g.wait(8)
+        g.screenshot(f"{name}_in_grass")
+        steps = 0
+        while not g.st["inBattle"] and g.cb2() == "CB2_Overworld":
+            g.walk("left" if steps % 2 == 0 else "right", 1)
+            steps += 1
+            if steps > 400:
+                raise TestFailure(f"{name}: no wild encounter in 400 steps")
+        g.wait(150)                     # the entry wall of plants slides past about now
+        g.screenshot(f"{name}_battle_intro")
+        outcome = g.battle("run", max_actions=10)
+        g.check(outcome in (1, 4), f"{name}: wild battle after {steps} steps ended (outcome {outcome})")
+
+
 # ---------------------------------------------------------------------------
 @scenario
 def act_tour(g, args):

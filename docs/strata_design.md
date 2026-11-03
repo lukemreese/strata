@@ -495,6 +495,13 @@ not built).
 - Each act is a copy of the same base region map with changed terrain, water and
   vegetation. Landmarks (a particular butte, a river bend) stay put so the player
   can *see* deep time act on one place.
+- Ground cover follows the plants of the era. Grasses existed by the latest Cretaceous
+  but stayed rare until the Oligocene, so in Acts 1-5 the encounter "grass" is drawn as
+  undergrowth (fern brakes and clumps; dead ferns and fiddleheads after the impact;
+  fan-palm seedlings and legume thickets; broad-leaved herbs; ferns among horsetails) and
+  the lawn as litter, ash, soil or moss. Act 6 keeps sparse grass, Acts 7-8 and the present
+  are grassy. Same metatile behaviours, so encounters work as before
+  (`docs/strata_art.md`, "Era ground cover").
 
 ### 7.6 Types
 Keep the standard 18 types for compatibility, but assign them by ecology.

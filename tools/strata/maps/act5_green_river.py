@@ -35,6 +35,12 @@ BULL_FLAG = "0x284"
 PATRIOFELIS_FLAG = "0x285"
 ACT5_VAR = "0x40FB"   # VAR_STRATA_ACT5 (VAR_UNUSED_0x40FB in vars.h)
 
+# Era ground cover (gen_era_tiles.py): horsetails and ferns for the tall grass, damp moss
+# and litter for the lawn. One primary variant, the stock secondaries recoloured to match.
+GREEN_RIVER_RUSTBORO = ("gTileset_GeneralGreenRiver", "gTileset_RustboroGreenRiver")
+GREEN_RIVER_PETALBURG = ("gTileset_GeneralGreenRiver", "gTileset_PetalburgGreenRiver")
+GREEN_RIVER_FALLARBOR = ("gTileset_GeneralGreenRiver", "gTileset_FallarborGreenRiver")
+
 # General primary tileset: the wooden signpost. A field note on open ground gets this
 # metatile so the player can see there is something to read (same as act 0).
 SIGNPOST = 0x01B
@@ -87,7 +93,7 @@ MAPS = [
         habitat="forest", light="day",
         forage=[forage(3, 21, "PALM_FRUIT"), forage(30, 24, "LARVAE"), forage(20, 44, "LEGUME_POD"),
                 forage(24, 5, "FERN_FROND"), forage(9, 26, "BROWSE"), forage(16, 59, "CARRION")],
-        crop=dict(**{"from": "LAYOUT_ROUTE104"}, rect=(0, 0, 40, 80)),
+        crop=dict(**{"from": "LAYOUT_ROUTE104"}, rect=(0, 0, 40, 80), tilesets=GREEN_RIVER_RUSTBORO),
         patches=[
             dict(rect=(3, 14, 7, 5), like=(5, 21)),     # house -> grass
             dict(rect=(24, 9, 2, 8), like=(22, 12)),    # piers -> lake
@@ -137,7 +143,7 @@ MAPS = [
         habitat="water", light="day",
         forage=[forage(21, 8, "CARRION"), forage(23, 13, "CARRION"), forage(5, 4, "FERN_FROND"),
                 forage(10, 10, "PALM_FRUIT"), forage(8, 20, "LARVAE")],
-        crop=dict(**{"from": "LAYOUT_ROUTE103"}, rect=(0, 0, 49, 22)),
+        crop=dict(**{"from": "LAYOUT_ROUTE103"}, rect=(0, 0, 49, 22), tilesets=GREEN_RIVER_PETALBURG),
         patches=[dict(rect=(8, 18, 6, 4), like=(9, 20))] + [p for p, _ in _fossil_signs],   # widen the way out south
         music="MUS_ROUTE104", map_type="MAP_TYPE_ROUTE", mapsec="MAPSEC_STRATA_FOSSIL_LAKE",
         connections=[connection("down", "MAP_STRATA_LAKE_FOREST", -2)],
@@ -160,7 +166,7 @@ MAPS = [
         habitat="forest", light="day",
         forage=[forage(9, 4, "PALM_FRUIT"), forage(38, 5, "BROWSE"), forage(22, 14, "LEGUME_POD"),
                 forage(15, 16, "FERN_FROND"), forage(17, 12, "LARVAE")],
-        crop=dict(**{"from": "LAYOUT_ROUTE116"}, rect=(0, 0, 40, 20)),
+        crop=dict(**{"from": "LAYOUT_ROUTE116"}, rect=(0, 0, 40, 20), tilesets=GREEN_RIVER_RUSTBORO),
         patches=[dict(rect=(35, 3, 5, 8), metatile=0x001, elevation=3)]     # house and yard -> grass
         + [tree(x, y) for x, y in _forest_trees] + [p for p, _ in _forest_signs],
         music="MUS_ROUTE104", map_type="MAP_TYPE_ROUTE", mapsec="MAPSEC_STRATA_BRIDGER_FOREST",
@@ -177,7 +183,7 @@ MAPS = [
         habitat="open", light="day",
         forage=[forage(12, 28, "CARRION"), forage(17, 24, "BROWSE"), forage(2, 15, "FERN_FROND"),
                 forage(11, 31, "LARVAE")],
-        crop=dict(**{"from": "LAYOUT_ROUTE115"}, rect=(14, 36, 26, 34)),
+        crop=dict(**{"from": "LAYOUT_ROUTE115"}, rect=(14, 36, 26, 34), tilesets=GREEN_RIVER_FALLARBOR),
         patches=[
             dict(rect=(10, 15, 2, 15), metatile=0x00D, elevation=3),    # tall grass beside the sand path
             dict(rect=(16, 14, 3, 17), metatile=0x00D, elevation=3),    # ...and along the east strip (over the mud patch)

@@ -16,7 +16,11 @@ transform as that era's overworld tilesets. Without this they kept Hoenn colours
 | `ERA_BIGHORN_PETM` | `petm` | Red Beds |
 | `ERA_WHITE_RIVER` | `oligocene` | White River |
 | `ERA_TRAP_CAVE` | `ice_age` | Steppe, Trap Cave |
+| `ERA_HELL_CREEK`, `ERA_CORRAL_BLUFFS`, `ERA_GREEN_RIVER` | none; ground cover only (next section) | Acts 1, 3, 5 |
 | all other eras | stock | |
+
+Acts 1-5 also get their own grass art (tiles, overlays, battle backgrounds): see "Era
+ground cover" below. The table of eras is `ERA_ART` in `gen_tilesets.py`.
 
 **Data.** `python3 tools/strata/gen_tilesets.py` writes the tileset variants (as
 before) and also:
@@ -56,6 +60,79 @@ each transform.
 - The transforms are global colour maps. The impact-winter battle BG is almost grey,
   matching the tileset. New background *art* (badland cliffs, ash) is still task A6/§4.1.
 - Stadium, building and legendary environments are untouched.
+
+## Era ground cover: undergrowth instead of grass (`gen_era_tiles.py`)
+
+**Why.** Grasses existed by the latest Cretaceous (grass phytoliths in Indian dinosaur
+coprolites, Prasad et al. 2005), but they were rare minor plants: Hell Creek pollen and leaf
+floras are ferns, flowering herbs, shrubs and trees. Grass-rich open woodland appears in the
+Oligocene (Act 6) and true grasslands in the Miocene (Act 7). So in Acts 1-5 the Hoenn tall
+grass, long grass and lawn are redrawn. The metatile **behaviours** stay (tall grass,
+long grass, ash grass), so encounters, field effects and battle environments work as before.
+
+| Era (act) | Tall grass 0x00D | Long grass 0x015 (+ Fortree edge 0x208) | Lawn 0x001 (ground) |
+|---|---|---|---|
+| Hell Creek (1) | fern clump | fern brake: overlapping arching fronds | olive moss and leaf litter |
+| Impact winter (2) | slumped dead fern, a fiddlehead | dead ash-grey fronds over mud, fiddleheads (the fern spike) | grey ash over mud, dead leaves |
+| Corral Bluffs (3) | fan-palm seedling with cycad-like leaves | legume thicket: pinnate leaflets, hanging pods | bare tan soil, pebbles, litter |
+| PETM (4) | ginger-like broad-leaved herb (Zingiberopsis), red flower spike | broad-leaved herb thicket (unused) | reddened, cracked soil, seedlings |
+| Green River (5) | fern clump between horsetails (Equisetum) with spore cones | horsetail stand (unused) | damp moss and litter |
+| White River (6) on | stock grass, era palette (sparse bunch grass) | | |
+
+Polecat Bench (PETM) uses Fallarbor's ash grass: the PETM Fallarbor variant redraws it, and
+the "normal grass" it turns into when walked on, as a dry-season broad-leaved shrub on the
+bench's dusty ground (Fallarbor palettes 10/11 have no greens: olive-drab leaves).
+
+**How.** `gen_tilesets.py` stays the one command. `VARIANTS` gained a fifth field, the
+ground (`gen_era_tiles.GROUNDS`); such variants
+- swap the stock lawn ramp `(164,213,197) (115,197,164) (65,180,131)` and the tree-shadow
+  teal `(24,164,106)` for the era's ground ramp in **every** palette (primary and secondary),
+  so ground under trees, signs and cliff edges matches; then apply the era transform;
+- get their own `tiles.png` (General: tiles 0x002/0x003 lawn, 0x010/0x011/0x020/0x021 tall,
+  0x012/0x013/0x022/0x023 long; Fortree: 0x30A/0x30B/0x31A/0x31B; Fallarbor PETM:
+  0x201.. and 0x203..), declared in `strata_headers.h` as `gTilesetTiles_<Variant>` with the
+  base's INCGFX arguments. Rustboro/Petalburg/Fallarbor (Green River) are palette-only.
+
+| Act | Tilesets |
+|---|---|
+| 1 | `GeneralHellCreek` + `FortreeHellCreek` (`common.hell_creek()`) |
+| 2 | `GeneralWinter` + `FortreeWinter` |
+| 3 | `GeneralCorralBluffs` + `RustboroCorralBluffs` / `FortreeCorralBluffs` |
+| 4 | `GeneralPetm` + `FallarborPetm` |
+| 5 | `GeneralGreenRiver` + `RustboroGreenRiver` / `PetalburgGreenRiver` / `FallarborGreenRiver` |
+
+The art is drawn from code in role grids (`. , '` ground, `l m d o` greens, `p g r b y a`
+browns/accents) with a few primitives: `frond` (pinnate fern frond on a Bezier), `blade`
+(broad leaf), `fan` (palm fan with dark folds), `horsetail` (jointed stem, whorls, cone),
+`fiddlehead`, and hand-drawn 8x8 lawn grids (`LAWNS`; each 8x8 self-contained because
+other metatiles reuse the two lawn tiles flipped). Roles map to General palette 2.
+Long-grass art wraps (seamless fields); the Fortree edge is derived from it.
+
+**Outside the tileset** (`ERA_ART` in `gen_tilesets.py`, `write_era_art`), per ground era:
+- `graphics/field_effects/pics/strata/{tall,long}_grass_<ground>.png`: the overlay drawn over
+  a walker's legs (tall: 5 frames, derived from the clump: lower half, pushed apart, loose
+  leaflets settling; long: 4 swaying frames). `GENERAL_1` gets the ground ramp and two
+  accent browns in slots 10/11 (the ash puff's; slots 6-9 are the ripples' blues).
+- `graphics/battle_environment/strata/<ground>/`: tall/long-grass platform tiles (each stock
+  blade replaced by an era sprig, plus litter specks; bank-0 slots 2/3/8 ground, 5/9/7
+  plant, 10 accent, stripes tinted), the entry wall (`*_anim_tiles.png`: ferns, palm fans in
+  front of cycad leaves, dead fronds, ginger leaves, horsetails; seamless at 128 px, tile 0
+  kept empty) and the plain environment's palette (boss and trainer battles on open ground).
+- Engine: `src/strata_art.c` adds `Strata_GetBattleEnvironmentTiles/AnimTiles()` (both
+  loads in `battle_bg.c`) and `Strata_GetFieldEffectImages()` (`FldEff_TallGrass`,
+  `FldEff_LongGrass` swap `sprite->images` right after creation: frames are copied from it
+  on every frame change, the first one too). Not swapped: the jump-into-grass spray and the
+  overworld-encounter shaking grass (palette only).
+
+**Review.** `python3 tools/strata/gen_era_tiles.py --preview DIR` (after `gen_tilesets.py`):
+`ground_<ground>.png` (lawn, clumps, brake, edge, a tree; and `ground_stock.png`),
+`overlay_<ground>.png`, `battle_<ground>.png` (both grass backgrounds, with and without the
+entry wall, and the plain one). `maprender.py map LAYOUT_...` shows the real maps (it reads
+a variant's own `tiles.png`). Judge at 1x too: the clumps must read as plants, not tufts.
+
+**Adding an era's ground:** a `Ground` in `GROUNDS` (ramp, accents, tall/long functions,
+lawn grid), `SPRIGS[key]`, a branch in `plant_shape`, variants in `VARIANTS`, the era in
+`ERA_ART`, and the tilesets in the act module.
 
 ## P1: creature sprites (`tools/strata/sprites/`, `gen_sprite.py`)
 

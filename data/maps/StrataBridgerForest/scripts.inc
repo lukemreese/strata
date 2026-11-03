@@ -1,5 +1,5 @@
 @ Act 5: Bridger Forest, Wyoming, ~50-47 Ma (the Bridger Formation). Canopy primates and early
-@ rodents. Field notes only; the forage and the tall grass do the work.
+@ rodents. Field notes only; the forage and the undergrowth (tall-grass tiles) do the work.
 StrataBridgerForest_MapScripts::
 	.byte 0
 

@@ -10,6 +10,7 @@
 #include "palette.h"
 #include "sound.h"
 #include "sprite.h"
+#include "strata_art.h"
 #include "trig.h"
 #include "wild_encounter_ow.h"
 #include "constants/event_objects.h"
@@ -441,6 +442,9 @@ u32 FldEff_TallGrass(void)
     if (spriteId != MAX_SPRITES)
     {
         struct Sprite *sprite = &gSprites[spriteId];
+        // Strata: the era's undergrowth (ferns, palms, herbs, horsetails) instead of grass.
+        // Frames are copied from sprite->images on each frame change, the first one too.
+        sprite->images = Strata_GetFieldEffectImages(FLDEFFOBJ_TALL_GRASS, sprite->images);
         sprite->coordOffsetEnabled = TRUE;
         sprite->oam.priority = gFieldEffectArguments[3];
         sprite->sElevation = gFieldEffectArguments[2];
@@ -545,6 +549,7 @@ u32 FldEff_LongGrass(void)
     if (spriteId != MAX_SPRITES)
     {
         struct Sprite *sprite = &gSprites[spriteId];
+        sprite->images = Strata_GetFieldEffectImages(FLDEFFOBJ_LONG_GRASS, sprite->images);
         sprite->coordOffsetEnabled = TRUE;
         sprite->oam.priority = ElevationToPriority(gFieldEffectArguments[2]);
         sprite->sElevation = gFieldEffectArguments[2];

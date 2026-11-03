@@ -877,7 +877,7 @@ static void LoadBattleEnvironmentGfx(u16 environment)
     if (environment >= NELEMS(gBattleEnvironmentInfo))
         environment = BATTLE_ENVIRONMENT_PLAIN;  // If higher than the number of entries in gBattleEnvironmentInfo, use the default.
     // Copy to bg3
-    DecompressDataWithHeaderVram(gBattleEnvironmentInfo[environment].background.tileset, (void *)(BG_CHAR_ADDR(2)));
+    DecompressDataWithHeaderVram(Strata_GetBattleEnvironmentTiles(environment, gBattleEnvironmentInfo[environment].background.tileset), (void *)(BG_CHAR_ADDR(2)));
     DecompressDataWithHeaderVram(gBattleEnvironmentInfo[environment].background.tilemap, (void *)(BG_SCREEN_ADDR(26)));
     LoadPalette(Strata_GetBattleEnvironmentPalette(environment, gBattleEnvironmentInfo[environment].palette), BG_PLTT_ID(2), 3 * PLTT_SIZE_4BPP);
 }
@@ -889,7 +889,7 @@ static void LoadBattleEnvironmentEntryGfx(u16 environment)
     if (environment >= NELEMS(gBattleEnvironmentInfo))
         environment = BATTLE_ENVIRONMENT_PLAIN;
     // Copy to bg1
-    DecompressDataWithHeaderVram(gBattleEnvironmentInfo[environment].entry.tileset, (void *)BG_CHAR_ADDR(1));
+    DecompressDataWithHeaderVram(Strata_GetBattleEnvironmentAnimTiles(environment, gBattleEnvironmentInfo[environment].entry.tileset), (void *)BG_CHAR_ADDR(1));
     DecompressDataWithHeaderVram(gBattleEnvironmentInfo[environment].entry.tilemap, (void *)BG_SCREEN_ADDR(28));
 }
 
@@ -1339,7 +1339,7 @@ bool8 LoadChosenBattleElement(u8 caseId)
         LoadPalette(gBattleTextboxPalette, BG_PLTT_ID(0), 2 * PLTT_SIZE_4BPP);
         break;
     case 3:
-        DecompressDataWithHeaderVram(gBattleEnvironmentInfo[GetBattleEnvironmentOverride()].background.tileset, (void *)(BG_CHAR_ADDR(2)));
+        DecompressDataWithHeaderVram(Strata_GetBattleEnvironmentTiles(GetBattleEnvironmentOverride(), gBattleEnvironmentInfo[GetBattleEnvironmentOverride()].background.tileset), (void *)(BG_CHAR_ADDR(2)));
         break;
     case 4:
         DecompressDataWithHeaderVram(gBattleEnvironmentInfo[GetBattleEnvironmentOverride()].background.tilemap, (void *)(BG_SCREEN_ADDR(26)));
