@@ -118,6 +118,8 @@ the pattern, with **no real names, companies or specimens**.
 Rhythm: **enter layer → explore 3–5 maps → boss set piece → return → camp interlude**
 (one present-day beat, one peer-review battle, new shop stock). Story flags go in new
 `VAR_STRATA_SUBPLOT` (0–10), so `VAR_STRATA_STORY` keeps its 2N/2N+1 meaning.
+✅ **Built (S1, S2)**: the beats below are `SUBPLOT_*` 1–10, played in order; where and how
+each one starts is in the table after this one.
 
 | Act | Deep-time beat (the lesson) | Interlude at camp (the people) |
 |---|---|---|
@@ -131,6 +133,30 @@ Rhythm: **enter layer → explore 3–5 maps → boss set piece → return → c
 | 7 Ashfall, ~11.9 Ma | Clear grassland, then ash arrives from 1,600 km away. Death at the waterhole is slow: small animals first, rhinos last. The map flips to its ash variant after the boss. | Ortiz cites Kessler's crew for the BLM trespass. Kessler, still legal on Bea's land, keeps the auction going. Halvorsen proposes a museum consortium, and you build the "research case" (the Codex side quest, §3.5). |
 | 8 Ice Age, ~20 ka + coda ~13 ka | Megafauna at the Last Glacial Maximum, and the trap cave. **Coda: the Colby mammoth site (Bighorn Basin, ~13 ka) ⚠.** A Clovis point lies beside mammoth bones. The rig can't render the people. "Someone made this." | Auction day. Bea picks the consortium. Theo's peer review #3 is a double battle with Josie. |
 | Epilogue, today | The last filter runs and the Ice Age giants are lost. Today's prairie holds the descendants, and species that nearly disappeared in the last 150 years (bison, black-footed ferret, swift fox). | The Interpretive Center (NEW) opens with the Pair on display. Final peer review: Halvorsen (Lv 55). Credits roll up the stratigraphic column, listing every lineage you carried and its fate. |
+
+**As built (S1, `src/strata_story.c`).** `VAR_STRATA_SUBPLOT` is the last beat played. Beat N is
+due once its act is done and the subplot is N − 1, so a beat the player walks past waits, and
+later ones queue behind it; none of them gates the rig. Each hub map's on-transition script runs
+`special Strata_StoryPrepareMap` (`VAR_TEMP_2` = the beat due on this map, `VAR_TEMP_3` = 1 if
+any, `VAR_TEMP_4` = the beat due anywhere, so a map can send its cast away). The cast hides under
+`FLAG_TEMP_9..B` unless its beat is due.
+
+| Value | Beat | Act | Where | Starts |
+|---|---|---|---|---|
+| 1 `SUBPLOT_KESSLER_OFFER` | Kessler offers a "partnership" (rig maps for prospecting); Halvorsen says no; Theo: "a fancy diorama" | 1 | Field Station | trigger row y 10 (between rig and door) |
+| 2 `SUBPLOT_FERN_SPIKE` | Priya's spore counts (the fern spike); Bea's drought, and the permit tip | 2 | Lindqvist Ranch | frame script on arrival (cast moved by the road from camp) |
+| 3 `SUBPLOT_BLM_PERMIT` | Ortiz issues the collecting permit (`FLAG_STRATA_BLM_PERMIT`) | 2 | BLM office, Jordan | talk to Ortiz |
+| 4 `SUBPLOT_JOSIE_PIT` | Josie found a fresh pit on BLM land; the player goes to look (`FLAG_STRATA_STORY_SAW_PIT`) | 3 | Field Station → Sand Arroyo | trigger row |
+| 5 `SUBPLOT_HALVORSEN_REFUSAL` | Kessler offers to fund the rig after Halvorsen retires; she refuses; Theo keeps his card | 4 | Field Station | trigger row |
+| 6 `SUBPLOT_PIT_DOCUMENTED` | Ortiz's evidence scene: log the pit, the jacket and the tracks (`FLAG_STRATA_STORY_EVIDENCE_*`) | 5 | Sand Arroyo | talk to Ortiz (there only while due) |
+| 7 `SUBPLOT_AUCTION_DATE` | Bea sets the auction date with Kessler; Josie argues | 6 | Lindqvist Ranch | frame script |
+| 8 `SUBPLOT_CITATION` | Ortiz cites Kessler's crew; the sale on Bea's land stays legal | 7 | Jordan | frame script |
+| 9 `SUBPLOT_CONSORTIUM` | Halvorsen's museum consortium; the research case is the Codex count | 7 | Field Station | trigger row, or talk to Halvorsen |
+| 10 `SUBPLOT_AUCTION_DAY` | Bea picks the consortium (and is paid); Kessler loses gracefully; Josie picks paleontology | 8 | Lindqvist Ranch | frame script |
+
+Act 0's interlude (Theo's review #0, Kessler's crew at the ranch) was built in C2/C13 and needs
+no subplot value. The research case is the live Codex "caught" count (`special
+Strata_StoryBufferCaseCount`), not a separate quest, until C14 adds Evidence pages.
 
 **Ending text (the theme stated once, plainly):** Halvorsen: "Every extinction you saw
 was written in the rock before you got there. The one happening now isn't written
@@ -647,7 +673,7 @@ The player must always be able to see *what they are steering*.
 |---|---|---|
 | Start menu | CODEX / TEAM / FIELD BAG / FIELD LOG (replaces POKéNAV; opens the Fossil Case and quest log) / {PLAYER} / SAVE / OPTIONS | S |
 | Region map | Replace Hoenn with a West map (MT/WY/CO/SD/NE) showing the act sites; one image, palette-swapped per era | M (art) |
-| Quest log | `FIELD LOG` lists the current objective from `VAR_STRATA_STORY` + `VAR_STRATA_SUBPLOT` (table of strings in `strata_acts.c`) | S |
+| Quest log | ✅ **Done (S1).** The start menu shows a two-line "next objective" box top left (the Safari ball counter's corner and tiles), from `VAR_STRATA_STORY` + `VAR_STRATA_SUBPLOT` + a few flags (`Story_QuestLine` in `src/strata_story.c`; `StrataLog_Show`/`_Remove` hooked into `src/start_menu.c`). No FIELD LOG menu entry was needed | S |
 | Split `maps.py` and the roster for parallel work | `maps.py` → package `tools/strata/maps/` (`act0_present.py … act8_ice_age.py`, `epilogue.py`, `common.py`, aggregated in `__init__.py`); roster → package `tools/strata/roster/` with append-only `part3.py` (**done, R0**) | S (do it first) |
 | Saves | New vars: `VAR_STRATA_SUBPLOT`, `VAR_STRATA_FIELDKIT`, `VAR_STRATA_STIPEND_COUNT`; flags: waders, fossils (87), tips, set pieces (~20), Colby | S |
 
@@ -738,13 +764,13 @@ plausible but unverified co-occurrence or timing; **Low** = wording.
 
 | # | Risk | Claim (where) | Concern | Action |
 |---|---|---|---|---|
-| H1 | High | Act 3 = "Denver Fm, 65.7 Ma", "~300 kyr" (`strata_acts.c`, design doc), while the boss *Eoconodon* and *Taeniolabis* are listed ~65.4 Ma (roster) | Corral Bluffs reporting puts *Taeniolabis* (with the oldest legumes) ~700 kyr post-impact; *Eoconodon* is in the same study | Relabel Act 3 to ~65.4 Ma, or say the window spans ~300–700 kyr. Check Lyson et al. 2019 (*Science*). **Layer name, roster, maps and design doc relabelled 65.7–65.4 Ma (R7)**; mentor and boss lines still say 300,000 years |
+| H1 | High | Act 3 = "Denver Fm, 65.7 Ma", "~300 kyr" (`strata_acts.c`, design doc), while the boss *Eoconodon* and *Taeniolabis* are listed ~65.4 Ma (roster) | Corral Bluffs reporting puts *Taeniolabis* (with the oldest legumes) ~700 kyr post-impact; *Eoconodon* is in the same study | Relabel Act 3 to ~65.4 Ma, or say the window spans ~300–700 kyr. Check Lyson et al. 2019 (*Science*). **Layer name, roster, maps and design doc relabelled 65.7–65.4 Ma (R7)**; mentor lines now say "a few hundred thousand years" (S2); the boss line still says 300,000 years |
 | H2 | High | *Ovibos* wild on the present-day Montana prairie (`maps.py`) | Musk oxen don't live in Montana today | Remove it from the epilogue tables. **Done (R7)**: still wild on the Ice Age Steppe |
 | H3 | High | *Gallinuloides* wild at Ashfall, 11.9 Ma (`maps.py`); it's a ~52 Ma Green River bird | ~40 Myr anachronism. It's only there as a stasis placeholder | Remove it from the Act 7 wild table; keep it as a lineage only. Add a `first_era`/`last_era` test. **Removed (R7)**; **test done (C1)**: roster `first_era`/`last_era` → `sStrataSpeciesEras`, checked against every encounter table (Gallinuloid `last_era` = Green River) |
 | H4 | High | Teilhardina → Notharctus descent (`lineages.h`) | *Teilhardina* is omomyiform-grade; *Notharctus* is an adapiform: different primate groups | Descend to *Omomys* (NEW); Notharctus stays a wild species. **Done (C1/F8)**: Teilhardina → Omomys at the Act 5 load; Omomys dies at the Act 6 load |
 | H5 | High | *Aenocyon dirus* at Natural Trap Cave (roster site, steppe table) | Summaries of the cave's fauna list a Beringian-type wolf, not the dire wolf | Verify against the primary NTC faunal lists. If absent, change the site to another Wyoming/region locality and keep it regionally |
 | H6 | High | Ischyromys dex: "Rodents spread just as the last multituberculates vanished, and may have outcompeted them" | Rodents arrived in NA around the PETM, ~20 Myr before the last multis; competitive replacement is debated | Rewrite; *Paramys* (NEW) carries the arrival story. **Dex rewritten (R7)** |
-| H7 | High | PETM vs today's carbon-release rate (planned Act 4 line) | Needs a citable figure (e.g. "~10× faster today") | Cite before shipping (Zeebe et al. 2016 is the usual source) |
+| H7 | High | PETM vs today's carbon-release rate (planned Act 4 line) | Needs a citable figure (e.g. "~10× faster today") | Cite before shipping (Zeebe et al. 2016 is the usual source). Halvorsen (S2) and Ingrid both hedge it: "roughly ten times faster, by current estimates" |
 | M1 | Med | *Protictis* wild in the PETM Willwood (Act 4 table) | *Protictis* is mainly a mid/late Paleocene genus; Willwood viverravids are *Didymictis*, *Viverravus* | Remove it from Act 4 (done in §2.5). Keep it as the dog-line stand-in, labelled. **Done (R7)**: still wild in Act 3 |
 | M2 | Med | *Mesodma* in the PETM and at Green River (Acts 4–5) | Last appearance of *Mesodma* specifically (vs *Ectypodus*) | Check PBDB; if needed, show it as "multituberculate (Mesodma-grade)" |
 | M3 | Med | *Champsosaurus* at Green River ~50 Ma (Act 5 water) | Eocene champsosaurs are known mostly from the high Arctic; Wyoming Eocene uncertain | Check, or drop it from Act 5 |
@@ -757,8 +783,8 @@ plausible but unverified co-occurrence or timing; **Low** = wording.
 | M10 | Med | Tanis / "the first hour after impact" (if anyone writes Act 1 impact text) | Contested site and data | Don't depend on it; describe ejecta reentry generically |
 | M11 | Med | Montana fossil ownership ("belong to the surface owner"), and PRPA 2009 on BLM land | Legal claims in dialogue | Phrase them generally; check the current state law and PRPA wording |
 | M12 | Med | Black-footed ferret rediscovery (Meeteetse, WY, 1981) and swift fox / ferret reintroductions in Montana | Dates and places in the epilogue text | Check with USFWS / state sources |
-| L1 | Low | "Ash from 1,600 km away; Bruneau–Jarbidge; supereruption" | Distance and source fine; "supereruption" magnitude wording | Say "massive eruption" unless a VEI-8 source is cited |
-| L2 | Low | Mentor: "In 300,000 years the biggest mammals tripled in size" | Exact multiples from Lyson et al. | Check the figure |
+| L1 | Low | "Ash from 1,600 km away; Bruneau–Jarbidge; supereruption" | Distance and source fine; "supereruption" magnitude wording | Say "massive eruption" unless a VEI-8 source is cited. **Halvorsen's Act 7 line done (S2)** |
+| L2 | Low | Mentor: "In 300,000 years the biggest mammals tripled in size" | Exact multiples from Lyson et al. | Check the figure. **Reworded (S2)**: "within a few hundred thousand years ... several times heavier", with "the exact numbers are still being refined" |
 | L3 | Low | Onychonycteris "probably could not echolocate" | Debated since 2008 | Add "debated". **Done (R7)** |
 | L4 | Low | Masses: Triceratops 9 t, T. rex 8 t, Arctodus 900 kg, Uintatherium 2 t | Upper-range picks | Fine; show ranges in the Codex |
 | L5 | Low | Design doc multituberculate chain "Mesodma → Taeniolabis → Ptilodus" | Not ancestral; Ptilodus is mid-Paleocene | Fix the design doc wording |
@@ -824,8 +850,8 @@ Ordered by leverage ÷ risk. Tasks inside a milestone can run in parallel unless
 
 | ID | Task | Size | Deps | Track |
 |---|---|---|---|---|
-| S1 | `VAR_STRATA_SUBPLOT` + quest log strings + all camp interludes (§1.5) | L | C2, C13 | CON + TXT |
-| S2 | Halvorsen lines rewritten per story × subplot (extend `sMentorLines`) | M | S1 | TXT |
+| S1 | ✅ **Done.** `VAR_STRATA_SUBPLOT` (0x40DC) + quest log strings + all camp interludes (§1.5, "As built" table): 10 beats in `src/strata_story.c` (`sStoryBeats`: act, map), scenes in the Field Station, Lindqvist Ranch, Jordan, BLM office and Sand Arroyo scripts, Ortiz's evidence scene at the pit (C2 leftover). Hooks: `special Strata_StoryPrepareMap` in each hub map's on-transition (`VAR_TEMP_2/3/4`), the Field Station trigger row y 10, frame tables on the ranch and Jordan, `FLAG_STRATA_STORY_*` (0x4D4..), cast under `FLAG_TEMP_9..B`; the start-menu field log. Non-blocking: no beat gates the rig. Tests `test/strata_story.c`, harness `story_interludes` | L | C2, C13 | CON + TXT |
+| S2 | ✅ **Done.** Halvorsen's talk = the layer's science by story (`sMentorLines`, T. rex variant kept, numbers hedged: H1/L2 "several times heavier", H7 "roughly ten times faster", L1 "massive eruption") + the people by subplot (`sMentorBeatDue` while a beat waits, `sMentorSubplotLines` after it), in `src/strata_acts.c`. Every story × subplot is width-tested | M | S1 | TXT |
 | S3 | Act 8 Colby coda + epilogue ending + credits up the column (lineage fates from the fossil flags) | M | C10, C12, F4 | CON |
 | S4 | ✅ **Done.** Gentle Deep Time option (new-game question, `FLAG_STRATA_GENTLE_DEEP_TIME`, relatives in `sStrataFossils`, §3.5) | S | F4 | SYS |
 

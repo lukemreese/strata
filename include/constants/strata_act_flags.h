@@ -136,4 +136,39 @@
 // (1..7 are free.)
 
 
+// ---- Story: the present-day subplot (S1, src/strata_story.c) ------
+// VAR_STRATA_SUBPLOT (0x40DC, include/constants/vars.h) counts the camp interludes played. They
+// play in this order, once each: beat N becomes due when its act is done (VAR_STRATA_STORY >=
+// STORY_ACT_DONE(act)) and VAR_STRATA_SUBPLOT is N - 1, so a beat the player walks past waits
+// for them, and the later ones queue behind it. None of them gates the rig. Each hub map runs
+// special Strata_StoryPrepareMap in its on-transition script: VAR_TEMP_2 = the beat due on this
+// map (or 0), VAR_TEMP_3 = 1 if there is one. Where each plays and who is in it is the beat
+// table in src/strata_story.c (sStoryBeats); docs/strata_outline.md §1.5 has the script.
+#define SUBPLOT_NONE              0
+#define SUBPLOT_KESSLER_OFFER     1   // act 1: Kessler offers a "partnership"; Halvorsen says no (field station)
+#define SUBPLOT_FERN_SPIKE        2   // act 2: Priya's spore counts, Bea's drought (ranch)
+#define SUBPLOT_BLM_PERMIT        3   // act 2: Ranger Ortiz issues the collecting permit (BLM office, Jordan)
+#define SUBPLOT_JOSIE_PIT         4   // act 3: Josie finds a fresh pit on BLM land (field station)
+#define SUBPLOT_HALVORSEN_REFUSAL 5   // act 4: Kessler's funding deal; Halvorsen refuses, Theo nearly takes it (field station)
+#define SUBPLOT_PIT_DOCUMENTED    6   // act 5: the player documents the pit with Ortiz (Sand Arroyo)
+#define SUBPLOT_AUCTION_DATE      7   // act 6: Bea sets an auction date; Josie argues (ranch)
+#define SUBPLOT_CITATION          8   // act 7: Ortiz cites Kessler's crew for the trespass (Jordan)
+#define SUBPLOT_CONSORTIUM        9   // act 7: Halvorsen proposes the museum consortium (field station)
+#define SUBPLOT_AUCTION_DAY       10  // act 8: Bea picks the consortium (ranch)
+#define SUBPLOT_COUNT             11
+
+// FLAG_UNUSED_0x4D4..0x4DD in flags.h: inside the saved flag array, no save space.
+#define FLAG_STRATA_STORY_BASE 0x4D4
+// The player has looked at the pit Josie found (Sand Arroyo), so the field log moves on.
+#define FLAG_STRATA_STORY_SAW_PIT          (FLAG_STRATA_STORY_BASE + 0)
+// Ortiz's evidence scene: she asked for three records, and each one logged.
+#define FLAG_STRATA_STORY_EVIDENCE_STARTED (FLAG_STRATA_STORY_BASE + 1)
+#define FLAG_STRATA_STORY_EVIDENCE_PIT     (FLAG_STRATA_STORY_BASE + 2)
+#define FLAG_STRATA_STORY_EVIDENCE_JACKET  (FLAG_STRATA_STORY_BASE + 3)
+#define FLAG_STRATA_STORY_EVIDENCE_TRACKS  (FLAG_STRATA_STORY_BASE + 4)
+// (5..9 are free.)
+// The interlude cast on the hub maps hides under FLAG_TEMP_9..FLAG_TEMP_C (set in each map's
+// on-transition script unless its beat is due; FLAG_TEMP_1..8 are the researchers).
+
+
 #endif // GUARD_CONSTANTS_STRATA_ACT_FLAGS_H

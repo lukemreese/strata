@@ -37,6 +37,7 @@
 #include "script.h"
 #include "sound.h"
 #include "start_menu.h"
+#include "strata_story.h"
 #include "strings.h"
 #include "string_util.h"
 #include "task.h"
@@ -467,6 +468,7 @@ static void ShowPyramidFloorWindow(void)
 
 static void RemoveExtraStartMenuWindows(void)
 {
+    StrataLog_Remove();
     if (GetSafariZoneFlag())
     {
         ClearStdWindowAndFrameToTransparent(sSafariBallsWindowId, FALSE);
@@ -535,6 +537,10 @@ static bool32 InitStartMenuStep(void)
             ShowSafariBallsWindow();
         if (CurrentBattlePyramidLocation() != PYRAMID_LOCATION_NONE)
             ShowPyramidFloorWindow();
+        // Strata: the field log's next objective (src/strata_story.c), in the normal menu only.
+        else if (!GetSafariZoneFlag() && !IsOverworldLinkActive() && !InUnionRoom()
+              && !InBattlePike() && !InMultiPartnerRoom())
+            StrataLog_Show();
         sInitStartMenuData[0]++;
         break;
     case 4:
@@ -758,6 +764,8 @@ static bool8 StartMenuPlayerNameCallback(void)
 
 static bool8 StartMenuSaveCallback(void)
 {
+    // The save info window takes the field log's corner; InitStartMenu shows it again on cancel.
+    StrataLog_Remove();
     if (CurrentBattlePyramidLocation() != PYRAMID_LOCATION_NONE)
         RemoveExtraStartMenuWindows();
 

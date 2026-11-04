@@ -2,10 +2,12 @@
 #include "event_data.h"
 #include "lineage.h"
 #include "strata_acts.h"
+#include "strata_story.h"
 #include "string_util.h"
 #include "strings.h"
 #include "text.h"
 #include "constants/battle_ai.h"
+#include "constants/characters.h"
 #include "constants/flags.h"
 #include "constants/vars.h"
 
@@ -26,12 +28,26 @@ static const u8 *const sLayerNames[ERA_COUNT] =
     [ERA_EPILOGUE]      = COMPOUND_STRING("Today"),
 };
 
-// Dr. Halvorsen's line for each value of VAR_STRATA_STORY.
+// ---------------------------------------------------------------------------
+// Dr. Halvorsen (S2). Talking to her in the field station gives two parts:
+//   1. the science of the layer, by VAR_STRATA_STORY (sMentorLines, the Tyrannosaurus variant);
+//   2. the people, by VAR_STRATA_SUBPLOT against the story: where the next interlude waits if
+//      one is due (sMentorBeatDue), else what she makes of the last one (sMentorSubplotLines).
+// Her voice: careful, warm, and she says how sure she is. Numbers are hedged where the
+// literature is (docs/strata_outline.md §5). The theme: what survives, why, and what we keep.
+// test/strata_story.c formats every story x subplot and checks the widths.
+// ---------------------------------------------------------------------------
+
+// The science of each story value.
 static const u8 *const sMentorLines[STORY_IN_ACT(ERA_EPILOGUE) + 1] =
 {
     [1] = COMPOUND_STRING(
         "The rig is calibrated to the Hell\n"
-        "Creek layer, 66.04 million years ago."),
+        "Creek layer, about 66 million years\l"
+        "old.\p"
+        "It can only rebuild what the rock\n"
+        "records. Where the record is silent\l"
+        "it makes a best guess, and says so."),
     [STORY_IN_ACT(ERA_HELL_CREEK)] = COMPOUND_STRING(
         "You saw tyrannosaur tracks by the\n"
         "river? Be careful up on that bluff.\p"
@@ -43,57 +59,68 @@ static const u8 *const sMentorLines[STORY_IN_ACT(ERA_EPILOGUE) + 1] =
         "TYRANNOSAURUS! Remarkable.\p"
         "The rig is ready for the next layer:\n"
         "the rock just above the boundary\l"
-        "clay. About a year after the impact."),
+        "clay, about a year after the impact.\p"
+        "That year is the model's window, not\n"
+        "a date anyone measured."),
     [STORY_IN_ACT(ERA_IMPACT_WINTER)] = COMPOUND_STRING(
         "Dark, cold, and almost nothing\n"
-        "growing. Soot blocked the sun.\p"
+        "growing. Soot and dust blocked much\l"
+        "of the sun, probably for months.\p"
         "Crocodiles and champsosaurs are cold-\n"
         "blooded. They can go months without\l"
-        "a meal. That's part of why they\l"
-        "made it.\p"
+        "a meal. That's likely part of why\l"
+        "they made it.\p"
         "This layer is about who's left, not\n"
         "who changes. Nothing new evolves\l"
         "in a year; the filter just runs."),
     [STORY_ACT_DONE(ERA_IMPACT_WINTER)] = COMPOUND_STRING(
         "Ferns! The fern spike: the first\n"
         "plants back after a disaster.\p"
-        "The next good layer is under a\n"
-        "million years on, at CORRAL BLUFFS\l"
+        "The next good layer is a few hundred\n"
+        "thousand years on, at CORRAL BLUFFS\l"
         "in Colorado. The rig is ready."),
     [STORY_IN_ACT(ERA_CORRAL_BLUFFS)] = COMPOUND_STRING(
-        "In under a million years the\n"
-        "biggest mammals tripled in size.\p"
+        "Within a few hundred thousand years\n"
+        "the biggest mammals were several\l"
+        "times heavier than any that lived\l"
+        "beside the dinosaurs.\p"
         "Palms first, then legumes, then\n"
         "bigger plant eaters, then the\l"
-        "predators that hunt them."),
+        "predators. The order is solid. The\l"
+        "exact numbers are still being\l"
+        "refined."),
     [STORY_ACT_DONE(ERA_CORRAL_BLUFFS)] = COMPOUND_STRING(
         "Next: the Bighorn Basin, Wyoming,\n"
         "56 million years ago.\p"
         "Carbon poured into the air and the\n"
-        "world warmed by 5 to 8 degrees.\l"
-        "Watch how the animals respond."),
+        "world warmed by roughly 5 to 8\l"
+        "degrees. Watch how the animals\l"
+        "respond."),
     [STORY_IN_ACT(ERA_BIGHORN_PETM)] = COMPOUND_STRING(
         "The PETM heat made many mammals\n"
-        "shrink. The first horses got a\l"
-        "third smaller, then grew back.\p"
+        "shrink. The first horses got about\l"
+        "a third smaller, then grew back.\p"
         "Smaller bodies shed heat better.\n"
-        "Bring your team to the heat, and\l"
-        "their lineages will feel it too."),
+        "That's the leading explanation,\l"
+        "not the only one."),
     [STORY_ACT_DONE(ERA_BIGHORN_PETM)] = COMPOUND_STRING(
         "The PETM carbon release took\n"
-        "thousands of years. Ours is roughly\l"
-        "ten times faster, by current\l"
-        "estimates.\p"
+        "thousands of years. Ours is going\l"
+        "roughly ten times faster, by current\l"
+        "estimates. Maybe more.\p"
+        "Those animals had millennia to move\n"
+        "or shrink. We're giving today's far\l"
+        "less time.\p"
         "Next: the Green River lakes, about\n"
-        "50 million years ago.\p"
-        "The lake mud there preserved whole\n"
-        "fish, bats, even feathers."),
+        "50 million years ago. The lake mud\l"
+        "kept whole fish, bats, even feathers."),
     [STORY_IN_ACT(ERA_GREEN_RIVER)] = COMPOUND_STRING(
         "Wyoming was subtropical then:\n"
         "palms, crocodiles and primates\l"
         "in the trees.\p"
-        "It won't last. The world is\n"
-        "slowly cooling."),
+        "It won't last. Over the next fifteen\n"
+        "million years the world slowly\l"
+        "cools."),
     [STORY_ACT_DONE(ERA_GREEN_RIVER)] = COMPOUND_STRING(
         "Next: the White River badlands of\n"
         "South Dakota, 32 million years ago.\p"
@@ -104,24 +131,28 @@ static const u8 *const sMentorLines[STORY_IN_ACT(ERA_EPILOGUE) + 1] =
         "Horses with longer legs, saber-\n"
         "toothed false cats, oreodonts by\l"
         "the thousand.\p"
-        "Open country favours runners."),
+        "Open country seems to favour\n"
+        "runners and burrowers. Notice who\l"
+        "is missing, too."),
     [STORY_ACT_DONE(ERA_WHITE_RIVER)] = COMPOUND_STRING(
         "Next: Nebraska, 12 million years\n"
         "ago. The grasslands have arrived.\p"
         "And something terrible happened\n"
         "at one waterhole there."),
     [STORY_IN_ACT(ERA_ASHFALL)] = COMPOUND_STRING(
-        "A supereruption in Idaho, 1,600 km\n"
-        "away, dropped ash on Nebraska.\p"
+        "A massive eruption in Idaho, some\n"
+        "1,600 km away, dropped ash on\l"
+        "Nebraska.\p"
         "The animals at the waterhole didn't\n"
         "die at once. Breathing the ash made\l"
-        "them sick over weeks."),
+        "them sick over weeks, perhaps\l"
+        "months. The small ones went first."),
     [STORY_ACT_DONE(ERA_ASHFALL)] = COMPOUND_STRING(
-        "Next: the Ice Age, 20,000 years\n"
-        "ago, at Natural Trap Cave.\p"
+        "Next: the Ice Age, about 20,000\n"
+        "years ago, at Natural Trap Cave.\p"
         "A sinkhole that trapped animals for\n"
         "over 100,000 years. Mammoths, lions,\l"
-        "cheetahs, giant bears…"),
+        "cheetah-like cats, giant bears…"),
     [STORY_IN_ACT(ERA_TRAP_CAVE)] = COMPOUND_STRING(
         "Most of these giants will be gone\n"
         "within 10,000 years.\p"
@@ -139,7 +170,7 @@ static const u8 *const sMentorLines[STORY_IN_ACT(ERA_EPILOGUE) + 1] =
         "Every lineage you carried was\n"
         "shaped by where it lived and what\l"
         "it ate, and by luck.\p"
-        "The prairie past the camp is open.\n"
+        "The highway west of JORDAN is open.\n"
         "The descendants are out there.\l"
         "Go and meet them."),
 };
@@ -153,7 +184,150 @@ static const u8 *const sMentorLineTyrantFled = COMPOUND_STRING(
     "lived here.\p"
     "The rig is ready for the next layer:\n"
     "the rock just above the boundary\l"
-    "clay. About a year after the impact.");
+    "clay, about a year after the impact.");
+
+// The next interlude is due (Story_PendingBeat): where it waits.
+static const u8 *const sMentorBeatDue[SUBPLOT_COUNT] =
+{
+    [SUBPLOT_KESSLER_OFFER] = COMPOUND_STRING(
+        "A truck just pulled up outside. A\n"
+        "dealer's, I think. I suspect he'll\l"
+        "come in on his own."),
+    [SUBPLOT_FERN_SPIKE] = COMPOUND_STRING(
+        "PRIYA, the palynologist, is out at\n"
+        "the LINDQVIST RANCH with her spore\l"
+        "counts. Go and hear her out.\p"
+        "She can read a whole forest in a\n"
+        "pinch of mud."),
+    [SUBPLOT_BLM_PERMIT] = COMPOUND_STRING(
+        "RANGER ORTIZ wants to see you at the\n"
+        "BLM office in JORDAN, west past the\l"
+        "ranch. She has a permit for you."),
+    [SUBPLOT_JOSIE_PIT] = COMPOUND_STRING(
+        "JOSIE radioed from the arroyo. She's\n"
+        "on her way in, and she sounded\l"
+        "upset."),
+    [SUBPLOT_HALVORSEN_REFUSAL] = COMPOUND_STRING(
+        "KESSLER's truck is at the gate again.\n"
+        "And THEO wants a word with both of\l"
+        "us. I can guess why."),
+    [SUBPLOT_PIT_DOCUMENTED] = COMPOUND_STRING(
+        "RANGER ORTIZ is at the pit in SAND\n"
+        "ARROYO. She asked for you by name.\p"
+        "Bring your notebook. Notes are the\n"
+        "one thing nobody can dig up later."),
+    [SUBPLOT_AUCTION_DATE] = COMPOUND_STRING(
+        "JOSIE went home to the ranch in a\n"
+        "hurry. Something about a date.\p"
+        "Go and see her. Gently."),
+    [SUBPLOT_CITATION] = COMPOUND_STRING(
+        "ORTIZ called from JORDAN. Your notes\n"
+        "from the pit have done their work,\l"
+        "I think."),
+    [SUBPLOT_CONSORTIUM] = COMPOUND_STRING(
+        "I've been on the phone all week.\n"
+        "Stay a moment. I have a plan for\l"
+        "the Pair."),
+    [SUBPLOT_AUCTION_DAY] = COMPOUND_STRING(
+        "Today is the auction at the\n"
+        "LINDQVIST RANCH. I'll be there with\l"
+        "the consortium's offer.\p"
+        "Come with me. You built half of it."),
+};
+
+// The subplot has caught up: what Halvorsen makes of the last beat.
+static const u8 *const sMentorSubplotLines[SUBPLOT_COUNT] =
+{
+    [SUBPLOT_NONE] = COMPOUND_STRING(
+        "Keep one question in your notebook:\n"
+        "why did your partner's kind make it\l"
+        "through, when the giants didn't?\p"
+        "Size, diet, habitat, luck. The rock\n"
+        "will answer a piece at a time."),
+    [SUBPLOT_KESSLER_OFFER] = COMPOUND_STRING(
+        "MR. KESSLER is right that bones\n"
+        "erode if no one collects them.\p"
+        "He's wrong about what a bone is\n"
+        "worth without its layer. I said no.\l"
+        "I'd say it again."),
+    [SUBPLOT_FERN_SPIKE] = COMPOUND_STRING(
+        "Ferns came back first because their\n"
+        "spores are small, tough, and travel\l"
+        "on the wind.\p"
+        "Survival often looks like that. Not\n"
+        "strength: the right trait in the\l"
+        "right place when the filter came."),
+    [SUBPLOT_BLM_PERMIT] = COMPOUND_STRING(
+        "With that permit, anything you find\n"
+        "on BLM ground stays public, in a\l"
+        "museum anyone can visit.\p"
+        "That's the point of a permit: what\n"
+        "we dig belongs to everyone."),
+    [SUBPLOT_JOSIE_PIT] = COMPOUND_STRING(
+        "A bone dug out with no notes loses\n"
+        "its layer, its date, its neighbours.\p"
+        "Whoever dug that pit kept the bone\n"
+        "and threw away the science."),
+    [SUBPLOT_HALVORSEN_REFUSAL] = COMPOUND_STRING(
+        "His money would keep the rig running\n"
+        "after I retire. I know.\p"
+        "But data you sell first stops being\n"
+        "science. THEO will choose for\l"
+        "himself. I hope he chooses well."),
+    [SUBPLOT_PIT_DOCUMENTED] = COMPOUND_STRING(
+        "Your notes put that pit on federal\n"
+        "ground, in a layer, on a date.\p"
+        "Evidence is only careful looking\n"
+        "that someone else can check."),
+    [SUBPLOT_AUCTION_DATE] = COMPOUND_STRING(
+        "BEA has every right to sell. The\n"
+        "law is clear on private land.\p"
+        "I can't ask her to be poorer for\n"
+        "science. I can try to find her a\l"
+        "better offer."),
+    [SUBPLOT_CITATION] = COMPOUND_STRING(
+        "The citation covers the digging on\n"
+        "BLM land. It can't touch the sale:\l"
+        "the Pair is on BEA's land."),
+    [SUBPLOT_CONSORTIUM] = COMPOUND_STRING(
+        "The consortium is less money than an\n"
+        "auction might bring, probably.\p"
+        "What it buys is a Pair that stays\n"
+        "together, where anyone can study it.\p"
+        "Your CODEX is our research case:\n"
+        "{STR_VAR_1} species, each tied to its\l"
+        "layer. Keep logging."),
+    [SUBPLOT_AUCTION_DAY] = COMPOUND_STRING(
+        "The Pair goes to a public museum,\n"
+        "and BEA was paid. Not as much as a\l"
+        "dealer might have, but fairly.\p"
+        "We kept what mattered: the bones,\n"
+        "and the layer they came from."),
+};
+
+// The science line for a story value (the Tyrannosaurus variant included), or NULL.
+static const u8 *Mentor_ScienceLine(u32 story)
+{
+    if (story == STORY_ACT_DONE(ERA_HELL_CREEK) && FlagGet(FLAG_STRATA_TREX_FLED))
+        return sMentorLineTyrantFled;
+    if (story < ARRAY_COUNT(sMentorLines))
+        return sMentorLines[story];
+    return NULL;
+}
+
+// The people line for a story value and subplot: the beat that is due, or the last one played.
+static const u8 *Mentor_PeopleLine(u32 story, u32 subplot)
+{
+    u32 beat = Story_PendingBeat(story, subplot);
+
+    if (story == 0)
+        return NULL;
+    if (beat != SUBPLOT_NONE)
+        return sMentorBeatDue[beat];
+    if (subplot < SUBPLOT_COUNT)
+        return sMentorSubplotLines[subplot];
+    return NULL;
+}
 
 // The wild AI flags of boss battles must stay the plain "smart trainer" set: scripts set
 // them as the number STRATA_BOSS_AI_FLAGS, which assembly can't build from AI_FLAG_*.
@@ -245,17 +419,22 @@ void Strata_SpecialGetCurrentAct(void)
 }
 
 // special Strata_BufferMentorText
-// Output: gStringVar4 = Dr. Halvorsen's line for the current story
+// Output: gStringVar4 = Dr. Halvorsen's lines for the current story and subplot (science, then
+// people, as two parts of one message). STR_VAR_1 = the research case (Codex species).
 void Strata_BufferMentorText(void)
 {
     u32 story = VarGet(VAR_STRATA_STORY);
-    const u8 *line = NULL;
+    const u8 *science = Mentor_ScienceLine(story);
+    const u8 *people = Mentor_PeopleLine(story, VarGet(VAR_STRATA_SUBPLOT));
+    u8 *end;
 
-    if (story < ARRAY_COUNT(sMentorLines))
-        line = sMentorLines[story];
-    if (story == STORY_ACT_DONE(ERA_HELL_CREEK) && FlagGet(FLAG_STRATA_TREX_FLED))
-        line = sMentorLineTyrantFled;
-    if (line == NULL)
-        line = COMPOUND_STRING("Keep up the good work out there.");
-    StringExpandPlaceholders(gStringVar4, line);
+    if (science == NULL)
+        science = COMPOUND_STRING("Keep up the good work out there.");
+    Strata_StoryBufferCaseCount();
+    end = StringExpandPlaceholders(gStringVar4, science);
+    if (people != NULL)
+    {
+        *end++ = CHAR_PROMPT_CLEAR;
+        StringExpandPlaceholders(end, people);
+    }
 }

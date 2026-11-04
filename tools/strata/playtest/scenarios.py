@@ -26,7 +26,7 @@ def expand(name):
         return [f"boss_{a}" for a in range(1, 9)]
     if name == "all":
         return ["watchdog_selftest", "new_game_smoke", "battle_smoke", "forecast_smoke", "pressure_chart_smoke",
-                "peer_review_smoke", "act_tour", "extinction_smoke"] + [f"boss_{a}" for a in range(1, 9)]
+                "peer_review_smoke", "act_tour", "extinction_smoke", "story_interludes"] + [f"boss_{a}" for a in range(1, 9)]
     if name in REGISTRY or name.endswith(".txt") or re.fullmatch(r"boss_[1-8]", name):
         return [name]
     raise SystemExit(f"unknown scenario {name} (try --list)")
@@ -684,3 +684,138 @@ def extinction_smoke(g, args):
     g.press("B", 4, 20)
     g.wait_until(lambda: not g.st["scriptActive"] and not g.st["fieldLocked"], 600, "the case to close")
     g.screenshot("after_case")
+
+
+# ---------------------------------------------------------------------------
+# The present-day subplot (S1): src/strata_story.c, the hub map scripts
+
+STORY_TEAM = [("SPECIES_CIMOLESTES", 30)]
+STATION_RIG = (10, 8)     # arrival from the rig; the interlude row is y 10
+CAMP_WEST = (2, 9)        # on the ranch road, a few steps from the ranch
+RANCH_WEST = (2, 8)       # on the road, a few steps from Jordan
+
+
+def story_start(g, map_name, pos, story, subplot, flags=()):
+    g.quickstart(map_name, *pos, story=story, era=min(story // 2, 9), party=STORY_TEAM,
+                 vars=[("VAR_STRATA_SUBPLOT", subplot)], flags=["FLAG_STRATA_DIG_DONE"] + list(flags))
+    settle(g)
+
+
+def field_log(g, name):
+    """START: the field log's objective beside the menu, then close it again."""
+    g.wait_overworld()
+    g.press("START", 4, 30)
+    g.wait(10)
+    g.screenshot(f"fieldlog_{name}")
+    g.check(g.read("sLogShown", 1) == 1, f"{name}: the field log window is up with the start menu")
+    g.press("B", 4, 20)
+    g.wait_until(lambda: not g.st["fieldLocked"], 300, "the start menu to close")
+    g.check(g.read("sLogShown", 1) == 0, f"{name}: closing the menu removes the field log")
+
+
+def interlude(g, name, subplot):
+    """Play the interlude that just started (a screenshot per box) and check the subplot moved on."""
+    g.wait_until(lambda: g.st["scriptActive"] or g.st["fieldLocked"], 300, f"the {name} interlude to start")
+    shots = play_script(g, name)
+    g.check(shots >= 2, f"{name}: the interlude showed its text ({shots} boxes)")
+    g.expect_var("VAR_STRATA_SUBPLOT", subplot)
+    g.screenshot(f"{name}_after")
+
+
+def station_interlude(g, name, story, subplot, after):
+    story_start(g, "MAP_STRATA_FIELD_STATION", STATION_RIG, story, subplot, ["FLAG_STRATA_BLM_PERMIT"])
+    g.check(g.var("VAR_TEMP_3") == 1, f"{name}: a station beat is due ({g.var('VAR_TEMP_2')})")
+    field_log(g, f"{name}_due")
+    g.walk("down", 2)
+    interlude(g, name, after)
+    g.check(g.var("VAR_TEMP_3") == 0, f"{name}: no second beat waits in the station")
+
+
+def walk_into(g, direction, want_map, tiles=6):
+    g.walk(direction, tiles)
+    g.check(g.map_id() == g.const(want_map), f"walked into {want_map} ({g._map_name()})")
+
+
+@scenario
+def story_interludes(g, args):
+    """Every present-day interlude after acts 1-8 (S1): quick-start where the player arrives with
+    the right story and subplot, play each scene through (a shot per box) and check
+    VAR_STRATA_SUBPLOT moved on; the field log in the start menu at a few of the states."""
+    # Act 1 done (story 3): Kessler's offer, in the field station.
+    station_interlude(g, "kessler_offer", 3, "SUBPLOT_NONE", "SUBPLOT_KESSLER_OFFER")
+    field_log(g, "after_kessler")
+
+    # Act 2 done (story 5): the fern spike at the ranch, then the permit in Jordan.
+    story_start(g, "MAP_STRATA_FIELD_CAMP", CAMP_WEST, 5, "SUBPLOT_KESSLER_OFFER")
+    walk_into(g, "left", "MAP_STRATA_LINDQVIST_RANCH")
+    interlude(g, "fern_spike", "SUBPLOT_FERN_SPIKE")
+    field_log(g, "after_fern_spike")
+    g.warp("MAP_STRATA_BLM_OFFICE", 5, 5)
+    g.face("up")
+    g.press("A")
+    interlude(g, "permit", "SUBPLOT_BLM_PERMIT")
+    g.expect_flag("FLAG_STRATA_BLM_PERMIT")
+
+    # Act 3 done (story 7): Josie's pit, then a look at it in Sand Arroyo.
+    station_interlude(g, "josie_pit", 7, "SUBPLOT_BLM_PERMIT", "SUBPLOT_JOSIE_PIT")
+    field_log(g, "see_the_pit")
+    g.warp("MAP_STRATA_SAND_ARROYO", 29, 14)
+    g.face("up")
+    g.press("A")
+    play_script(g, "arroyo_pit")
+    g.expect_flag("FLAG_STRATA_STORY_SAW_PIT")
+
+    # Act 4 done (story 9): Kessler's funding deal; Halvorsen refuses, Theo keeps the card.
+    station_interlude(g, "refusal", 9, "SUBPLOT_JOSIE_PIT", "SUBPLOT_HALVORSEN_REFUSAL")
+
+    # Act 5 done (story 11): documenting the pit with Ranger Ortiz.
+    story_start(g, "MAP_STRATA_SAND_ARROYO", (26, 14), 11, "SUBPLOT_HALVORSEN_REFUSAL", ["FLAG_STRATA_BLM_PERMIT"])
+    g.check(not g.flag("FLAG_TEMP_9"), "Ortiz is at the pit")
+    g.screenshot("ortiz_at_pit")
+    g.face("left")
+    g.press("A")
+    play_script(g, "ortiz_brief")
+    g.expect_flag("FLAG_STRATA_STORY_EVIDENCE_STARTED")
+    field_log(g, "evidence_0")
+    for name, pos, facing, flag in [("pit", (29, 14), "up", "PIT"), ("jacket", (27, 14), "down", "JACKET"),
+                                    ("tracks", (31, 14), "down", "TRACKS")]:
+        g.warp("MAP_STRATA_SAND_ARROYO", *pos)
+        g.face(facing)
+        g.press("A")
+        play_script(g, f"log_{name}")
+        g.expect_flag(f"FLAG_STRATA_STORY_EVIDENCE_{flag}")
+    field_log(g, "evidence_3")
+    g.warp("MAP_STRATA_SAND_ARROYO", 26, 14)
+    g.face("left")
+    g.press("A")
+    interlude(g, "ortiz_report", "SUBPLOT_PIT_DOCUMENTED")
+
+    # Act 6 done (story 13): Bea has set an auction date; Josie argues.
+    story_start(g, "MAP_STRATA_FIELD_CAMP", CAMP_WEST, 13, "SUBPLOT_PIT_DOCUMENTED")
+    g.check(g.flag("FLAG_TEMP_9"), "Josie is not at camp while the ranch scene waits")
+    walk_into(g, "left", "MAP_STRATA_LINDQVIST_RANCH")
+    interlude(g, "auction_date", "SUBPLOT_AUCTION_DATE")
+
+    # Act 7 done (story 15): Ortiz cites Kessler's crew in Jordan; Halvorsen's consortium.
+    story_start(g, "MAP_STRATA_LINDQVIST_RANCH", RANCH_WEST, 15, "SUBPLOT_AUCTION_DATE")
+    walk_into(g, "left", "MAP_STRATA_JORDAN")
+    interlude(g, "citation", "SUBPLOT_CITATION")
+    station_interlude(g, "consortium", 15, "SUBPLOT_CITATION", "SUBPLOT_CONSORTIUM")
+    # The same beat from a talk with Halvorsen (she plays it instead of her usual lines).
+    story_start(g, "MAP_STRATA_FIELD_STATION", (6, 6), 15, "SUBPLOT_CITATION")
+    g.face("up")
+    g.press("A")
+    interlude(g, "consortium_talk", "SUBPLOT_CONSORTIUM")
+
+    # Act 8 done (story 17): auction day at the ranch. Bea picks the consortium.
+    story_start(g, "MAP_STRATA_FIELD_CAMP", CAMP_WEST, 17, "SUBPLOT_CONSORTIUM")
+    walk_into(g, "left", "MAP_STRATA_LINDQVIST_RANCH")
+    interlude(g, "auction_day", "SUBPLOT_AUCTION_DAY")
+    field_log(g, "after_auction")
+
+    # Halvorsen afterwards: science, then what she makes of the auction.
+    g.warp("MAP_STRATA_FIELD_STATION", 6, 6)
+    g.face("up")
+    g.press("A")
+    play_script(g, "halvorsen_after")
+    g.expect_var("VAR_STRATA_SUBPLOT", "SUBPLOT_AUCTION_DAY")

@@ -3,11 +3,109 @@
 @ prairie once the present layer is loaded (the epilogue).
 StrataJordan_MapScripts::
 	map_script MAP_SCRIPT_ON_TRANSITION, StrataJordan_OnTransition
+	map_script MAP_SCRIPT_ON_FRAME_TABLE, StrataJordan_OnFrame
 	.byte 0
 
+@ The citation interlude (S1, src/strata_story.c) plays on arrival once act 7 is done: Ortiz
+@ and Kessler stand on the street (FLAG_TEMP_9, FLAG_TEMP_A hide them otherwise).
 StrataJordan_OnTransition:
 	special Strata_HideLockedReviewers
+	special Strata_StoryPrepareMap
+	setflag FLAG_TEMP_9
+	setflag FLAG_TEMP_A
+	call_if_eq VAR_TEMP_2, SUBPLOT_CITATION, StrataJordan_EventScript_SetupCitation
 	end
+
+StrataJordan_OnFrame:
+	map_script_2 VAR_TEMP_3, 1, StrataJordan_EventScript_Citation
+	.2byte 0
+
+StrataJordan_EventScript_SetupCitation::
+	clearflag FLAG_TEMP_9
+	clearflag FLAG_TEMP_A
+	return
+
+@ Act 7 done: Ortiz cites Kessler's crew for digging on BLM land. Kessler pays, and points
+@ out that the auction on Bea's land is legal.
+StrataJordan_EventScript_Citation::
+	lockall
+	setvar VAR_TEMP_3, 0
+	applymovement OBJ_EVENT_ID_PLAYER, StrataJordan_Movement_FaceLeft
+	waitmovement 0
+	msgbox StrataJordan_Text_StoryCitation1, MSGBOX_DEFAULT
+	applymovement LOCALID_STRATA_JORDAN_KESSLER, StrataJordan_Movement_FaceRight
+	waitmovement 0
+	msgbox StrataJordan_Text_StoryCitation2, MSGBOX_DEFAULT
+	applymovement LOCALID_STRATA_JORDAN_KESSLER, StrataJordan_Movement_KesslerLeave
+	waitmovement 0
+	removeobject LOCALID_STRATA_JORDAN_KESSLER
+	msgbox StrataJordan_Text_StoryCitation3, MSGBOX_DEFAULT
+	setvar VAR_STRATA_SUBPLOT, SUBPLOT_CITATION
+	special Strata_StoryPrepareMap
+	releaseall
+	end
+
+StrataJordan_EventScript_Ortiz::
+	msgbox StrataJordan_Text_Ortiz, MSGBOX_NPC
+	end
+
+StrataJordan_EventScript_Kessler::
+	msgbox StrataJordan_Text_Kessler, MSGBOX_NPC
+	end
+
+StrataJordan_Movement_FaceLeft:
+	face_left
+	step_end
+
+StrataJordan_Movement_FaceRight:
+	face_right
+	step_end
+
+@ From (16, 7) up the street and away to the north side of town.
+StrataJordan_Movement_KesslerLeave:
+	walk_up
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	step_end
+
+StrataJordan_Text_StoryCitation1::
+	.string "RANGER ORTIZ: MR. KESSLER. This is\n"
+	.string "a citation for your crew: digging\l"
+	.string "on BLM land without a permit.\p"
+	.string "SAND ARROYO. The photos, the GPS,\n"
+	.string "the layer, the tire tracks to your\l"
+	.string "lease fence. It's all in the file.\p"
+	.string "Most of it from that one's notebook.$"
+
+StrataJordan_Text_StoryCitation2::
+	.string "KESSLER: My crew crossed a fence they\n"
+	.string "shouldn't have. I'll pay the fine,\l"
+	.string "and they'll learn where it is.\p"
+	.string "But the Pair is on BEA LINDQVIST's\n"
+	.string "land, Ranger. That sale is legal,\l"
+	.string "and it goes ahead.\p"
+	.string "You keep good notes, {PLAYER}. If you\n"
+	.string "ever want a job, I pay better than\l"
+	.string "a university.$"
+
+StrataJordan_Text_StoryCitation3::
+	.string "RANGER ORTIZ: He's right about the\n"
+	.string "sale. I've no say over private land.\p"
+	.string "The broken jacket goes to a museum\n"
+	.string "repository. What's left of it.\p"
+	.string "A bone with no layer can still be\n"
+	.string "looked at. It just can't answer\l"
+	.string "most questions anymore.$"
+
+StrataJordan_Text_Ortiz::
+	.string "RANGER ORTIZ: The fine won't close\n"
+	.string "the pit. But it's on the record now.$"
+
+StrataJordan_Text_Kessler::
+	.string "KESSLER: Off to pay a fine. A\n"
+	.string "pleasure, as always.$"
 
 @ Visiting researchers (peer review, C13): the ichnologist (act 6) and the volcanologist
 @ (act 7). One battle each.

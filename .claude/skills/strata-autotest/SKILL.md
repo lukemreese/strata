@@ -64,6 +64,7 @@ checks, screenshots with map and position, emulator errors, warnings, crash PC/L
 | `extinction_smoke` | Act 1 done with dinosaurs in the team and PC: rig to the impact winter, the loss list (a shot per message), fossil flags, then START > BAG > KEY ITEMS > Fossil Case > a fossil's label |
 | `forecast_smoke` | Field station after act 6, mixed TEAM (pressures set) + PC: rig -> forecast window, every row, A, YES; asserts the TEAM after the load equals `gStrataRigForecast` |
 | `pressure_chart_smoke` | TEAM menu -> LINEAGE: the pressure chart for each TEAM animal (Up/Down), B back to the TEAM menu on the last one viewed |
+| `story_interludes` | All 10 present-day interludes (S1): quick-start beside each one with the story and `VAR_STRATA_SUBPLOT` it needs (`vars=[("VAR_STRATA_SUBPLOT", "SUBPLOT_X")]`), walk in, play it (a shot per box), check the subplot moved on; Ortiz's three evidence records; the start-menu field log (`sLogShown`) at several states |
 
 ## Writing a scenario
 
@@ -139,6 +140,11 @@ animations off; pass `encounters=True`, `collision=False`, `instant_text=False`,
 - Parallel agents share the default output folder (and its `summary.json`): pass
   `--out /mnt/c/Projects/pokemon-custom/build/harness_<lane>` so runs don't overwrite each other.
 - PC mons: `give_mon` after a full 6-mon quick-start party sends them to the PC.
+- `quickstart` waits up to 600 frames for map scripts to finish, so it can't land on a map whose
+  frame script starts a cutscene: quick-start on the neighbouring map and `walk` across the edge
+  (`walk` stops when a script starts), then press through with `play_script`.
+- The start menu has a field-log box top left (`src/strata_story.c`); screenshots of the menu show
+  it, and `sLogShown` says whether it is up.
 - Menus by memory, not by guessing the cursor: the start menu is `sCurrentStartMenuActions`/
   `sNumStartMenuActions`/`sStartMenuCursorPos` (BAG is action 2), the bag pocket is byte 5 of
   `gBagPosition`. Static EWRAM symbols resolve like globals. `FLAG_STRATA_*` and `POCKET_*`
