@@ -47,6 +47,12 @@ def reviewer_flag(act):
     return f"FLAG_TEMP_{act:X}"
 
 
+def cast_flag(n):
+    """Hide flag of the interlude cast on a hub map: FLAG_TEMP_9.. (each map's on-transition
+    script sets it unless its beat is due; see the Story section of strata_act_flags.h)."""
+    return f"FLAG_TEMP_{9 + n:X}"
+
+
 def edge_triggers(x, ys, script):
     """Coord triggers along a map edge (VAR_TEMP_1 == 0: the map's scripts set it to
     1 to open the way)."""
@@ -65,6 +71,11 @@ _DIG_STAKES = [signpost(14, 20, "StrataBadlands_EventScript_StakeJaw"),
 
 # The badlands' south edge is the BLM boundary: walkable tiles of the bottom row.
 _BLM_EDGE = [(x, 39) for x in list(range(9, 16)) + list(range(22, 38))]
+
+# The field station's interludes (src/strata_story.c) start on the row between the rig and the
+# door, which every way in or out crosses. VAR_TEMP_3 is 1 while a beat is due here.
+_STATION_INTERLUDE = [trigger(x, 10, "VAR_TEMP_3", 1, "StrataFieldStation_EventScript_Interlude")
+                      for x in range(2, 11)]
 
 MAPS = [
     # ------------------------------------------------------------------
@@ -88,9 +99,10 @@ MAPS = [
             # Theo Okafor, PhD student and the rival (peer review starts with C13).
             obj("LOCALID_STRATA_CAMP_THEO", "OBJ_EVENT_GFX_SCIENTIST_2", 18, 9,
                 "StrataFieldCamp_EventScript_Theo", "MOVEMENT_TYPE_WANDER_AROUND"),
-            # Josie Lindqvist, undergrad on the crew (the camp "Student").
+            # Josie Lindqvist, undergrad on the crew (the camp "Student"); at the ranch while a
+            # ranch interlude is due.
             obj("LOCALID_STRATA_CAMP_STUDENT", "OBJ_EVENT_GFX_PICNICKER", 22, 11,
-                "StrataFieldCamp_EventScript_Student", "MOVEMENT_TYPE_LOOK_AROUND"),
+                "StrataFieldCamp_EventScript_Student", "MOVEMENT_TYPE_LOOK_AROUND", flag=cast_flag(0)),
             # The camp store: the quartermaster, parked beside the station door.
             obj("LOCALID_STRATA_CAMP_QUARTERMASTER", "OBJ_EVENT_GFX_EXPERT_F", 29, 19,
                 "StrataFieldCamp_EventScript_Quartermaster", "MOVEMENT_TYPE_FACE_LEFT"),
@@ -125,7 +137,15 @@ MAPS = [
             # The isotope geochemist (act 4), at the bench beside the rig.
             obj("LOCALID_STRATA_STATION_INGRID", "OBJ_EVENT_GFX_WOMAN_1", 11, 4,
                 "StrataFieldStation_EventScript_Ingrid", "MOVEMENT_TYPE_FACE_LEFT", flag=reviewer_flag(4)),
+            # Interlude visitors (S1): they come in at the door during their beat only.
+            obj("LOCALID_STRATA_STATION_KESSLER", "OBJ_EVENT_GFX_GENTLEMAN", 8, 11,
+                "StrataFieldStation_EventScript_VisitorKessler", "MOVEMENT_TYPE_FACE_UP", flag=cast_flag(0)),
+            obj("LOCALID_STRATA_STATION_THEO", "OBJ_EVENT_GFX_SCIENTIST_2", 4, 11,
+                "StrataFieldStation_EventScript_VisitorTheo", "MOVEMENT_TYPE_FACE_UP", flag=cast_flag(1)),
+            obj("LOCALID_STRATA_STATION_JOSIE", "OBJ_EVENT_GFX_PICNICKER", 9, 11,
+                "StrataFieldStation_EventScript_VisitorJosie", "MOVEMENT_TYPE_FACE_UP", flag=cast_flag(2)),
         ],
+        coords=_STATION_INTERLUDE,
         bgs=[
             sign(10, 7, "StrataFieldStation_EventScript_Rig", "BG_EVENT_PLAYER_FACING_NORTH"),
             sign(11, 7, "StrataFieldStation_EventScript_Rig", "BG_EVENT_PLAYER_FACING_NORTH"),
@@ -197,6 +217,12 @@ MAPS = [
                 "StrataJordan_EventScript_Oskar", "MOVEMENT_TYPE_FACE_DOWN", flag=reviewer_flag(6)),
             obj("LOCALID_STRATA_JORDAN_HOLLIS", "OBJ_EVENT_GFX_MAN_2", 3, 13,
                 "StrataJordan_EventScript_Hollis", "MOVEMENT_TYPE_FACE_RIGHT", flag=reviewer_flag(7)),
+            # The citation interlude (S1): Ranger Ortiz and Kessler on the street, in view of the
+            # highway from the ranch.
+            obj("LOCALID_STRATA_JORDAN_ORTIZ", "OBJ_EVENT_GFX_MAN_5", 15, 7,
+                "StrataJordan_EventScript_Ortiz", "MOVEMENT_TYPE_FACE_RIGHT", flag=cast_flag(0)),
+            obj("LOCALID_STRATA_JORDAN_KESSLER", "OBJ_EVENT_GFX_GENTLEMAN", 16, 7,
+                "StrataJordan_EventScript_Kessler", "MOVEMENT_TYPE_FACE_LEFT", flag=cast_flag(1)),
         ],
         bgs=[
             sign(10, 11, "StrataJordan_EventScript_TownSign"),
@@ -233,9 +259,10 @@ MAPS = [
         music="MUS_FALLARBOR", map_type="MAP_TYPE_INDOOR", mapsec="MAPSEC_STRATA_JORDAN",
         warps=[warp(5, 7, "MAP_STRATA_JORDAN", 2), warp(6, 7, "MAP_STRATA_JORDAN", 2)],
         objects=[
-            # Ranger Lucia Ortiz, BLM paleontology / law-enforcement ranger.
+            # Ranger Lucia Ortiz, BLM paleontology / law-enforcement ranger (out in the field while
+            # the pit and citation interludes are due).
             obj("LOCALID_STRATA_RANGER", "OBJ_EVENT_GFX_MAN_5", 5, 4,
-                "StrataBlmOffice_EventScript_Ranger"),
+                "StrataBlmOffice_EventScript_Ranger", flag=cast_flag(0)),
         ],
         bgs=[
             sign(5, 1, "StrataBlmOffice_EventScript_Binder", "BG_EVENT_PLAYER_FACING_NORTH"),
@@ -270,6 +297,13 @@ MAPS = [
                 "StrataLindqvistRanch_EventScript_Keola", "MOVEMENT_TYPE_FACE_RIGHT", flag=reviewer_flag(5)),
             obj("LOCALID_STRATA_RANCH_ASHA", "OBJ_EVENT_GFX_WOMAN_5", 53, 10,
                 "StrataLindqvistRanch_EventScript_Asha", "MOVEMENT_TYPE_FACE_DOWN", flag=reviewer_flag(8)),
+            # Interlude cast (S1), by the road in from camp so the player sees them on arrival:
+            # Josie (the auction date and day) and Dr. Halvorsen (auction day). Bea, Priya and
+            # Kessler are moved here by the on-transition script when their beat is due.
+            obj("LOCALID_STRATA_RANCH_JOSIE", "OBJ_EVENT_GFX_PICNICKER", 54, 8,
+                "StrataLindqvistRanch_EventScript_Josie", "MOVEMENT_TYPE_FACE_UP", flag=cast_flag(0)),
+            obj("LOCALID_STRATA_RANCH_HALVORSEN", "OBJ_EVENT_GFX_SCIENTIST_1", 57, 7,
+                "StrataLindqvistRanch_EventScript_Halvorsen", "MOVEMENT_TYPE_FACE_LEFT", flag=cast_flag(1)),
         ],
         bgs=[
             sign(49, 5, "StrataLindqvistRanch_EventScript_RanchSign"),
@@ -301,6 +335,9 @@ MAPS = [
             # A plaster field jacket, cracked open and left behind.
             obj("LOCALID_STRATA_ARROYO_JACKET", "OBJ_EVENT_GFX_BREAKABLE_ROCK", 27, 15,
                 "StrataSandArroyo_EventScript_Jacket"),
+            # Ranger Ortiz, documenting the pit (S1: after act 5, until the evidence is logged).
+            obj("LOCALID_STRATA_ARROYO_ORTIZ", "OBJ_EVENT_GFX_MAN_5", 25, 14,
+                "StrataSandArroyo_EventScript_Ortiz", "MOVEMENT_TYPE_FACE_RIGHT", flag=cast_flag(0)),
         ],
         bgs=[
             sign(7, 10, "StrataSandArroyo_EventScript_ContextNote"),

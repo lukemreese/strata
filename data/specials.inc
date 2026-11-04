@@ -638,6 +638,8 @@ gSpecials::
 	def_special UpdateTrainerCardPhotoIcons
 	def_special StickerManGetBragFlags
 	def_special CheckAddCoins
+	def_special Strata_StoryPrepareMap
+	def_special Strata_StoryBufferCaseCount
 	def_special Strata_HideLockedReviewers
 	def_special Strata_PayStipend
 	def_special Strata_StipendBaseline

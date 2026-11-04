@@ -4,12 +4,241 @@
 @ the Hell Creek act is done (FLAG_TEMP_1F hides them after that).
 StrataLindqvistRanch_MapScripts::
 	map_script MAP_SCRIPT_ON_TRANSITION, StrataLindqvistRanch_OnTransition
+	map_script MAP_SCRIPT_ON_FRAME_TABLE, StrataLindqvistRanch_OnFrame
 	.byte 0
 
+@ Interludes (S1, src/strata_story.c): the fern spike, the auction date and auction day play here
+@ on arrival. Their cast waits by the road in from camp (Josie and Halvorsen are hidden under
+@ FLAG_TEMP_9 and FLAG_TEMP_A otherwise; Bea, Priya and Kessler are moved there).
 StrataLindqvistRanch_OnTransition:
 	call_if_ge VAR_STRATA_STORY, STORY_ACT_DONE(ERA_HELL_CREEK), StrataLindqvistRanch_EventScript_KesslerGone
 	special Strata_HideLockedReviewers
+	special Strata_StoryPrepareMap
+	setflag FLAG_TEMP_9
+	setflag FLAG_TEMP_A
+	switch VAR_TEMP_2
+	case SUBPLOT_FERN_SPIKE, StrataLindqvistRanch_EventScript_SetupFernSpike
+	case SUBPLOT_AUCTION_DATE, StrataLindqvistRanch_EventScript_SetupAuctionDate
+	case SUBPLOT_AUCTION_DAY, StrataLindqvistRanch_EventScript_SetupAuctionDay
 	end
+
+StrataLindqvistRanch_OnFrame:
+	map_script_2 VAR_TEMP_3, 1, StrataLindqvistRanch_EventScript_Interlude
+	.2byte 0
+
+StrataLindqvistRanch_EventScript_SetupBea::
+	setobjectxyperm LOCALID_STRATA_RANCH_BEA, 55, 7
+	setobjectmovementtype LOCALID_STRATA_RANCH_BEA, MOVEMENT_TYPE_FACE_RIGHT
+	return
+
+StrataLindqvistRanch_EventScript_SetupFernSpike::
+	call StrataLindqvistRanch_EventScript_SetupBea
+	setobjectxyperm LOCALID_STRATA_RANCH_PRIYA, 56, 9
+	setobjectmovementtype LOCALID_STRATA_RANCH_PRIYA, MOVEMENT_TYPE_FACE_RIGHT
+	end
+
+StrataLindqvistRanch_EventScript_SetupAuctionDate::
+	call StrataLindqvistRanch_EventScript_SetupBea
+	clearflag FLAG_TEMP_9
+	end
+
+StrataLindqvistRanch_EventScript_SetupAuctionDay::
+	call StrataLindqvistRanch_EventScript_SetupBea
+	clearflag FLAG_TEMP_9
+	clearflag FLAG_TEMP_A
+	clearflag FLAG_TEMP_1F
+	setobjectxyperm LOCALID_STRATA_RANCH_KESSLER, 56, 6
+	setobjectmovementtype LOCALID_STRATA_RANCH_KESSLER, MOVEMENT_TYPE_FACE_DOWN
+	end
+
+StrataLindqvistRanch_EventScript_Interlude::
+	lockall
+	setvar VAR_TEMP_3, 0
+	switch VAR_TEMP_2
+	case SUBPLOT_FERN_SPIKE, StrataLindqvistRanch_EventScript_FernSpike
+	case SUBPLOT_AUCTION_DATE, StrataLindqvistRanch_EventScript_AuctionDate
+	case SUBPLOT_AUCTION_DAY, StrataLindqvistRanch_EventScript_AuctionDay
+	releaseall
+	end
+
+StrataLindqvistRanch_EventScript_InterludeEnd::
+	special Strata_StoryPrepareMap
+	releaseall
+	end
+
+@ Act 2 done: Priya explains the fern spike from her spore counts; Bea mentions the drought
+@ and sends the player to Ranger Ortiz for a permit.
+StrataLindqvistRanch_EventScript_FernSpike::
+	applymovement OBJ_EVENT_ID_PLAYER, StrataLindqvistRanch_Movement_FaceLeft
+	waitmovement 0
+	msgbox StrataLindqvistRanch_Text_StoryFern1, MSGBOX_DEFAULT
+	msgbox StrataLindqvistRanch_Text_StoryFern2, MSGBOX_DEFAULT
+	setvar VAR_STRATA_SUBPLOT, SUBPLOT_FERN_SPIKE
+	goto StrataLindqvistRanch_EventScript_InterludeEnd
+
+@ Act 6 done: Bea has set an auction date with Kessler; Josie argues with her.
+StrataLindqvistRanch_EventScript_AuctionDate::
+	applymovement OBJ_EVENT_ID_PLAYER, StrataLindqvistRanch_Movement_FaceLeft
+	waitmovement 0
+	msgbox StrataLindqvistRanch_Text_StoryDate1, MSGBOX_DEFAULT
+	msgbox StrataLindqvistRanch_Text_StoryDate2, MSGBOX_DEFAULT
+	setvar VAR_STRATA_SUBPLOT, SUBPLOT_AUCTION_DATE
+	goto StrataLindqvistRanch_EventScript_InterludeEnd
+
+@ Act 8 done: auction day. Halvorsen brings the consortium's offer and the research case
+@ (STR_VAR_1 = Codex species); Bea picks the consortium. Kessler loses gracefully.
+StrataLindqvistRanch_EventScript_AuctionDay::
+	applymovement OBJ_EVENT_ID_PLAYER, StrataLindqvistRanch_Movement_FaceLeft
+	waitmovement 0
+	special Strata_StoryBufferCaseCount
+	msgbox StrataLindqvistRanch_Text_StoryAuction1, MSGBOX_DEFAULT
+	msgbox StrataLindqvistRanch_Text_StoryAuction2, MSGBOX_DEFAULT
+	msgbox StrataLindqvistRanch_Text_StoryAuction3, MSGBOX_DEFAULT
+	applymovement LOCALID_STRATA_RANCH_KESSLER, StrataLindqvistRanch_Movement_KesslerLeave
+	waitmovement 0
+	removeobject LOCALID_STRATA_RANCH_KESSLER
+	msgbox StrataLindqvistRanch_Text_StoryAuction4, MSGBOX_DEFAULT
+	setvar VAR_STRATA_SUBPLOT, SUBPLOT_AUCTION_DAY
+	goto StrataLindqvistRanch_EventScript_InterludeEnd
+
+StrataLindqvistRanch_Movement_FaceLeft:
+	face_left
+	step_end
+
+@ From (56, 6) west along the fence.
+StrataLindqvistRanch_Movement_KesslerLeave:
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	step_end
+
+@ The cast between scenes (they stand by the road until the next map load).
+StrataLindqvistRanch_EventScript_Josie::
+	lock
+	faceplayer
+	goto_if_ge VAR_STRATA_SUBPLOT, SUBPLOT_AUCTION_DAY, StrataLindqvistRanch_EventScript_JosieAfter
+	msgbox StrataLindqvistRanch_Text_JosieDate, MSGBOX_DEFAULT
+	release
+	end
+
+StrataLindqvistRanch_EventScript_JosieAfter::
+	msgbox StrataLindqvistRanch_Text_JosieAfter, MSGBOX_DEFAULT
+	release
+	end
+
+StrataLindqvistRanch_EventScript_Halvorsen::
+	msgbox StrataLindqvistRanch_Text_Halvorsen, MSGBOX_NPC
+	end
+
+StrataLindqvistRanch_Text_StoryFern1::
+	.string "PRIYA: {PLAYER}! Over here. I've\n"
+	.string "counted the spores from your\l"
+	.string "impact layer.\p"
+	.string "Below the boundary clay: mostly\n"
+	.string "pollen from flowering plants.\p"
+	.string "Just above it, fern spores take\n"
+	.string "over. In some samples, nearly\l"
+	.string "everything is fern.\p"
+	.string "Fern spores are tiny and tough.\n"
+	.string "They ride the wind onto bare\l"
+	.string "ground and sprout first.\p"
+	.string "That's the fern spike. It tells us\n"
+	.string "the forests fell, and how slowly\l"
+	.string "they came back.$"
+
+StrataLindqvistRanch_Text_StoryFern2::
+	.string "BEA: Ferns on bare ground. Sounds\n"
+	.string "like my south pasture.\p"
+	.string "No real rain since May. If the\n"
+	.string "pond goes, I sell the herd or I\l"
+	.string "sell the bones.\p"
+	.string "Josie says you want to look at the\n"
+	.string "BLM ground south of your dig. Then\l"
+	.string "you need a permit.\p"
+	.string "RANGER ORTIZ hands them out at the\n"
+	.string "BLM office in JORDAN, just west.$"
+
+StrataLindqvistRanch_Text_StoryDate1::
+	.string "JOSIE: Gran, you can't! A private\n"
+	.string "buyer could lock it in a vault.\l"
+	.string "Nobody would ever study it again.\p"
+	.string "BEA: Or they might lend it to a\n"
+	.string "museum. Some do.\p"
+	.string "MR. KESSLER has set the date: the\n"
+	.string "last day of the dig season. Sealed\l"
+	.string "bids, here at the ranch.\p"
+	.string "JOSIE: It's not just bones, Gran.\n"
+	.string "It's the only Pair. Two animals in\l"
+	.string "one layer, and how they got there.$"
+
+StrataLindqvistRanch_Text_StoryDate2::
+	.string "BEA: And the hay bill is the only\n"
+	.string "hay bill. I've done the sums,\l"
+	.string "Josie. Four times.\p"
+	.string "Don't look at me like that,\n"
+	.string "{PLAYER}. I'd take a fair offer from\l"
+	.string "a museum.\p"
+	.string "Nobody's made one.$"
+
+StrataLindqvistRanch_Text_StoryAuction1::
+	.string "KESSLER: The sealed bids are in,\n"
+	.string "MRS. LINDQVIST. The top one would\l"
+	.string "carry this ranch for ten years.\p"
+	.string "DR. HALVORSEN: BEA, before you open\n"
+	.string "it. The consortium's offer.\p"
+	.string "It's less. I won't pretend it\n"
+	.string "isn't.$"
+
+StrataLindqvistRanch_Text_StoryAuction2::
+	.string "DR. HALVORSEN: But the Pair goes on\n"
+	.string "show in a public museum, as one\l"
+	.string "specimen, with your family's name\l"
+	.string "on the case.\p"
+	.string "And here is the crew's research\n"
+	.string "case: {STR_VAR_1} species, each tied to\l"
+	.string "its layer.\p"
+	.string "The museums want more work like it,\n"
+	.string "here, on your land. Paid work.\p"
+	.string "JOSIE: Gran…$"
+
+StrataLindqvistRanch_Text_StoryAuction3::
+	.string "BEA: Four generations on this place,\n"
+	.string "and the thing that lasts is a pile\l"
+	.string "of bones.\p"
+	.string "Might as well be where people can\n"
+	.string "see it.\p"
+	.string "Doctor, you have a deal. MR. KESSLER,\n"
+	.string "I'm sorry for your trouble.\p"
+	.string "KESSLER: Don't be. Losing gracefully\n"
+	.string "is part of the job.\p"
+	.string "There's always another ranch.$"
+
+StrataLindqvistRanch_Text_StoryAuction4::
+	.string "JOSIE: {PLAYER}, did you hear? It's\n"
+	.string "going to a museum!\p"
+	.string "And I've decided. I'm switching my\n"
+	.string "major to paleontology.\p"
+	.string "Don't tell Gran yet. Let her enjoy\n"
+	.string "the money first.$"
+
+StrataLindqvistRanch_Text_JosieDate::
+	.string "JOSIE: She's not wrong about the\n"
+	.string "hay. That's the worst part.\p"
+	.string "There has to be an offer that\n"
+	.string "doesn't make her choose.$"
+
+StrataLindqvistRanch_Text_JosieAfter::
+	.string "JOSIE: A museum, with our name on\n"
+	.string "the case. Gran's pretending she\l"
+	.string "isn't proud.$"
+
+StrataLindqvistRanch_Text_Halvorsen::
+	.string "DR. HALVORSEN: We kept the Pair, and\n"
+	.string "its layer. That was the part worth\l"
+	.string "keeping.$"
 
 @ Visiting researchers (peer review, C13): the palynologist (act 2), the ichthyologist at the
 @ stock pond (act 5) and the Quaternary ecologist (act 8). One battle each.
@@ -150,9 +379,35 @@ StrataLindqvistRanch_EventScript_Bea::
 	end
 
 StrataLindqvistRanch_EventScript_BeaLater::
+	goto_if_ge VAR_STRATA_SUBPLOT, SUBPLOT_AUCTION_DAY, StrataLindqvistRanch_EventScript_BeaSold
+	goto_if_ge VAR_STRATA_SUBPLOT, SUBPLOT_AUCTION_DATE, StrataLindqvistRanch_EventScript_BeaDate
 	msgbox StrataLindqvistRanch_Text_BeaLater, MSGBOX_DEFAULT
 	release
 	end
+
+StrataLindqvistRanch_EventScript_BeaDate::
+	msgbox StrataLindqvistRanch_Text_BeaDate, MSGBOX_DEFAULT
+	release
+	end
+
+StrataLindqvistRanch_EventScript_BeaSold::
+	msgbox StrataLindqvistRanch_Text_BeaSold, MSGBOX_DEFAULT
+	release
+	end
+
+StrataLindqvistRanch_Text_BeaDate::
+	.string "BEA: Last day of the season. Sealed\n"
+	.string "bids. Then it's done, one way or\l"
+	.string "the other.\p"
+	.string "I keep telling Josie it's only\n"
+	.string "bones. She keeps not believing me.$"
+
+StrataLindqvistRanch_Text_BeaSold::
+	.string "BEA: The consortium paid. Not what\n"
+	.string "the dealer bid, but the hay's\l"
+	.string "bought, and the bones stay public.\p"
+	.string "Josie tells everyone in JORDAN.\n"
+	.string "Twice.$"
 
 StrataLindqvistRanch_EventScript_Kessler::
 	lock

@@ -103,11 +103,11 @@ largest extinction in the epilogue is the one humans were present for.
 | Map | Era | Layout source (placeholder) | Notes |
 |---|---|---|---|
 | Hell Creek Camp | present | Route 111 north | Hub; field station door at (26, 18); Theo (four peer reviews), Josie, Marge's store, the ornithologist and mammalogist (visiting researchers); ranch road west to the Lindqvist Ranch |
-| Field Station | present | Birch's lab | STRATA rig at (10–11, 7); mentor Dr. Halvorsen; respawn point; PC, cot, relearner Wren, rig-rules notes |
+| Field Station | present | Birch's lab | STRATA rig at (10–11, 7); mentor Dr. Halvorsen; respawn point; PC, cot, relearner Wren, rig-rules notes; interludes 1, 4, 5, 9 (S1) on the trigger row y 10, visitors (Kessler, Theo, Josie) just inside the door |
 | Hell Creek Badlands | present | Route 111 desert | K-Pg boundary clay; Dale's tutorial dig (3 survey stakes, `FLAG_STRATA_DIG_*`); BLM boundary on the south edge (needs `FLAG_STRATA_BLM_PERMIT`); no encounters |
-| Sand Arroyo | present | Route 111 desert rows 74–100 (joins the badlands) | BLM land: the poached pit, a broken jacket, spoil and tire tracks |
-| Lindqvist Ranch | present | Route 117 | Bea; Kessler and a crew hand (until Act 1 is done); the Pair under a tarp (`FLAG_STRATA_SAW_PAIR`) |
-| Jordan | present | Fallarbor Town (tent and healing building removed) | General store (Mart), café (House 2, heals), BLM field office (Lanette's house; Ranger Ortiz gives the permit after Act 2); the highway west leads to the prairie in the epilogue |
+| Sand Arroyo | present | Route 111 desert rows 74–100 (joins the badlands) | BLM land: the poached pit, a broken jacket, spoil and tire tracks; Ortiz's evidence scene after act 5 (S1: three records, `FLAG_STRATA_STORY_EVIDENCE_*`) |
+| Lindqvist Ranch | present | Route 117 | Bea; Kessler and a crew hand (until Act 1 is done, and on auction day); the Pair under a tarp (`FLAG_STRATA_SAW_PAIR`); interludes 2, 7, 10 (S1) play on arrival, their cast by the road from camp |
+| Jordan | present | Fallarbor Town (tent and healing building removed) | General store (Mart), café (House 2, heals), BLM field office (Lanette's house; Ranger Ortiz gives the permit after Act 2, interlude 3); the citation (interlude 8) on the street on arrival after Act 7; the highway west leads to the prairie in the epilogue |
 | Levee Forest | 66.04 Ma | Route 119 south | Arrival point; south edge returns to camp; east side opens into the Fern Glade; 3 field notes; *Avisaurus* at the forest edge |
 | River Channel | 66.04 Ma | Route 119 middle | The tyrannosaur waits on the bluff (survival set piece); the ejecta streaks end the act and the rig pulls you out |
 | Backswamp | 66.04 Ma | Route 120 marsh | Gar, champsosaurs, crocodylians, *Emarginachelys*; field notes on the detritus food web |
@@ -152,9 +152,21 @@ The rig only moves up: once a layer is loaded, earlier layers are closed.
 Story progress is `VAR_STRATA_STORY`: 0 new game, 1 starter chosen, then for act N
 `2N` while in the act and `2N + 1` once its boss is done (`STORY_IN_ACT`,
 `STORY_ACT_DONE` in `include/constants/strata.h`); 18 is the epilogue. The rig
-(`src/strata_acts.c`) loads the next layer only after the act is done; Dr.
-Halvorsen has a line for every story value. Each deep-time map has an anchor sign
-that returns to the field station.
+(`src/strata_acts.c`) loads the next layer only after the act is done. Each deep-time map has
+an anchor sign that returns to the field station.
+
+The present-day subplot is a second var, `VAR_STRATA_SUBPLOT` (0x40DC, `SUBPLOT_*` 0–10 in
+`include/constants/strata_act_flags.h`): the last camp interlude played. Interlude N is due once
+its act is done (`VAR_STRATA_STORY >= STORY_ACT_DONE(act)`) and the subplot is N − 1; it plays
+on its own hub map (`sStoryBeats` in `src/strata_story.c`; the beats, places and triggers are
+the "As built" table in outline §1.5). Skipped beats wait in order; none gates the rig. Every
+hub map's on-transition script calls `special Strata_StoryPrepareMap` (`VAR_TEMP_2` = the beat
+due here, `VAR_TEMP_3` = 1 if any, `VAR_TEMP_4` = the beat due anywhere). The start menu shows
+the next objective for every (story, subplot) in a box top left (`Story_QuestLine`).
+
+Dr. Halvorsen's talk depends on both vars: the science of the layer by story (`sMentorLines`,
+with the T. rex-fled variant), then the people by subplot: where the next interlude waits, or
+what she makes of the last one (`src/strata_acts.c`).
 
 `python3 tools/strata/mapcheck.py` walks every Strata map from its arrival point and
 connected edges and reports any trigger, sign or edge the player can't reach on foot.
@@ -352,6 +364,12 @@ free, since most of it comes from catching and from fighting.
 Present-day content has no act of its own. Its section at the end of
 `include/constants/strata_act_flags.h` holds `FLAG_STRATA_HUB_BASE` (0x2AC..0x2B3, one used:
 `FLAG_STRATA_HUB_STIPEND_TOLD`) and `VAR_STRATA_STIPEND_COUNT` (0x40DB).
+
+The subplot (S1) has its own "Story" section after it: `FLAG_STRATA_STORY_BASE` (0x4D4..0x4DD,
+inside the saved flag array): `FLAG_STRATA_STORY_SAW_PIT` and Ortiz's evidence records
+(`FLAG_STRATA_STORY_EVIDENCE_STARTED`, `_PIT`, `_JACKET`, `_TRACKS`); 5..9 are free. The var is
+`VAR_STRATA_SUBPLOT` (0x40DC, named in `vars.h`). On the hub maps the interlude cast hides under
+`FLAG_TEMP_9..B` (the researchers keep `FLAG_TEMP_1..8`, Kessler at the ranch `FLAG_TEMP_1F`).
 
 ## 7. Systems
 

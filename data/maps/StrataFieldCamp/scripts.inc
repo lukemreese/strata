@@ -9,7 +9,15 @@ StrataFieldCamp_MapScripts::
 
 StrataFieldCamp_OnTransition:
 	special Strata_HideLockedReviewers
+	@ Josie is at the ranch while a ranch interlude is due there (S1, src/strata_story.c).
+	special Strata_StoryPrepareMap
+	call_if_eq VAR_TEMP_4, SUBPLOT_AUCTION_DATE, StrataFieldCamp_EventScript_JosieAway
+	call_if_eq VAR_TEMP_4, SUBPLOT_AUCTION_DAY, StrataFieldCamp_EventScript_JosieAway
 	end
+
+StrataFieldCamp_EventScript_JosieAway::
+	setflag FLAG_TEMP_9
+	return
 
 @ Theo Okafor, PhD student and the rival. Peer review #0 once the starter is chosen (his animal
 @ is the next starter in the cycle mammal -> bird -> turtle), then #1 after Corral Bluffs, #2
@@ -82,9 +90,23 @@ StrataFieldCamp_EventScript_TheoIdle0::
 	end
 
 StrataFieldCamp_EventScript_TheoIdle3::
+	@ After Kessler's funding offer (S1) he still has the card.
+	goto_if_ge VAR_STRATA_SUBPLOT, SUBPLOT_HALVORSEN_REFUSAL, StrataFieldCamp_EventScript_TheoCard
 	msgbox StrataFieldCamp_Text_TheoIdle3, MSGBOX_DEFAULT
 	release
 	end
+
+StrataFieldCamp_EventScript_TheoCard::
+	msgbox StrataFieldCamp_Text_TheoCard, MSGBOX_DEFAULT
+	release
+	end
+
+StrataFieldCamp_Text_TheoCard::
+	.string "THEO: Kessler's card is still in my\n"
+	.string "wallet. I haven't called.\p"
+	.string "If the rig is sold, my thesis goes\n"
+	.string "with it. I'd like a better reason\l"
+	.string "than that to say no.$"
 
 StrataFieldCamp_EventScript_TheoIdle6::
 	msgbox StrataFieldCamp_Text_TheoIdle6, MSGBOX_DEFAULT
@@ -127,6 +149,10 @@ StrataFieldCamp_EventScript_TomasWon::
 StrataFieldCamp_EventScript_Student::
 	lock
 	faceplayer
+	@ The subplot (S1): what Josie is worried about after each interlude.
+	goto_if_ge VAR_STRATA_SUBPLOT, SUBPLOT_AUCTION_DAY, StrataFieldCamp_EventScript_JosieMuseum
+	goto_if_ge VAR_STRATA_SUBPLOT, SUBPLOT_AUCTION_DATE, StrataFieldCamp_EventScript_JosieAuction
+	goto_if_ge VAR_STRATA_SUBPLOT, SUBPLOT_JOSIE_PIT, StrataFieldCamp_EventScript_JosiePit
 	msgbox StrataFieldCamp_Text_Student, MSGBOX_DEFAULT
 	goto_if_set FLAG_STRATA_SAW_PAIR, StrataFieldCamp_EventScript_JosieSawPair
 	msgbox StrataFieldCamp_Text_JosieRanch, MSGBOX_DEFAULT
@@ -137,6 +163,56 @@ StrataFieldCamp_EventScript_JosieSawPair::
 	msgbox StrataFieldCamp_Text_JosieSawPair, MSGBOX_DEFAULT
 	release
 	end
+
+StrataFieldCamp_EventScript_JosiePit::
+	goto_if_ge VAR_STRATA_SUBPLOT, SUBPLOT_PIT_DOCUMENTED, StrataFieldCamp_EventScript_JosieDocumented
+	msgbox StrataFieldCamp_Text_JosiePit, MSGBOX_DEFAULT
+	release
+	end
+
+StrataFieldCamp_EventScript_JosieDocumented::
+	msgbox StrataFieldCamp_Text_JosieDocumented, MSGBOX_DEFAULT
+	release
+	end
+
+StrataFieldCamp_EventScript_JosieAuction::
+	msgbox StrataFieldCamp_Text_JosieAuction, MSGBOX_DEFAULT
+	release
+	end
+
+StrataFieldCamp_EventScript_JosieMuseum::
+	msgbox StrataFieldCamp_Text_JosieMuseum, MSGBOX_DEFAULT
+	release
+	end
+
+StrataFieldCamp_Text_JosiePit::
+	.string "JOSIE: I keep thinking about that\n"
+	.string "pit. Somebody stood there with a\l"
+	.string "shovel and decided the layer\l"
+	.string "didn't matter.\p"
+	.string "Dale says a bone without its layer\n"
+	.string "is just a rock. Now I get it.$"
+
+StrataFieldCamp_Text_JosieDocumented::
+	.string "JOSIE: ORTIZ says your notes are\n"
+	.string "good enough for a case file.\p"
+	.string "Photos, GPS, the layer. That's all\n"
+	.string "it takes? Huh. I'm keeping a\l"
+	.string "notebook from now on.$"
+
+StrataFieldCamp_Text_JosieAuction::
+	.string "JOSIE: Gran set an auction date.\n"
+	.string "Sealed bids. Kessler's running it.\p"
+	.string "I yelled at her. She didn't yell\n"
+	.string "back. That was worse.\p"
+	.string "The ranch is going to be mine one\n"
+	.string "day. And this choice with it.$"
+
+StrataFieldCamp_Text_JosieMuseum::
+	.string "JOSIE: The Pair's going to a museum,\n"
+	.string "and Gran still got paid!\p"
+	.string "One day it's my land, and my turn\n"
+	.string "to choose. I know what I'll pick.$"
 
 StrataFieldCamp_EventScript_CampSign::
 	msgbox StrataFieldCamp_Text_CampSign, MSGBOX_SIGN

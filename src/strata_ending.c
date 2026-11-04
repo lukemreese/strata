@@ -8,6 +8,7 @@
 #include "strata_ending.h"
 #include "strata_fossils.h"
 #include "string_util.h"
+#include "constants/strata_act_flags.h"
 #include "text.h"
 #include "constants/rgb.h"
 
@@ -24,12 +25,6 @@
 
 #define FIRST_STRATA_SPECIES (SPECIES_CUSTOM_START + 1)
 #define STRATA_SPECIES_COUNT (SPECIES_CUSTOM_END - FIRST_STRATA_SPECIES)
-
-// The story lane's VAR_STRATA_SUBPLOT (S1: 0x40DC, 10 = Bea chose the museum consortium on
-// auction day, Act 8). Read through a local name so this file builds before that lane lands;
-// switch to VAR_STRATA_SUBPLOT once it is defined.
-#define ENDING_VAR_SUBPLOT        0x40DC
-#define ENDING_SUBPLOT_CONSORTIUM 10
 
 // Bottom (oldest) to top. The age strings say "about" only where the rig's own layer name does
 // not already give a range; the Colby date is approximate (calibrated radiocarbon, ~13 ka).
@@ -286,7 +281,7 @@ u32 Ending_FitFont(const u8 *str, u32 width)
 // always shows it on display; the credits name it only once the subplot says so.
 bool32 Ending_PairOnDisplay(void)
 {
-    return VarGet(ENDING_VAR_SUBPLOT) >= ENDING_SUBPLOT_CONSORTIUM;
+    return VarGet(VAR_STRATA_SUBPLOT) >= SUBPLOT_AUCTION_DAY;  // Bea chose the museum consortium
 }
 
 // special Strata_RollCredits

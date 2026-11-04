@@ -38,7 +38,12 @@ Because `ANIMAL` means the creature, don't reuse it for anything else: the meat-
    formats every species x era x pressure case and checks the widths. Follow that pattern for new
    generated text. `{COLOR RED}` is palette index 4 (shadow 5): a custom palette must keep those
    slots red (the chart's does) or the colour code shows the wrong colour.
-6. Menu text that must stay a fixed width uses `{CLEAR_TO n}` (battle menu `Battle Bag Team Run`);
+6. Map script text has no width test of its own. For new dialogue you want checked, make its
+   labels global (`Label::`), declare them `extern const u8 Label[];` in a test, expand the
+   placeholders at their widest (7-char `W` name, `888` for a number) and measure each line
+   (≤ 208 px, at most one `\n` per `\p` page): `test/strata_story.c` does this for the S1
+   interludes, Halvorsen's lines (every story × subplot) and the 152 px field-log box.
+7. Menu text that must stay a fixed width uses `{CLEAR_TO n}` (battle menu `Battle Bag Team Run`);
    keep those offsets.
 
 ## Species category

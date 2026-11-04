@@ -9,6 +9,11 @@ StrataFieldStation_MapScripts::
 
 StrataFieldStation_OnTransition:
 	special Strata_HideLockedReviewers
+	@ The interlude visitors only come in during their beat (S1, src/strata_story.c).
+	special Strata_StoryPrepareMap
+	setflag FLAG_TEMP_9
+	setflag FLAG_TEMP_A
+	setflag FLAG_TEMP_B
 	end
 
 StrataFieldStation_OnFrame:
@@ -42,8 +47,12 @@ StrataFieldStation_EventScript_Mentor::
 	faceplayer
 	msgbox StrataFieldStation_Text_Rest, MSGBOX_DEFAULT
 	special HealPlayerParty
+	@ The consortium interlude is hers: talking to her plays it as well as the trigger row.
+	goto_if_eq VAR_TEMP_2, SUBPLOT_CONSORTIUM, StrataFieldStation_EventScript_MentorConsortium
+	@ Science by story, then people by subplot (src/strata_acts.c).
 	special Strata_BufferMentorText
 	msgbox gStringVar4, MSGBOX_DEFAULT
+StrataFieldStation_EventScript_MentorServices::
 	@ Saves from before the gear existed get it here.
 	checkitem ITEM_WADERS
 	call_if_eq VAR_RESULT, FALSE, StrataFieldStation_EventScript_LateWaterGear
@@ -496,3 +505,331 @@ StrataFieldStation_Text_RelearnerEgg:
 StrataFieldStation_Text_RelearnerBye:
 	.string "WREN: Come back whenever the archive\n"
 	.string "can help.$"
+
+@ ---------------------------------------------------------------------------
+@ Interludes in the field station (S1; the beat table is in src/strata_story.c). They start
+@ on the trigger row between the rig and the door (y 10) while VAR_TEMP_3 is 1, which
+@ special Strata_StoryPrepareMap sets when a station beat is due. Visitors appear just inside
+@ the door (row 11), Dr. Halvorsen comes down from her desk, and everyone goes back after.
+@ ---------------------------------------------------------------------------
+StrataFieldStation_EventScript_Interlude::
+	lockall
+	setvar VAR_TEMP_3, 0
+	switch VAR_TEMP_2
+	case SUBPLOT_KESSLER_OFFER, StrataFieldStation_EventScript_KesslerOffer
+	case SUBPLOT_JOSIE_PIT, StrataFieldStation_EventScript_JosiePit
+	case SUBPLOT_HALVORSEN_REFUSAL, StrataFieldStation_EventScript_Refusal
+	case SUBPLOT_CONSORTIUM, StrataFieldStation_EventScript_Consortium
+	releaseall
+	end
+
+@ The next beat may be due here too (a save that skipped some): check again after each one.
+StrataFieldStation_EventScript_InterludeEnd::
+	special Strata_StoryPrepareMap
+	releaseall
+	end
+
+StrataFieldStation_EventScript_MentorDown::
+	applymovement LOCALID_STRATA_MENTOR, StrataFieldStation_Movement_MentorDown
+	waitmovement 0
+	return
+
+StrataFieldStation_EventScript_MentorBack::
+	applymovement LOCALID_STRATA_MENTOR, StrataFieldStation_Movement_MentorBack
+	waitmovement 0
+	return
+
+@ Act 1 done: Kessler offers a "partnership" (rig output for prospecting). Halvorsen says no,
+@ and Theo calls the rig a fancy diorama.
+StrataFieldStation_EventScript_KesslerOffer::
+	playse SE_DOOR
+	clearflag FLAG_TEMP_9
+	addobject LOCALID_STRATA_STATION_KESSLER
+	applymovement OBJ_EVENT_ID_PLAYER, StrataFieldStation_Movement_FaceDown
+	waitmovement 0
+	msgbox StrataFieldStation_Text_StoryKessler1, MSGBOX_DEFAULT
+	call StrataFieldStation_EventScript_MentorDown
+	msgbox StrataFieldStation_Text_StoryKessler2, MSGBOX_DEFAULT
+	msgbox StrataFieldStation_Text_StoryKessler3, MSGBOX_DEFAULT
+	applymovement LOCALID_STRATA_STATION_KESSLER, StrataFieldStation_Movement_KesslerLeave
+	waitmovement 0
+	playse SE_EXIT
+	removeobject LOCALID_STRATA_STATION_KESSLER
+	setflag FLAG_TEMP_9
+	playse SE_DOOR
+	clearflag FLAG_TEMP_A
+	addobject LOCALID_STRATA_STATION_THEO
+	msgbox StrataFieldStation_Text_StoryKessler4, MSGBOX_DEFAULT
+	applymovement LOCALID_STRATA_STATION_THEO, StrataFieldStation_Movement_TheoLeave
+	waitmovement 0
+	playse SE_EXIT
+	removeobject LOCALID_STRATA_STATION_THEO
+	setflag FLAG_TEMP_A
+	msgbox StrataFieldStation_Text_StoryKessler5, MSGBOX_DEFAULT
+	call StrataFieldStation_EventScript_MentorBack
+	setvar VAR_STRATA_SUBPLOT, SUBPLOT_KESSLER_OFFER
+	goto StrataFieldStation_EventScript_InterludeEnd
+
+@ Act 3 done: Josie found a fresh pit on BLM land, in Sand Arroyo.
+StrataFieldStation_EventScript_JosiePit::
+	playse SE_DOOR
+	clearflag FLAG_TEMP_B
+	addobject LOCALID_STRATA_STATION_JOSIE
+	applymovement OBJ_EVENT_ID_PLAYER, StrataFieldStation_Movement_FaceDown
+	waitmovement 0
+	msgbox StrataFieldStation_Text_StoryJosie1, MSGBOX_DEFAULT
+	call StrataFieldStation_EventScript_MentorDown
+	msgbox StrataFieldStation_Text_StoryJosie2, MSGBOX_DEFAULT
+	applymovement LOCALID_STRATA_STATION_JOSIE, StrataFieldStation_Movement_JosieLeave
+	waitmovement 0
+	playse SE_EXIT
+	removeobject LOCALID_STRATA_STATION_JOSIE
+	setflag FLAG_TEMP_B
+	call StrataFieldStation_EventScript_MentorBack
+	setvar VAR_STRATA_SUBPLOT, SUBPLOT_JOSIE_PIT
+	goto StrataFieldStation_EventScript_InterludeEnd
+
+@ Act 4 done: Kessler offers to fund the rig after Halvorsen retires, for a first look at the
+@ crew's surveys. She refuses; Theo, whose grant is ending, nearly takes it.
+StrataFieldStation_EventScript_Refusal::
+	playse SE_DOOR
+	clearflag FLAG_TEMP_9
+	addobject LOCALID_STRATA_STATION_KESSLER
+	clearflag FLAG_TEMP_A
+	addobject LOCALID_STRATA_STATION_THEO
+	applymovement OBJ_EVENT_ID_PLAYER, StrataFieldStation_Movement_FaceDown
+	waitmovement 0
+	msgbox StrataFieldStation_Text_StoryRefusal1, MSGBOX_DEFAULT
+	call StrataFieldStation_EventScript_MentorDown
+	msgbox StrataFieldStation_Text_StoryRefusal2, MSGBOX_DEFAULT
+	msgbox StrataFieldStation_Text_StoryRefusal3, MSGBOX_DEFAULT
+	applymovement LOCALID_STRATA_STATION_KESSLER, StrataFieldStation_Movement_KesslerLeave
+	waitmovement 0
+	playse SE_EXIT
+	removeobject LOCALID_STRATA_STATION_KESSLER
+	setflag FLAG_TEMP_9
+	msgbox StrataFieldStation_Text_StoryRefusal4, MSGBOX_DEFAULT
+	applymovement LOCALID_STRATA_STATION_THEO, StrataFieldStation_Movement_TheoLeave
+	waitmovement 0
+	playse SE_EXIT
+	removeobject LOCALID_STRATA_STATION_THEO
+	setflag FLAG_TEMP_A
+	call StrataFieldStation_EventScript_MentorBack
+	setvar VAR_STRATA_SUBPLOT, SUBPLOT_HALVORSEN_REFUSAL
+	goto StrataFieldStation_EventScript_InterludeEnd
+
+@ Act 7 done, after the citation: Halvorsen proposes a museum consortium. The research case
+@ is the player's Codex (STR_VAR_1 = species caught).
+StrataFieldStation_EventScript_Consortium::
+	applymovement OBJ_EVENT_ID_PLAYER, StrataFieldStation_Movement_FaceUp
+	waitmovement 0
+	call StrataFieldStation_EventScript_MentorDown
+	call StrataFieldStation_EventScript_ConsortiumTalk
+	call StrataFieldStation_EventScript_MentorBack
+	goto StrataFieldStation_EventScript_InterludeEnd
+
+StrataFieldStation_EventScript_MentorConsortium::
+	setvar VAR_TEMP_3, 0
+	call StrataFieldStation_EventScript_ConsortiumTalk
+	special Strata_StoryPrepareMap
+	goto StrataFieldStation_EventScript_MentorServices
+
+StrataFieldStation_EventScript_ConsortiumTalk::
+	special Strata_StoryBufferCaseCount
+	msgbox StrataFieldStation_Text_StoryConsortium1, MSGBOX_DEFAULT
+	msgbox StrataFieldStation_Text_StoryConsortium2, MSGBOX_DEFAULT
+	setvar VAR_STRATA_SUBPLOT, SUBPLOT_CONSORTIUM
+	return
+
+@ The visitors only stand in the station during their scene.
+StrataFieldStation_EventScript_VisitorKessler::
+	msgbox StrataFieldStation_Text_VisitorKessler, MSGBOX_NPC
+	end
+
+StrataFieldStation_EventScript_VisitorTheo::
+	msgbox StrataFieldStation_Text_VisitorTheo, MSGBOX_NPC
+	end
+
+StrataFieldStation_EventScript_VisitorJosie::
+	msgbox StrataFieldStation_Text_VisitorJosie, MSGBOX_NPC
+	end
+
+StrataFieldStation_Movement_FaceDown:
+	face_down
+	step_end
+
+StrataFieldStation_Movement_FaceUp:
+	face_up
+	step_end
+
+StrataFieldStation_Movement_MentorDown:
+	walk_down
+	walk_down
+	walk_down
+	step_end
+
+StrataFieldStation_Movement_MentorBack:
+	walk_up
+	walk_up
+	walk_up
+	face_down
+	step_end
+
+@ From (8, 11) out through the door at (7, 12).
+StrataFieldStation_Movement_KesslerLeave:
+	walk_left
+	walk_down
+	step_end
+
+@ From (4, 11) out through the door at (6, 12).
+StrataFieldStation_Movement_TheoLeave:
+	walk_right
+	walk_right
+	walk_down
+	step_end
+
+@ From (9, 11) out through the door at (7, 12).
+StrataFieldStation_Movement_JosieLeave:
+	walk_left
+	walk_left
+	walk_down
+	step_end
+
+StrataFieldStation_Text_StoryKessler1::
+	.string "KESSLER: DR. HALVORSEN. Forgive the\n"
+	.string "intrusion. WADE KESSLER, Kessler\l"
+	.string "Natural History.\p"
+	.string "I hear your rig rebuilds a whole\n"
+	.string "landscape from what's in the rock.$"
+
+StrataFieldStation_Text_StoryKessler2::
+	.string "KESSLER: Picture it pointed at a\n"
+	.string "hillside before anyone digs. Which\l"
+	.string "layer, what lived there, where.\p"
+	.string "A partnership. Your rig's maps, my\n"
+	.string "crews. I pay well, and I hear the\l"
+	.string "station could use the money.\p"
+	.string "DR. HALVORSEN: It could. The answer\n"
+	.string "is still no, MR. KESSLER.\p"
+	.string "What the rig makes is published,\n"
+	.string "for anyone, once it's been checked.\l"
+	.string "It isn't for sale first.\p"
+	.string "And it rebuilds animals, not bones.\n"
+	.string "It can't tell you where to dig. I'm\l"
+	.string "not sure anything can.$"
+
+StrataFieldStation_Text_StoryKessler3::
+	.string "KESSLER: Every spring the rain takes\n"
+	.string "bones nobody came to collect,\l"
+	.string "Doctor. That's not a theory.\p"
+	.string "My door stays open.$"
+
+StrataFieldStation_Text_StoryKessler4::
+	.string "THEO: Was that a fossil dealer?\n"
+	.string "He wants to prospect with a fancy\l"
+	.string "diorama?\p"
+	.string "DR. HALVORSEN: THEO.\p"
+	.string "THEO: I'm only saying. A toy can't\n"
+	.string "find a fossil. It can barely find\l"
+	.string "its own mistakes.$"
+
+StrataFieldStation_Text_StoryKessler5::
+	.string "DR. HALVORSEN: He's half right about\n"
+	.string "the rain, {PLAYER}. Bones do erode\l"
+	.string "away if nobody collects them.\p"
+	.string "But a bone sold without its layer\n"
+	.string "has lost most of what it could\l"
+	.string "tell us. Remember that.$"
+
+StrataFieldStation_Text_StoryJosie1::
+	.string "JOSIE: {PLAYER}! There you are.\p"
+	.string "I took the short way home, across\n"
+	.string "SAND ARROYO. The BLM ground.\p"
+	.string "There's a pit dug into the slope.\n"
+	.string "Fresh pick marks. A plaster jacket\l"
+	.string "cracked open and left behind.\p"
+	.string "No stakes, no field numbers,\n"
+	.string "nothing written down.$"
+
+StrataFieldStation_Text_StoryJosie2::
+	.string "DR. HALVORSEN: Then whatever came\n"
+	.string "out of it has lost its layer, and\l"
+	.string "its date with it.\p"
+	.string "Nobody touches it. {PLAYER}, you have\n"
+	.string "the permit. Go and look, and take\l"
+	.string "careful notes.\p"
+	.string "JOSIE: I'll call RANGER ORTIZ. She\n"
+	.string "said to, if we ever saw a hole that\l"
+	.string "shouldn't be there.$"
+
+StrataFieldStation_Text_StoryRefusal1::
+	.string "KESSLER: Doctor. I'll be brief this\n"
+	.string "time.\p"
+	.string "Word in JORDAN is that you retire\n"
+	.string "at the end of the season, and the\l"
+	.string "university means to sell the rig.$"
+
+StrataFieldStation_Text_StoryRefusal2::
+	.string "KESSLER: I'll fund it instead. Five\n"
+	.string "years: staff, power, repairs.\p"
+	.string "In return, a first look at every\n"
+	.string "survey your crew runs on private\l"
+	.string "land. Nothing illegal in that.\p"
+	.string "DR. HALVORSEN: No. Nothing illegal.\p"
+	.string "But a first look means everyone\n"
+	.string "else looks second. Data sold first\l"
+	.string "is data someone can bend.\p"
+	.string "Thank you, MR. KESSLER. No.$"
+
+StrataFieldStation_Text_StoryRefusal3::
+	.string "KESSLER: Your student may see it\n"
+	.string "differently. MR. OKAFOR, your grant\l"
+	.string "ends in the spring, I believe?\p"
+	.string "THEO: …It does.\p"
+	.string "KESSLER: My card. The offer is for\n"
+	.string "whoever runs the rig next.$"
+
+StrataFieldStation_Text_StoryRefusal4::
+	.string "THEO: Three more years of funding.\n"
+	.string "I won't pretend I don't want it.\p"
+	.string "DR. HALVORSEN: It's your choice,\n"
+	.string "THEO. I won't think less of you.\p"
+	.string "THEO: I'm keeping the card. That's\n"
+	.string "all. I'm just keeping the card.$"
+
+StrataFieldStation_Text_StoryConsortium1::
+	.string "DR. HALVORSEN: {PLAYER}, a moment.\n"
+	.string "RANGER ORTIZ told me about the\l"
+	.string "citation.\p"
+	.string "The sale is legal. We can't stop it,\n"
+	.string "and I don't think we should try.\p"
+	.string "But we can make BEA a better offer\n"
+	.string "than a dealer's auction.\p"
+	.string "Three museums and the county have\n"
+	.string "agreed to pool what they have. A\l"
+	.string "consortium.$"
+
+StrataFieldStation_Text_StoryConsortium2::
+	.string "It will probably be less money than\n"
+	.string "the top bid. I won't pretend\l"
+	.string "otherwise.\p"
+	.string "What it buys is a Pair that stays\n"
+	.string "together, in public, where anyone\l"
+	.string "can study it and check our work.\p"
+	.string "The museums want a research case:\n"
+	.string "proof this crew does work worth\l"
+	.string "funding. That's your CODEX.\p"
+	.string "{STR_VAR_1} species so far, each tied to\n"
+	.string "its layer. Keep catching and\l"
+	.string "logging. I'll take it to the\l"
+	.string "auction.$"
+
+StrataFieldStation_Text_VisitorKessler::
+	.string "KESSLER: Don't mind me. I was just\n"
+	.string "leaving.$"
+
+StrataFieldStation_Text_VisitorTheo::
+	.string "THEO: Not now.$"
+
+StrataFieldStation_Text_VisitorJosie::
+	.string "JOSIE: Come on, come on…$"

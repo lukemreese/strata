@@ -56,6 +56,48 @@
       "trainer_sight_or_berry_tree_id": "0",
       "script": "StrataFieldStation_EventScript_Ingrid",
       "flag": "FLAG_TEMP_4"
+    },
+    {
+      "local_id": "LOCALID_STRATA_STATION_KESSLER",
+      "graphics_id": "OBJ_EVENT_GFX_GENTLEMAN",
+      "x": 8,
+      "y": 11,
+      "elevation": 3,
+      "movement_type": "MOVEMENT_TYPE_FACE_UP",
+      "movement_range_x": 1,
+      "movement_range_y": 1,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "StrataFieldStation_EventScript_VisitorKessler",
+      "flag": "FLAG_TEMP_9"
+    },
+    {
+      "local_id": "LOCALID_STRATA_STATION_THEO",
+      "graphics_id": "OBJ_EVENT_GFX_SCIENTIST_2",
+      "x": 4,
+      "y": 11,
+      "elevation": 3,
+      "movement_type": "MOVEMENT_TYPE_FACE_UP",
+      "movement_range_x": 1,
+      "movement_range_y": 1,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "StrataFieldStation_EventScript_VisitorTheo",
+      "flag": "FLAG_TEMP_A"
+    },
+    {
+      "local_id": "LOCALID_STRATA_STATION_JOSIE",
+      "graphics_id": "OBJ_EVENT_GFX_PICNICKER",
+      "x": 9,
+      "y": 11,
+      "elevation": 3,
+      "movement_type": "MOVEMENT_TYPE_FACE_UP",
+      "movement_range_x": 1,
+      "movement_range_y": 1,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "StrataFieldStation_EventScript_VisitorJosie",
+      "flag": "FLAG_TEMP_B"
     }
   ],
   "warp_events": [
@@ -74,7 +116,89 @@
       "dest_warp_id": "0"
     }
   ],
-  "coord_events": [],
+  "coord_events": [
+    {
+      "type": "trigger",
+      "x": 2,
+      "y": 10,
+      "elevation": 3,
+      "var": "VAR_TEMP_3",
+      "var_value": "1",
+      "script": "StrataFieldStation_EventScript_Interlude"
+    },
+    {
+      "type": "trigger",
+      "x": 3,
+      "y": 10,
+      "elevation": 3,
+      "var": "VAR_TEMP_3",
+      "var_value": "1",
+      "script": "StrataFieldStation_EventScript_Interlude"
+    },
+    {
+      "type": "trigger",
+      "x": 4,
+      "y": 10,
+      "elevation": 3,
+      "var": "VAR_TEMP_3",
+      "var_value": "1",
+      "script": "StrataFieldStation_EventScript_Interlude"
+    },
+    {
+      "type": "trigger",
+      "x": 5,
+      "y": 10,
+      "elevation": 3,
+      "var": "VAR_TEMP_3",
+      "var_value": "1",
+      "script": "StrataFieldStation_EventScript_Interlude"
+    },
+    {
+      "type": "trigger",
+      "x": 6,
+      "y": 10,
+      "elevation": 3,
+      "var": "VAR_TEMP_3",
+      "var_value": "1",
+      "script": "StrataFieldStation_EventScript_Interlude"
+    },
+    {
+      "type": "trigger",
+      "x": 7,
+      "y": 10,
+      "elevation": 3,
+      "var": "VAR_TEMP_3",
+      "var_value": "1",
+      "script": "StrataFieldStation_EventScript_Interlude"
+    },
+    {
+      "type": "trigger",
+      "x": 8,
+      "y": 10,
+      "elevation": 3,
+      "var": "VAR_TEMP_3",
+      "var_value": "1",
+      "script": "StrataFieldStation_EventScript_Interlude"
+    },
+    {
+      "type": "trigger",
+      "x": 9,
+      "y": 10,
+      "elevation": 3,
+      "var": "VAR_TEMP_3",
+      "var_value": "1",
+      "script": "StrataFieldStation_EventScript_Interlude"
+    },
+    {
+      "type": "trigger",
+      "x": 10,
+      "y": 10,
+      "elevation": 3,
+      "var": "VAR_TEMP_3",
+      "var_value": "1",
+      "script": "StrataFieldStation_EventScript_Interlude"
+    }
+  ],
   "bg_events": [
     {
       "type": "sign",
