@@ -50,9 +50,21 @@ Because `ANIMAL` means the creature, don't reuse it for anything else: the meat-
 
 Stock content nothing links to: contests, Battle Frontier, link/trade/union room, TV, Match
 Call, Pokéblock and berry blender, day care, safari zone, Mauville and Lilycove NPC text,
-tutors, every stock `data/maps/*` (Hoenn and Kanto) script, `src/debug.c`, credits
-(`src/data/credits.h`, `src/credits_frlg.c`: needs a Strata credits pass), `shared_dex_text.h`
-(stock species). Text baked into images (not redrawn): `graphics/pokedex/hgss/tileset_menu_search*.png`
+tutors, every stock `data/maps/*` (Hoenn and Kanto) script, `src/debug.c`, the stock credits
+data (`src/data/credits.h`, no longer included) and `src/credits_frlg.c` (FRLG build only),
+`shared_dex_text.h` (stock species), the Hall of Fame screen (league text, never entered).
+Text baked into images (not redrawn): `graphics/pokedex/hgss/tileset_menu_search*.png`
 ("POKéDEX" title), `graphics/pokedex/menu.png`, `graphics/pokedex/search_menu.png`,
-`graphics/credits/the_end_copyright.png`, FRLG intro/title/credits art, `graphics/pokenav/*`.
+FRLG intro/title/credits art, `graphics/pokenav/*`.
 If one becomes reachable, redraw it and add the file to this list's "done" side in the commit.
+Done: the credits (`src/credits.c` is Strata's roll up the column, S3: printed text only, so
+`graphics/credits/the_end_copyright.png` and the bike-scene art are no longer drawn).
+
+## The credits roll (S3)
+
+`src/credits.c` draws, `src/strata_ending.c` holds the words: band names and ages, loss phrases
+per filter ("lost at the K-Pg boundary"), the credits proper (`gEndingCreditsLines`) and the
+fixed lines (`gText_Ending*`). Rows are two columns (x 8 and x 92, end 232) or centred; every
+string goes through `Ending_FitFont` (narrow when too wide), and `test/strata_ending.c` checks
+every band, every species as lost or living, and every fixed line, so a new line must be added
+to that test. Credit people as "the Strata team" and the science in general; no stock names.

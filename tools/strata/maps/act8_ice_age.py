@@ -200,14 +200,16 @@ MAPS = [
         bgs=_COLBY_NOTES[1],
         coords=[trigger(10, y, "VAR_TEMP_1", 0, "StrataColby_EventScript_Intro") for y in (6, 7, 8, 9)],
         objects=[
-            # The bone pile (stand-in boulders) and, among the bones, the point.
+            # The bone pile (stand-in boulders) and, among the bones, the point: the stock fossil
+            # stone, not the item ball (that draws a specimen capsule, which isn't a find).
+            # Reading the point sets FLAG_STRATA_COLBY_SEEN, which opens "Today" at the rig (S3).
             obj("LOCALID_STRATA_COLBY_BONES_A", "OBJ_EVENT_GFX_BREAKABLE_ROCK", 13, 7,
                 "StrataColby_EventScript_Bones", "MOVEMENT_TYPE_FACE_DOWN"),
             obj("LOCALID_STRATA_COLBY_BONES_B", "OBJ_EVENT_GFX_BREAKABLE_ROCK", 15, 8,
                 "StrataColby_EventScript_Bones", "MOVEMENT_TYPE_FACE_DOWN"),
             obj("LOCALID_STRATA_COLBY_BONES_C", "OBJ_EVENT_GFX_BREAKABLE_ROCK", 12, 9,
                 "StrataColby_EventScript_Bones", "MOVEMENT_TYPE_FACE_DOWN"),
-            obj("LOCALID_STRATA_COLBY_POINT", "OBJ_EVENT_GFX_ITEM_BALL", 14, 8,
+            obj("LOCALID_STRATA_COLBY_POINT", "OBJ_EVENT_GFX_FOSSIL", 14, 8,
                 "StrataColby_EventScript_Point", "MOVEMENT_TYPE_FACE_DOWN"),
         ],
     ),

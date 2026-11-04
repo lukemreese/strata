@@ -654,3 +654,4 @@ gSpecials::
 	def_special Strata_PushFossilList
 	def_special Strata_BufferFossil
 	def_special Strata_BufferHallCase
+	def_special Strata_RollCredits, waitstate=1

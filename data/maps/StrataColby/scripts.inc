@@ -1,8 +1,11 @@
 @ Act 8 coda: the Colby site, Bighorn Basin, ~13,000 years ago (late glacial sub-layer, same
 @ era as the cave). No wild encounters. Mammoth bones and a Clovis point; the rig can build
 @ the bone and the stone but not the people (rule R-g). Seeing the point sets
-@ FLAG_STRATA_COLBY_SEEN, which the epilogue gate (story task S3) can check before the rig
-@ offers "Today". The story value is left alone: leaving by the anchor is always allowed.
+@ FLAG_STRATA_COLBY_SEEN: the rig holds "Today" back until it is set (S3, Strata_IsTodayGated
+@ in src/strata_acts.c). The story value is left alone: leaving by the anchor is always allowed.
+@ Science, hedged on purpose: the date is approximate (calibrated radiocarbon); the bone piles
+@ were read as meat caches by the excavators (Frison and Todd, 1986), which is debated; and the
+@ part Clovis hunting played in the megafauna extinctions, against the climate, is unresolved.
 StrataColby_MapScripts::
 	.byte 0
 
@@ -38,23 +41,27 @@ StrataColby_EventScript_NoteEvidence::
 	msgbox StrataColby_Text_NoteEvidence, MSGBOX_SIGN
 	end
 
-StrataColby_Text_Intro:
+StrataColby_Text_Intro::
 	.string "The layer thins. Less snow, and no\n"
 	.string "herds: only what the ground kept.\p"
 	.string "About 13,000 years ago. The rig\n"
 	.string "renders bone and stone here, and\l"
 	.string "nothing that walked on two legs.$"
 
-StrataColby_Text_Bones:
+StrataColby_Text_Bones::
 	.string "A heap of mammoth bones: limb\n"
 	.string "bones, ribs, parts of skulls, from\l"
 	.string "several animals.\p"
-	.string "One reading is a pile made by\n"
-	.string "people. Another is a chance heap.\l"
-	.string "The bones are evidence. The story\l"
-	.string "is a guess.$"
+	.string "The diggers read the piles as meat\n"
+	.string "caches: bones stacked by people,\l"
+	.string "one pile capped with a skull.\p"
+	.string "Others doubt it, or think some\n"
+	.string "bones just collected here. That\l"
+	.string "reading is still debated.\p"
+	.string "The bones are evidence. The story\n"
+	.string "is a hypothesis.$"
 
-StrataColby_Text_Point:
+StrataColby_Text_Point::
 	.string "A fluted stone point lies among the\n"
 	.string "bones: a channel flake was struck\l"
 	.string "off each face.\p"
@@ -65,13 +72,15 @@ StrataColby_Text_Point:
 	.string "it: people are only traces here.\p"
 	.string "Someone made this.$"
 
-StrataColby_Text_PointLogged:
+StrataColby_Text_PointLogged::
 	.string "The rig logs the find. Nothing here\n"
 	.string "to resolve: this slice is only a\l"
 	.string "record of bones with tools.\p"
+	.string "The sub-layer is read. The rig can\n"
+	.string "chain the last layer now: today.\p"
 	.string "The anchor leads back to camp.$"
 
-StrataColby_Text_NoteSite:
+StrataColby_Text_NoteSite::
 	.string "FIELD NOTE: Colby\p"
 	.string "A bone bed in the Bighorn Basin,\n"
 	.string "near Worland, Wyoming, about 13,000\l"
@@ -79,9 +88,13 @@ StrataColby_Text_NoteSite:
 	.string "Bones of several mammoths lie in\n"
 	.string "one pile, with Clovis stone tools.\p"
 	.string "Clovis is a toolmaking tradition,\n"
-	.string "known only from its tools.$"
+	.string "known mostly from its tools.\p"
+	.string "Ancient DNA from a Clovis-age\n"
+	.string "burial in Montana is closely\l"
+	.string "related to many Native peoples\l"
+	.string "living today.$"
 
-StrataColby_Text_NoteEvidence:
+StrataColby_Text_NoteEvidence::
 	.string "FIELD NOTE: Hunters, climate, or\n"
 	.string "both?\p"
 	.string "For a human role: big animals fade\n"

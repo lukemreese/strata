@@ -165,6 +165,31 @@ u32 Strata_GetCurrentAct(void)
     return VarGet(VAR_STRATA_STORY) / 2;
 }
 
+// The Colby gate (roadmap S3): once the Ice Age boss is done, the rig holds "Today" back until
+// the player has read the late-glacial sub-layer, the Colby site, ~13 ka (FLAG_STRATA_COLBY_SEEN,
+// set by the Clovis point in data/maps/StrataColby/scripts.inc). Until then it only offers to
+// re-enter the Ice Age layer, where the sub-layer marker stands by the anchor.
+bool32 Strata_IsTodayGated(void)
+{
+    return VarGet(VAR_STRATA_STORY) == STORY_ACT_DONE(ERA_TRAP_CAVE) && !FlagGet(FLAG_STRATA_COLBY_SEEN);
+}
+
+// Why, in the rig's words. Strata_RigQuery puts it in front of the layer name, so the field
+// station's "STRATA RIG: {STR_VAR_1}.\nEnter the reconstruction?" reads it out first (rule R-b:
+// each layer is chained from the one below it).
+static const u8 sText_TodayGated[] = _(
+    "Today can't load yet.\p"
+    "Each layer is chained from the one\n"
+    "below. The Colby sub-layer, about\l"
+    "13,000 years ago, isn't read.\p"
+    "Its marker stands by the Ice Age\n"
+    "anchor.\p");
+
+const u8 *Strata_GetTodayGateText(void)
+{
+    return sText_TodayGated;
+}
+
 u32 Strata_GetRigState(void)
 {
     u32 story = VarGet(VAR_STRATA_STORY);
@@ -175,7 +200,7 @@ u32 Strata_GetRigState(void)
         return RIG_FIRST;
     if (story >= STORY_IN_ACT(ERA_EPILOGUE))
         return RIG_COMPLETE;
-    if (story % 2 == 0)
+    if (story % 2 == 0 || Strata_IsTodayGated())
         return RIG_REENTER;
     return RIG_NEXT;
 }
@@ -216,8 +241,11 @@ void Strata_RigQuery(void)
         act = ERA_HELL_CREEK;
     else if (state == RIG_NEXT)
         act++;
+    gStringVar1[0] = EOS;
+    if (Strata_IsTodayGated())
+        StringCopy(gStringVar1, sText_TodayGated);
     if (act < ERA_COUNT && sLayerNames[act] != NULL)
-        StringCopy(gStringVar1, sLayerNames[act]);
+        StringAppend(gStringVar1, sLayerNames[act]);
     gSpecialVar_0x8006 = (act == ERA_EPILOGUE);
     gSpecialVar_Result = state;
 }

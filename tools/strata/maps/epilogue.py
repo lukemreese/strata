@@ -13,8 +13,9 @@ The epilogue, west to east and north to south:
                                                        |
                                                  Pryor Mountains (south edge)
 
-    Interpretive Center 1F: the Pair on display, Halvorsen (the final peer review:
-                            hook for C13), staff and visitors.
+    Interpretive Center 1F: the Pair on display, Halvorsen (the final peer review, C13;
+                            then the ending lines, the save prompt and the credits up the
+                            column, S3: src/credits.c, src/strata_ending.c), staff and visitors.
     Hall of Lost Lineages (2F): one plaque per extinction filter of src/data/lineages.h;
                             each lists the player's own lost lineages from the fossil flags
                             (F4, special Strata_BufferHallCase), or every lineage of that

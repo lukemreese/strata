@@ -85,6 +85,8 @@ TEST("Peer-review trainers carry only Strata species that exist by their act, at
     EXPECT_EQ(trainer->trainerClass, e->classId);
     EXPECT_NE(trainer->trainerName[0], EOS);
     EXPECT_NE(trainer->trainerPic, TRAINER_PIC_NONE);
+    // A pic with only a back sprite (FRLG's Old Man) trips an assert when the battle starts.
+    EXPECT(gTrainerPicInfo[trainer->trainerPic].frontPic != NULL);
     EXPECT_NE(trainer->aiFlags, 0);
     if (e->doubles)
         EXPECT_GE(partySize, 2);

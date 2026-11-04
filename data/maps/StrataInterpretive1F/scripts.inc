@@ -4,22 +4,37 @@
 @
 @ C13 (peer-review trainers): Halvorsen's final peer review (Lv 50-55: Chelydra, Teleoceras,
 @ Epicyon, Uintatherium, Arctodus, Tyrannosaur) is in StrataInterpretive1F_EventScript_Halvorsen,
-@ which then sets FLAG_STRATA_EPI_PEER_REVIEW_DONE. S3 (ending text, credits) can hook the same script.
-@ Light story hooks only: the present-day wrap-up (Kessler, the museum specimen) is S1/S3.
+@ which then sets FLAG_STRATA_EPI_PEER_REVIEW_DONE.
+@ S3 (the ending): after the review, Halvorsen gives the ending lines (outline §1.5: the theme,
+@ and the prairie animals people nearly lost or brought back), sets FLAG_STRATA_ENDING_SEEN,
+@ offers the stock save prompt, and the credits roll up the column (special Strata_RollCredits,
+@ src/credits.c), then THE END and the title screen. A save made at the prompt continues here,
+@ after the ending: she offers the roll again, and the Hall upstairs stays open.
 StrataInterpretive1F_MapScripts::
 	.byte 0
 
 StrataInterpretive1F_EventScript_Halvorsen::
 	lock
 	faceplayer
-	goto_if_set FLAG_STRATA_EPI_PEER_REVIEW_DONE, StrataInterpretive1F_EventScript_HalvorsenAfter
+	goto_if_set FLAG_STRATA_ENDING_SEEN, StrataInterpretive1F_EventScript_HalvorsenAfter
+	goto_if_set FLAG_STRATA_EPI_PEER_REVIEW_DONE, StrataInterpretive1F_EventScript_HalvorsenEnding
 	msgbox StrataInterpretive1F_Text_HalvorsenIntro, MSGBOX_DEFAULT
 	msgbox StrataInterpretive1F_Text_HalvorsenReady, MSGBOX_YESNO
 	goto_if_eq VAR_RESULT, NO, StrataInterpretive1F_EventScript_HalvorsenLater
 	@ The final peer review (C13): the classics, Lv 50-55 (src/data/trainers_strata.party).
 	trainerbattle_no_intro TRAINER_STRATA_HALVORSEN, StrataInterpretive1F_Text_HalvorsenDefeat
 	setflag FLAG_STRATA_EPI_PEER_REVIEW_DONE
-	goto StrataInterpretive1F_EventScript_HalvorsenAfter
+StrataInterpretive1F_EventScript_HalvorsenEnding::
+	msgbox StrataInterpretive1F_Text_EndingTheme, MSGBOX_DEFAULT
+	msgbox StrataInterpretive1F_Text_EndingPrairie, MSGBOX_DEFAULT
+	msgbox StrataInterpretive1F_Text_EndingThanks, MSGBOX_DEFAULT
+	setflag FLAG_STRATA_ENDING_SEEN
+StrataInterpretive1F_EventScript_RollCredits::
+	msgbox StrataInterpretive1F_Text_EndingSave, MSGBOX_DEFAULT
+	call Common_EventScript_SaveGame
+	fadescreen FADE_TO_BLACK
+	special Strata_RollCredits
+	end
 
 StrataInterpretive1F_EventScript_HalvorsenLater::
 	msgbox StrataInterpretive1F_Text_HalvorsenLater, MSGBOX_DEFAULT
@@ -28,6 +43,8 @@ StrataInterpretive1F_EventScript_HalvorsenLater::
 
 StrataInterpretive1F_EventScript_HalvorsenAfter::
 	msgbox StrataInterpretive1F_Text_HalvorsenAfter, MSGBOX_DEFAULT
+	msgbox StrataInterpretive1F_Text_HalvorsenAgain, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, YES, StrataInterpretive1F_EventScript_RollCredits
 	release
 	end
 
@@ -93,15 +110,11 @@ StrataInterpretive1F_EventScript_MuralIceAge::
 	msgbox StrataInterpretive1F_Text_MuralIceAge, MSGBOX_SIGN
 	end
 
-StrataInterpretive1F_Text_HalvorsenIntro:
+StrataInterpretive1F_Text_HalvorsenIntro::
 	.string "There you are, {PLAYER}. Look at\n"
 	.string "it: the Pair, in a public case,\l"
 	.string "with its layer, its map and its\l"
 	.string "notes.\p"
-	.string "Every extinction you saw was\n"
-	.string "written in the rock before you got\l"
-	.string "there. The one happening now isn't\l"
-	.string "written yet.\p"
 	.string "One last peer review, if you're\n"
 	.string "willing. Two people put their\l"
 	.string "reconstructions side by side. Mine\l"
@@ -122,14 +135,58 @@ StrataInterpretive1F_Text_HalvorsenDefeat:
 	.string "That doesn't make them the truth.\n"
 	.string "It makes them a good hypothesis.$"
 
-StrataInterpretive1F_Text_HalvorsenAfter:
+@ The ending lines (outline §1.5). Population figures are hedged: the old bison herds are
+@ estimates (tens of millions), the low point was under a thousand in the late 1880s
+@ (Hornaday's count, ~1889). Black-footed ferrets: thought extinct, found near Meeteetse, WY in
+@ 1981; today's ferrets descend from seven founders of the captive herd. Swift foxes: gone from
+@ Montana by mid-century, back in the north from Canadian and tribal reintroductions.
+StrataInterpretive1F_Text_EndingTheme::
+	.string "So. That's the season, {PLAYER}.\p"
+	.string "Every extinction you saw was\n"
+	.string "written in the rock before you got\l"
+	.string "there. The one happening now isn't\l"
+	.string "written yet.$"
+
+StrataInterpretive1F_Text_EndingPrairie::
+	.string "Look at the prairie outside.\p"
+	.string "Bison ran in the tens of millions,\n"
+	.string "by most estimates. By the late\l"
+	.string "1880s fewer than a thousand were\l"
+	.string "left. Ranchers, parks and tribes\l"
+	.string "brought them back.\p"
+	.string "The black-footed ferret was\n"
+	.string "thought extinct until a ranch dog\l"
+	.string "found one in Wyoming, in 1981.\l"
+	.string "Nearly every ferret alive today\l"
+	.string "descends from just seven.\p"
+	.string "Swift foxes were gone from Montana\n"
+	.string "for decades. Reintroductions in\l"
+	.string "Canada and on tribal land brought\l"
+	.string "them back to the north.\p"
+	.string "None of that was in the rock.\n"
+	.string "People decided it.$"
+
+StrataInterpretive1F_Text_EndingThanks::
+	.string "Thank you for the season. The rig\n"
+	.string "kept a record of every lineage you\l"
+	.string "carried, and what became of it.\p"
+	.string "Let's read it once more, from the\n"
+	.string "bottom of the column up.$"
+
+StrataInterpretive1F_Text_EndingSave::
+	.string "Save your field notes first. Once\n"
+	.string "the record is read, the rig resets.$"
+
+StrataInterpretive1F_Text_HalvorsenAfter::
 	.string "Two reconstructions, side by side,\n"
 	.string "and neither one is the truth. Both\l"
 	.string "are useful. That's the job.\p"
-	.string "Thank you for the season, {PLAYER}.\n"
-	.string "Go and look at the prairie again.\l"
+	.string "Go and look at the prairie again.\n"
 	.string "Everything out there is a lineage\l"
 	.string "that made it this far.$"
+
+StrataInterpretive1F_Text_HalvorsenAgain::
+	.string "Read the column again?$"
 
 StrataInterpretive1F_Text_Josie:
 	.string "I switched my major to\n"

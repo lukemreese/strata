@@ -140,11 +140,11 @@ largest extinction in the epilogue is the one humans were present for.
 | Natural Trap Cave | ~20 ka | Granite Cave 1F | Act 8; *Arctodus* boss (Lv 52); 3 field notes; a rope climbs back out |
 | Meltwater River | ~20 ka | Route 118 west half, `*_ice_age` palettes, snow, sand-bar ford patched across the channel | Act 8; braided outwash, water habitat; *Chelydra* stand-in (surf and fishing), glacial-edge grazers on land; 3 field notes |
 | Ice Margin | ~20 ka | Route 111 desert rows 60-83, `*_ice_age` palettes, snow | Act 8; open habitat; *Ovibos*, *Mammuthus*, *Panthera*, *Ovis*; the ice, sea-level and mixed-bone-bed notes. Not a Laurentide front (that was hundreds of km north): mountain glaciers, drawn close |
-| Colby Site | ~13 ka | Route 118 east crop, `*_ice_age` palettes, no snow | Act 8 coda (same era, a late-glacial sub-layer reached by a marker, not a connection); no encounters; mammoth bone pile and a Clovis point (`FLAG_STRATA_COLBY_SEEN`); an evidence-for-and-against note |
+| Colby Site | ~13 ka | Route 118 east crop, `*_ice_age` palettes, no snow | Act 8 coda (same era, a late-glacial sub-layer reached by a marker, not a connection); no encounters; mammoth bone pile (the meat-cache reading, flagged as debated) and a Clovis point (the stock fossil stone; reading it sets `FLAG_STRATA_COLBY_SEEN`, which the rig needs before "Today", §7.9); an evidence-for-and-against note |
 | Montana Prairie | today | Route 102 | Epilogue; open once the present layer is loaded, via the highway west of Jordan. Prairie-dog town and a one-time black-footed ferret encounter (`FLAG_STRATA_EPI_FERRET_MET`), swift fox, sage-grouse, bison, pronghorn; 4 field notes; the Interpretive Center is the building in the east half (door warp); east edge opens to the Breaks, south edge to the Pryor Mountains |
 | Missouri Breaks | today | Route 114 top (river, badlands ground; house, berry plots and bridge removed) | Epilogue; water habitat: *Chelydra*, *Lepisosteus*, *Ovis*, *Meleagris*; 3 field notes (the same Hell Creek rock eroding today) |
 | Pryor Mountains | today | Route 112 south (red limestone plateau, stairs, lowland) | Epilogue, optional; feral *Equus* (3 visible horses), pronghorn, *Ovis*, sage-grouse; 3 field notes |
-| Interpretive Center | today | Lilycove Museum 1F | Epilogue; the Pair in the round case, paleoart murals of the layers, Halvorsen (the final peer review, Lv 50-55), Josie, Bea, Dale, Theo; stairs up |
+| Interpretive Center | today | Lilycove Museum 1F | Epilogue; the Pair in the round case, paleoart murals of the layers, Halvorsen (the final peer review, Lv 50-55, then the ending lines, the save prompt and the credits, §7.9), Josie, Bea, Dale, Theo; stairs up |
 | Hall of Lost Lineages | today | Lilycove Museum 2F | Epilogue; five cases (one plaque per extinction filter: K-Pg, Paleocene recovery, Eocene-Oligocene, Miocene grassland, Ice Age) and two statues (end-Pleistocene; the case not written yet). Generic until F4 adds fossil flags |
 
 The present-day hub sits outside time: returning to camp does not change `VAR_STRATA_ERA`.
@@ -678,6 +678,41 @@ set behaves the same), so there is one dex and it lists only Strata animals.
   species). `weight` is never 0 (minimum 1 hg) so tiny animals are not weightless in battle.
 - **Tests:** `test/strata_codex.c` (unique 001-087 numbers, no stock species, era order,
   sort orders, unit formatting for tiny, normal and clamped values, widths).
+
+### 7.9 The ending: Colby gate, last lines, credits up the column (S3)
+
+- **Colby gate** (`Strata_IsTodayGated`, `src/strata_acts.c`): at story 17 (Ice Age done) and
+  without `FLAG_STRATA_COLBY_SEEN`, `Strata_GetRigState` answers `RIG_REENTER`, so the rig
+  re-enters the Ice Age instead of loading today (`Strata_GetRigTargetEra` = none, no filter
+  runs). `Strata_RigQuery` puts the reason in front of the layer name in `STR_VAR_1` ("Today
+  can't load yet. Each layer is chained from the one below..."), which the field station's
+  "Enter the reconstruction?" box reads out, so no hub script changed. The Steppe's sub-layer
+  marker leads to Colby; reading the Clovis point sets the flag.
+- **Ending** (`data/maps/StrataInterpretive1F/scripts.inc`): Halvorsen's review win, then three
+  boxes (the theme line; bison, the black-footed ferret and swift foxes, with the hedged
+  numbers in the script's comment), `FLAG_STRATA_ENDING_SEEN`, the stock save prompt
+  (`Common_EventScript_SaveGame`, so the save continues after the ending), a fade and
+  `special Strata_RollCredits`. Later talks offer the roll again (with the save prompt). There
+  is no Hall of Fame screen: the stock one is league text and trainer art.
+- **Credits** (`src/credits.c`, data and fates in `src/strata_ending.c`): the camera rises from
+  below Hell Creek to today, so each layer comes in at the top, above the last. Ten bands (the
+  nine layers plus a thin Colby sub-band), each a coloured header strip (name, age) over its
+  layer. Under it: the player's losses there (`Ending_BuildFates`: every fossil flag, under the
+  layer it was lost leaving, "lost at the K-Pg boundary", "gone by the late Paleocene", ...);
+  a band with none says "Every lineage you carried came through." Under today: one row per
+  living species in the TEAM (first) and PC, "descended to Canis" from its root in the descent
+  table (Cimolestes) or "living today" (overflow summed up), and "The Pair: in a public museum
+  case." once `VAR_STRATA_SUBPLOT` (0x40DC, read through a local define) is 10. On top: the
+  credits proper (the Strata team; the science in general; thanks), then THE END and a soft
+  reset to the title, as the stock credits do. Two scrolling BGs: band colour tiles on BG1, a
+  30x32-tile text window on BG0, drawn one 16 px row ahead into the wrapping tilemaps. Text
+  falls back to `FONT_NARROW` (`Ending_FitFont`). A or B held speeds it up.
+- **Flags:** "Ending" section 0x4DE..0x4E5 (`FLAG_STRATA_ENDING_BASE`; +0 `ENDING_SEEN`).
+- **Not recorded:** whether a living animal was carried or caught today; a prairie catch is
+  listed as living too.
+- **Tests:** `test/strata_ending.c` (gate states, rig message and every ending/Colby text width,
+  lineage roots, the fate list from given fossil flags + TEAM + PC, overflow, every roll line
+  width); harness `colby_gate`, `ending_smoke` (`gStrataCreditsState`: 1 roll, 2 THE END).
 
 ## 8. Scientific integrity rules
 

@@ -26,7 +26,8 @@ def expand(name):
         return [f"boss_{a}" for a in range(1, 9)]
     if name == "all":
         return ["watchdog_selftest", "new_game_smoke", "battle_smoke", "forecast_smoke", "pressure_chart_smoke",
-                "peer_review_smoke", "act_tour", "extinction_smoke"] + [f"boss_{a}" for a in range(1, 9)]
+                "peer_review_smoke", "act_tour", "extinction_smoke"] + [f"boss_{a}" for a in range(1, 9)] \
+            + ["colby_gate", "ending_smoke"]
     if name in REGISTRY or name.endswith(".txt") or re.fullmatch(r"boss_[1-8]", name):
         return [name]
     raise SystemExit(f"unknown scenario {name} (try --list)")
@@ -684,3 +685,194 @@ def extinction_smoke(g, args):
     g.press("B", 4, 20)
     g.wait_until(lambda: not g.st["scriptActive"] and not g.st["fieldLocked"], 600, "the case to close")
     g.screenshot("after_case")
+
+
+# ---------------------------------------------------------------------------
+# S3: the Colby gate, the ending and the credits up the column.
+
+def read_messages(g, prefix, until, max_shots=30, timeout=60 * 60 * 3):
+    """Press A through text boxes and menus (default answers), with a screenshot of each, until
+    until() holds. Returns every message the field box showed (gStringVar4, decoded)."""
+    shots, seen, t0 = 0, [], g.frame
+    while not until():
+        if g.frame - t0 > timeout:
+            raise TestFailure(f"{prefix}: still waiting after {timeout} frames (cb2={g.cb2()}, tasks={g.tasks()})")
+        if g.text_waiting():
+            msg = g.read_text("gStringVar4")
+            if not seen or seen[-1] != msg:
+                seen.append(msg)
+            if shots < max_shots:
+                g.screenshot(f"{prefix}_{shots:02d}")
+                shots += 1
+            g.press("A", 2, 4)
+            continue
+        # The stock save dialog runs its own YES/NO inside SaveGameTask.
+        if (g.menu_open() or "SaveGameTask" in g.tasks()) and not g.text_active():
+            msg = g.read_text("gStringVar4")
+            if not seen or seen[-1] != msg:
+                seen.append(msg)
+            if shots < max_shots:
+                g.screenshot(f"{prefix}_menu_{shots:02d}")
+                shots += 1
+            g.press("A", 4, 20)
+            continue
+        g.step(2, 0)
+    return seen
+
+
+def trainer_battle(g, rounds=8):
+    """g.battle('fight'), but when the lead faints and the game waits for the next animal
+    (WaitForMonSelection: the TEAM menu of a forced switch), pick the next one and go on."""
+    for n in range(rounds):
+        try:
+            return g.battle("fight", max_actions=80, timeout=9000, shots=(n == 0))
+        except TestFailure:
+            if "WaitForMonSelection" not in g.controllers():
+                raise
+        g.log(f"forced switch: cb2={g.cb2()} tasks={g.tasks()}")
+        g.screenshot(f"switch_{n}")
+        g.wait(30)
+        g.press("DOWN", 4, 10)
+        g.press("A", 4, 30)
+        g.press("A", 4, 60)
+    raise TestFailure("the battle needed more switches than the TEAM has")
+
+
+def field_free(g):
+    return not g.st["scriptActive"] and not g.st["fieldLocked"] and g.cb2() == "CB2_Overworld" \
+        and not g.st["fadeActive"] and not g.text_active()
+
+
+@scenario
+def colby_gate(g, args):
+    """Story 17 (Ice Age done) at the rig: with the Colby coda unseen the rig holds today back and
+    only re-enters the Ice Age; then the real coda (sub-layer marker, Clovis point, anchor) and the
+    rig loads today, with the end-Pleistocene filter."""
+    party = [("SPECIES_CANIS", 50), ("SPECIES_CHELYDRA", 50), ("SPECIES_MAMMUTHUS", 49)]
+    g.quickstart("MAP_STRATA_FIELD_STATION", 10, 8, story=17, era="ERA_TRAP_CAVE", party=party,
+                 items=[("ITEM_POKE_BALL", 5)])
+    g.check(not g.flag("FLAG_STRATA_COLBY_SEEN"), "the Colby coda is not seen yet")
+
+    # Unseen: the rig says why, and offers the Ice Age layer again (YES re-enters it).
+    g.face("up")
+    g.screenshot("rig_unseen")
+    g.press("A")
+    msgs = read_messages(g, "rig_unseen", lambda: g.map_id() == g.const("MAP_STRATA_STEPPE") and field_free(g))
+    g.log(f"rig said: {msgs}")
+    g.check(any("load yet. Each layer is chained" in m for m in msgs), "the rig explains the gate")
+    g.check(any("Colby sub-layer" in m for m in msgs), "the rig names the Colby sub-layer")
+    g.check(any("Trap Cave, 20,000 yrs ago" in m and "Enter the reconstruction?" in m for m in msgs),
+            "the rig offers to re-enter the Ice Age layer")
+    g.expect_map("MAP_STRATA_STEPPE")
+    g.expect_var("VAR_STRATA_STORY", 17)
+    g.expect_var("VAR_STRATA_ERA", g.const("ERA_TRAP_CAVE"))
+    g.check(len(g.party()) == 3, "no filter ran: the mammoth is still in the TEAM")
+
+    # The sub-layer marker beside the anchor (55, 8): stand below it and read it.
+    g.walk("left", 1)
+    g.face("up")
+    g.press("A")
+    read_messages(g, "marker", lambda: g.map_id() == g.const("MAP_STRATA_COLBY") and field_free(g))
+    g.expect_map("MAP_STRATA_COLBY")
+    g.screenshot("colby_arrival")
+    # East along row 8: the intro trigger at x 10, then up to the bone pile.
+    g.walk("right", 6)
+    read_messages(g, "colby_intro", lambda: field_free(g))
+    g.walk("right", 13 - g.pos()[0])
+    g.check(g.pos() == (13, 8), f"beside the point ({g.pos()})")
+    g.face("right")
+    g.screenshot("colby_point")
+    g.press("A")
+    msgs = read_messages(g, "colby_point", lambda: field_free(g))
+    g.check(any("Someone made this." in m for m in msgs), "the point: someone made this")
+    g.expect_flag("FLAG_STRATA_COLBY_SEEN")
+    # The bone pile's note hedges the meat-cache reading.
+    g.face("up")
+    g.press("A")
+    msgs = read_messages(g, "colby_bones", lambda: field_free(g))
+    g.check(any("debated" in m for m in msgs), "the bone pile says the cache reading is debated")
+
+    # Back by the anchor sign (5, 7), then the rig.
+    g.walk("left", g.pos()[0] - 5)
+    g.check(g.pos() == (5, 8), f"below the anchor ({g.pos()})")
+    g.face("up")
+    g.press("A")
+    read_messages(g, "anchor", lambda: g.map_id() == g.const("MAP_STRATA_FIELD_STATION") and field_free(g))
+    g.expect_map("MAP_STRATA_FIELD_STATION")
+    g.face("up")
+    g.screenshot("rig_seen")
+    g.press("A")
+    msgs = read_messages(g, "rig_seen", lambda: g.var("VAR_STRATA_STORY") == 18 and field_free(g), max_shots=40)
+    g.log(f"rig said: {msgs}")
+    g.check(not any("load yet. Each layer is chained" in m for m in msgs), "no gate once Colby is seen")
+    g.expect_var("VAR_STRATA_STORY", 18)
+    g.expect_var("VAR_STRATA_ERA", g.const("ERA_EPILOGUE"))
+    g.check(g.flag(f"FLAG_STRATA_FOSSIL_BASE + {fossil_slot('SPECIES_MAMMUTHUS')}"), "the mammoth is a fossil now")
+    g.screenshot("today")
+
+
+@scenario
+def ending_smoke(g, args):
+    """Epilogue: the Interpretive Center with a few fossils and a mixed TEAM and PC. Beat
+    Halvorsen's final peer review, read her ending lines, save, then the credits climb the column
+    band by band to THE END (left there: a key would soft-reset to the title)."""
+    # The lead must carry the whole review: g.battle() can't pick a replacement after a faint.
+    party = [("SPECIES_BISON", 100), ("SPECIES_CHELYDRA", 100), ("SPECIES_MELEAGRIS", 100),
+             ("SPECIES_EQUUS", 100), ("SPECIES_CENTROCERCUS", 100), ("SPECIES_CANIS", 100)]
+    lost =["SPECIES_TYRANNOSAUR", "SPECIES_TRICERATOPS", "SPECIES_TAENIOLABIS", "SPECIES_HYOPSODUS",
+            "SPECIES_HYAENODON", "SPECIES_EPICYON", "SPECIES_MAMMUTHUS", "SPECIES_ARCTODUS"]
+    flags = [f"FLAG_STRATA_FOSSIL_BASE + {fossil_slot(sp)}" for sp in lost] + ["FLAG_STRATA_COLBY_SEEN"]
+    # VAR_STRATA_SUBPLOT (0x40DC, story lane S1) at its final value: Bea chose the consortium.
+    g.quickstart("MAP_STRATA_INTERPRETIVE_1F", 15, 8, story=18, era="ERA_EPILOGUE", party=party,
+                 items=[("ITEM_POKE_BALL", 5)], flags=flags, vars=[("0x40DC", 10)])
+    g.give_mon("SPECIES_ANTILOCAPRA", 50)  # the TEAM is full: these go to the PC
+    g.give_mon("SPECIES_MUSTELA", 50)
+    g.give_mon("SPECIES_CANIS", 48)
+    g.screenshot("center")
+
+    # Halvorsen (14, 8) faces right, at the Pair.
+    g.face("left")
+    g.press("A")
+    r = g.talk(stop_at_menu=True)
+    g.check(r == "menu", f"Halvorsen asks first ({r})")
+    g.screenshot("review_question")
+    # YES (the cursor's default). The menu ignores A for a few frames after it opens: retry.
+    for _ in range(10):
+        g.wait(10)
+        g.press("A", 4, 10)
+        if "Task_HandleYesNoInput" not in g.tasks():
+            break
+    r = g.talk(stop_at_menu=False)
+    g.check(r == "battle", f"the final peer review starts ({r})")
+    outcome = trainer_battle(g)
+    g.check(outcome == 1, f"the final peer review was won (outcome {outcome})")
+    g.check(g.trainer_defeated("TRAINER_STRATA_HALVORSEN"), "Halvorsen's defeat flag is set")
+
+    # Her ending lines, the save prompt, then the credits.
+    msgs = read_messages(g, "ending", lambda: g.cb2() == "CB2_Credits", max_shots=40)
+    g.log(f"ending said: {msgs}")
+    text = " ".join(msgs)
+    g.check("written in the rock before you got" in text and "happening now isn" in text, "the theme line")
+    for animal in ("Bison", "black-footed ferret", "Swift foxes"):
+        g.check(animal in text, f"the ending names the {animal}")
+    g.check(any("would you like to save" in m.lower() for m in msgs), "the stock save prompt was shown")
+    g.check(g.flag("FLAG_STRATA_EPI_PEER_REVIEW_DONE"), "the peer review flag is set")
+    g.check(g.flag("FLAG_STRATA_ENDING_SEEN"), "the ending flag is set")
+    g.check(g.read("gSpecialVar_Result", 2) == 1, "the save succeeded (SAVE_SUCCESS)")
+
+    # The roll: a screenshot every few seconds until THE END.
+    state = lambda: g.read("gStrataCreditsState", 2)
+    g.check(state() == 1, "the credits roll started")
+    g.wait(90)
+    shots, t0 = 0, g.frame
+    while state() != 2:
+        if g.frame - t0 > 60 * 60 * 3:
+            raise TestFailure("the credits did not reach THE END in 3 minutes")
+        g.screenshot(f"credits_{shots:02d}")
+        shots += 1
+        g.wait(200)
+    g.log(f"credits: {shots} screenshots, {g.frame - t0} frames")
+    g.check(shots >= 8, f"the roll lasted long enough for several bands ({shots} shots)")
+    g.wait(150)
+    g.screenshot("the_end")
+    g.check(g.cb2() == "CB2_Credits", "still on the credits (no reset)")

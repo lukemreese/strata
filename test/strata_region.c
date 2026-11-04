@@ -58,6 +58,8 @@ TEST("Each finished act lets the rig load the next, up to today")
     CreateMon(&gParties[B_TRAINER_PLAYER][0], SPECIES_CIMOLESTES, 5, 0, OTID_STRUCT_PLAYER_ID);
     VarSet(VAR_STRATA_ERA, ERA_PRESENT_DIG);
     VarSet(VAR_STRATA_STORY, 1);
+    // The Colby coda has been seen, so the rig offers today after the Ice Age (test/strata_ending.c).
+    FlagSet(FLAG_STRATA_COLBY_SEEN);
     EXPECT_EQ(Strata_GetRigState(), RIG_FIRST);
     Strata_RigLoadNext();
     for (act = ERA_HELL_CREEK; act < ERA_EPILOGUE; act++)

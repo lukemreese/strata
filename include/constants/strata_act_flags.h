@@ -114,7 +114,8 @@
 
 // ---- Fossils and the Gentle Deep Time option (F4, S4) -------------
 // Not per act: owned by src/strata_fossils.c. FLAG_UNUSED_0x493..0x4D3 in flags.h, inside the
-// saved flag array, so they cost no save space. (0x4D4..0x4E5 are still free.)
+// saved flag array, so they cost no save space. (0x4D4..0x4DD are still free; 0x4DE..0x4E5 are
+// the Ending section below.)
 // One flag per lineage that can be lost to an extinction filter: fossil slot i of
 // sStrataFossils (src/data/strata_fossils.h, append-only) is FLAG_STRATA_FOSSIL_BASE + i,
 // set when the rig drops a party or PC animal of that species. Use Fossil_Has(species) in C.
@@ -123,6 +124,15 @@
 // Chosen at new game (Halvorsen's question): a lost animal is replaced at the same level by a
 // related survivor (S4). The fossil is still recorded. Default (clear): the strict record.
 #define FLAG_STRATA_GENTLE_DEEP_TIME (FLAG_STRATA_FOSSIL_BASE + STRATA_FOSSIL_FLAG_COUNT)
+
+// ---- Ending: Halvorsen's last lines and the credits up the column (S3) ----------
+// Not per act: owned by the Interpretive Center scripts and src/strata_ending.c.
+// FLAG_UNUSED_0x4DE..0x4E5 in flags.h (inside the saved flag array, no extra save space).
+#define FLAG_STRATA_ENDING_BASE 0x4DE
+// Halvorsen has given the ending lines after the final peer review, and the credits have been
+// offered. Set before the save prompt, so a save made there continues after the ending.
+#define FLAG_STRATA_ENDING_SEEN  (FLAG_STRATA_ENDING_BASE + 0)
+// (1..7 are free.)
 
 // ---- Hub: the present-day camp, Jordan and the ranch (peer review, stipend) --
 // Present-day content has no act of its own, so the hub has this section. Its trainers' defeat

@@ -33,11 +33,21 @@ Read `docs/strata_outline.md` (plan per act, §2) and `docs/strata_design.md` (a
 
 - `VAR_STRATA_STORY`: 0 new game, 1 starter chosen, act N = `STORY_IN_ACT(N)` (2N) in the act and
   `STORY_ACT_DONE(N)` (2N+1) once its boss is done, 18 epilogue (`include/constants/strata.h`).
-  The rig (`src/strata_acts.c`) only loads the next layer after `STORY_ACT_DONE`.
+  The rig (`src/strata_acts.c`) only loads the next layer after `STORY_ACT_DONE`, and "Today"
+  (story 17 -> 18) only once `FLAG_STRATA_COLBY_SEEN` is set (`Strata_IsTodayGated`; until then
+  it re-enters the Ice Age). A gate that needs words but no hub-script change can put them in
+  front of the layer name in `STR_VAR_1` (the station's "STRATA RIG: {STR_VAR_1}." box).
 - Fossils and Gentle Deep Time have their own section at the end of `strata_act_flags.h`
-  (`FLAG_STRATA_FOSSIL_BASE` 0x493 + 64 slots, `FLAG_STRATA_GENTLE_DEEP_TIME`; 0x4D4..0x4E5 are
-  still free, inside the saved flag array: new flags there cost no save space). Scripts read
-  fossils through specials (`Strata_BufferHallCase`, `Strata_PushFossilList`), not by flag name.
+  (`FLAG_STRATA_FOSSIL_BASE` 0x493 + 64 slots, `FLAG_STRATA_GENTLE_DEEP_TIME`), then the Ending
+  section (0x4DE..0x4E5, `FLAG_STRATA_ENDING_*`); 0x4D4..0x4DD are still free, inside the saved
+  flag array: new flags there cost no save space. Scripts read fossils through specials
+  (`Strata_BufferHallCase`, `Strata_PushFossilList`), not by flag name.
+- The ending (S3): Halvorsen's script in `StrataInterpretive1F` -> `Common_EventScript_SaveGame`
+  -> `fadescreen` -> `special Strata_RollCredits` (`src/credits.c`, `src/strata_ending.c`;
+  design doc §7.9). The roll ends in a soft reset to the title.
+- A map-script text a C test reads (`extern const u8 X_Text_Y[]`, e.g. width checks in
+  `test/strata_ending.c`) needs a global label, `X_Text_Y::`; a single colon is file-local and
+  the test ROM fails to link.
 - Each act owns 8 save flags and one var in `include/constants/strata_act_flags.h`
   (`FLAG_STRATA_ACTn_BASE + 0..7`, `VAR_STRATA_ACTn`). Define names only in your act's section.
   The header is included by `data/map_events.s`, so the names work in map data too.

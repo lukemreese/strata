@@ -64,6 +64,8 @@ checks, screenshots with map and position, emulator errors, warnings, crash PC/L
 | `extinction_smoke` | Act 1 done with dinosaurs in the team and PC: rig to the impact winter, the loss list (a shot per message), fossil flags, then START > BAG > KEY ITEMS > Fossil Case > a fossil's label |
 | `forecast_smoke` | Field station after act 6, mixed TEAM (pressures set) + PC: rig -> forecast window, every row, A, YES; asserts the TEAM after the load equals `gStrataRigForecast` |
 | `pressure_chart_smoke` | TEAM menu -> LINEAGE: the pressure chart for each TEAM animal (Up/Down), B back to the TEAM menu on the last one viewed |
+| `colby_gate` | Story 17 at the rig: Colby unseen -> the gate message and a re-entry to the Ice Age (no filter); the sub-layer marker, the Colby intro, the Clovis point (flag), the bone pile (hedged text), the anchor; the rig then loads today (story 18, the mammoth's fossil) |
+| `ending_smoke` | Interpretive Center, story 18, fossils + mixed TEAM/PC + subplot 10: Halvorsen's review (forced switch handled), the ending lines, the stock save prompt (YES), the credits roll a shot every 200 frames, THE END (stops there) |
 
 ## Writing a scenario
 
@@ -139,6 +141,18 @@ animations off; pass `encounters=True`, `collision=False`, `instant_text=False`,
 - Parallel agents share the default output folder (and its `summary.json`): pass
   `--out /mnt/c/Projects/pokemon-custom/build/harness_<lane>` so runs don't overwrite each other.
 - PC mons: `give_mon` after a full 6-mon quick-start party sends them to the PC.
+- `read_text` decodes the game's apostrophe as `’` (U+2019): match substrings without one
+  ("load yet", "happening now isn"), not "can't".
+- The stock save dialog (`Common_EventScript_SaveGame`) runs its YES/NO inside `SaveGameTask`,
+  which `menu_open()` doesn't match: treat that task as a menu (`read_messages` in scenarios.py).
+- `g.battle()` can't send in the next animal after a faint in a trainer battle (it sits in
+  `WaitForMonSelection` until the timeout). `trainer_battle()` in scenarios.py retries with a
+  short timeout and picks the next one (DOWN, A, A). Lv 100 isn't enough to sweep Halvorsen.
+- The credits end in `SoftReset`, which the harness reports as a crash: stop at THE END
+  (`gStrataCreditsState`: 1 rolling, 2 THE END) without pressing a key.
+- A trainer pic with no front sprite (FRLG's "Old Man") asserts (`CrashScreen`, "does not have a
+  front pic defined") the moment its battle starts; `test/strata_review.c` now checks every
+  Strata trainer's pic.
 - Menus by memory, not by guessing the cursor: the start menu is `sCurrentStartMenuActions`/
   `sNumStartMenuActions`/`sStartMenuCursorPos` (BAG is action 2), the bag pocket is byte 5 of
   `gBagPosition`. Static EWRAM symbols resolve like globals. `FLAG_STRATA_*` and `POCKET_*`

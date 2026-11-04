@@ -337,7 +337,7 @@ Balearica, Anchigyps; NEW: Aphelops, Hypohippus, Cormohipparion.
 ***Panthera atrox* pair** (double, Lv 48/48) as an overworld set piece.
 **Colby coda:** opens after the Arctodus fight via the anchor sign ("Load the late-glacial
 sub-layer?"). Same era, so no lineage changes. Needs `FLAG_STRATA_COLBY_SEEN` before the rig
-offers "Today".
+offers "Today" ✅ (S3: until then the rig re-enters the Ice Age and says the sub-layer isn't read).
 **Pressures:** O, W. No descents happen at the epilogue load (only extinctions), so
 Act 8's pressures steer nothing. Say so in the rig text: "This last step is about who is
 left." The bird's *Centrocercus* branch happens at the Act 8 load, steered in the Act 6–7
@@ -356,7 +356,8 @@ Miracinonyx, Panthera, Mammuthus, Camelops.
 
 **No boss.** The finale is the Halvorsen peer review (Lv 55 team built from "classic"
 reconstructions: Tyrannosaur, Uintatherium, Epicyon, Arctodus, Teleoceras, Chelydra), then
-the credits.
+the credits. ✅ (S3) Her ending lines come after the win (the theme; the bison, ferret and swift
+fox, hedged), then the save prompt and the roll up the column; the Hall stays open afterwards.
 
 ### 2.11 Lineage branches (all descents, existing + proposed)
 
@@ -826,7 +827,7 @@ Ordered by leverage ÷ risk. Tasks inside a milestone can run in parallel unless
 |---|---|---|---|---|
 | S1 | `VAR_STRATA_SUBPLOT` + quest log strings + all camp interludes (§1.5) | L | C2, C13 | CON + TXT |
 | S2 | Halvorsen lines rewritten per story × subplot (extend `sMentorLines`) | M | S1 | TXT |
-| S3 | Act 8 Colby coda + epilogue ending + credits up the column (lineage fates from the fossil flags) | M | C10, C12, F4 | CON |
+| S3 | ✅ **Done.** Act 8 Colby coda + epilogue ending + credits up the column (lineage fates from the fossil flags). **Gate:** at story 17 the rig holds "Today" back until `FLAG_STRATA_COLBY_SEEN` (`Strata_IsTodayGated`, `src/strata_acts.c`): it re-enters the Ice Age instead and says why (the gate text goes in front of the layer name in `STR_VAR_1`, so the field station script is unchanged). Colby: bone-pile text hedges the meat-cache reading, the point is the stock fossil stone (not the capsule-looking item ball), the site note adds the Anzick ancient-DNA link to living Native peoples. **Ending:** after Halvorsen's review, three boxes (the theme line; bison, black-footed ferret, swift fox, hedged), `FLAG_STRATA_ENDING_SEEN` (new "Ending" flag section 0x4DE..0x4E5), the stock save prompt (`Common_EventScript_SaveGame`), then `special Strata_RollCredits`; afterwards she offers the roll again. **Credits:** `src/credits.c` replaced by a roll that climbs the column (10 bands incl. the Colby sub-band; fates from `Ending_BuildFates` in `src/strata_ending.c`: losses under the layer they were lost leaving, living TEAM/PC species under today as "descended to X" from their root in the descent table), credits proper, THE END, soft reset to the title. Reads `VAR_STRATA_SUBPLOT` (0x40DC, a local define) for "The Pair: in a public museum case". Tests `test/strata_ending.c`; harness `colby_gate`, `ending_smoke`. Left: carried-vs-caught-today isn't recorded, so a prairie catch is listed as living too; no Hall of Fame screen | M | C10, C12, F4 | CON |
 | S4 | ✅ **Done.** Gentle Deep Time option (new-game question, `FLAG_STRATA_GENTLE_DEEP_TIME`, relatives in `sStrataFossils`, §3.5) | S | F4 | SYS |
 
 ### M4: Art (starts in parallel with M0)
