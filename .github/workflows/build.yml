@@ -3,8 +3,7 @@ name: CI
 on:
   push:
     branches:
-      - master
-      - upcoming
+      - strata
   pull_request:
 
 env:
@@ -158,6 +157,12 @@ jobs:
         env:
           GAME_VERSION: EMERALD
         run: make -j$(nproc) release
+
+      - name: Upload ROM
+        uses: actions/upload-artifact@v4
+        with:
+          name: strata
+          path: pokeemerald-release.gba
 
   test:
     if: github.actor != 'allcontributors[bot]'
