@@ -162,6 +162,44 @@ static void PrintSelectorArrow(u32);
 static void PrintSearchParameterTitle(u32, const u8 *);
 static void ClearSearchParameterBoxText(void);
 
+// Strata (roadmap C14): the info screen's bar reads EVIDENCE | LINEAGE | CRY | CANCEL. The stock
+// AREA screen (a Hoenn map with no Strata areas) and SIZE screen (affine scales borrowed from stock
+// species, which can't put a 10 cm mammal and a 12 m theropod beside the player) are no longer
+// reachable. Slot numbers are what sPokedexView->selectedScreen holds.
+enum
+{
+    CODEX_SCREEN_EVIDENCE,
+    CODEX_SCREEN_LINEAGE,
+    CODEX_SCREEN_CRY,
+    CODEX_SCREEN_CANCEL,
+};
+STATIC_ASSERT((u32)CODEX_SCREEN_CANCEL == (u32)CANCEL_SCREEN, CodexBarKeepsTheCancelSlot);
+STATIC_ASSERT(CODEX_SCREEN_CANCEL == CODEX_BAR_SLOTS, CodexBarLabelsCoverTheSlots);
+
+// screenSwitchState values for the switches between the info screen and its pages.
+enum
+{
+    CODEX_SWITCH_NONE,
+    CODEX_SWITCH_INFO,
+    CODEX_SWITCH_EVIDENCE,
+    CODEX_SWITCH_LINEAGE,
+    CODEX_SWITCH_CRY,
+};
+
+#define WIN_CODEX_BAR (WIN_VU_METER + 1) // three label windows, one per bar slot
+
+static void Task_LoadCodexPage(u8);
+static void Task_HandleCodexPageInput(u8);
+static void Task_SwitchScreensFromCodexPage(u8);
+static void DrawCodexBarLabels(void);
+
+// The page (CODEX_SCREEN_EVIDENCE or CODEX_SCREEN_LINEAGE) being shown, and the LINEAGE list.
+static EWRAM_DATA u8 sCodexPage = 0;
+static EWRAM_DATA u8 sCodexLineageCount = 0;
+static EWRAM_DATA u8 sCodexLineageCursor = 0;
+static EWRAM_DATA u8 sCodexLineageScroll = 0;
+static EWRAM_DATA struct CodexLineageRow sCodexLineage[CODEX_LINEAGE_MAX_ROWS] = {0};
+
 // const rom data
 // Strata: the Codex lists Strata species only, so it sorts with its own generated orders
 // (tools/strata/gen_species.py) instead of the stock pokedex_orders.h.
@@ -794,6 +832,11 @@ static const struct WindowTemplate sInfoScreen_WindowTemplates[] =
         .paletteNum = 9,
         .baseBlock = 869,
     },
+    // Strata: the bar's labels (EVIDENCE, LINEAGE, CRY) over each slot's interior, between its
+    // end caps. BG1 shares char base 0 with the menu graphics (256 tiles), so these start after.
+    [WIN_CODEX_BAR + 0] = { .bg = 1, .tilemapLeft = 0 * 7 + 2, .tilemapTop = 0, .width = 5, .height = 2, .paletteNum = 2, .baseBlock = 0x140 },
+    [WIN_CODEX_BAR + 1] = { .bg = 1, .tilemapLeft = 1 * 7 + 2, .tilemapTop = 0, .width = 5, .height = 2, .paletteNum = 2, .baseBlock = 0x140 + 10 },
+    [WIN_CODEX_BAR + 2] = { .bg = 1, .tilemapLeft = 2 * 7 + 2, .tilemapTop = 0, .width = 5, .height = 2, .paletteNum = 2, .baseBlock = 0x140 + 20 },
     DUMMY_WIN_TEMPLATE
 };
 
@@ -3370,19 +3413,8 @@ void Task_HandleInfoScreenInput(u8 taskId)
     {
         switch (sPokedexView->selectedScreen)
         {
-        case AREA_SCREEN:
-            BeginNormalPaletteFade(PALETTES_ALL & ~(0x14), 0, 0, 16, RGB_BLACK);
-            sPokedexView->screenSwitchState = 1;
-            gTasks[taskId].func = Task_SwitchScreensFromInfoScreen;
-            PlaySE(SE_PIN);
-            break;
-        case CRY_SCREEN:
-            BeginNormalPaletteFade(PALETTES_ALL & ~(0x14), 0, 0, 0x10, RGB_BLACK);
-            sPokedexView->screenSwitchState = 2;
-            gTasks[taskId].func = Task_SwitchScreensFromInfoScreen;
-            PlaySE(SE_PIN);
-            break;
-        case SIZE_SCREEN:
+        case CODEX_SCREEN_EVIDENCE:
+            // Like the stock SIZE screen: the evidence is logged once an animal is caught.
             if (!sPokedexListItem->owned)
             {
                 PlaySE(SE_FAILURE);
@@ -3390,12 +3422,24 @@ void Task_HandleInfoScreenInput(u8 taskId)
             else
             {
                 BeginNormalPaletteFade(PALETTES_ALL & ~(0x14), 0, 0, 0x10, RGB_BLACK);
-                sPokedexView->screenSwitchState = 3;
+                sPokedexView->screenSwitchState = CODEX_SWITCH_EVIDENCE;
                 gTasks[taskId].func = Task_SwitchScreensFromInfoScreen;
                 PlaySE(SE_PIN);
             }
             break;
-        case CANCEL_SCREEN:
+        case CODEX_SCREEN_LINEAGE:
+            BeginNormalPaletteFade(PALETTES_ALL & ~(0x14), 0, 0, 0x10, RGB_BLACK);
+            sPokedexView->screenSwitchState = CODEX_SWITCH_LINEAGE;
+            gTasks[taskId].func = Task_SwitchScreensFromInfoScreen;
+            PlaySE(SE_PIN);
+            break;
+        case CODEX_SCREEN_CRY:
+            BeginNormalPaletteFade(PALETTES_ALL & ~(0x14), 0, 0, 0x10, RGB_BLACK);
+            sPokedexView->screenSwitchState = CODEX_SWITCH_CRY;
+            gTasks[taskId].func = Task_SwitchScreensFromInfoScreen;
+            PlaySE(SE_PIN);
+            break;
+        case CODEX_SCREEN_CANCEL:
             BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 0x10, RGB_BLACK);
             gTasks[taskId].func = Task_ExitInfoScreen;
             PlaySE(SE_PC_OFF);
@@ -3430,15 +3474,17 @@ void Task_SwitchScreensFromInfoScreen(u8 taskId)
         FreeAndDestroyMonPicSprite(gTasks[taskId].tMonSpriteId);
         switch (sPokedexView->screenSwitchState)
         {
-        case 1:
+        case CODEX_SWITCH_EVIDENCE:
         default:
-            gTasks[taskId].func = Task_LoadAreaScreen;
+            sCodexPage = CODEX_SCREEN_EVIDENCE;
+            gTasks[taskId].func = Task_LoadCodexPage;
             break;
-        case 2:
+        case CODEX_SWITCH_LINEAGE:
+            sCodexPage = CODEX_SCREEN_LINEAGE;
+            gTasks[taskId].func = Task_LoadCodexPage;
+            break;
+        case CODEX_SWITCH_CRY:
             gTasks[taskId].func = Task_LoadCryScreen;
-            break;
-        case 3:
-            gTasks[taskId].func = Task_LoadSizeScreen;
             break;
         }
     }
@@ -3567,7 +3613,7 @@ void Task_LoadCryScreen(u8 taskId)
             gPokedexVBlankCB = gMain.vblankCallback;
             SetVBlankCallback(NULL);
             ResetOtherVideoRegisters(DISPCNT_BG1_ON);
-            sPokedexView->selectedScreen = CRY_SCREEN;
+            sPokedexView->selectedScreen = CODEX_SCREEN_CRY;
             gMain.state = 1;
         }
         break;
@@ -3582,7 +3628,7 @@ void Task_LoadCryScreen(u8 taskId)
         break;
     case 2:
         LoadScreenSelectBarSubmenu(0xD);
-        HighlightSubmenuScreenSelectBarItem(1, 0xD);
+        HighlightSubmenuScreenSelectBarItem(CODEX_SCREEN_CRY, 0xD);
         LoadPokedexBgPalette(sPokedexView->isSearchResults);
         gMain.state++;
         break;
@@ -3679,36 +3725,20 @@ void Task_HandleCryScreenInput(u8 taskId)
         {
             BeginNormalPaletteFade(PALETTES_ALL & ~(0x14), 0, 0, 0x10, RGB_BLACK);
             m4aMPlayContinue(&gMPlayInfo_BGM);
-            sPokedexView->screenSwitchState = 1;
+            sPokedexView->screenSwitchState = CODEX_SWITCH_INFO;
             gTasks[taskId].func = Task_SwitchScreensFromCryScreen;
             PlaySE(SE_PC_OFF);
             return;
         }
+        // Strata: CRY is the last page of the bar; left goes back to LINEAGE.
         if (JOY_NEW(DPAD_LEFT)
          || (JOY_NEW(L_BUTTON) && gSaveBlock2Ptr->optionsButtonMode == OPTIONS_BUTTON_MODE_LR))
         {
             BeginNormalPaletteFade(PALETTES_ALL & ~(0x14), 0, 0, 0x10, RGB_BLACK);
             m4aMPlayContinue(&gMPlayInfo_BGM);
-            sPokedexView->screenSwitchState = 2;
+            sPokedexView->screenSwitchState = CODEX_SWITCH_LINEAGE;
             gTasks[taskId].func = Task_SwitchScreensFromCryScreen;
             PlaySE(SE_DEX_PAGE);
-            return;
-        }
-        if (JOY_NEW(DPAD_RIGHT)
-         || (JOY_NEW(R_BUTTON) && gSaveBlock2Ptr->optionsButtonMode == OPTIONS_BUTTON_MODE_LR))
-        {
-            if (!sPokedexListItem->owned)
-            {
-                PlaySE(SE_FAILURE);
-            }
-            else
-            {
-                BeginNormalPaletteFade(PALETTES_ALL & ~(0x14), 0, 0, 0x10, RGB_BLACK);
-                m4aMPlayContinue(&gMPlayInfo_BGM);
-                sPokedexView->screenSwitchState = 3;
-                gTasks[taskId].func = Task_SwitchScreensFromCryScreen;
-                PlaySE(SE_DEX_PAGE);
-            }
             return;
         }
     }
@@ -3727,14 +3757,12 @@ static void Task_SwitchScreensFromCryScreen(u8 taskId)
         switch (sPokedexView->screenSwitchState)
         {
         default:
-        case 1:
+        case CODEX_SWITCH_INFO:
             gTasks[taskId].func = Task_LoadInfoScreen;
             break;
-        case 2:
-            gTasks[taskId].func = Task_LoadAreaScreen;
-            break;
-        case 3:
-            gTasks[taskId].func = Task_LoadSizeScreen;
+        case CODEX_SWITCH_LINEAGE:
+            sCodexPage = CODEX_SCREEN_LINEAGE;
+            gTasks[taskId].func = Task_LoadCodexPage;
             break;
         }
     }
@@ -3903,11 +3931,13 @@ static void Task_SwitchScreensFromSizeScreen(u8 taskId)
 static void LoadScreenSelectBarMain(u16 unused)
 {
     CopyToBgTilemapBuffer(1, gPokedexScreenSelectBarMain_Tilemap, 0, 0);
+    DrawCodexBarLabels();
 }
 
 static void LoadScreenSelectBarSubmenu(u16 unused)
 {
     CopyToBgTilemapBuffer(1, gPokedexScreenSelectBarSubmenu_Tilemap, 0, 0);
+    DrawCodexBarLabels();
 }
 
 static void HighlightScreenSelectBarItem(u8 selectedScreen, u16 unused)
@@ -3963,6 +3993,320 @@ static void HighlightSubmenuScreenSelectBarItem(u8 a, u16 b)
         }
     }
     CopyBgTilemapBufferToVram(1);
+}
+
+// ---------------------------------------------------------------------------------------------
+// Strata Codex pages (roadmap C14): EVIDENCE and LINEAGE, behind the info screen's bar. Their
+// data and text come from src/strata_codex.c; this draws them and handles the input:
+//   bar     Left/Right pick a slot on the info screen, A opens it (EVIDENCE needs a catch).
+//   pages   Left/Right step between EVIDENCE, LINEAGE and CRY; B goes back to the info screen.
+//   LINEAGE Up/Down move the cursor over the line; the box below explains the row.
+
+// The bar art's fill, frame, letter and shadow colour indices (graphics/pokedex/menu.png). The
+// labels use them, so the slot highlight (BG palette 2 or 4) recolours a label with its slot.
+#define BAR_OUTSIDE 7
+#define BAR_FRAME   6
+#define BAR_FILL    12
+#define BAR_TEXT    15
+#define BAR_SHADOW  13
+
+static void DrawCodexBarLabels(void)
+{
+    static const u8 colors[3] = {BAR_FILL, BAR_TEXT, BAR_SHADOW};
+    u32 i;
+
+    for (i = 0; i < CODEX_BAR_SLOTS; i++)
+    {
+        u32 windowId = WIN_CODEX_BAR + i;
+        s32 x = (CODEX_BAR_LABEL_WIDTH - GetStringWidth(CODEX_BAR_LABEL_FONT, gCodexBarLabels[i], 0)) / 2;
+
+        FillWindowPixelBuffer(windowId, PIXEL_FILL(BAR_FILL));
+        AddTextPrinterParameterized4(windowId, CODEX_BAR_LABEL_FONT, max(x, 0), 3, 0, 0, colors, TEXT_SKIP_DRAW, gCodexBarLabels[i]);
+        // The slot's top and bottom edges, as in the bar art (drawn after the text's cells).
+        FillWindowPixelRect(windowId, PIXEL_FILL(BAR_OUTSIDE), 0, 0, CODEX_BAR_LABEL_WIDTH, 2);
+        FillWindowPixelRect(windowId, PIXEL_FILL(BAR_FRAME), 0, 2, CODEX_BAR_LABEL_WIDTH, 1);
+        FillWindowPixelRect(windowId, PIXEL_FILL(BAR_FRAME), 0, 15, CODEX_BAR_LABEL_WIDTH, 1);
+        PutWindowTilemap(windowId);
+        CopyWindowToVram(windowId, COPYWIN_GFX);
+    }
+}
+
+// A plain page: the info screen's frame with one big text box below the bar (the description
+// box's border and fill tiles, rows 0, 13 and 19 of the info screen tilemap).
+static void DrawCodexPageFrame(void)
+{
+    u16 *map = GetBgTilemapBuffer(3);
+    u32 row, col;
+
+    CopyToBgTilemapBuffer(3, gPokedexInfoScreen_Tilemap, 0, 0);
+    for (row = 2; row < 20; row++)
+    {
+        u32 src = row == 2 ? 0 : (row == 19 ? 19 : 13);
+        for (col = 0; col < 32; col++)
+            map[row * 32 + col] = map[src * 32 + col];
+    }
+}
+
+enum
+{
+    CODEX_COLOR_TEXT,
+    CODEX_COLOR_TITLE,
+    CODEX_COLOR_LIVING,
+    CODEX_COLOR_LOST,
+    CODEX_COLOR_FAINT,
+};
+
+// Dex BG palette 0 (graphics/pokedex/bg_hoenn.pal): 15 black, 7 dark blue, 13 dark green,
+// 5 slate, 4 grey; shadow 3 light grey. The LINEAGE cursor row is filled with 2.
+static const u8 sCodexColors[][3] =
+{
+    [CODEX_COLOR_TEXT]   = {TEXT_COLOR_TRANSPARENT, 15, 3},
+    [CODEX_COLOR_TITLE]  = {TEXT_COLOR_TRANSPARENT, 7, 3},
+    [CODEX_COLOR_LIVING] = {TEXT_COLOR_TRANSPARENT, 13, 3},
+    [CODEX_COLOR_LOST]   = {TEXT_COLOR_TRANSPARENT, 5, 3},
+    [CODEX_COLOR_FAINT]  = {TEXT_COLOR_TRANSPARENT, 4, 3},
+};
+#define CODEX_CURSOR_FILL 2
+#define CODEX_RULE_COLOR  4
+
+static void PrintCodexText(const u8 *str, u32 x, u32 y, u32 width, u32 color)
+{
+    AddTextPrinterParameterized4(WIN_INFO, Codex_FitFont(str, width), x, y, 0, 0, sCodexColors[color], TEXT_SKIP_DRAW, str);
+}
+
+static enum Species CodexPageSpecies(void)
+{
+    return NationalPokedexNumToSpeciesForm(sPokedexListItem->dexNum);
+}
+
+#define EVIDENCE_TOP     20
+#define EVIDENCE_HEADER  4  // genus, site, age, record
+#define EVIDENCE_RULE_Y  85
+#define EVIDENCE_BODY_Y  89
+
+static void PrintCodexEvidence(void)
+{
+    u8 rows[CODEX_EVIDENCE_ROWS][CODEX_LINE_SIZE];
+    u32 i, count = Codex_FormatEvidence(CodexPageSpecies(), rows);
+
+    for (i = 0; i < count; i++)
+    {
+        u32 y = i < EVIDENCE_HEADER ? EVIDENCE_TOP + 16 * i : EVIDENCE_BODY_Y + 16 * (i - EVIDENCE_HEADER);
+        PrintCodexText(rows[i], CODEX_PAGE_LEFT, y, CODEX_PAGE_WIDTH, i == 0 ? CODEX_COLOR_TITLE : CODEX_COLOR_TEXT);
+    }
+    FillWindowPixelRect(WIN_INFO, PIXEL_FILL(CODEX_RULE_COLOR), CODEX_PAGE_LEFT, EVIDENCE_RULE_Y, CODEX_PAGE_WIDTH, 1);
+}
+
+#define LINEAGE_TOP       19
+#define LINEAGE_ROW_H     15
+#define LINEAGE_VISIBLE   5
+#define LINEAGE_RULE_Y    (LINEAGE_TOP + LINEAGE_VISIBLE * LINEAGE_ROW_H + 2)
+#define LINEAGE_DETAIL_Y  (LINEAGE_RULE_Y + 3)
+#define LINEAGE_DETAIL_H  14
+
+static void PrintCodexLineage(void)
+{
+    u8 lines[CODEX_LINEAGE_DETAIL_LINES][CODEX_LINE_SIZE];
+    u8 name[CODEX_LINE_SIZE], tag[CODEX_LINE_SIZE], fate[CODEX_LINE_SIZE];
+    u32 i, n;
+
+    FillWindowPixelBuffer(WIN_INFO, PIXEL_FILL(0));
+    for (i = 0; i < LINEAGE_VISIBLE && sCodexLineageScroll + i < sCodexLineageCount; i++)
+    {
+        u32 index = sCodexLineageScroll + i;
+        const struct CodexLineageRow *row = &sCodexLineage[index];
+        u32 y = LINEAGE_TOP + i * LINEAGE_ROW_H;
+        u32 x = CODEX_LINEAGE_NAME_X + CODEX_LINEAGE_INDENT * row->depth;
+
+        if (index == sCodexLineageCursor)
+        {
+            FillWindowPixelRect(WIN_INFO, PIXEL_FILL(CODEX_CURSOR_FILL), CODEX_PAGE_LEFT - 2, y, CODEX_PAGE_WIDTH + 4, LINEAGE_ROW_H);
+            PrintCodexText(gText_SelectorArrow3, 6, y, 8, CODEX_COLOR_TEXT);
+        }
+        Codex_FormatLineageRow(row, name, tag, fate);
+        PrintCodexText(name, x, y, CODEX_LINEAGE_NAME_WIDTH(row->depth), row->isSelf ? CODEX_COLOR_TITLE : CODEX_COLOR_TEXT);
+        PrintCodexText(tag, CODEX_LINEAGE_TAG_X, y, CODEX_LINEAGE_TAG_WIDTH, CODEX_COLOR_FAINT);
+        PrintCodexText(fate, CODEX_LINEAGE_FATE_X, y, CODEX_LINEAGE_FATE_WIDTH,
+                       row->fate == CODEX_FATE_LOST && row->seen ? CODEX_COLOR_LOST : CODEX_COLOR_LIVING);
+    }
+    // More rows above or below the five shown.
+    if (sCodexLineageScroll > 0)
+        PrintCodexText(COMPOUND_STRING("{UP_ARROW}"), 222, LINEAGE_TOP, 10, CODEX_COLOR_FAINT);
+    if (sCodexLineageScroll + LINEAGE_VISIBLE < sCodexLineageCount)
+        PrintCodexText(COMPOUND_STRING("{DOWN_ARROW}"), 222, LINEAGE_TOP + (LINEAGE_VISIBLE - 1) * LINEAGE_ROW_H, 10, CODEX_COLOR_FAINT);
+
+    FillWindowPixelRect(WIN_INFO, PIXEL_FILL(CODEX_RULE_COLOR), CODEX_PAGE_LEFT, LINEAGE_RULE_Y, CODEX_PAGE_WIDTH, 1);
+    n = Codex_FormatLineageDetail(sCodexLineage, sCodexLineageCount, sCodexLineageCursor, lines);
+    for (i = 0; i < n; i++)
+    {
+        u32 color = CODEX_COLOR_TEXT;
+        if (i == 1 && sCodexLineage[sCodexLineageCursor].seen)
+            color = sCodexLineage[sCodexLineageCursor].fate == CODEX_FATE_LOST ? CODEX_COLOR_LOST : CODEX_COLOR_LIVING;
+        PrintCodexText(lines[i], CODEX_PAGE_LEFT, LINEAGE_DETAIL_Y + i * LINEAGE_DETAIL_H, CODEX_PAGE_WIDTH, color);
+    }
+}
+
+static void InitCodexLineage(void)
+{
+    u32 i;
+
+    sCodexLineageCount = Codex_BuildLineage(CodexPageSpecies(), sCodexLineage, CODEX_LINEAGE_MAX_ROWS);
+    sCodexLineageCursor = 0;
+    for (i = 0; i < sCodexLineageCount; i++)
+    {
+        if (sCodexLineage[i].isSelf)
+            sCodexLineageCursor = i;
+    }
+    // Show the page's own row with up to two rows of ancestors above it.
+    sCodexLineageScroll = 0;
+    if (sCodexLineageCount > LINEAGE_VISIBLE)
+        sCodexLineageScroll = min(max((s32)sCodexLineageCursor - 2, 0), sCodexLineageCount - LINEAGE_VISIBLE);
+}
+
+static void Task_LoadCodexPage(u8 taskId)
+{
+    switch (gMain.state)
+    {
+    default:
+    case 0:
+        if (!gPaletteFade.active)
+        {
+            sPokedexView->currentPage = sCodexPage == CODEX_SCREEN_EVIDENCE ? PAGE_EVIDENCE : PAGE_LINEAGE;
+            gPokedexVBlankCB = gMain.vblankCallback;
+            SetVBlankCallback(NULL);
+            ResetOtherVideoRegisters(DISPCNT_BG1_ON);
+            sPokedexView->selectedScreen = sCodexPage;
+            gMain.state = 1;
+        }
+        break;
+    case 1:
+        DecompressAndLoadBgGfxUsingHeap(3, gPokedexMenu_Gfx, 0x2000, 0, 0);
+        DrawCodexPageFrame();
+        FillWindowPixelBuffer(WIN_INFO, PIXEL_FILL(0));
+        PutWindowTilemap(WIN_INFO);
+        gMain.state++;
+        break;
+    case 2:
+        LoadScreenSelectBarSubmenu(0xD);
+        HighlightSubmenuScreenSelectBarItem(sCodexPage, 0xD);
+        LoadPokedexBgPalette(sPokedexView->isSearchResults);
+        gMain.state++;
+        break;
+    case 3:
+        ResetPaletteFade();
+        if (sCodexPage == CODEX_SCREEN_LINEAGE)
+        {
+            InitCodexLineage();
+            PrintCodexLineage();
+        }
+        else
+        {
+            PrintCodexEvidence();
+        }
+        CopyWindowToVram(WIN_INFO, COPYWIN_FULL);
+        CopyBgTilemapBufferToVram(1);
+        CopyBgTilemapBufferToVram(2);
+        CopyBgTilemapBufferToVram(3);
+        gMain.state++;
+        break;
+    case 4:
+        BeginNormalPaletteFade(PALETTES_ALL & ~(0x14), 0, 0x10, 0, RGB_BLACK);
+        SetVBlankCallback(gPokedexVBlankCB);
+        gMain.state++;
+        break;
+    case 5:
+        SetGpuReg(REG_OFFSET_BLDCNT, 0);
+        SetGpuReg(REG_OFFSET_BLDALPHA, 0);
+        SetGpuReg(REG_OFFSET_BLDY, 0);
+        SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_OBJ_1D_MAP | DISPCNT_OBJ_ON);
+        HideBg(0);
+        ShowBg(1);
+        ShowBg(2);
+        ShowBg(3);
+        gMain.state++;
+        break;
+    case 6:
+        if (!gPaletteFade.active)
+        {
+            sPokedexView->screenSwitchState = CODEX_SWITCH_NONE;
+            gMain.state = 0;
+            gTasks[taskId].func = Task_HandleCodexPageInput;
+        }
+        break;
+    }
+}
+
+static void CodexPageSwitch(u8 taskId, u32 target, u32 sound)
+{
+    BeginNormalPaletteFade(PALETTES_ALL & ~(0x14), 0, 0, 0x10, RGB_BLACK);
+    sPokedexView->screenSwitchState = target;
+    gTasks[taskId].func = Task_SwitchScreensFromCodexPage;
+    PlaySE(sound);
+}
+
+static void Task_HandleCodexPageInput(u8 taskId)
+{
+    bool32 left = JOY_NEW(DPAD_LEFT) || (JOY_NEW(L_BUTTON) && gSaveBlock2Ptr->optionsButtonMode == OPTIONS_BUTTON_MODE_LR);
+    bool32 right = JOY_NEW(DPAD_RIGHT) || (JOY_NEW(R_BUTTON) && gSaveBlock2Ptr->optionsButtonMode == OPTIONS_BUTTON_MODE_LR);
+
+    if (gPaletteFade.active)
+        return;
+    if (JOY_NEW(B_BUTTON))
+    {
+        CodexPageSwitch(taskId, CODEX_SWITCH_INFO, SE_PC_OFF);
+        return;
+    }
+    if (sCodexPage == CODEX_SCREEN_LINEAGE && (JOY_REPEAT(DPAD_UP) || JOY_REPEAT(DPAD_DOWN)))
+    {
+        if (JOY_REPEAT(DPAD_UP) && sCodexLineageCursor > 0)
+            sCodexLineageCursor--;
+        else if (JOY_REPEAT(DPAD_DOWN) && sCodexLineageCursor + 1 < sCodexLineageCount)
+            sCodexLineageCursor++;
+        else
+            return;
+        if (sCodexLineageCursor < sCodexLineageScroll)
+            sCodexLineageScroll = sCodexLineageCursor;
+        else if (sCodexLineageCursor >= sCodexLineageScroll + LINEAGE_VISIBLE)
+            sCodexLineageScroll = sCodexLineageCursor - LINEAGE_VISIBLE + 1;
+        PrintCodexLineage();
+        CopyWindowToVram(WIN_INFO, COPYWIN_GFX);
+        PlaySE(SE_SELECT);
+        return;
+    }
+    if (left && sCodexPage == CODEX_SCREEN_LINEAGE)
+    {
+        if (!sPokedexListItem->owned)
+            PlaySE(SE_FAILURE);
+        else
+            CodexPageSwitch(taskId, CODEX_SWITCH_EVIDENCE, SE_DEX_PAGE);
+        return;
+    }
+    if (right)
+        CodexPageSwitch(taskId, sCodexPage == CODEX_SCREEN_EVIDENCE ? CODEX_SWITCH_LINEAGE : CODEX_SWITCH_CRY, SE_DEX_PAGE);
+}
+
+static void Task_SwitchScreensFromCodexPage(u8 taskId)
+{
+    if (gPaletteFade.active)
+        return;
+    switch (sPokedexView->screenSwitchState)
+    {
+    case CODEX_SWITCH_INFO:
+    default:
+        gTasks[taskId].func = Task_LoadInfoScreen;
+        break;
+    case CODEX_SWITCH_EVIDENCE:
+        sCodexPage = CODEX_SCREEN_EVIDENCE;
+        gTasks[taskId].func = Task_LoadCodexPage;
+        break;
+    case CODEX_SWITCH_LINEAGE:
+        sCodexPage = CODEX_SCREEN_LINEAGE;
+        gTasks[taskId].func = Task_LoadCodexPage;
+        break;
+    case CODEX_SWITCH_CRY:
+        gTasks[taskId].func = Task_LoadCryScreen;
+        break;
+    }
 }
 
 #define tState         data[0]
@@ -4297,7 +4641,7 @@ static void PrintOwnedMonMeasurements(enum Species species)
 }
 
 // Strata: metric entries come from the exact mass and length in strata_codex.h, so a 50 g
-// animal reads "50 g" and an 8 t one "8,000 kg" (the species_info fields round to 0.1 kg and
+// animal reads "50 g" and an 8 t one "8.0 t" (the species_info fields round to 0.1 kg and
 // 0.1 m, and cap at 6553.5 kg). Imperial keeps the stock conversion.
 static u8 *ConvertSpeciesHeightToString(enum Species species, u32 height)
 {

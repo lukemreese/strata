@@ -24,7 +24,7 @@ description: Adding or changing Strata species and their art and cries — roste
   `HOENN_DEX_COUNT`). The player only sees these (001-087); the National number is just the
   save-flag index, so appending keeps saves valid while a new species shifts later Codex
   numbers. A species needs a correct `first_era`, `mass` (kg) and `length` (m): the Codex
-  shows mass and length exactly and metric (`50 g`, `2.2 kg`, `9,000 kg`, `10 cm`, `1.5 m`)
+  shows mass and length exactly and metric (`50 g`, `2.2 kg`, `450 kg`, `9.0 t`, `10 cm`, `1.5 m`)
   from `src/data/strata_codex.h`, not from the u16 `weight`/`height` fields. Details in
   `docs/strata_design.md` 7.8.
 - Names ≤ 12 chars (genus, else informal form, else a morpheme cut). Category ≤ 12 chars. Dex text
@@ -36,6 +36,31 @@ description: Adding or changing Strata species and their art and cries — roste
 - Lineages and extinctions: `src/data/lineages.h` (`DESCENT_DEFAULT`, `DESCENT_BRANCH(sp, pressure,
   minScore)`, `DESCENT_END`; per-era extinction lists; `sEraLevelFloor`). Branch thresholds must stay
   above the knockout cap (24).
+
+## Codex: evidence and lineage pages (C14; design doc 7.8)
+
+Every species needs an EVIDENCE entry, or `gen_species.py` stops ("roster/evidence.py: missing").
+
+- Add it to `tools/strata/roster/evidence.py` (not the roster modules: other lanes edit those),
+  keyed by the species constant (`const_name`: the in-game name upper-cased, e.g. `"DOUGLASSCIUR"`):
+  `record` (confidence tag: "well known", "partial skeletons", "teeth and jaws", "living
+  species"), `bones` (what the reconstruction rests on, ≤ 2 wrapped lines), `inferred` (one line,
+  R-e: "colour, calls, habits"; living species: "little, it lives today"), optional `standin`
+  (every grade or stand-in descent: shown as "Stand-in: ..."), `note` (a caveat line written in
+  full: "Debated: ...", "Unverified: ..."), `today` (a living end's status for the LINEAGE page,
+  ≤ 2 lines split by `\n`, e.g. "lost from Montana, alive elsewhere").
+- The page also shows the roster's `genus`, `site`, `age` and `mass_est`; don't repeat them. The
+  body must wrap to 2-4 lines of ≤ 38 characters. No `~` (the game font has no glyph; ages get
+  "about" automatically). Say less rather than guess: no specimen numbers, counts or years you
+  can't source; hedge debated points; list species you were unsure of in the commit message.
+- Then `gen_species.py`, `make`, `make check TESTS='Every'` (coverage, `Inferred:`, widths in
+  pixels) and add the species to the stand-in list in `test/strata_codex.c` if it is a grade.
+- LINEAGE needs nothing per species: it reads `src/data/lineages.h` (and `sStrataFossils` for
+  the loss reason). A new descent shows up by itself; `test/strata_codex.c` checks every
+  species' rows fit their columns, so a long name deep in a line may need FONT_NARROW (it falls
+  back automatically) or a shorter `name`.
+- Look at it: `python3 tools/strata/playtest/run.py codex_pages` (edit `CODEX_CAUGHT` in
+  `scenarios.py` to screenshot another species' pages).
 
 ## Art pipeline (`tools/strata/sprites/`, CLI `gen_sprite.py`)
 

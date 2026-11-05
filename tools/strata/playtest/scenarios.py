@@ -27,7 +27,7 @@ def expand(name):
     if name == "all":
         return ["watchdog_selftest", "new_game_smoke", "battle_smoke", "forecast_smoke", "pressure_chart_smoke",
                 "peer_review_smoke", "act_tour", "extinction_smoke", "story_interludes"] \
-            + [f"boss_{a}" for a in range(1, 9)] + ["colby_gate", "ending_smoke"]
+            + [f"boss_{a}" for a in range(1, 9)] + ["colby_gate", "ending_smoke", "codex_pages"]
     if name in REGISTRY or name.endswith(".txt") or re.fullmatch(r"boss_[1-8]", name):
         return [name]
     raise SystemExit(f"unknown scenario {name} (try --list)")
@@ -1010,3 +1010,128 @@ def story_interludes(g, args):
     g.press("A")
     play_script(g, "halvorsen_after")
     g.expect_var("VAR_STRATA_SUBPLOT", "SUBPLOT_AUCTION_DAY")
+
+
+# ------------------------------------------------------------------ Codex (C14)
+# Codex pages: Info, Evidence, Lineage (src/pokedex.c, src/strata_codex.c).
+
+def codex_set_dex(g, species, caught=True):
+    """Mark a species seen (and caught) in the Codex by writing the save's dex flag bits."""
+    c = g.const
+    sb1 = g.read("gSaveBlock1Ptr", 4)
+    bit = c(species.replace("SPECIES_", "NATIONAL_DEX_")) - 1
+    fields = ["dexSeen"] + (["dexCaught"] if caught else [])
+    for field in fields:
+        addr = sb1 + c(f"__builtin_offsetof(struct SaveBlock1, {field})") + bit // 8
+        value = g.read(addr, 1) | (1 << (bit % 8))
+        g.runner.cmd(f"w8 {addr:x} {value:x}")
+
+
+def codex_open(g):
+    """START -> CODEX; returns once the Codex list takes input."""
+    g.wait_overworld()
+    g.press("START", 4, 20)
+    n = g.read("sNumStartMenuActions", 1)
+    actions = [g.read("sCurrentStartMenuActions", 1, i) for i in range(n)]
+    codex = actions.index(0)  # MENU_ACTION_POKEDEX (src/start_menu.c)
+    g.screenshot("start_menu")
+    for _ in range(codex):
+        g.press("DOWN", 4, 4)
+    g.press("A", 4, 10)
+    g.wait_until(lambda: "Task_HandlePokedexInput" in g.tasks() and not g.st["fadeActive"], 900, "the Codex list")
+
+
+def codex_wait(g, task, what):
+    g.wait_until(lambda: task in g.tasks() and not g.st["fadeActive"], 900, what)
+
+
+def codex_goto(g, species, cursor):
+    """From the Codex list, move to `species`' Codex number and open its info page.
+    `cursor` is [list position], kept across calls (the list remembers it)."""
+    target = g.const(species.replace("SPECIES_", "HOENN_DEX_")) - 1
+    while cursor[0] != target:
+        key = "DOWN" if target > cursor[0] else "UP"
+        g.press(key, 2, 2)
+        g.wait_until(lambda: "Task_HandlePokedexInput" in g.tasks(), 300, "the list to scroll")
+        cursor[0] += 1 if key == "DOWN" else -1
+    g.press("A", 4, 10)
+    codex_wait(g, "Task_HandleInfoScreenInput", "the info page")
+    dexnum = g.read(g.read("sPokedexListItem", 4), 2)
+    g.check(dexnum == g.const(species.replace("SPECIES_", "NATIONAL_DEX_")), f"the info page shows {species}")
+
+
+def codex_bar_open(g, slot):
+    """On the info page: pick bar slot `slot` (0 EVIDENCE, 1 LINEAGE, 2 CRY) and open it."""
+    for _ in range(3):
+        g.press("LEFT", 2, 4)
+    for _ in range(slot):
+        g.press("RIGHT", 2, 4)
+    g.check(g.read("sPokedexView", 4) != 0, "the Codex is open")
+    g.press("A", 4, 10)
+
+
+# Quick-start TEAM (caught): a starter, two giants (one lost at the K-Pg) and the dog line's
+# branching point. Seen only: some of the dog line, so the LINEAGE page names them; the rest
+# of the line stays "?".
+CODEX_CAUGHT = ["SPECIES_CIMOLESTES", "SPECIES_TYRANNOSAUR", "SPECIES_HESPEROCYON", "SPECIES_MAMMUTHUS"]
+CODEX_SEEN = ["SPECIES_PROTICTIS", "SPECIES_MIACIS", "SPECIES_LEPTOCYON", "SPECIES_CANIS", "SPECIES_EPICYON"]
+# LINEAGE rows expected (ancestors + itself + descendants, src/strata_codex.c).
+CODEX_LINEAGE_ROWS = {"SPECIES_CIMOLESTES": 9, "SPECIES_TYRANNOSAUR": 1, "SPECIES_HESPEROCYON": 9,
+                      "SPECIES_MAMMUTHUS": 1}
+
+
+@scenario
+def codex_pages(g, args):
+    """START -> CODEX: the Info, Evidence, Lineage and Cry pages of a starter, two giants and the
+    dog line's branching point (C14), moving between pages with Left/Right and the cursor."""
+    g.quickstart("MAP_STRATA_FIELD_STATION", 6, 6, story=3, era=1,
+                 party=[(s, 30) for s in CODEX_CAUGHT])
+    for s in CODEX_SEEN:
+        codex_set_dex(g, s, caught=False)
+    codex_open(g)
+    g.screenshot("list")
+    cursor = [0]
+    for species in CODEX_CAUGHT:
+        name = species.replace("SPECIES_", "").lower()
+        codex_goto(g, species, cursor)
+        g.screenshot(f"{name}_info")
+        codex_bar_open(g, 0)
+        codex_wait(g, "Task_HandleCodexPageInput", "the EVIDENCE page")
+        g.check(g.read("sCodexPage", 1) == 0, "EVIDENCE is open")
+        g.screenshot(f"{name}_evidence")
+        g.press("RIGHT", 2, 10)
+        codex_wait(g, "Task_HandleCodexPageInput", "the LINEAGE page")
+        g.check(g.read("sCodexPage", 1) == 1, "Right on EVIDENCE opens LINEAGE")
+        rows = g.read("sCodexLineageCount", 1)
+        g.check(rows == CODEX_LINEAGE_ROWS[species], f"{name}: {rows} lineage rows")
+        g.screenshot(f"{name}_lineage")
+        if rows > 1:
+            # Down to the last row (scrolling), then its detail; back up to the first.
+            for _ in range(rows):
+                g.press("DOWN", 2, 4)
+            g.check(g.read("sCodexLineageCursor", 1) == rows - 1, "the cursor reaches the last row")
+            g.screenshot(f"{name}_lineage_last")
+            for _ in range(rows):
+                g.press("UP", 2, 4)
+            g.check(g.read("sCodexLineageCursor", 1) == 0, "the cursor reaches the root")
+            g.screenshot(f"{name}_lineage_root")
+        g.press("RIGHT", 2, 10)
+        codex_wait(g, "Task_HandleCryScreenInput", "the CRY page")
+        g.screenshot(f"{name}_cry")
+        g.press("LEFT", 2, 10)
+        codex_wait(g, "Task_HandleCodexPageInput", "LINEAGE again")
+        g.press("LEFT", 2, 10)
+        codex_wait(g, "Task_HandleCodexPageInput", "EVIDENCE again")
+        g.check(g.read("sCodexPage", 1) == 0, "Left on LINEAGE opens EVIDENCE")
+        g.press("B", 2, 10)
+        codex_wait(g, "Task_HandleInfoScreenInput", "the info page again")
+        g.press("B", 2, 10)
+        codex_wait(g, "Task_HandlePokedexInput", "the Codex list again")
+    # A seen-only animal: EVIDENCE is closed until it is caught; LINEAGE opens.
+    codex_goto(g, "SPECIES_EPICYON", cursor)
+    codex_bar_open(g, 0)
+    g.wait(30)
+    g.check("Task_HandleInfoScreenInput" in g.tasks(), "EVIDENCE stays closed for an uncaught animal")
+    codex_bar_open(g, 1)
+    codex_wait(g, "Task_HandleCodexPageInput", "the LINEAGE page of a seen animal")
+    g.screenshot("epicyon_lineage_seen_only")

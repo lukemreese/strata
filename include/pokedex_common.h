@@ -11,7 +11,9 @@ enum
     PAGE_UNK,
     PAGE_AREA,
     PAGE_CRY,
-    PAGE_SIZE
+    PAGE_SIZE,
+    PAGE_EVIDENCE, // Strata Codex pages (src/pokedex.c, roadmap C14)
+    PAGE_LINEAGE,
 };
 
 enum

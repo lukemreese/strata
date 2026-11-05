@@ -599,12 +599,18 @@ The player must always be able to see *what they are steering*.
   (24 entries, the rest summed up). Opening the Codex entry from the list is not done.
 - ✅ **Hall of Lost Lineages:** each filter plaque shows the player's own lost lineages from
   that filter (`special Strata_BufferHallCase`), or the generic list if none.
-- **Codex** (rename the Pokédex; base it on the expansion's HGSS dex): pages for **Entry**
-  (full genus, site, age, mass with "est." flag, dex text), **Evidence** (what the
-  reconstruction is based on: bones / teeth only / tracks; from the roster `notes` field), and
-  **Lineage**: reuse the HGSS **evolution page** but feed it from `sLineageDescents` (ancestor
-  and descendants, with undiscovered branches as silhouettes). A status line says "Living",
-  "Extinct ~X Ma", or "Lost from Montana, survives elsewhere".
+- ✅ **Codex (C14):** built on the stock (non-HGSS) dex, which the Codex already used (numbers,
+  metric units, sort orders). The info screen's bar reads EVIDENCE | LINEAGE | CRY | CANCEL.
+  **Entry** (info page): Codex number, name, category, exact length and mass (`6.8 t`), dex
+  text. **Evidence** (once caught): full genus, site, age, "mass estimated" where the roster
+  says so, a confidence tag ("Record: partial skeletons") and 2-4 lines: the material, what is
+  inferred (R-e) and the stand-in or caveat, from `tools/strata/roster/evidence.py`.
+  **Lineage** (once seen): an HGSS-style list fed from `sLineageDescents`: the ancestor chain,
+  the animal, its descendants by era with `default` or the branch pressure, ends marked
+  `living` or `lost`; a cursor and a detail box ("From Hesperocyon at Ashfall: MEAT", "Gone
+  before the Ice Age." + the fossil reason, or "Living today." + a note such as the alligator
+  snapper's "lives on only in the warm Southeast"). Unseen animals are "?". Details: design doc
+  7.8.
 - **Research case (Act 7 side quest):** Halvorsen's museum pitch needs N Codex entries with
   *Evidence* logged (from catching, or finding a field-note item in each map). Rewards: the
   epilogue museum display grows with your count; the stipend pays per entry (§3.6).
@@ -845,7 +851,7 @@ Ordered by leverage ÷ risk. Tasks inside a milestone can run in parallel unless
 | C11 | ✅ **Done** (with C9). Act 7 pre-ash / ash map pairs: each of the 4 Ashfall maps is built twice from one footprint (clear = `*_oligocene` palettes plus plain grass swaps and `WEATHER_SHADE`; ash = stock Fallarbor ash tiles and `WEATHER_VOLCANIC_ASH`). The Teleoceras script fades out and warps into the ash Waterhole; the ash maps only connect to each other. No new palette variant was needed | M | C9, palettes (A1) | CON |
 | C12 | ✅ **Done** (Hall generic). Prairie extended (ferret/fox/grouse placed, 4 notes, Center door), Missouri Breaks, Pryor Mountains, Interpretive Center 1F (the Pair, Halvorsen peer-review hook for C13) and the Hall of Lost Lineages (one plaque per extinction filter). Follow-up: **F4** fossil flags, so the Hall lists the player's own lost lineages (hook: `StrataInterpretive2F` case scripts) | M | F4 | CON |
 | C13 | ✅ **Done.** 8 visiting researchers (hidden by `FLAG_TEMP_N` until act N is done: camp, field station, ranch, Jordan), Theo ×4 (#0 on the starter after yours at Lv 5; #3 a double battle with Josie), Halvorsen's final review (Lv 50-55, `FLAG_STRATA_EPI_PEER_REVIEW_DONE`), all one-time, class RESEARCHER; `special Strata_PayStipend` (150 + 25 per act done, per new Codex entry) in the Mentor script. Data `src/data/trainers_strata.party`, code `src/strata_review.c`, table and balance in `docs/strata_design.md`. The 15 trainer IDs reuse unreferenced stock slots (the trainer flag range is fixed). Hub flags in `strata_act_flags.h` | M | R8 | CON + SYS |
-| C14 | Codex pages (Evidence, Lineage via the HGSS evolution page) + weight widening | L | F8 | SYS |
+| C14 | ✅ **Done.** Codex pages + weight widening. The info screen's bar is now EVIDENCE \| LINEAGE \| CRY \| CANCEL (labels drawn in code over the stock bar art; the Hoenn AREA map and the SIZE screen are unreachable). **EVIDENCE** (caught only): genus, site, age (+ "mass estimated"), a confidence tag ("Record: teeth and jaws"), then 2-4 lines: the material, "Inferred: ...", "Stand-in: ..." / caveat, from the new `tools/strata/roster/evidence.py` (all 87, keyed by species constant) → `src/data/strata_evidence.h` (`gen_evidence()` in `gen_species.py`). **LINEAGE** (seen is enough): HGSS-style list built from `sLineageDescents` (`Codex_BuildLineage`, `src/strata_codex.c`): the ancestor chain to the root, the animal, then its descendants depth first, each row with its tag (`default` or the branch pressure FOREST/OPEN/WATER/PLANT/MEAT/HEAT) and fate (`living`, `lost`); Up/Down move a cursor and the box below says where the row comes from, its fate ("Lost at the K-Pg boundary." + the fossil reason, "Living today." + an optional `today` note such as Macrochelys') and its descendants. Unseen animals show as "?" (their branch tag stays). Mass: `Strata_WriteMass` now writes `50 g`, `450 kg`, `6.8 t`, `120 t` (no cap below 4,295 t). Hooks: `Task_LoadCodexPage` / `Task_HandleCodexPageInput` in `src/pokedex.c`, `PAGE_EVIDENCE`/`PAGE_LINEAGE`. Tests `test/strata_codex.c`; harness `codex_pages`. Not done: jumping from a LINEAGE row to that animal's entry; Q3 (a science review of the evidence lines) | L | F8 | SYS |
 
 ### M3: Story
 

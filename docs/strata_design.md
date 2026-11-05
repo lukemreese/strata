@@ -658,7 +658,7 @@ Keep the standard 18 types for compatibility, but assign them by ecology.
   there. Battle only compares weights with brackets far below the clamp, so it keeps that
   field (stock tests assert its hectogram values). The Codex does not use it: see 7.8.
 
-### 7.8 The Codex (numbers and units)
+### 7.8 The Codex (numbers, units, pages)
 
 The Codex is the expansion's regional dex, filled with Strata species. The stock National
 Dex never unlocks (`IsNationalPokedexEnabled()` is always false, so an old save that had it
@@ -687,15 +687,57 @@ set behaves the same), so there is one dex and it lists only Strata animals.
   | *Mesodma* 0.05 kg | `50 g` | under 1 kg: grams |
   | *Vulpes* 2.2 kg | `2.2 kg` | under 100 kg: one decimal |
   | *Equus* 300 kg | `300 kg` | from 100 kg: whole kg |
-  | *Mammuthus* 9000 kg | `9,000 kg` | thousands comma |
-  | above 99,999 kg | `99,999+ kg` | display cap |
+  | *Mammuthus* 9000 kg | `9.0 t` | from 1 t: tonnes, one decimal (C14) |
+  | 120,000 kg | `120 t` | from 100 t: whole tonnes, thousands comma (`4,295 t` is the u32 top) |
   | length 0.1 m | `10 cm` | under 1 m: cm; otherwise `1.5 m`, `12.3 m`, cap `999.9+ m` |
 
+  Each step is picked by the rounded value (99,950 g is `100 kg`, 999,500 g is `1.0 t`).
   Stock species fall back to their species_info fields (hectograms, decimeters). The
   strings stay under 64 px so they clear the footprint (`test/strata_codex.c` measures every
-  species). `weight` is never 0 (minimum 1 hg) so tiny animals are not weightless in battle.
+  species). `weight` is never 0 (minimum 1 hg) so tiny animals are not weightless in battle;
+  it stays the clamped u16 for battle (7.7), and the Codex sort orders use the exact grams.
+- **Pages (C14).** The info screen's bar is EVIDENCE | LINEAGE | CRY | CANCEL. Left/Right pick a
+  slot and A opens it; on a page Left/Right step to the neighbouring page and B returns to the
+  info page. The labels are drawn in code (`DrawCodexBarLabels`, `FONT_SMALL_NARROW` in three
+  BG1 windows over each slot's interior, in the bar art's colour indices so the slot highlight
+  recolours them); the baked-in stock labels underneath are covered. The stock AREA screen (a
+  Hoenn map with nothing for Strata) and SIZE screen (affine scales borrowed from stock species;
+  a 10 cm *Mesodma* and a 12 m *Tyrannosaurus* can't share the screen with the player) are no
+  longer reachable; their code is untouched. Both new pages use one white box below the bar,
+  built from the info screen's description-box tiles (`DrawCodexPageFrame`).
+  - **EVIDENCE** (caught animals only, as the stock SIZE screen was): the full genus, `Site:`,
+    `Age:` (the roster's `~` is written "about": the game font has no tilde) plus ", mass
+    estimated" for `mass_est`, `Record:` (a confidence tag), a rule, then 2-4 lines: what the
+    reconstruction rests on, `Inferred: ...` (R-e) and `Stand-in: ...` or a caveat
+    (`Debated:`, `Unverified:`). Data: `tools/strata/roster/evidence.py`, keyed by species
+    constant, kept apart from the roster modules so balance work and evidence work don't
+    collide; `gen_species.py` (`gen_evidence()`) joins it with the roster's genus/site/age/
+    `mass_est`/`first_era` into `src/data/strata_evidence.h` and fails on a missing entry,
+    an unknown key, a tilde or more than 4 wrapped lines.
+  - **LINEAGE** (seen is enough): `Codex_BuildLineage` walks `sLineageDescents` up to the root
+    and lists the chain, the animal, then its descendants depth first (each era's default before
+    its branches). Sister branches off the chain are not listed (Canis shows its ancestors, not
+    Epicyon). Columns: name (indented 6 px per generation), tag (`default` or the branch's
+    pressure: FOREST, OPEN, WATER, PLANT, MEAT, HEAT), fate (`living`; `lost` when the species is
+    in an extinction list; blank when it descends). Five rows show; Up/Down move the cursor and
+    scroll (arrows mark more rows). The box below: where it comes from ("Root of the line, at
+    Hell Creek", "From Hesperocyon at Ashfall: MEAT", "No descents: a line of its own."), its
+    fate ("Descends: Canis, Aenocyon or Vulpes.", "Lost at the K-Pg boundary." with the fossil
+    reason from `sStrataFossils`, "Living today." with the evidence file's `today` note, e.g.
+    *Macrochelys*, *Equus*, *Ovibos*). **Spoilers:** an animal not yet seen in the Codex is "?"
+    in its row and in other rows' details, its fate column is "?", and its detail says "Not yet
+    seen in the Codex."; its branch tag stays (the pressure chart already hints branches).
 - **Tests:** `test/strata_codex.c` (unique 001-087 numbers, no stock species, era order,
-  sort orders, unit formatting for tiny, normal and clamped values, widths).
+  sort orders, unit formatting for g/kg/t and every species' width; an evidence entry of 2-4
+  lines for every species with one `Inferred:` line, `Stand-in:` on every grade, every page row
+  in the normal font within 224 px; the lineage builder for the dog line from Hesperocyon
+  (a MEAT branch lost before the Ice Age, an OPEN branch alive), Canis (chain only), the bird
+  line (three-way split, two branches lost in the cooling), Tyrannosaurus (a line of its own,
+  lost at the K-Pg, with the fossil reason), Macrochelys (the `today` note); "?" for unseen
+  animals; every row and detail line of every species within its column; ends are lost or
+  living; at most one ancestor per species; bar label widths). Harness: `codex_pages` (START →
+  CODEX; Info, Evidence, Lineage and Cry for Cimolestes, Tyrannosaurus, Hesperocyon and
+  Mammuthus, the cursor to both ends, a seen-only Epicyon).
 
 ### 7.9 The ending: Colby gate, last lines, credits up the column (S3)
 

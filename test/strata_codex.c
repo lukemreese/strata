@@ -1,5 +1,6 @@
 #include "global.h"
 #include "event_data.h"
+#include "lineage.h"
 #include "pokedex.h"
 #include "pokemon.h"
 #include "string_util.h"
@@ -163,23 +164,29 @@ static const struct { u32 grams; u8 text[CODEX_MEASURE_STR_LEN]; } sMassCases[] 
     MASS_CASE(30, "30 g"),
     MASS_CASE(50, "50 g"),
     MASS_CASE(999, "999 g"),
-    // Normal: one decimal below 100 kg, whole kg above.
+    // Normal: one decimal below 100 kg, whole kg up to a tonne.
     MASS_CASE(1000, "1.0 kg"),
     MASS_CASE(2200, "2.2 kg"),
     MASS_CASE(13000, "13.0 kg"),
     MASS_CASE(99949, "99.9 kg"),
     MASS_CASE(99950, "100 kg"),
     MASS_CASE(300000, "300 kg"),
-    // Huge: the real mass, with a thousands comma.
-    MASS_CASE(1000000, "1,000 kg"),
-    MASS_CASE(9000000, "9,000 kg"),
-    MASS_CASE(99999499, "99,999 kg"),
-    // Clamped: past the display cap, including the largest value the field holds.
-    MASS_CASE(99999500, "99,999+ kg"),
-    MASS_CASE(0xFFFFFFFF, "99,999+ kg"),
+    MASS_CASE(450000, "450 kg"),
+    MASS_CASE(999499, "999 kg"),
+    // Giants: tonnes, one decimal below 100 t (the old u16 field stopped at 6553.5 kg).
+    MASS_CASE(999500, "1.0 t"),
+    MASS_CASE(1000000, "1.0 t"),
+    MASS_CASE(6800000, "6.8 t"),
+    MASS_CASE(9000000, "9.0 t"),
+    MASS_CASE(45000000, "45.0 t"),
+    MASS_CASE(99949999, "99.9 t"),
+    // Whole tonnes with a thousands comma, up to the largest value the field holds.
+    MASS_CASE(99950000, "100 t"),
+    MASS_CASE(120000000, "120 t"),
+    MASS_CASE(0xFFFFFFFF, "4,295 t"),
 };
 
-TEST("Codex masses are written in g, kg and thousands of kg")
+TEST("Codex masses are written in g, kg and t")
 {
     u32 i, index = 0;
     u8 text[CODEX_MEASURE_STR_LEN];
@@ -233,8 +240,10 @@ static const struct
     SPECIES_CASE(SPECIES_TEILHARDINA, "30 g", "10 cm"),
     SPECIES_CASE(SPECIES_VULPES, "2.2 kg", "80 cm"),
     SPECIES_CASE(SPECIES_EQUUS, "300 kg", "2.2 m"),         // a wild horse
-    SPECIES_CASE(SPECIES_MAMMUTHUS, "9,000 kg", "4.5 m"),   // past the old 6553.5 kg field
-    SPECIES_CASE(SPECIES_TYRANNOSAUR, "8,000 kg", "12.3 m"),
+    SPECIES_CASE(SPECIES_BISON, "700 kg", "3.0 m"),
+    SPECIES_CASE(SPECIES_UINTATHERIUM, "2.0 t", "4.0 m"),
+    SPECIES_CASE(SPECIES_MAMMUTHUS, "9.0 t", "4.5 m"),      // past the old 6553.5 kg field
+    SPECIES_CASE(SPECIES_TYRANNOSAUR, "8.0 t", "12.3 m"),
 };
 
 TEST("Tiny, normal and huge species read sensibly in the Codex")
@@ -301,12 +310,416 @@ TEST("The widest Codex measurements fit beside the footprint")
 {
     u8 text[CODEX_MEASURE_STR_LEN];
 
-    Strata_WriteMass(text, 0xFFFFFFFF); // "99,999+ kg"
+    Strata_WriteMass(text, 0xFFFFFFFF); // "4,295 t"
     EXPECT_LE(GetStringWidth(FONT_NORMAL, text, 0), CODEX_MEASURE_WIDTH_PX);
-    Strata_WriteMass(text, 88888000); // "88,888 kg"
+    Strata_WriteMass(text, 88888888); // "88.9 t"
+    EXPECT_LE(GetStringWidth(FONT_NORMAL, text, 0), CODEX_MEASURE_WIDTH_PX);
+    Strata_WriteMass(text, 888888); // "889 kg"
     EXPECT_LE(GetStringWidth(FONT_NORMAL, text, 0), CODEX_MEASURE_WIDTH_PX);
     Strata_WriteLength(text, 0xFFFFFFFF); // "999.9+ m"
     EXPECT_LE(GetStringWidth(FONT_NORMAL, text, 0), CODEX_MEASURE_WIDTH_PX);
     Strata_WriteLength(text, 88888); // "888.9 m"
     EXPECT_LE(GetStringWidth(FONT_NORMAL, text, 0), CODEX_MEASURE_WIDTH_PX);
+}
+
+// ---------------------------------------------------------------------------------------------
+// EVIDENCE page (tools/strata/roster/evidence.py -> src/data/strata_evidence.h)
+
+TEST("Every Strata species has an evidence entry of 2-4 lines")
+{
+    enum Species species = SPECIES_NONE;
+    const struct StrataEvidence *evidence;
+    u32 i;
+
+    for (i = FIRST_STRATA_SPECIES; i < SPECIES_CUSTOM_END; i++)
+    {
+        PARAMETRIZE_LABEL("%S", gSpeciesInfo[i].speciesName) { species = i; }
+    }
+    evidence = Codex_GetEvidence(species);
+    EXPECT(evidence != NULL);
+    EXPECT(evidence->genus != NULL && evidence->genus[0] != EOS);
+    EXPECT(evidence->site != NULL && evidence->site[0] != EOS);
+    EXPECT(evidence->age != NULL && evidence->age[0] != EOS);
+    EXPECT(evidence->record != NULL && evidence->record[0] != EOS);
+    EXPECT_GE(evidence->lineCount, 2);
+    EXPECT_LE(evidence->lineCount, CODEX_EVIDENCE_MAX_LINES);
+    for (i = 0; i < evidence->lineCount; i++)
+        EXPECT(evidence->lines[i] != NULL && evidence->lines[i][0] != EOS);
+    EXPECT_EQ(evidence->firstEra, sStrataSpeciesEras[species].firstEra);
+}
+
+static bool32 StartsWith(const u8 *str, const u8 *prefix)
+{
+    while (*prefix != EOS)
+    {
+        if (*str++ != *prefix++)
+            return FALSE;
+    }
+    return TRUE;
+}
+
+TEST("Every evidence entry says what is inferred (rule R-e)")
+{
+    enum Species species = SPECIES_NONE;
+    const struct StrataEvidence *evidence;
+    u32 i, inferred = 0;
+
+    for (i = FIRST_STRATA_SPECIES; i < SPECIES_CUSTOM_END; i++)
+    {
+        PARAMETRIZE_LABEL("%S", gSpeciesInfo[i].speciesName) { species = i; }
+    }
+    evidence = Codex_GetEvidence(species);
+    for (i = 0; i < evidence->lineCount; i++)
+        inferred += StartsWith(evidence->lines[i], COMPOUND_STRING("Inferred: "));
+    EXPECT_EQ(inferred, 1);
+}
+
+TEST("The Codex's grades and stand-ins are labelled as stand-ins")
+{
+    // Outline 5 (H4, M7, M8) and design doc 8.2: every link of the dog chain is a grade, and the
+    // other stand-in descents say so too.
+    static const u16 standIns[] =
+    {
+        SPECIES_CIMOLESTES, SPECIES_PROTICTIS, SPECIES_MIACIS, SPECIES_HESPEROCYON, SPECIES_LEPTOCYON,
+        SPECIES_ASTERIORNIS, SPECIES_GALLINULOID, SPECIES_PROTOCHELYD, SPECIES_OMOMYS, SPECIES_PARAMYS,
+        SPECIES_HYRACHYUS, SPECIES_APHELOPS, SPECIES_HYPOHIPPUS, SPECIES_DOUGLASSCIUR, SPECIES_COSORYX,
+        SPECIES_VULPES,
+    };
+    enum Species species = SPECIES_NONE;
+    const struct StrataEvidence *evidence;
+    u32 i, labelled = 0;
+
+    for (i = 0; i < ARRAY_COUNT(standIns); i++)
+    {
+        PARAMETRIZE_LABEL("%S", gSpeciesInfo[standIns[i]].speciesName) { species = standIns[i]; }
+    }
+    evidence = Codex_GetEvidence(species);
+    for (i = 0; i < evidence->lineCount; i++)
+        labelled += StartsWith(evidence->lines[i], COMPOUND_STRING("Stand-in: "));
+    EXPECT_EQ(labelled, 1);
+}
+
+TEST("Every EVIDENCE page row fits the page in the normal font")
+{
+    enum Species species = SPECIES_NONE;
+    u8 rows[CODEX_EVIDENCE_ROWS][CODEX_LINE_SIZE];
+    u32 i, count;
+
+    for (i = FIRST_STRATA_SPECIES; i < SPECIES_CUSTOM_END; i++)
+    {
+        PARAMETRIZE_LABEL("%S", gSpeciesInfo[i].speciesName) { species = i; }
+    }
+    count = Codex_FormatEvidence(species, rows);
+    EXPECT_GE(count, 4 + 2);
+    EXPECT_LE(count, CODEX_EVIDENCE_ROWS);
+    for (i = 0; i < count; i++)
+        EXPECT_LE(GetStringWidth(FONT_NORMAL, rows[i], 0), CODEX_PAGE_WIDTH);
+}
+
+TEST("The EVIDENCE page reads genus, site, age, record, then the evidence")
+{
+    u8 rows[CODEX_EVIDENCE_ROWS][CODEX_LINE_SIZE];
+    u32 count = Codex_FormatEvidence(SPECIES_TYRANNOSAUR, rows);
+
+    EXPECT_EQ(count, 4 + Codex_GetEvidence(SPECIES_TYRANNOSAUR)->lineCount);
+    EXPECT_EQ(StringCompare(rows[0], COMPOUND_STRING("Tyrannosaurus rex")), 0);
+    EXPECT_EQ(StringCompare(rows[1], COMPOUND_STRING("Site: Hell Creek Fm, MT")), 0);
+    EXPECT_EQ(StringCompare(rows[2], COMPOUND_STRING("Age: 66.1 Ma")), 0);
+    EXPECT_EQ(StringCompare(rows[3], COMPOUND_STRING("Record: well known")), 0);
+    // An estimated mass says so; the roster's tilde reads "about" (the font has no tilde glyph).
+    Codex_FormatEvidence(SPECIES_MAMMUTHUS, rows);
+    EXPECT_EQ(StringCompare(rows[2], COMPOUND_STRING("Age: about 20 ka, mass estimated")), 0);
+    EXPECT(Codex_GetEvidence(SPECIES_BULBASAUR) == NULL);
+    EXPECT_EQ(Codex_FormatEvidence(SPECIES_BULBASAUR, rows), 0);
+}
+
+// ---------------------------------------------------------------------------------------------
+// LINEAGE page (src/data/lineages.h)
+
+static void SetSeen(enum Species species, bool32 seen)
+{
+    u32 bit = SpeciesToNationalPokedexNum(species) - 1;
+    if (seen)
+        gSaveBlock1Ptr->dexSeen[bit / 8] |= 1 << (bit % 8);
+    else
+        gSaveBlock1Ptr->dexSeen[bit / 8] &= ~(1 << (bit % 8));
+}
+
+static void SetAllSeen(bool32 seen)
+{
+    u32 i;
+    for (i = FIRST_STRATA_SPECIES; i < SPECIES_CUSTOM_END; i++)
+        SetSeen(i, seen);
+}
+
+struct ExpectedRow
+{
+    u16 species;
+    u8 depth;
+    u8 era;
+    u8 pressure;
+    u8 kind;
+    u8 fate;
+    u8 lostEra;
+};
+
+#define ROW(sp, depth, era, pressure, kind, fate, lost) { SPECIES_##sp, depth, ERA_##era, pressure, CODEX_LINEAGE_##kind, CODEX_FATE_##fate, lost }
+
+static void ExpectLineage(enum Species species, const struct ExpectedRow *expected, u32 count)
+{
+    struct CodexLineageRow rows[CODEX_LINEAGE_MAX_ROWS];
+    u32 i, n = Codex_BuildLineage(species, rows, CODEX_LINEAGE_MAX_ROWS);
+
+    EXPECT_EQ(n, count);
+    for (i = 0; i < n && i < count; i++)
+    {
+        EXPECT_EQ(rows[i].species, expected[i].species);
+        EXPECT_EQ(rows[i].depth, expected[i].depth);
+        EXPECT_EQ(rows[i].era, expected[i].era);
+        EXPECT_EQ(rows[i].pressure, expected[i].pressure);
+        EXPECT_EQ(rows[i].kind, expected[i].kind);
+        EXPECT_EQ(rows[i].fate, expected[i].fate);
+        EXPECT_EQ(rows[i].lostEra, expected[i].lostEra);
+        EXPECT_EQ(rows[i].isSelf, rows[i].species == species);
+    }
+}
+
+TEST("LINEAGE: Hesperocyon shows its ancestors, then its descendants with the branches and losses")
+{
+    static const struct ExpectedRow expected[] =
+    {
+        ROW(CIMOLESTES,  0, HELL_CREEK,    PRESSURE_NONE,      ROOT,    DESCENDS, ERA_COUNT),
+        ROW(PROTICTIS,   1, CORRAL_BLUFFS, PRESSURE_NONE,      DEFAULT, DESCENDS, ERA_COUNT),
+        ROW(MIACIS,      2, GREEN_RIVER,   PRESSURE_NONE,      DEFAULT, DESCENDS, ERA_COUNT),
+        ROW(HESPEROCYON, 3, WHITE_RIVER,   PRESSURE_NONE,      DEFAULT, DESCENDS, ERA_COUNT),
+        ROW(LEPTOCYON,   4, ASHFALL,       PRESSURE_NONE,      DEFAULT, DESCENDS, ERA_COUNT),
+        ROW(CANIS,       5, TRAP_CAVE,     PRESSURE_NONE,      DEFAULT, LIVING,   ERA_COUNT),
+        ROW(AENOCYON,    5, TRAP_CAVE,     PRESSURE_MEAT_DIET, BRANCH,  LOST,     ERA_EPILOGUE),
+        ROW(VULPES,      5, TRAP_CAVE,     PRESSURE_OPEN,      BRANCH,  LIVING,   ERA_COUNT),
+        ROW(EPICYON,     4, ASHFALL,       PRESSURE_MEAT_DIET, BRANCH,  LOST,     ERA_TRAP_CAVE),
+    };
+    ExpectLineage(SPECIES_HESPEROCYON, expected, ARRAY_COUNT(expected));
+}
+
+TEST("LINEAGE: Canis shows only its ancestor chain, not its sister branches")
+{
+    static const struct ExpectedRow expected[] =
+    {
+        ROW(CIMOLESTES,  0, HELL_CREEK,    PRESSURE_NONE, ROOT,    DESCENDS, ERA_COUNT),
+        ROW(PROTICTIS,   1, CORRAL_BLUFFS, PRESSURE_NONE, DEFAULT, DESCENDS, ERA_COUNT),
+        ROW(MIACIS,      2, GREEN_RIVER,   PRESSURE_NONE, DEFAULT, DESCENDS, ERA_COUNT),
+        ROW(HESPEROCYON, 3, WHITE_RIVER,   PRESSURE_NONE, DEFAULT, DESCENDS, ERA_COUNT),
+        ROW(LEPTOCYON,   4, ASHFALL,       PRESSURE_NONE, DEFAULT, DESCENDS, ERA_COUNT),
+        ROW(CANIS,       5, TRAP_CAVE,     PRESSURE_NONE, DEFAULT, LIVING,   ERA_COUNT),
+    };
+    ExpectLineage(SPECIES_CANIS, expected, ARRAY_COUNT(expected));
+}
+
+TEST("LINEAGE: the bird line's three-way split, its water and plant branches lost in the cooling")
+{
+    static const struct ExpectedRow expected[] =
+    {
+        ROW(ASTERIORNIS,  0, HELL_CREEK,   PRESSURE_NONE,       ROOT,    DESCENDS, ERA_COUNT),
+        ROW(GALLINULOID,  1, BIGHORN_PETM, PRESSURE_NONE,       DEFAULT, DESCENDS, ERA_COUNT),
+        ROW(MELEAGRIS,    2, TRAP_CAVE,    PRESSURE_NONE,       DEFAULT, LIVING,   ERA_COUNT),
+        ROW(CENTROCERCUS, 2, TRAP_CAVE,    PRESSURE_OPEN,       BRANCH,  LIVING,   ERA_COUNT),
+        ROW(PRESBYORNIS,  1, BIGHORN_PETM, PRESSURE_WATER,      BRANCH,  LOST,     ERA_WHITE_RIVER),
+        ROW(GASTORNIS,    1, BIGHORN_PETM, PRESSURE_PLANT_DIET, BRANCH,  LOST,     ERA_WHITE_RIVER),
+    };
+    ExpectLineage(SPECIES_ASTERIORNIS, expected, ARRAY_COUNT(expected));
+}
+
+TEST("LINEAGE: an animal outside the descent table is a line of its own, lost at the K-Pg")
+{
+    static const struct ExpectedRow expected[] =
+    {
+        ROW(TYRANNOSAUR, 0, HELL_CREEK, PRESSURE_NONE, ROOT, LOST, ERA_IMPACT_WINTER),
+    };
+    u8 lines[CODEX_LINEAGE_DETAIL_LINES][CODEX_LINE_SIZE];
+    struct CodexLineageRow rows[CODEX_LINEAGE_MAX_ROWS];
+    u32 n, count;
+
+    ExpectLineage(SPECIES_TYRANNOSAUR, expected, ARRAY_COUNT(expected));
+    SetAllSeen(TRUE);
+    count = Codex_BuildLineage(SPECIES_TYRANNOSAUR, rows, CODEX_LINEAGE_MAX_ROWS);
+    n = Codex_FormatLineageDetail(rows, count, 0, lines);
+    EXPECT_EQ(n, 4); // where from, fate, and the fossil reason's two lines
+    EXPECT_EQ(StringCompare(lines[0], COMPOUND_STRING("No descents: a line of its own.")), 0);
+    EXPECT_EQ(StringCompare(lines[1], COMPOUND_STRING("Lost at the K-Pg boundary.")), 0);
+    EXPECT_EQ(StringCompare(lines[2], COMPOUND_STRING("Top of a food chain that broke")), 0);
+    EXPECT_EQ(StringCompare(lines[3], COMPOUND_STRING("when the plants stopped growing.")), 0);
+}
+
+TEST("LINEAGE: rows and details name the branch, its pressure and the fate")
+{
+    u8 lines[CODEX_LINEAGE_DETAIL_LINES][CODEX_LINE_SIZE];
+    u8 name[CODEX_LINE_SIZE], tag[CODEX_LINE_SIZE], fate[CODEX_LINE_SIZE];
+    struct CodexLineageRow rows[CODEX_LINEAGE_MAX_ROWS];
+    u32 count;
+
+    SetAllSeen(TRUE);
+    count = Codex_BuildLineage(SPECIES_HESPEROCYON, rows, CODEX_LINEAGE_MAX_ROWS);
+    // Epicyon, the bone-crusher branch (last row).
+    Codex_FormatLineageRow(&rows[8], name, tag, fate);
+    EXPECT_EQ(StringCompare(name, COMPOUND_STRING("Epicyon")), 0);
+    EXPECT_EQ(StringCompare(tag, COMPOUND_STRING("MEAT")), 0);
+    EXPECT_EQ(StringCompare(fate, COMPOUND_STRING("lost")), 0);
+    EXPECT_EQ(Codex_FormatLineageDetail(rows, count, 8, lines), 4);
+    EXPECT_EQ(StringCompare(lines[0], COMPOUND_STRING("From Hesperocyon at Ashfall: MEAT")), 0);
+    EXPECT_EQ(StringCompare(lines[1], COMPOUND_STRING("Gone before the Ice Age.")), 0);
+    // Hesperocyon itself descends into both.
+    Codex_FormatLineageRow(&rows[3], name, tag, fate);
+    EXPECT_EQ(StringCompare(tag, COMPOUND_STRING("default")), 0);
+    EXPECT_EQ(fate[0], EOS);
+    Codex_FormatLineageDetail(rows, count, 3, lines);
+    EXPECT_EQ(StringCompare(lines[0], COMPOUND_STRING("From Miacis at White River: default")), 0);
+    EXPECT_EQ(StringCompare(lines[1], COMPOUND_STRING("Descends: Leptocyon or Epicyon.")), 0);
+    // The swift fox: an OPEN branch, alive today.
+    Codex_FormatLineageRow(&rows[7], name, tag, fate);
+    EXPECT_EQ(StringCompare(tag, COMPOUND_STRING("OPEN")), 0);
+    EXPECT_EQ(StringCompare(fate, COMPOUND_STRING("living")), 0);
+    EXPECT_EQ(Codex_FormatLineageDetail(rows, count, 7, lines), 2);
+    EXPECT_EQ(StringCompare(lines[1], COMPOUND_STRING("Living today.")), 0);
+    // The root.
+    Codex_FormatLineageRow(&rows[0], name, tag, fate);
+    EXPECT_EQ(tag[0], EOS);
+    Codex_FormatLineageDetail(rows, count, 0, lines);
+    EXPECT_EQ(StringCompare(lines[0], COMPOUND_STRING("Root of the line, at Hell Creek")), 0);
+}
+
+TEST("LINEAGE: a living end with a status note shows it (lost from Montana, alive elsewhere)")
+{
+    u8 lines[CODEX_LINEAGE_DETAIL_LINES][CODEX_LINE_SIZE];
+    struct CodexLineageRow rows[CODEX_LINEAGE_MAX_ROWS];
+    u32 count, i, self = 0;
+
+    SetAllSeen(TRUE);
+    count = Codex_BuildLineage(SPECIES_MACROCHELYS, rows, CODEX_LINEAGE_MAX_ROWS);
+    for (i = 0; i < count; i++)
+    {
+        if (rows[i].isSelf)
+            self = i;
+    }
+    EXPECT_EQ(rows[self].kind, CODEX_LINEAGE_BRANCH);
+    EXPECT_EQ(rows[self].pressure, PRESSURE_HEAT);
+    EXPECT_EQ(rows[self].fate, CODEX_FATE_LIVING);
+    EXPECT_EQ(Codex_FormatLineageDetail(rows, count, self, lines), 4);
+    EXPECT_EQ(StringCompare(lines[1], COMPOUND_STRING("Living today.")), 0);
+    EXPECT_EQ(StringCompare(lines[2], Codex_GetEvidence(SPECIES_MACROCHELYS)->today[0]), 0);
+}
+
+TEST("LINEAGE: unseen animals show as ?, with their branch but not their fate")
+{
+    u8 lines[CODEX_LINEAGE_DETAIL_LINES][CODEX_LINE_SIZE];
+    u8 name[CODEX_LINE_SIZE], tag[CODEX_LINE_SIZE], fate[CODEX_LINE_SIZE];
+    struct CodexLineageRow rows[CODEX_LINEAGE_MAX_ROWS];
+    u32 count;
+
+    SetAllSeen(FALSE);
+    SetSeen(SPECIES_HESPEROCYON, TRUE);
+    count = Codex_BuildLineage(SPECIES_HESPEROCYON, rows, CODEX_LINEAGE_MAX_ROWS);
+    EXPECT(rows[3].seen);
+    EXPECT(!rows[8].seen);
+    Codex_FormatLineageRow(&rows[8], name, tag, fate);
+    EXPECT_EQ(StringCompare(name, COMPOUND_STRING("?")), 0);
+    EXPECT_EQ(StringCompare(tag, COMPOUND_STRING("MEAT")), 0);
+    EXPECT_EQ(StringCompare(fate, COMPOUND_STRING("?")), 0);
+    EXPECT_EQ(Codex_FormatLineageDetail(rows, count, 8, lines), 2);
+    EXPECT_EQ(StringCompare(lines[1], COMPOUND_STRING("Not yet seen in the Codex.")), 0);
+    // A seen animal's unseen descendants are "?" in its own detail too.
+    Codex_FormatLineageDetail(rows, count, 3, lines);
+    EXPECT_EQ(StringCompare(lines[1], COMPOUND_STRING("Descends: ? or ?.")), 0);
+    // An unseen parent is "?" in its child's detail.
+    SetSeen(SPECIES_EPICYON, TRUE);
+    SetSeen(SPECIES_HESPEROCYON, FALSE);
+    count = Codex_BuildLineage(SPECIES_EPICYON, rows, CODEX_LINEAGE_MAX_ROWS);
+    Codex_FormatLineageDetail(rows, count, count - 1, lines);
+    EXPECT_EQ(StringCompare(lines[0], COMPOUND_STRING("From ? at Ashfall: MEAT")), 0);
+}
+
+TEST("Every LINEAGE row and detail line fits the page")
+{
+    enum Species species = SPECIES_NONE;
+    u8 lines[CODEX_LINEAGE_DETAIL_LINES][CODEX_LINE_SIZE];
+    u8 name[CODEX_LINE_SIZE], tag[CODEX_LINE_SIZE], fate[CODEX_LINE_SIZE];
+    struct CodexLineageRow rows[CODEX_LINEAGE_MAX_ROWS];
+    u32 i, j, n, count, self = 0;
+
+    for (i = FIRST_STRATA_SPECIES; i < SPECIES_CUSTOM_END; i++)
+    {
+        PARAMETRIZE_LABEL("%S", gSpeciesInfo[i].speciesName) { species = i; }
+    }
+    SetAllSeen(TRUE); // names are wider than "?"
+    count = Codex_BuildLineage(species, rows, CODEX_LINEAGE_MAX_ROWS);
+    EXPECT_GE(count, 1);
+    EXPECT_LT(count, CODEX_LINEAGE_MAX_ROWS); // nothing cut off
+    for (i = 0; i < count; i++)
+    {
+        if (rows[i].isSelf)
+            self++;
+        Codex_FormatLineageRow(&rows[i], name, tag, fate);
+        EXPECT_LE(GetStringWidth(FONT_NARROW, name, 0), CODEX_LINEAGE_NAME_WIDTH(rows[i].depth));
+        EXPECT_LE(GetStringWidth(FONT_NORMAL, tag, 0), CODEX_LINEAGE_TAG_WIDTH);
+        EXPECT_LE(GetStringWidth(FONT_NORMAL, fate, 0), CODEX_LINEAGE_FATE_WIDTH);
+        n = Codex_FormatLineageDetail(rows, count, i, lines);
+        EXPECT_GE(n, 2);
+        EXPECT_LE(n, CODEX_LINEAGE_DETAIL_LINES);
+        for (j = 0; j < n; j++)
+            EXPECT_LE(GetStringWidth(Codex_FitFont(lines[j], CODEX_PAGE_WIDTH), lines[j], 0), CODEX_PAGE_WIDTH);
+    }
+    EXPECT_EQ(self, 1);
+}
+
+TEST("Every lineage end is either lost at a filter or alive today, and only ends are")
+{
+    enum Species species = SPECIES_NONE;
+    struct CodexLineageRow rows[CODEX_LINEAGE_MAX_ROWS];
+    u32 i, count;
+
+    for (i = FIRST_STRATA_SPECIES; i < SPECIES_CUSTOM_END; i++)
+    {
+        PARAMETRIZE_LABEL("%S", gSpeciesInfo[i].speciesName) { species = i; }
+    }
+    count = Codex_BuildLineage(species, rows, CODEX_LINEAGE_MAX_ROWS);
+    for (i = 0; i < count; i++)
+    {
+        // Rows run depth first, so a row with descendants is followed by its first child,
+        // except the ancestors above the page's own species, whose next row is the chain.
+        bool32 hasChild = i + 1 < count && rows[i + 1].depth == rows[i].depth + 1;
+        EXPECT_EQ(rows[i].fate == CODEX_FATE_DESCENDS, hasChild);
+        if (rows[i].fate == CODEX_FATE_LOST)
+            EXPECT_LT(rows[i].lostEra, ERA_COUNT);
+        else
+            EXPECT_EQ(rows[i].lostEra, ERA_COUNT);
+        // A descendant exists by the era it descends at (test/lineage.c checks the table too).
+        if (rows[i].kind != CODEX_LINEAGE_ROOT)
+            EXPECT_GE(rows[i].era, sStrataSpeciesEras[rows[i].species].firstEra);
+    }
+}
+
+TEST("Every Strata species descends from at most one ancestor")
+{
+    u32 species, ancestor, era, parents;
+
+    for (species = FIRST_STRATA_SPECIES; species < SPECIES_CUSTOM_END; species++)
+    {
+        parents = 0;
+        for (ancestor = FIRST_STRATA_SPECIES; ancestor < SPECIES_CUSTOM_END; ancestor++)
+        {
+            for (era = 0; era < ERA_COUNT; era++)
+            {
+                const struct DescentOption *option = Lineage_GetDescentOptions(ancestor, era);
+                for (; option != NULL && option->species != SPECIES_NONE; option++)
+                    parents += option->species == species;
+            }
+        }
+        EXPECT_LE(parents, 1);
+    }
+}
+
+TEST("The Codex bar labels fit their slots")
+{
+    u32 i;
+    for (i = 0; i < CODEX_BAR_SLOTS; i++)
+        EXPECT_LE(GetStringWidth(CODEX_BAR_LABEL_FONT, gCodexBarLabels[i], 0), CODEX_BAR_LABEL_WIDTH);
 }
