@@ -7,6 +7,12 @@
 // or most of an act spent in one habitat (docs/strata_outline.md §3.3).
 #define DESCENT_MIN_SCORE 64
 
+// Lineage resilience (F7, docs/strata_outline.md §3.2): every era a lineage survives (TEAM or
+// PC), each of its IVs rises by RESILIENCE_IV_PER_ERA, plus RESILIENCE_STASIS_BONUS if its species
+// did not change that era, capped at MAX_PER_STAT_IVS. IVs, not EVs, so the 510 EV cap is untouched.
+#define RESILIENCE_IV_PER_ERA   3
+#define RESILIENCE_STASIS_BONUS 1
+
 // One possible descendant of a lineage. A branch is eligible only once its
 // pressure counter reaches minScore (0 means DESCENT_MIN_SCORE); among eligible
 // branches the highest counter wins, ties going to the one listed first. With
@@ -39,6 +45,8 @@ bool32 Lineage_DescendBoxMon(struct BoxPokemon *boxMon, enum StrataEra era);
 bool32 Lineage_DescendMon(struct Pokemon *mon, enum StrataEra era);
 bool32 Lineage_IsExtinctInEra(enum Species species, enum StrataEra era);
 u32 Lineage_GetEraLevelFloor(enum StrataEra era);
+u32 Lineage_ResilientIV(u32 iv, bool32 descended);
+void Lineage_ApplyResilience(struct BoxPokemon *boxMon, bool32 descended);
 bool32 Lineage_RaiseBoxMonToLevel(struct BoxPokemon *boxMon, u32 level);
 bool32 Lineage_RaiseMonToLevel(struct Pokemon *mon, u32 level);
 u32 Lineage_AdvanceToEra(enum StrataEra targetEra);

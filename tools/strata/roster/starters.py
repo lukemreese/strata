@@ -129,7 +129,7 @@ SPECIES = [
         types=("NORMAL", "FLYING"), abilities=("KEEN_EYE", "EARLY_BIRD"),
         category="Wonderchick", color="BROWN", growth="MEDIUM_SLOW", catch=45, gender=50,
         borrow="torchic",
-        moves=[(1, "PECK"), (1, "GROWL"), (5, "SAND_ATTACK"), (9, "QUICK_ATTACK"), (14, "WING_ATTACK"),
+        moves=[(1, "PECK"), (1, "GROWL"), (5, "MUD_SLAP"), (9, "QUICK_ATTACK"), (14, "WING_ATTACK"),
                (18, "DOUBLE_KICK"), (23, "FEATHER_DANCE"), (28, "AERIAL_ACE")],
         dex="A small ground-dwelling bird related to both ducks and chickens. Birds like this survived the impact that killed the other dinosaurs.",
         notes="Stand-in: found in Belgium, not Hell Creek, but it shows the kind of bird that lived there.",

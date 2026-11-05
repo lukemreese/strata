@@ -12,7 +12,7 @@ StrataFernGlade_EventScript_RaptorAmbush::
 	playmoncry SPECIES_ACHERORAPTOR, CRY_MODE_ENCOUNTER
 	msgbox StrataFernGlade_Text_RaptorsAppear, MSGBOX_DEFAULT
 	waitmoncry
-	setwildbattle SPECIES_ACHERORAPTOR, 8, ITEM_NONE, SPECIES_ACHERORAPTOR, 8
+	setwildbattle SPECIES_ACHERORAPTOR, 11, ITEM_NONE, SPECIES_ACHERORAPTOR, 11
 	dowildbattle
 	setvar VAR_STRATA_ACT1, 1
 	setflag FLAG_STRATA_A1_RAPTORS_GONE

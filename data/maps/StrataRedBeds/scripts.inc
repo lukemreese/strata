@@ -19,7 +19,7 @@ StrataRedBeds_EventScript_Coryphodon::
 
 StrataRedBeds_EventScript_CoryphodonAndCalf::
 	msgbox StrataRedBeds_Text_CalfAppears, MSGBOX_DEFAULT
-	setwildbattle SPECIES_CORYPHODON, 28, ITEM_NONE, SPECIES_CORYPHODON, 24
+	setwildbattle SPECIES_CORYPHODON, 28, ITEM_NONE, SPECIES_CORYPHODON, 21
 StrataRedBeds_EventScript_CoryphodonBattle::
 	dowildbattle
 	strata_boss_done

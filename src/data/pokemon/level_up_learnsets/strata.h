@@ -97,7 +97,7 @@ static const struct LevelUpMove sCanisLevelUpLearnset[] = {
 static const struct LevelUpMove sAsteriornisLevelUpLearnset[] = {
     LEVEL_UP_MOVE( 1, MOVE_PECK),
     LEVEL_UP_MOVE( 1, MOVE_GROWL),
-    LEVEL_UP_MOVE( 5, MOVE_SAND_ATTACK),
+    LEVEL_UP_MOVE( 5, MOVE_MUD_SLAP),
     LEVEL_UP_MOVE( 9, MOVE_QUICK_ATTACK),
     LEVEL_UP_MOVE(14, MOVE_WING_ATTACK),
     LEVEL_UP_MOVE(18, MOVE_DOUBLE_KICK),

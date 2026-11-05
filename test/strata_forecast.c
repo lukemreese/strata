@@ -231,7 +231,7 @@ TEST("The forecast reports how close each branch is")
     Forecast_Lineage(SPECIES_HESPEROCYON, 35, pressures, ERA_WHITE_RIVER, ERA_ASHFALL, &f);
     EXPECT_EQ(f.fate, FATE_DESCENDS);
     EXPECT_EQ(f.result, SPECIES_LEPTOCYON);
-    EXPECT_EQ(f.newLevel, 37); // the Ashfall level floor
+    EXPECT_EQ(f.newLevel, 38); // the Ashfall level floor
     EXPECT_EQ(Forecast_GetBranchHints(f.decisionSpecies, f.decisionEra, f.pressures, hints), 1);
     EXPECT_EQ(hints[0].species, SPECIES_EPICYON);
     EXPECT_EQ(hints[0].pressure, PRESSURE_MEAT_DIET);
@@ -241,7 +241,7 @@ TEST("The forecast reports how close each branch is")
     EXPECT_EQ(Forecast_FormatDetail(&f, lines), 3);
     EXPECT_EQ(StringCompare(lines[0], COMPOUND_STRING("Default descent: no branch reached.")), 0);
     EXPECT_EQ(StringCompare(lines[1], COMPOUND_STRING("Epicyon if MEAT reaches 64 (now 41).")), 0);
-    EXPECT_EQ(StringCompare(lines[2], COMPOUND_STRING("Raised to the era floor: {LV}35 {RIGHT_ARROW} {LV}37.")), 0);
+    EXPECT_EQ(StringCompare(lines[2], COMPOUND_STRING("Raised to the era floor: {LV}35 {RIGHT_ARROW} {LV}38.")), 0);
 
     pressures[PRESSURE_MEAT_DIET] = 64;
     Forecast_Lineage(SPECIES_HESPEROCYON, 40, pressures, ERA_WHITE_RIVER, ERA_ASHFALL, &f);
@@ -346,11 +346,11 @@ TEST("The forecast names who joins a TEAM the load would empty")
     EXPECT(rig.refillFromPc);
     EXPECT_EQ(rig.refillSlot, 3 * IN_BOX_COUNT + 5);
     EXPECT_EQ(rig.refillSpecies, SPECIES_LEPISOSTEUS);
-    EXPECT_EQ(rig.refillLevel, 7); // the impact winter's floor
+    EXPECT_EQ(rig.refillLevel, 10); // the impact winter's floor
     Lineage_AdvanceToEra(ERA_IMPACT_WINTER);
     EXPECT_EQ(CalculatePlayerPartyCount(), 1);
     EXPECT_EQ(GetMonData(&gParties[B_TRAINER_PLAYER][0], MON_DATA_SPECIES), SPECIES_LEPISOSTEUS);
-    EXPECT_EQ(GetLevelFromMonExp(&gParties[B_TRAINER_PLAYER][0]), 7);
+    EXPECT_EQ(GetLevelFromMonExp(&gParties[B_TRAINER_PLAYER][0]), 10);
 
     // Nobody anywhere: the gift survivor.
     ResetStrata();
