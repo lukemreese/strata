@@ -32,7 +32,7 @@ StrataClarksFork_EventScript_OxyaenaFight::
 	msgbox StrataClarksFork_Text_OxyaenaAppears, MSGBOX_DEFAULT
 	waitmoncry
 	strata_boss_prep
-	setwildbattle SPECIES_OXYAENA, 26
+	setwildbattle SPECIES_OXYAENA, 28
 	dowildbattle
 	strata_boss_done
 	call StrataClarksFork_EventScript_ResolveOxyaena

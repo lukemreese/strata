@@ -24,10 +24,12 @@ def get(name):
 def expand(name):
     if name == "boss_all":
         return [f"boss_{a}" for a in range(1, 9)]
+    if name == "starter_runs":   # Q2 balance playthroughs (slow, not in `all`)
+        return ["starter_run_mammal", "starter_run_bird", "starter_run_turtle"]
     if name == "all":
         return ["watchdog_selftest", "new_game_smoke", "battle_smoke", "forecast_smoke", "pressure_chart_smoke",
                 "peer_review_smoke", "act_tour", "extinction_smoke", "story_interludes"] \
-            + [f"boss_{a}" for a in range(1, 9)] + ["colby_gate", "ending_smoke", "codex_pages"]
+            + [f"boss_{a}" for a in range(1, 9)] + ["colby_gate", "ending_smoke", "codex_pages", "starter_run_smoke"]
     if name in REGISTRY or name.endswith(".txt") or re.fullmatch(r"boss_[1-8]", name):
         return [name]
     raise SystemExit(f"unknown scenario {name} (try --list)")
@@ -215,7 +217,7 @@ def peer_review_smoke(g, args):
     g.screenshot("end")
     g.check(g.trainer_defeated("TRAINER_STRATA_REVIEW_ACT1"), "Arlo's defeat flag is set")
     prize = g.money() - money0
-    g.check(prize == 4 * 9 * 12, f"the prize is 4 x Lv 9 x 12 = 432 (got {prize})")
+    g.check(prize == 4 * 13 * 12, f"the prize is 4 x Lv 13 x 12 = 624 (got {prize})")
     # Talking again does not start another battle.
     g.press("A")
     r = g.talk(stop_at_menu=False)
@@ -816,7 +818,8 @@ def ending_smoke(g, args):
     """Epilogue: the Interpretive Center with a few fossils and a mixed TEAM and PC. Beat
     Halvorsen's final peer review, read her ending lines, save, then the credits climb the column
     band by band to THE END (left there: a key would soft-reset to the title)."""
-    # The lead must carry the whole review: g.battle() can't pick a replacement after a faint.
+    # q2_battle (the Q2 policy): the best-damage move each turn and the next animal after a faint.
+    # g.battle('fight') always used move 1, the bison's Stomp, and lost to the Uintatherium (Q2).
     party = [("SPECIES_BISON", 100), ("SPECIES_CHELYDRA", 100), ("SPECIES_MELEAGRIS", 100),
              ("SPECIES_EQUUS", 100), ("SPECIES_CENTROCERCUS", 100), ("SPECIES_CANIS", 100)]
     lost =["SPECIES_TYRANNOSAUR", "SPECIES_TRICERATOPS", "SPECIES_TAENIOLABIS", "SPECIES_HYOPSODUS",
@@ -844,8 +847,10 @@ def ending_smoke(g, args):
             break
     r = g.talk(stop_at_menu=False)
     g.check(r == "battle", f"the final peer review starts ({r})")
-    outcome = trainer_battle(g)
-    g.check(outcome == 1, f"the final peer review was won (outcome {outcome})")
+    res = q2_battle(g)
+    g.check(res["outcome"] == 1, f"the final peer review was won (outcome {res['outcome']})")
+    lead = g.party()[0]
+    g.log(f"Halvorsen review: {res['turns']} turns, the Lv 100 bison ends at {lead['hp']}/{lead['maxHP']} HP")
     g.check(g.trainer_defeated("TRAINER_STRATA_HALVORSEN"), "Halvorsen's defeat flag is set")
 
     # Her ending lines, the save prompt, then the credits.
@@ -1135,3 +1140,636 @@ def codex_pages(g, args):
     codex_bar_open(g, 1)
     codex_wait(g, "Task_HandleCodexPageInput", "the LINEAGE page of a seen animal")
     g.screenshot("epicyon_lineage_seen_only")
+
+
+# ---------------------------------------------------------------------------
+# Q2 balance pass (docs/strata_outline.md §6 M5): headless starter playthroughs.
+#
+# starter_run_mammal / _bird / _turtle walk one starter's lineage through every boss, set
+# piece and peer review in story order. Each fight is its own quick-start: the TEAM is the
+# starter's default-path descendant for that act (lead) plus the same typical catches for every
+# starter, all at the level a normal player has there (balance.exp_model: 20 wild knockouts per
+# act with the Exp. Share, carried from act to act, raised to the era floor on arrival), with
+# stats set to IV 15 and a neutral nature so the three runs differ only by the starter.
+# The policy is simple: always FIGHT with the move that does the most expected damage (power,
+# STAB, type chart, attack/defence and stages, accuracy), never switch or use items, send in
+# the next animal when one faints. Each run writes fights.csv and fights.md to its output folder;
+# tools/strata/balance.py --playtest <out> merges them into the balance report.
+# About 2 minutes each, so they are not in `all`:
+#   python3 tools/strata/playtest/run.py starter_runs --out /mnt/c/Projects/pokemon-custom/build/harness_balance
+# Environment: STRATA_Q2_REPEAT=<n> plays every fight n times (wild IVs, crits and damage rolls
+# vary; default 1); STRATA_Q2_KOS=<n> wild knockouts per act in the EXP model (default 20);
+# STRATA_Q2_ONLY=arlo,gauntlet runs only those fights.
+
+import csv  # noqa: E402
+import json  # noqa: E402
+import os  # noqa: E402
+import struct  # noqa: E402
+
+import harness  # noqa: E402
+
+Q2_REPEAT = int(os.environ.get("STRATA_Q2_REPEAT", "1"))
+Q2_KOS = int(os.environ.get("STRATA_Q2_KOS", "0")) or None
+Q2_ONLY = [f for f in os.environ.get("STRATA_Q2_ONLY", "").split(",") if f]
+Q2_ANIM = os.environ.get("STRATA_Q2_ANIM", "0") == "1"   # battle animations on (slower)
+# Halvorsen's final review: an epilogue TEAM at about Lv 50-55 (§3.1); STRATA_Q2_FINAL_LEVEL to vary.
+Q2_FINAL_LEVEL = int(os.environ.get("STRATA_Q2_FINAL_LEVEL", "52"))
+Q2_LINES = {"mammal": 0, "bird": 1, "turtle": 2}   # VAR_STARTER_MON
+# Typical catches, the same for every starter (wild in that act or carried from the last one,
+# never a starter line, mid-table BST). The TEAM size per act is balance.TEAM_SIZE (3 animals
+# in acts 1-2, 4 in 3-5, 5 in 6-8, 6 in the epilogue).
+Q2_CATCHES = {
+    0: [],
+    1: ["CHAMPSOSAUR", "DIDELPHODON"],
+    2: ["CHAMPSOSAUR", "MESODMA"],
+    3: ["CHAMPSOSAUR", "LOXOLOPHUS", "CARSIOPTYCH"],
+    4: ["SIFRHIPPUS", "DIACODEXIS", "BOREALOSUCH"],
+    5: ["EOHIPPUS", "HYRACHYUS", "PRESBYORNIS"],
+    6: ["MESOHIPPUS", "POEBROTHERE", "MERYCOIDODON", "STYLEMYS"],
+    7: ["PROTOHIPPUS", "PROCAMELUS", "COSORYX", "HYPOHIPPUS"],
+    8: ["EQUUS", "OVIS", "ANTILOCAPRA", "CAMELOPS"],
+    9: ["BISON", "EQUUS", "OVIS", "ANTILOCAPRA", "CENTROCERCUS"],
+}
+THEO0 = ["TRAINER_STRATA_THEO_ACT0_BIRD", "TRAINER_STRATA_THEO_ACT0_TURTLE", "TRAINER_STRATA_THEO_ACT0_MAMMAL"]
+# Story order: (act, id, kind, map folder, how, script). kind: setpiece | boss | survival (the
+# tyrannosaur: running is the point) | encounter (the ferret: a catch, not a fight to win) |
+# review | final. how: "trigger" (step onto a coord trigger of that script) or "talk" (A on the
+# object running it). Reviews happen at STORY_ACT_DONE(act).
+Q2_FIGHTS = [
+    (0, "theo_0", "review", "StrataFieldCamp", "talk", "StrataFieldCamp_EventScript_Theo"),
+    (1, "acheroraptors", "setpiece", "StrataFernGlade", "trigger", "StrataFernGlade_EventScript_RaptorAmbush"),
+    (1, "tyrannosaur", "survival", "StrataRiver", "trigger", "StrataRiver_EventScript_Tyrannosaur"),
+    (1, "arlo", "review", "StrataFieldCamp", "talk", "StrataFieldCamp_EventScript_Arlo"),
+    (2, "gauntlet", "boss", "StrataBackswampWinter", "trigger", "StrataBackswampWinter_EventScript_Gauntlet"),
+    (2, "priya", "review", "StrataLindqvistRanch", "talk", "StrataLindqvistRanch_EventScript_Priya"),
+    (3, "taeniolabis", "setpiece", "StrataConcretionBluffs", "talk", "StrataConcretionBluffs_EventScript_Taeniolabis"),
+    (3, "eoconodon", "boss", "StrataLegumeThicket", "trigger", "StrataLegumeThicket_EventScript_Eoconodon"),
+    (3, "tomas", "review", "StrataFieldCamp", "talk", "StrataFieldCamp_EventScript_Tomas"),
+    (3, "theo_3", "review", "StrataFieldCamp", "talk", "StrataFieldCamp_EventScript_Theo"),
+    (4, "oxyaena", "setpiece", "StrataClarksFork", "talk", "StrataClarksFork_EventScript_Oxyaena"),
+    (4, "coryphodon", "boss", "StrataRedBeds", "trigger", "StrataRedBeds_EventScript_Coryphodon"),
+    (4, "ingrid", "review", "StrataFieldStation", "talk", "StrataFieldStation_EventScript_Ingrid"),
+    (5, "patriofelis", "setpiece", "StrataOilShale", "talk", "StrataOilShale_EventScript_Patriofelis"),
+    (5, "uintatherium", "boss", "StrataLakeForest", "trigger", "StrataLakeForest_EventScript_Uintatherium"),
+    (5, "keola", "review", "StrataLindqvistRanch", "talk", "StrataLindqvistRanch_EventScript_Keola"),
+    (6, "hyaenodon", "setpiece", "StrataToadstool", "trigger", "StrataToadstool_EventScript_Hyaenodon"),
+    (6, "archaeotherium", "boss", "StrataWhiteRiver", "trigger", "StrataWhiteRiver_EventScript_Archaeotherium"),
+    (6, "oskar", "review", "StrataJordan", "talk", "StrataJordan_EventScript_Oskar"),
+    (6, "theo_6", "review", "StrataFieldCamp", "talk", "StrataFieldCamp_EventScript_Theo"),
+    (7, "epicyon", "setpiece", "StrataSavanna", "talk", "StrataSavanna_EventScript_Epicyon"),
+    (7, "teleoceras", "boss", "StrataWaterhole", "trigger", "StrataWaterhole_EventScript_Teleoceras"),
+    (7, "hollis", "review", "StrataJordan", "talk", "StrataJordan_EventScript_Hollis"),
+    (8, "panthera", "setpiece", "StrataSteppe", "trigger", "StrataSteppe_EventScript_Lions"),
+    (8, "arctodus", "boss", "StrataTrapCave", "trigger", "StrataTrapCave_EventScript_Arctodus"),
+    (8, "asha", "review", "StrataLindqvistRanch", "talk", "StrataLindqvistRanch_EventScript_Asha"),
+    (8, "theo_8", "review", "StrataFieldCamp", "talk", "StrataFieldCamp_EventScript_Theo"),
+    (9, "mustela", "encounter", "StrataPrairie", "talk", "StrataPrairie_EventScript_Ferret"),
+    (9, "halvorsen", "final", "StrataInterpretive1F", "talk", "StrataInterpretive1F_EventScript_Halvorsen"),
+]
+# Theo offers the earliest review not had yet: the earlier ones must be marked as done.
+Q2_THEO_DONE = {"theo_3": THEO0, "theo_6": THEO0 + ["TRAINER_STRATA_THEO_ACT3"],
+                "theo_8": THEO0 + ["TRAINER_STRATA_THEO_ACT3", "TRAINER_STRATA_THEO_ACT6"]}
+Q2_OUTCOMES = {1: "won", 2: "lost", 3: "drew", 4: "ran", 7: "caught", 9: "forfeited"}
+
+
+def q2_data():
+    """The starter lines' default paths and the EXP model's levels, from balance.py (lineages.h,
+    the roster, the map modules and the boss scripts), so a change to a floor, a wild table or a
+    boss moves the TEAM levels too."""
+    import balance
+    descents, extinct, _floors = balance.read_lineages()
+    lines = balance.starter_lines(descents, extinct)
+    model = balance.exp_model(Q2_KOS or balance.WILD_KOS_PER_ACT)
+    return balance, lines, model
+
+
+def q2_level(act, kind, model):
+    """The TEAM level for a fight (balance.exp_model); Halvorsen's final review at Q2_FINAL_LEVEL."""
+    if kind == "final":
+        return Q2_FINAL_LEVEL
+    kind = {"survival": "boss", "encounter": "setpiece"}.get(kind, kind)
+    return model[act][kind]
+
+
+def q2_team(line, act, level, lines, starters, size):
+    """[(SPECIES_X, level)]: the line's animal for this act first, then the act's catches."""
+    start = starters[line]
+    lead = lines[start][act] if act else start
+    return [(f"SPECIES_{sp}", level) for sp in ([lead] + Q2_CATCHES[act])[:size]]
+
+
+def q2_carried_moves(g, line, act, level, lines, starters, model):
+    """The moves the carried starter line knows at this fight: a quick-started animal only gets its
+    own species' last four level-up moves, but a lineage keeps what its ancestors learned. Walks
+    the line act by act (Lv 5 at the dig, the EXP model's levels after), learning each era's
+    species' level-up moves; when four are known, a sensible player forgets the weakest (status
+    moves count as power 0) and skips a new move weaker than all four. [] before act 2."""
+    import balance
+    if act < 2:
+        return []
+    lay = q2_layout(g)
+    path = lines[starters[line]]
+    known = []
+
+    def power(name):
+        return q2_move(g, lay, g.const(f"MOVE_{name}"))[2]
+
+    def learn(name):
+        if name in known:
+            return
+        if len(known) < 4:
+            known.append(name)
+            return
+        weakest = min(known, key=power)
+        if power(name) > power(weakest):
+            known[known.index(weakest)] = name
+
+    prev = 0
+    for k in range(1, act + 1):
+        species = path[k]
+        end = level if k == act else model[k]["review"]
+        start = balance.STARTER_LEVEL if k == 1 else prev
+        for lv, mv in balance.BY_CONST[species]["moves"]:
+            if (k == 1 and lv <= start) or prev < lv <= end:
+                learn(mv)
+        prev = end
+    return known
+
+
+def q2_set_moves(g, slot, moves):
+    """Give TEAM slot `slot` exactly `moves` (names) with full PP: a setmonmove script written to
+    gStringVar4 and started with RUN_SCRIPT (no change to the playtest ROM needed)."""
+    for h in ("constants/script_commands.h",):
+        if h not in harness.Constants.HEADERS:
+            harness.Constants.HEADERS.append(h)
+    ids = [g.const(f"MOVE_{m}") for m in moves] + [g.const("MOVE_NONE")] * (4 - len(moves))
+    code = b"".join(struct.pack("<BBBH", g.const("SCR_OP_SETMONMOVE"), slot, i, mv) for i, mv in enumerate(ids))
+    code += bytes([g.const("SCR_OP_END")])
+    addr = g.sym["gStringVar4"]
+    g.runner.cmd(f"wd {addr:x} {code.hex()}")
+    g._command("RUN_SCRIPT", [addr & 0xFFFF, addr >> 16])
+    g.wait_until(lambda: not g.st["scriptActive"], 600, "the move script")
+    g.wait(4)
+
+
+def q2_ivs(line, act, lines, starters, size):
+    """IVs per TEAM slot: the starter line has been carried since act 1, so it has the lineage
+    resilience of every load since (balance.resilience_iv, from include/lineage.h); the catches
+    are fresh (15, a wild catch's average)."""
+    import balance
+    return [balance.resilience_iv(lines[starters[line]], act)] + [balance.IV] * (size - 1)
+
+
+def q2_layout(g):
+    """Battle struct offsets, move data and the type chart (read once per run)."""
+    if getattr(g, "_q2", None):
+        return g._q2
+    for h in ("pokemon.h", "move.h", "battle_main.h"):
+        if h not in harness.Constants.HEADERS:
+            harness.Constants.HEADERS.append(h)
+    c = g.const
+    lay = dict(bm=c("sizeof(struct BattlePokemon)"), mi=c("sizeof(struct MoveInfo)"),
+               mon=c("sizeof(struct Pokemon)"), mon_hp=c("offsetof(struct Pokemon, hp)"),
+               mon_level=c("offsetof(struct Pokemon, level)"),
+               moves=c("offsetof(struct BattlePokemon, moves)"), stages=c("offsetof(struct BattlePokemon, statStages)"),
+               types=c("offsetof(struct BattlePokemon, types)"), pp=c("offsetof(struct BattlePokemon, pp)"),
+               hp=c("offsetof(struct BattlePokemon, hp)"), level=c("offsetof(struct BattlePokemon, level)"),
+               maxhp=c("offsetof(struct BattlePokemon, maxHP)"), ability=c("offsetof(struct BattlePokemon, ability)"),
+               ntypes=c("NUMBER_OF_MON_TYPES"), eff_size=c("sizeof(uq4_12_t)"),
+               no_types=(c("TYPE_NONE"), c("TYPE_MYSTERY")),
+               phys=c("DAMAGE_CATEGORY_PHYSICAL"), special=c("DAMAGE_CATEGORY_SPECIAL"),
+               stat=dict(atk=c("STAT_ATK"), defn=c("STAT_DEF"), spa=c("STAT_SPATK"), spd=c("STAT_SPDEF")),
+               party=g.sym["gParties"] + c("B_TRAINER_PLAYER") * c("PARTY_SIZE") * c("sizeof(struct Pokemon)"))
+    n, es = lay["ntypes"], lay["eff_size"]
+    raw = bytes.fromhex(g.runner.cmd(f"rd {g.sym['gTypeEffectivenessTable']:x} {n * n * es}"))
+    lay["eff"] = struct.unpack(f"<{n * n}{'I' if es == 4 else 'H'}", raw)
+    lay["move_cache"] = {}
+    g._q2 = lay
+    return lay
+
+
+def q2_move(g, lay, move):
+    """(type, category, power, accuracy) of a move, from gMovesInfo (bit-fields of word 2)."""
+    if move not in lay["move_cache"]:
+        raw = bytes.fromhex(g.runner.cmd(f"rd {g.sym['gMovesInfo'] + move * lay['mi'] + 8:x} 8"))
+        w0, acc = struct.unpack_from("<IH", raw)
+        lay["move_cache"][move] = ((w0 >> 16) & 31, (w0 >> 21) & 3, w0 >> 23, acc & 127)
+    return lay["move_cache"][move]
+
+
+def q2_battler(g, lay, b):
+    bm = lay["bm"]
+    raw = bytes.fromhex(g.runner.cmd(f"rd {g.sym['gBattleMons'] + b * bm:x} {bm}"))
+    sp, atk, dfn, spe, spa, spd = struct.unpack_from("<6H", raw, 0)
+    return dict(species=sp, atk=atk, defn=dfn, spa=spa, spd=spd,
+                moves=struct.unpack_from("<4H", raw, lay["moves"]),
+                stages=struct.unpack_from("<8b", raw, lay["stages"]),
+                types=[t for t in raw[lay["types"]:lay["types"] + 3]],
+                pp=list(raw[lay["pp"]:lay["pp"] + 4]),
+                hp=struct.unpack_from("<H", raw, lay["hp"])[0], maxhp=struct.unpack_from("<H", raw, lay["maxhp"])[0],
+                level=raw[lay["level"]], ability=struct.unpack_from("<H", raw, lay["ability"])[0])
+
+
+def q2_stage(s):
+    return (2 + s - 6) / 2 if s >= 6 else 2 / (2 + 6 - s)
+
+
+def q2_damage(g, lay, move, atk, dfn):
+    """Expected damage as a share of the target's HP (capped at 1: a KO)."""
+    mtype, cat, power, acc = q2_move(g, lay, move)
+    if power == 0 or cat not in (lay["phys"], lay["special"]) or dfn["hp"] == 0:
+        return 0.0
+    power = 60 if power == 1 else power      # variable-power moves
+    st = lay["stat"]
+    if cat == lay["phys"]:
+        a = atk["atk"] * q2_stage(atk["stages"][st["atk"]])
+        d = dfn["defn"] * q2_stage(dfn["stages"][st["defn"]])
+    else:
+        a = atk["spa"] * q2_stage(atk["stages"][st["spa"]])
+        d = dfn["spd"] * q2_stage(dfn["stages"][st["spd"]])
+    dmg = (2 * atk["level"] / 5 + 2) * power * a / max(d, 1) / 50 + 2
+    if mtype in atk["types"]:
+        dmg *= 1.5
+    for t in set(dfn["types"]) - set(lay["no_types"]):
+        dmg *= lay["eff"][mtype * lay["ntypes"] + t] / 4096
+    dmg *= (acc or 100) / 100
+    return min(1.0, dmg / dfn["hp"])
+
+
+def q2_best_slot(g, lay, battler, foes):
+    me = q2_battler(g, lay, battler)
+    targets = [q2_battler(g, lay, f) for f in foes]
+    targets = [t for t in targets if t["hp"] > 0 and t["species"]] or targets[:1]
+    best, slot = -1.0, 0
+    for i, mv in enumerate(me["moves"]):
+        if not mv or not me["pp"][i]:
+            continue
+        score = max((q2_damage(g, lay, mv, me, t) for t in targets), default=0.0)
+        if score > best:
+            best, slot = score, i
+    return slot
+
+
+def q2_normalize_team(g, team, ivs):
+    """The given IVs, no EVs, neutral nature, full HP: overwrite the TEAM's calculated stats (the
+    plain, unencrypted part of struct Pokemon). Battles copy these; only a level-up recalculates them."""
+    import balance
+    lay = q2_layout(g)
+    for i, (species, _lv) in enumerate(team):
+        base = lay["party"] + i * lay["mon"]
+        level = g.read(base + lay["mon_level"], 1)
+        s, _ = balance.stats_at(species.removeprefix("SPECIES_"), level, ivs[i])
+        data = struct.pack("<7H", s["hp"], s["hp"], s["atk"], s["defn"], s["spe"], s["spa"], s["spd"])
+        g.runner.cmd(f"wd {base + lay['mon_hp']:x} {data.hex()}")
+    g.step(2)
+
+
+def q2_assert_screen(g):
+    """The freeze watchdog fired on the game's assert screen (AssertfCrashScreen: 'PRESS START TO
+    CONTINUE', a recoverable debug-build assert): press START and carry on. FALSE for a real crash."""
+    info = getattr(g, "crash_info", None) or {}
+    if "CrashScreen" not in info.get("where", ""):
+        return False
+    g.log(f"Q2 ASSERT screen ({info.get('where')}): START to continue")
+    g.crash_info = None
+    g.stalled = 0
+    g.press("START", 4, 30)
+    g.stalled = 0
+    return True
+
+
+def q2_ko_counter(g):
+    """(address, bit) of gBattleStruct->battlerKOAnimsRunning (a 3-bit field, so no offsetof): from
+    the playtest ELF's DWARF once, then cached with the harness constants."""
+    key = "__q2_battlerKOAnimsRunning_bit"
+    if key not in g.const.values:
+        import subprocess
+        out = subprocess.run(["arm-none-eabi-readelf", "--debug-dump=info", g.elf], capture_output=True,
+                             text=True).stdout
+        m = re.search(r"DW_AT_name\s*:.*: battlerKOAnimsRunning\n(?:.*\n){0,6}?.*DW_AT_data_bit_offset:\s*(\d+)", out)
+        g.const.values[key] = int(m.group(1)) if m else -1
+        try:
+            json.dump(g.const.values, open(g.const.cache_path, "w"), indent=0, sort_keys=True)
+        except OSError:
+            pass
+    bit = g.const.values[key]
+    if bit < 0:
+        return None
+    return g.read("gBattleStruct", 4) + bit // 8, bit % 8
+
+
+def q2_softlock(g):
+    """The KO-animation soft-lock (see q2_battle): TRUE if battlerKOAnimsRunning was stuck and has been
+    cleared so the battle goes on."""
+    where = q2_ko_counter(g)
+    if not where:
+        return False
+    addr, bit = where
+    byte = g.read(addr, 1)
+    count = (byte >> bit) & 7
+    if not count:
+        return False
+    g.log(f"Q2 SOFTLOCK: battlerKOAnimsRunning stuck at {count} (controllers={g.controllers()}); clearing it")
+    g.screenshot("softlock")
+    g.runner.cmd(f"wd {addr:x} {byte & ~(7 << bit) & 0xFF:02x}")
+    return True
+
+
+def q2_battle(g, timeout=60 * 60 * 8, max_turns=150):
+    """Play one battle with the best-damage policy. Returns dict(outcome, turns, foe_hp, msgs, asserts,
+    softlocks). Two engine bugs in the KO animations (B_ANIMATE_MON_AFTER_KO, launched twice per
+    faint by BtlController_HandleFaintAnimation) are worked around and counted, not hidden: the
+    debug-build assert screen ("disabled species", START continues) and a soft-lock where
+    battlerKOAnimsRunning never returns to 0 and Cmd_waitanimation waits for ever."""
+    lay = q2_layout(g)
+    s = dict(start=g.frame, turns=0, idle=0, last_msg="", foe_hp=None, msgs=[], tries=0, asserts=0, softlocks=0)
+    g.wait_battle()
+    g.wait(2)
+    double = bool(g.st["battleTypeFlags"] & g.const("BATTLE_TYPE_DOUBLE"))
+    foes = [1, 3] if double else [1]
+    while g.st["inBattle"] or "Battle" in g.cb2():
+        if g.frame - s["start"] > timeout:
+            raise TestFailure(f"battle still running after {timeout} frames (controllers={g.controllers()})")
+        if not g.st["inBattle"] and g.cb2() == "CB2_Overworld":
+            break
+        try:
+            q2_battle_step(g, lay, foes, s, max_turns)
+        except harness.GameCrash:
+            if not q2_assert_screen(g):
+                raise
+            s["asserts"] += 1
+        if s["idle"] >= 600 and q2_softlock(g):   # 1200 frames with nothing to press
+            s["softlocks"] += 1
+            s["idle"] = 0
+    outcome = g.st["battleOutcome"]
+    g.log(f"battle over: outcome {outcome} after {s['turns']} turns, {g.frame - s['start']} frames")
+    return dict(outcome=outcome, turns=s["turns"], foe_hp=s["foe_hp"] or [], msgs=s["msgs"], asserts=s["asserts"],
+                softlocks=s["softlocks"])
+
+
+def q2_foe_party_hp(g, lay):
+    """[(hp, maxHP)] of the whole opposing party (gParties[B_TRAINER_OPPONENT_A], the plain part of
+    struct Pokemon), so a loss to a trainer counts the animals not sent out yet too."""
+    base = g.sym["gParties"] + g.const("B_TRAINER_OPPONENT_A") * 6 * lay["mon"]
+    raw = bytes.fromhex(g.runner.cmd(f"rd {base:x} {6 * lay['mon']}"))
+    out = []
+    for i in range(6):
+        hp, mx = struct.unpack_from("<HH", raw, i * lay["mon"] + lay["mon_hp"])
+        if mx:
+            out.append((hp, mx))
+    return out
+
+
+def q2_battle_step(g, lay, foes, s, max_turns):
+    """One input decision of q2_battle (s: its state)."""
+    cb2 = g.cb2()
+    ctrl = g.controllers() if g.st["inBattle"] else []
+    who = next((i for i, f in enumerate(ctrl) if f in ("HandleInputChooseAction", "HandleInputChooseMove")), None)
+    if who is not None and ctrl[who] == "HandleInputChooseAction":
+        if who == 0:
+            s["turns"] += 1
+            s["foe_hp"] = q2_foe_party_hp(g, lay)
+            if s["turns"] > max_turns:
+                raise TestFailure(f"battle: more than {max_turns} turns")
+        g.press("LEFT", 2, 2); g.press("UP", 2, 2); g.press("A", 2, 10)
+        s["idle"] = s["tries"] = 0
+        return
+    if who is not None:   # HandleInputChooseMove
+        s["tries"] += 1
+        slot = q2_best_slot(g, lay, who, foes) if s["tries"] < 4 else 0
+        g.press("LEFT", 2, 2); g.press("UP", 2, 2)
+        if slot & 1:
+            g.press("RIGHT", 2, 4)
+        if slot & 2:
+            g.press("DOWN", 2, 4)
+        g.press("A", 2, 10)
+        return
+    if "HandleInputChooseTarget" in ctrl:
+        g.press("A", 2, 10)
+        return
+    msg = g.battle_text() if g.st["inBattle"] else ""
+    if msg and msg != s["last_msg"] and " " in msg.strip():
+        line = msg.replace("\n", " ").strip()
+        g.log(f"battle: {line}")
+        s["msgs"].append(line)
+        s["last_msg"] = msg
+    if "PartyMenu" in cb2 or "WaitForMonSelection" in ctrl:
+        # A faint: 'use next?' YES opened the TEAM, or a trainer battle's forced switch.
+        # Driven by the party menu's own tasks: list -> next slot, A; submenu -> SEND OUT;
+        # "no energy left" / "already in battle" -> dismiss, back to the list, next slot.
+        tasks = g.tasks()
+        if "Task_HandleSelectionMenuInput" in tasks:
+            g.press("A", 4, 20)
+        elif "Task_PrintAndWaitForText" in tasks or "Task_ReturnToChooseMonAfterText" in tasks:
+            g.press("A", 4, 20)
+        elif "Task_HandleChooseMonInput" in tasks:
+            g.press("DOWN", 4, 10)
+            g.press("A", 4, 20)
+        else:
+            g.step(2, 0)
+        return
+    if "give up on having" in msg and not g.text_active():
+        g.press("A", 2, 20)   # a level-up move prompt: YES, keep the old moves
+        s["last_msg"] = ""
+        return
+    if "Use next" in msg and not g.text_active():
+        g.press("A", 2, 20)
+        s["last_msg"] = ""
+        return
+    if g.text_waiting():
+        g.press("B", 2, 2)
+        s["idle"] = 0
+        return
+    s["idle"] += 1
+    if s["idle"] % 30 == 0:
+        g.press("B", 2, 2)
+    g.step(2, 0)
+
+
+def q2_start_tile(mi, how, script):
+    """(tile, direction): where to quick-start and which way to step or face. Grass is fine
+    (encounters are off), triggers and objects are not."""
+    def ok(t):
+        return t in mi.reachable and t not in mi.blocked_by_objects and t not in mi.trigger_tiles
+
+    if how == "talk":
+        obj = next(o for o in mi.objects if o["script"] == script)
+        ox, oy = obj["x"], obj["y"]
+        for d in ("up", "right", "left", "down"):
+            dx, dy = world.DIR_STEP[d]
+            n = (ox - dx, oy - dy)
+            if ok(n):
+                return n, d
+        raise TestFailure(f"no free tile next to {script}'s object at {(ox, oy)}")
+    tiles = [t for t, e in mi.trigger_tiles.items() if e["script"] == script]
+    best = None
+    for t in sorted(tiles):
+        for d, (dx, dy) in world.DIR_STEP.items():
+            n = (t[0] - dx, t[1] - dy)
+            if ok(n):
+                score = abs(n[0] - (mi.arrival or n)[0]) + abs(n[1] - (mi.arrival or n)[1])
+                if best is None or score < best[0]:
+                    best = (score, n, d)
+    if not best:
+        raise TestFailure(f"no free tile next to a {script} trigger")
+    return best[1], best[2]
+
+
+def q2_fight(g, line, fight, team, rows, ivs=None, lead_moves=()):
+    act, fid, kind, map_name, how, script = fight
+    ivs = ivs or [15] * len(team)
+    mi = world.map_info(map_name)
+    story = 1 if act == 0 else 18 if act == 9 else 2 * act + (1 if kind == "review" else 0)
+    tile, d = q2_start_tile(mi, how, script)
+    flags = ["FLAG_STRATA_DIG_DONE", "FLAG_STRATA_BLM_PERMIT"] + (["FLAG_STRATA_COLBY_SEEN"] if act == 9 else []) \
+        + [f"(TRAINER_FLAGS_START + {t})" for t in Q2_THEO_DONE.get(fid, [])]
+    # Subplot at its last value: no present-day interlude starts on the hub maps.
+    vars_ = [("VAR_STARTER_MON", Q2_LINES[line]), ("VAR_STRATA_SUBPLOT", "SUBPLOT_COUNT - 1")]
+    g.quickstart(mi.id, *tile, story=story, era=act, party=team, items=[("ITEM_POKE_BALL", 5)],
+                 flags=flags, vars=vars_, battle_anim=Q2_ANIM)
+    q2_normalize_team(g, team, ivs)
+    if lead_moves:
+        q2_set_moves(g, 0, lead_moves)
+    g.log(f"Q2 {line} {fid}: TEAM {team}, IVs {ivs}, lead moves {list(lead_moves) or 'its own'}")
+    if how == "talk":
+        g.face(d)
+        g.press("A")
+    else:
+        g.walk(d, 1)
+    g.wait(10)
+    battles, t0 = 0, g.frame
+    while True:
+        if g.frame - t0 > 60 * 60 * 15:
+            raise TestFailure(f"{fid}: still running after 15 game minutes (tasks={g.tasks()})")
+        if g.st["inBattle"]:
+            battles += 1
+            r = q2_battle(g)
+            g.wait_until(lambda: not g.st["inBattle"], 3000, "the end of the battle")
+            party = g.party()
+            won = r["outcome"] in (1, 7)
+            hp = sum(m["hp"] for m in party) if won else 0
+            mx = sum(m["maxHP"] for m in party) or 1
+            foe = sum(h for h, _ in r["foe_hp"]) / (sum(m for _, m in r["foe_hp"]) or 1)
+            rows.append(dict(starter=line, act=act, fight=fid + (f"_{battles}" if fid == "gauntlet" else ""),
+                             kind=kind, lead=team[0][0].removeprefix("SPECIES_"), level=team[0][1],
+                             team="/".join(s.removeprefix("SPECIES_").title() for s, _ in team),
+                             outcome=Q2_OUTCOMES.get(r["outcome"], str(r["outcome"])), turns=r["turns"],
+                             team_hp=round(100 * hp / mx),
+                             lead_hp=round(100 * party[0]["hp"] / max(1, party[0]["maxHP"])) if won else 0,
+                             fainted=sum(1 for m in party if m["hp"] == 0) if won else len(team),
+                             foe_hp_left=0 if won else round(100 * foe), engine=r["asserts"] + r["softlocks"]))
+            g.log(f"Q2 result: {rows[-1]}")
+            if kind == "final" or not won:
+                return   # the ending (credits, then a soft reset) or a whiteout: done here
+            continue
+        if g.text_waiting():
+            g.press("A", 2, 4)
+            continue
+        if field_free(g) and g.frame - t0 > 30:
+            break
+        if (g.menu_open() or "SaveGameTask" in g.tasks()) and not g.text_active():
+            g.press("A", 4, 20)
+            continue
+        g.step(2, 0)
+    if not battles:
+        raise TestFailure(f"{fid}: the script started no battle")
+
+
+Q2_FIELDS = ["starter", "act", "fight", "kind", "lead", "level", "team", "outcome", "turns", "team_hp", "lead_hp",
+             "fainted", "foe_hp_left", "engine"]
+
+
+def q2_recover(g, tries=3000):
+    """After a failed fight: B through whatever is open (a battle is run from or lost) until the
+    overworld takes input again, so the next quick-start is accepted."""
+    for i in range(tries):
+        if field_free(g) and not g.st["inBattle"]:
+            return
+        if g.st["inBattle"] and "HandleInputChooseAction" in g.controllers():
+            g.press("RIGHT", 2, 2); g.press("DOWN", 2, 2); g.press("A", 2, 10)   # RUN
+            continue
+        if g.st["inBattle"] and i % 100 == 99:
+            q2_softlock(g)
+        g.press("B" if i % 3 else "A", 2, 6)
+    raise TestFailure("could not get back to the overworld after a failed fight")
+
+
+def starter_run(g, args, line, only=None, repeat=None):
+    balance, lines, model = q2_data()
+    starters = {name: world.STARTERS[i].removeprefix("SPECIES_") for name, i in Q2_LINES.items()}
+    repeat = repeat or Q2_REPEAT
+    g.max_frames = 40_000_000 * repeat
+    rows = []
+    try:
+        q2_fights(g, line, balance, lines, model, starters, rows, only or Q2_ONLY, repeat)
+    finally:
+        q2_write(g, line, rows)
+    lost = sorted({r["fight"] for r in rows if r["outcome"] not in ("won", "caught") and r["kind"] != "survival"})
+    g.check(not lost, f"{line}: every boss, set piece and review won ({', '.join(lost) or 'all won'})")
+    return rows
+
+
+def q2_fights(g, line, balance, lines, model, starters, rows, only, repeat):
+    for fight in Q2_FIGHTS:
+        act, fid, kind = fight[:3]
+        if only and fid not in only:
+            continue
+        team = q2_team(line, act, q2_level(act, kind, model), lines, starters, balance.TEAM_SIZE[act])
+        ivs = q2_ivs(line, act, lines, starters, len(team))
+        lead_moves = q2_carried_moves(g, line, act, team[0][1], lines, starters, model)
+        for attempt in range(repeat):
+            n = len(rows)
+            try:
+                q2_fight(g, line, fight, team, rows, ivs, lead_moves)
+            except harness.GameCrash:
+                raise
+            except TestFailure as e:
+                g.log(f"Q2 {fid} error: {e}")
+                g.screenshot(f"error_{fid}")
+                q2_recover(g)
+                rows.append(dict(starter=line, act=act, fight=fid, kind=kind,
+                                 lead=team[0][0].removeprefix("SPECIES_"), level=team[0][1], team="",
+                                 outcome="error", turns=0, team_hp=0, lead_hp=0, fainted=0, foe_hp_left=0,
+                                 engine=0))
+            for r in rows[n:]:
+                r["attempt"] = attempt + 1
+
+
+def q2_write(g, line, rows):
+    """fights.csv and fights.md in the scenario's output folder."""
+    fields = Q2_FIELDS + ["attempt"]
+    with open(os.path.join(g.out, "fights.csv"), "w", newline="") as f:
+        w = csv.DictWriter(f, fields, restval="")
+        w.writeheader()
+        w.writerows(rows)
+    md = [f"# Starter run: {line} (TEAM levels from balance.exp_model, {Q2_REPEAT} attempt(s) per fight)\n",
+          "| " + " | ".join(fields) + " |", "|" + "---|" * len(fields)]
+    md += ["| " + " | ".join(str(r.get(k, "")) for k in fields) + " |" for r in rows]
+    open(os.path.join(g.out, "fights.md"), "w").write("\n".join(md) + "\n")
+
+
+@scenario
+def starter_run_mammal(g, args):
+    """Q2: the mammal line (Cimolestes) through every boss, set piece and peer review (fights.csv)."""
+    starter_run(g, args, "mammal")
+
+
+@scenario
+def starter_run_bird(g, args):
+    """Q2: the bird line (Asteriornis) through every boss, set piece and peer review (fights.csv)."""
+    starter_run(g, args, "bird")
+
+
+@scenario
+def starter_run_turtle(g, args):
+    """Q2: the turtle line (Emarginachel) through every boss, set piece and peer review (fights.csv)."""
+    starter_run(g, args, "turtle")
+
+
+@scenario
+def starter_run_smoke(g, args):
+    """Q2 harness check (in `all`, ~15 s): the bird's act 4 TEAM (inherited moves, resilience IVs)
+    through a wild set piece and a peer review with the best-damage policy; fights.csv is written."""
+    rows = starter_run(g, args, "bird", only=["oxyaena", "ingrid"], repeat=1)
+    g.check([r["fight"] for r in rows] == ["oxyaena", "ingrid"], f"both fights recorded ({[r['fight'] for r in rows]})")
+    g.check(os.path.exists(os.path.join(g.out, "fights.csv")), "fights.csv written")

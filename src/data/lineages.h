@@ -325,21 +325,24 @@ static const u16 *const sEraExtinctions[ERA_COUNT] =
 // raised to it. A descendant arrives as a mature adult of its era, not as the
 // level the player last left its ancestor at, so a lineage kept in the PC since
 // Hell Creek is still usable in the Ice Age. Each floor is the era's lowest
-// land encounter level (tools/strata/maps.py) minus 3: below the wild mons, so
-// training still matters, but in reach of them. Fishing tables run a few levels
-// lower on purpose and are not counted. Hell Creek and the present dig start
-// the game and have no floor. The impact winter is the same animals a year
-// later; its floor only catches the low-level Hell Creek catches.
+// land encounter level (tools/strata/maps/), as docs/strata_outline.md §3.1 asks:
+// a fresh catch is always at least that, so the floor only rescues the lineages
+// the player carried. From act 5 on, a normal player arrives at the floor (the
+// EXP model in tools/strata/balance.py), so the late bosses and peer reviews are
+// tuned against it (Q2). Fishing tables run a few levels lower on purpose and
+// are not counted. Hell Creek and the present dig start the game and have no
+// floor. The impact winter is the same animals a year later; its floor only
+// catches the low-level Hell Creek catches.
 static const u8 sEraLevelFloor[ERA_COUNT] =
 {
     [ERA_PRESENT_DIG]   = 0,
     [ERA_HELL_CREEK]    = 0,
-    [ERA_IMPACT_WINTER] = 7,  // wild 10-16
-    [ERA_CORRAL_BLUFFS] = 12, // wild 15-20
-    [ERA_BIGHORN_PETM]  = 19, // wild 22-28
-    [ERA_GREEN_RIVER]   = 25, // wild 28-34
-    [ERA_WHITE_RIVER]   = 31, // wild 34-39
-    [ERA_ASHFALL]       = 37, // wild 40-45
-    [ERA_TRAP_CAVE]     = 43, // wild 46-51
-    [ERA_EPILOGUE]      = 45, // wild 48-53
+    [ERA_IMPACT_WINTER] = 10, // wild 10-16
+    [ERA_CORRAL_BLUFFS] = 14, // wild 14-21
+    [ERA_BIGHORN_PETM]  = 20, // wild 20-27
+    [ERA_GREEN_RIVER]   = 26, // wild 26-33
+    [ERA_WHITE_RIVER]   = 32, // wild 32-39
+    [ERA_ASHFALL]       = 38, // wild 38-46
+    [ERA_TRAP_CAVE]     = 44, // wild 44-51
+    [ERA_EPILOGUE]      = 46, // wild 46-54
 };

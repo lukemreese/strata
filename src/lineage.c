@@ -209,6 +209,28 @@ bool32 Lineage_RaiseMonToLevel(struct Pokemon *mon, u32 level)
     return TRUE;
 }
 
+// Lineage resilience (F7): an IV after one more era survived.
+u32 Lineage_ResilientIV(u32 iv, bool32 descended)
+{
+    iv += RESILIENCE_IV_PER_ERA + (descended ? 0 : RESILIENCE_STASIS_BONUS);
+    return min(iv, MAX_PER_STAT_IVS);
+}
+
+// Raises every IV of a stored mon for an era it lives through. The caller recalculates a party
+// mon's stats.
+void Lineage_ApplyResilience(struct BoxPokemon *boxMon, bool32 descended)
+{
+    u32 i;
+
+    if (!GetBoxMonData(boxMon, MON_DATA_SANITY_HAS_SPECIES) || GetBoxMonData(boxMon, MON_DATA_IS_EGG))
+        return;
+    for (i = 0; i < NUM_STATS; i++)
+    {
+        u8 iv = Lineage_ResilientIV(GetBoxMonData(boxMon, MON_DATA_HP_IV + i), descended);
+        SetBoxMonData(boxMon, MON_DATA_HP_IV + i, &iv);
+    }
+}
+
 static void ApplyLevelFloor(enum StrataEra era)
 {
     u32 i, boxId, boxPos, floor = Lineage_GetEraLevelFloor(era);
@@ -337,9 +359,11 @@ static void ApplyExtinctions(enum StrataEra era)
 }
 
 // Advances the world one era at a time up to `targetEra`, so a lineage passes
-// through every intermediate descent and extinction filter, then is raised to
-// that era's level floor (learning its moves level by level, era by era). Box
-// mons get their stats recalculated when withdrawn. Returns the number of
+// through every intermediate descent, resilience gain and extinction filter, then
+// is raised to that era's level floor (learning its moves level by level, era by
+// era). Resilience is applied with the descent, before the filter: a lineage the
+// filter removes loses it anyway, and one replaced in Gentle Deep Time keeps it.
+// Box mons get their stats recalculated when withdrawn. Returns the number of
 // descents that happened; see Lineage_GetExtinctionCount for the losses.
 u32 Lineage_AdvanceToEra(enum StrataEra targetEra)
 {
@@ -354,12 +378,26 @@ u32 Lineage_AdvanceToEra(enum StrataEra targetEra)
     for (era = VarGet(VAR_STRATA_ERA) + 1; era <= targetEra; era++)
     {
         for (i = 0; i < PARTY_SIZE; i++)
-            count += Lineage_DescendMon(&gParties[B_TRAINER_PLAYER][i], era);
+        {
+            struct Pokemon *mon = &gParties[B_TRAINER_PLAYER][i];
+            bool32 descended = Lineage_DescendMon(mon, era);
+            count += descended;
+            if (GetMonData(mon, MON_DATA_SANITY_HAS_SPECIES))
+            {
+                Lineage_ApplyResilience(&mon->box, descended);
+                CalculateMonStats(mon);
+            }
+        }
 
         for (boxId = 0; boxId < TOTAL_BOXES_COUNT; boxId++)
         {
             for (boxPos = 0; boxPos < IN_BOX_COUNT; boxPos++)
-                count += Lineage_DescendBoxMon(GetBoxedMonPtr(boxId, boxPos), era);
+            {
+                struct BoxPokemon *boxMon = GetBoxedMonPtr(boxId, boxPos);
+                bool32 descended = Lineage_DescendBoxMon(boxMon, era);
+                count += descended;
+                Lineage_ApplyResilience(boxMon, descended);
+            }
         }
         ApplyExtinctions(era);
         ApplyLevelFloor(era);

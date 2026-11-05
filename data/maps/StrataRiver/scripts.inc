@@ -14,7 +14,7 @@ StrataRiver_EventScript_Tyrannosaur::
 	msgbox StrataRiver_Text_TyrannosaurAppears, MSGBOX_DEFAULT
 	waitmoncry
 	strata_boss_prep atk=1
-	setwildbattle SPECIES_TYRANNOSAUR, 14
+	setwildbattle SPECIES_TYRANNOSAUR, 20
 	dowildbattle
 	strata_boss_done
 	call StrataRiver_EventScript_ResolveTyrannosaur

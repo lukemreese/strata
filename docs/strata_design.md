@@ -144,7 +144,7 @@ largest extinction in the epilogue is the one humans were present for.
 | Montana Prairie | today | Route 102 | Epilogue; open once the present layer is loaded, via the highway west of Jordan. Prairie-dog town and a one-time black-footed ferret encounter (`FLAG_STRATA_EPI_FERRET_MET`), swift fox, sage-grouse, bison, pronghorn; 4 field notes; the Interpretive Center is the building in the east half (door warp); east edge opens to the Breaks, south edge to the Pryor Mountains |
 | Missouri Breaks | today | Route 114 top (river, badlands ground; house, berry plots and bridge removed) | Epilogue; water habitat: *Chelydra*, *Lepisosteus*, *Ovis*, *Meleagris*; 3 field notes (the same Hell Creek rock eroding today) |
 | Pryor Mountains | today | Route 112 south (red limestone plateau, stairs, lowland) | Epilogue, optional; feral *Equus* (3 visible horses), pronghorn, *Ovis*, sage-grouse; 3 field notes |
-| Interpretive Center | today | Lilycove Museum 1F | Epilogue; the Pair in the round case, paleoart murals of the layers, Halvorsen (the final peer review, Lv 50-55, then the ending lines, the save prompt and the credits, §7.9), Josie, Bea, Dale, Theo; stairs up |
+| Interpretive Center | today | Lilycove Museum 1F | Epilogue; the Pair in the round case, paleoart murals of the layers, Halvorsen (the final peer review, Lv 46-52, then the ending lines, the save prompt and the credits, §7.9), Josie, Bea, Dale, Theo; stairs up |
 | Hall of Lost Lineages | today | Lilycove Museum 2F | Epilogue; five cases (one plaque per extinction filter: K-Pg, Paleocene recovery, Eocene-Oligocene, Miocene grassland, Ice Age) and two statues (end-Pleistocene; the case not written yet). Generic until F4 adds fossil flags |
 
 The present-day hub sits outside time: returning to camp does not change `VAR_STRATA_ERA`.
@@ -316,27 +316,29 @@ Because every trainer owns a flag and the flag range is fixed, the 15 Strata tra
 the slots of stock trainers nothing refers to (RED, LEAF, the two placeholders, AMY & LIV 3
 and GINA & MIA 2) plus the nine spare ones.
 
-**Teams** use only species that exist by the act just finished (`first_era`), at levels between the
-next layer's era floor and the act's expected party level, IV 15 (a wild catch's average), the last
-four level-up moves, `AI: Basic Trainer`. Pics are stock human trainer pics. `balance.py` prints a
+**Teams** use only species that exist by the act just finished (`first_era`), IV 15 (a wild catch's
+average), the last four level-up moves, `AI: Basic Trainer`. Levels come from the Q2 balance pass:
+the last (strongest) animal at about the level a normal player has after the act's boss (the EXP
+model in `balance.py`), the others a level or two below, checked with the headless starter runs
+(below, "Balance pass (Q2)"). Pics are stock human trainer pics. `balance.py` prints a
 "Peer review" table (each animal's stat total against the expected party median) and flags
 `REVIEW OVERTUNED` (an animal over 115% of it, 125% for Halvorsen) and `REVIEW WEAK`.
 
 | Trainer | Where | Unlocks | Team (Lv) | Prize |
 |---|---|---|---|---|
-| Theo #0 | Hell Creek Camp | starter chosen | the next starter in the cycle mammal, bird, turtle (Cimolestes / Asteriornis / Emarginachel) 5 | 200 |
-| ARLO, ornithologist | Hell Creek Camp (22, 8) | act 1 done | Avisaurus 7, Anzu 8, Asteriornis 9 | 432 |
-| PRIYA, palynologist | Lindqvist Ranch (33, 8) | act 2 done | Mesodma 13, Champsosaur 14, Emarginachel 15 | 720 |
+| Theo #0 | Hell Creek Camp | starter chosen | the next starter in the cycle mammal, bird, turtle: Asteriornis 4 (vs the mammal), Emarginachel 5, Cimolestes 5 | 160 / 200 |
+| ARLO, ornithologist | Hell Creek Camp (22, 8) | act 1 done | Avisaurus 11, Anzu 12, Asteriornis 13 | 624 |
+| PRIYA, palynologist | Lindqvist Ranch (33, 8) | act 2 done | Mesodma 15, Champsosaur 16, Emarginachel 17 | 816 |
 | TOMAS, mammalogist | Hell Creek Camp (26, 8) | act 3 done | Taeniolabis 18, Loxolophus 19, Protictis 20 | 960 |
 | Theo #1 | Hell Creek Camp | act 3 done | Champsosaur 19, Loxolophus 20, Protictis 21 | 840 |
 | INGRID, isotope geochemist | Field Station (11, 4) | act 4 done | Sifrhippus 24, Hyopsodus 25, Coryphodon 26 | 1248 |
-| KEOLA, ichthyologist | Lindqvist Ranch, stock pond (19, 12) | act 5 done | Knightia 30, Heliobatis 31, Lepisosteus 32, Presbyornis 32 | 1536 |
-| OSKAR, ichnologist | Jordan (13, 10) | act 6 done | Stylemys 36, Merycoidodon 37, Mesohippus 38 | 1824 |
-| Theo #2 | Hell Creek Camp | act 6 done | Stylemys 36, Leptomeryx 37, Mesohippus 38, Hesperocyon 39 | 1560 |
-| HOLLIS, volcanologist | Jordan (3, 13) | act 7 done | Balearica 43, Hypohippus 44, Procamelus 44 | 2112 |
-| ASHA, Quaternary ecologist | Lindqvist Ranch (53, 10) | act 8 done | Equus 47, Antilocapra 48, Camelops 49, Ovibos 50 | 2400 |
-| Theo #3 | Hell Creek Camp | act 8 done | double battle with Josie's pair: Canis 47, Meleagris 48, Ovis 49, Equus 50 | 4000 |
-| Dr. Halvorsen | Interpretive Center | epilogue (`FLAG_STRATA_EPI_PEER_REVIEW_DONE`) | Chelydra 50, Teleoceras 51, Epicyon 52, Uintatherium 53, Arctodus 54, Tyrannosaur 55 | 3080 |
+| KEOLA, ichthyologist | Lindqvist Ranch, stock pond (19, 12) | act 5 done | Knightia 27, Heliobatis 28, Lepisosteus 29, Presbyornis 30 | 1440 |
+| OSKAR, ichnologist | Jordan (13, 10) | act 6 done | Stylemys 33, Merycoidodon 34, Mesohippus 35 | 1680 |
+| Theo #2 | Hell Creek Camp | act 6 done | Stylemys 32, Leptomeryx 33, Mesohippus 34, Hesperocyon 35 | 1400 |
+| HOLLIS, volcanologist | Jordan (3, 13) | act 7 done | Balearica 41, Hypohippus 42, Procamelus 42 | 2016 |
+| ASHA, Quaternary ecologist | Lindqvist Ranch (53, 10) | act 8 done | Equus 43, Antilocapra 44, Camelops 45, Ovibos 46 | 2208 |
+| Theo #3 | Hell Creek Camp | act 8 done | double battle with Josie's pair: Canis 42, Meleagris 43, Ovis 44, Equus 45 | 3600 |
+| Dr. Halvorsen | Interpretive Center | epilogue (`FLAG_STRATA_EPI_PEER_REVIEW_DONE`) | Chelydra 46, Teleoceras 47, Epicyon 48, Uintatherium 49, Arctodus 50, Tyrannosaur 52 | 2912 |
 
 **Unlocking.** Researcher N hides under `FLAG_TEMP_N` until `VAR_STRATA_STORY >= STORY_ACT_DONE(N)`;
 every hub map calls `special Strata_HideLockedReviewers` when it loads (`src/strata_review.c`).
@@ -349,7 +351,7 @@ and sets the flag on a win; the player can come back until then.
 **Prizes** are the stock formula: 4 x the last animal's level x the class multiplier
 (`gTrainerClasses`: researchers 12, Theo 10, Halvorsen 14; a double battle pays twice).
 Against the camp store (Specimen Capsule 200, Great 600, Potion 200, Super 700, Hyper 1500): a
-first researcher is worth two capsules, the act 8 one a little over three Hyper Potions.
+first researcher is worth three capsules, the act 8 one about one and a half Hyper Potions.
 
 **Survey stipend** (the renewable income): talking to Dr. Halvorsen in the Field Station pays
 `special Strata_PayStipend`: every Codex "caught" entry since the last payment
@@ -646,7 +648,27 @@ Keep the standard 18 types for compatibility, but assign them by ecology.
 - **Balance report:** `python3 tools/strata/balance.py` prints, per act, the wild species
   and levels, the boss fights, the era level floor and the expected starter-line party,
   with stat totals at level, and flags gaps (`--strict` exits 1 on any flag). Run it after
-  any roster, encounter or boss change.
+  any roster, encounter or boss change. Its **EXP model** (`exp_model()`) gives the level a
+  normal player has at each fight: 20 wild knockouts per act from the act's land table, Gen 9
+  scaled EXP with the party-wide Exp. Share, carried from act to act and raised to the floor.
+  From act 5 on the floors bind: a normal player arrives at the floor and reaches the boss
+  about three levels above it.
+- **Lineage resilience (F7, a game concession):** every era a lineage survives, its IVs rise
+  by 3 (4 if its species didn't change), capped at 31, so a starter carried from Hell Creek
+  reaches IV 31 by Ashfall (`Lineage_ResilientIV`, `include/lineage.h`).
+- **Balance pass (Q2):** `python3 tools/strata/playtest/run.py starter_runs --out <dir>` plays
+  each starter's line through all 29 bosses, set pieces and peer reviews (a quick-start per
+  fight: the line's animal for the act, with its inherited moves and resilience IVs, plus the
+  same typical catches for every starter, at the EXP model's level; best-damage moves, no
+  items, no switching), then `balance.py --playtest <dir>` tabulates them. The runs behind the
+  numbers below are kept in `tools/strata/playtest/q2_results/` (`before/`: the game at
+  f7eac559f5, played by the same harness; `after/`), so `balance.py --playtest
+  tools/strata/playtest/q2_results/after` works without rerunning. Targets and result
+  (3 attempts per fight): every boss and set piece is won by all three starters, the TEAM
+  ending at 18-94% HP (mean 58-61% per starter); the act reviews are won in 106 of 108 tries;
+  the tyrannosaur still beats a Lv 14 TEAM (run from it); Halvorsen's final review is hard at
+  a Lv 52 TEAM (2 and 5 of 9 won in two runs) and won 9 of 9 at Lv 55. Known: with a Sifrhippus that has Magical
+  Leaf (Lv 28), the Coryphodon (Water/Ground, x4 to Grass) is easy.
 - **Art and cries are original:** `gen_sprite.py` draws every species and `gen_cry.py`
   synthesises every cry (docs/strata_art.md). The `borrow` stock species only supplies
   leftover presentation fields; its sprites and cry would be copied in as placeholders,

@@ -66,7 +66,9 @@ checks, screenshots with map and position, emulator errors, warnings, crash PC/L
 | `pressure_chart_smoke` | TEAM menu -> LINEAGE: the pressure chart for each TEAM animal (Up/Down), B back to the TEAM menu on the last one viewed |
 | `story_interludes` | All 10 present-day interludes (S1): quick-start beside each one with the story and `VAR_STRATA_SUBPLOT` it needs (`vars=[("VAR_STRATA_SUBPLOT", "SUBPLOT_X")]`), walk in, play it (a shot per box), check the subplot moved on; Ortiz's three evidence records; the start-menu field log (`sLogShown`) at several states |
 | `colby_gate` | Story 17 at the rig: Colby unseen -> the gate message and a re-entry to the Ice Age (no filter); the sub-layer marker, the Colby intro, the Clovis point (flag), the bone pile (hedged text), the anchor; the rig then loads today (story 18, the mammoth's fossil) |
-| `ending_smoke` | Interpretive Center, story 18, fossils + mixed TEAM/PC + subplot 10: Halvorsen's review (forced switch handled), the ending lines, the stock save prompt (YES), the credits roll a shot every 200 frames, THE END (stops there) |
+| `ending_smoke` | Interpretive Center, story 18, fossils + mixed TEAM/PC + subplot 10: Halvorsen's review (played with `q2_battle`), the ending lines, the stock save prompt (YES), the credits roll a shot every 200 frames, THE END (stops there) |
+| `starter_run_mammal` / `_bird` / `_turtle` (`starter_runs` = all three; **not in `all`**, ~3 min each) | Q2 balance: one starter's line through all 29 bosses, set pieces and peer reviews in story order, each a quick-start with a TEAM at the EXP model's level; writes `fights.csv`/`fights.md`. Env: `STRATA_Q2_REPEAT=3`, `STRATA_Q2_ONLY=arlo,coryphodon`, `STRATA_Q2_KOS`, `STRATA_Q2_FINAL_LEVEL`, `STRATA_Q2_ANIM=1`. Then `python3 tools/strata/balance.py --playtest <out>` |
+| `starter_run_smoke` | The Q2 machinery on two fights (in `all`) |
 
 ## Writing a scenario
 
@@ -148,7 +150,9 @@ animations off; pass `encounters=True`, `collision=False`, `instant_text=False`,
   which `menu_open()` doesn't match: treat that task as a menu (`read_messages` in scenarios.py).
 - `g.battle()` can't send in the next animal after a faint in a trainer battle (it sits in
   `WaitForMonSelection` until the timeout). `trainer_battle()` in scenarios.py retries with a
-  short timeout and picks the next one (DOWN, A, A). Lv 100 isn't enough to sweep Halvorsen.
+  short timeout and picks the next one (DOWN, A, A). `q2_battle()` handles faints properly. A
+  "Lv 100 animal loses" result usually means the policy, not the game: move 1 every turn (the
+  bison's Stomp), chip damage over five opponents, stat drops, Sturdy (Q2 diagnosis).
 - The credits end in `SoftReset`, which the harness reports as a crash: stop at THE END
   (`gStrataCreditsState`: 1 rolling, 2 THE END) without pressing a key.
 - A trainer pic with no front sprite (FRLG's "Old Man") asserts (`CrashScreen`, "does not have a
@@ -159,6 +163,31 @@ animations off; pass `encounters=True`, `collision=False`, `instant_text=False`,
   (`walk` stops when a script starts), then press through with `play_script`.
 - The start menu has a field-log box top left (`src/strata_story.c`); screenshots of the menu show
   it, and `sLogShown` says whether it is up.
+- `g.st["party"]` is only filled by READ_PARTY: call `g.party()`, never read the mirror directly.
+- `g.battle('fight')` always uses move 1. For a balance verdict use `q2_battle(g)` (scenarios.py):
+  best expected damage (gMovesInfo power/type/category, the type chart, stats and stages), TEAM
+  menu driven by its tasks (`Task_HandleChooseMonInput` -> DOWN, A; `Task_HandleSelectionMenuInput`
+  -> A; `Task_PrintAndWaitForText` -> A), and the level-up prompt "give up on having X learn Y?"
+  answered with A (B loops back to the question for ever).
+- Reading battle data: add `pokemon.h`, `move.h`, `battle_main.h` to `harness.Constants.HEADERS`
+  for `offsetof`/`sizeof`. `gTypeEffectivenessTable` is `uq4_12_t` = **u32** (4096 = x1).
+  `struct MoveInfo` word at +8: type bits 16-20, category 21-22 (PHYSICAL 1, SPECIAL 2, STATUS 3),
+  power 23-31. `TYPE_NONE` is 0, so `TYPE_NORMAL` is 1. Bit-fields have no `offsetof`: take
+  `DW_AT_data_bit_offset` from `arm-none-eabi-readelf --debug-dump=info` (`q2_ko_counter`).
+- Equalising a TEAM: write IV-15/neutral stats into the plain part of `struct Pokemon` (hp..spDefense
+  at `offsetof(struct Pokemon, hp)`); a battle copies them, only a level-up recalculates. Moves are
+  encrypted: set them with a `setmonmove` script written to `gStringVar4` and started with
+  RUN_SCRIPT (`q2_set_moves`). A quick-started animal knows only its own last four level-up moves;
+  a carried lineage keeps its ancestors' (`q2_carried_moves`), which mattered a lot for the bird.
+- Hub-map quick-starts: pass `("VAR_STRATA_SUBPLOT", "SUBPLOT_COUNT - 1")` so no interlude starts;
+  Theo offers his earliest review not had, so set the earlier ones' flags as
+  `"(TRAINER_FLAGS_START + TRAINER_STRATA_THEO_ACT3)"`; `VAR_STARTER_MON` picks his act 0 animal.
+- Known engine bugs (KO animations, B_ANIMATE_MON_AFTER_KO, launched twice per faint): a debug-build
+  assert screen "disabled species: 48" (`q2_assert_screen` presses START) and a soft-lock with
+  `battlerKOAnimsRunning` stuck (`q2_softlock` clears it). Both are counted in the `engine` column
+  of fights.csv, never hidden. A freeze at `CrashScreen` is the assert screen, not a hang.
+- Several run.py processes can run at once with separate `--out` folders, but warm the
+  constants cache (`pokeemerald-playtest.playtest_constants.json`) with one run first.
 - Menus by memory, not by guessing the cursor: the start menu is `sCurrentStartMenuActions`/
   `sNumStartMenuActions`/`sStartMenuCursorPos` (BAG is action 2), the bag pocket is byte 5 of
   `gBagPosition`. Static EWRAM symbols resolve like globals. `FLAG_STRATA_*` and `POCKET_*`

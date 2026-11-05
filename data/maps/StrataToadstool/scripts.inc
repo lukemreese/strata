@@ -10,7 +10,7 @@ StrataToadstool_EventScript_Hyaenodon::
 	msgbox StrataToadstool_Text_HyaenodonAppears, MSGBOX_DEFAULT
 	waitmoncry
 	strata_boss_prep atk=1
-	setwildbattle SPECIES_HYAENODON, 38
+	setwildbattle SPECIES_HYAENODON, 37
 	dowildbattle
 	strata_boss_done
 	setvar VAR_STRATA_ACT6, 1
