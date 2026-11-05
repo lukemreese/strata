@@ -11,13 +11,13 @@ StrataBackswampWinter_EventScript_Gauntlet::
 	playmoncry SPECIES_CHAMPSOSAUR, CRY_MODE_ENCOUNTER
 	waitmoncry
 	strata_boss_prep
-	setwildbattle SPECIES_CHAMPSOSAUR, 16
+	setwildbattle SPECIES_CHAMPSOSAUR, 17
 	dowildbattle
 	call StrataBackswampWinter_EventScript_CheckFled
 	msgbox StrataBackswampWinter_Text_SecondSurvivor, MSGBOX_DEFAULT
 	playmoncry SPECIES_BOREALOSUCH, CRY_MODE_ENCOUNTER
 	waitmoncry
-	setwildbattle SPECIES_BOREALOSUCH, 17
+	setwildbattle SPECIES_BOREALOSUCH, 18
 	dowildbattle
 	call StrataBackswampWinter_EventScript_CheckFled
 	msgbox StrataBackswampWinter_Text_OldCroc, MSGBOX_DEFAULT

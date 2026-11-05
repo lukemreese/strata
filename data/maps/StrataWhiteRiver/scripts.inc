@@ -13,7 +13,7 @@ StrataWhiteRiver_EventScript_Archaeotherium::
 	msgbox StrataWhiteRiver_Text_ArchaeotheriumAppears, MSGBOX_DEFAULT
 	waitmoncry
 	strata_boss_prep atk=1
-	setwildbattle SPECIES_ARCHAEOTHERE, 40
+	setwildbattle SPECIES_ARCHAEOTHERE, 39
 	dowildbattle
 	strata_boss_done
 	specialvar VAR_RESULT, GetBattleOutcome

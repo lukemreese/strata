@@ -45,25 +45,27 @@ struct ExpectedTrainer
     u8 classMoney;  // gTrainerClasses[classId].money, which src/battle_main.c sets
 };
 
-// Levels sit between the next layer's era floor and the act's expected party level
-// (docs/strata_outline.md section 3.1: 10, 16, 21, 27, 33, 39, 46, 51, then 54 for the epilogue).
+// Levels from the Q2 balance pass (tools/strata/balance.py, the headless starter runs): the last
+// animal at about the level a normal player has after the act's boss (the EXP model: 15, 20, 23,
+// 27, 31, 35, 41, 46), the others a level or two below. Theo's Lv 4 bird is the one the mammal
+// starter faces. Halvorsen's final review is meant to be hard at Lv 52 and won at Lv 55.
 static const struct ExpectedTrainer sExpected[] =
 {
-    { TRAINER_STRATA_THEO_ACT0_BIRD,   ERA_HELL_CREEK,     5,  5,  1, 1, FALSE, TRAINER_CLASS_RIVAL, 10 },
+    { TRAINER_STRATA_THEO_ACT0_BIRD,   ERA_HELL_CREEK,     4,  4,  1, 1, FALSE, TRAINER_CLASS_RIVAL, 10 },
     { TRAINER_STRATA_THEO_ACT0_TURTLE, ERA_HELL_CREEK,     5,  5,  1, 1, FALSE, TRAINER_CLASS_RIVAL, 10 },
     { TRAINER_STRATA_THEO_ACT0_MAMMAL, ERA_HELL_CREEK,     5,  5,  1, 1, FALSE, TRAINER_CLASS_RIVAL, 10 },
     { TRAINER_STRATA_THEO_ACT3,        ERA_CORRAL_BLUFFS, 19, 21,  3, 3, FALSE, TRAINER_CLASS_RIVAL, 10 },
-    { TRAINER_STRATA_THEO_ACT6,        ERA_WHITE_RIVER,   36, 39,  4, 4, FALSE, TRAINER_CLASS_RIVAL, 10 },
-    { TRAINER_STRATA_THEO_ACT8,        ERA_TRAP_CAVE,     47, 50,  4, 4, TRUE,  TRAINER_CLASS_RIVAL, 10 },
-    { TRAINER_STRATA_REVIEW_ACT1,      ERA_HELL_CREEK,     7,  9,  2, 4, FALSE, TRAINER_CLASS_PKMN_TRAINER_1, 12 },
-    { TRAINER_STRATA_REVIEW_ACT2,      ERA_IMPACT_WINTER, 13, 15,  2, 4, FALSE, TRAINER_CLASS_PKMN_TRAINER_1, 12 },
+    { TRAINER_STRATA_THEO_ACT6,        ERA_WHITE_RIVER,   32, 35,  4, 4, FALSE, TRAINER_CLASS_RIVAL, 10 },
+    { TRAINER_STRATA_THEO_ACT8,        ERA_TRAP_CAVE,     42, 45,  4, 4, TRUE,  TRAINER_CLASS_RIVAL, 10 },
+    { TRAINER_STRATA_REVIEW_ACT1,      ERA_HELL_CREEK,    11, 13,  2, 4, FALSE, TRAINER_CLASS_PKMN_TRAINER_1, 12 },
+    { TRAINER_STRATA_REVIEW_ACT2,      ERA_IMPACT_WINTER, 15, 17,  2, 4, FALSE, TRAINER_CLASS_PKMN_TRAINER_1, 12 },
     { TRAINER_STRATA_REVIEW_ACT3,      ERA_CORRAL_BLUFFS, 18, 20,  2, 4, FALSE, TRAINER_CLASS_PKMN_TRAINER_1, 12 },
     { TRAINER_STRATA_REVIEW_ACT4,      ERA_BIGHORN_PETM,  24, 26,  2, 4, FALSE, TRAINER_CLASS_PKMN_TRAINER_1, 12 },
-    { TRAINER_STRATA_REVIEW_ACT5,      ERA_GREEN_RIVER,   30, 32,  2, 4, FALSE, TRAINER_CLASS_PKMN_TRAINER_1, 12 },
-    { TRAINER_STRATA_REVIEW_ACT6,      ERA_WHITE_RIVER,   36, 38,  2, 4, FALSE, TRAINER_CLASS_PKMN_TRAINER_1, 12 },
-    { TRAINER_STRATA_REVIEW_ACT7,      ERA_ASHFALL,       43, 44,  2, 4, FALSE, TRAINER_CLASS_PKMN_TRAINER_1, 12 },
-    { TRAINER_STRATA_REVIEW_ACT8,      ERA_TRAP_CAVE,     47, 50,  2, 4, FALSE, TRAINER_CLASS_PKMN_TRAINER_1, 12 },
-    { TRAINER_STRATA_HALVORSEN,        ERA_EPILOGUE,      50, 55,  6, 6, FALSE, TRAINER_CLASS_PKMN_TRAINER_2, 14 },
+    { TRAINER_STRATA_REVIEW_ACT5,      ERA_GREEN_RIVER,   27, 30,  2, 4, FALSE, TRAINER_CLASS_PKMN_TRAINER_1, 12 },
+    { TRAINER_STRATA_REVIEW_ACT6,      ERA_WHITE_RIVER,   33, 35,  2, 4, FALSE, TRAINER_CLASS_PKMN_TRAINER_1, 12 },
+    { TRAINER_STRATA_REVIEW_ACT7,      ERA_ASHFALL,       41, 42,  2, 4, FALSE, TRAINER_CLASS_PKMN_TRAINER_1, 12 },
+    { TRAINER_STRATA_REVIEW_ACT8,      ERA_TRAP_CAVE,     43, 46,  2, 4, FALSE, TRAINER_CLASS_PKMN_TRAINER_1, 12 },
+    { TRAINER_STRATA_HALVORSEN,        ERA_EPILOGUE,      46, 52,  6, 6, FALSE, TRAINER_CLASS_PKMN_TRAINER_2, 14 },
 };
 
 TEST("Peer-review trainers carry only Strata species that exist by their act, at levels in range")
@@ -134,11 +136,12 @@ TEST("Peer-review prizes grow with the acts and are worth a few camp-store purch
     u32 capsule = gItemsInfo[ITEM_POKE_BALL].price;
 
     EXPECT_EQ(capsule, 200);
-    EXPECT_EQ(Prize(TRAINER_STRATA_THEO_ACT0_BIRD), 200);            // 4 x 5 x 10
-    EXPECT_EQ(Prize(TRAINER_STRATA_REVIEW_ACT1), 432);               // 4 x 9 x 12
-    EXPECT_EQ(Prize(TRAINER_STRATA_REVIEW_ACT8), 2400);              // 4 x 50 x 12
-    EXPECT_EQ(Prize(TRAINER_STRATA_THEO_ACT8), 4000);                // a double battle: 4 x 50 x 10 x 2
-    EXPECT_EQ(Prize(TRAINER_STRATA_HALVORSEN), 3080);                // 4 x 55 x 14
+    EXPECT_EQ(Prize(TRAINER_STRATA_THEO_ACT0_BIRD), 160);            // 4 x 4 x 10
+    EXPECT_EQ(Prize(TRAINER_STRATA_THEO_ACT0_TURTLE), 200);          // 4 x 5 x 10
+    EXPECT_EQ(Prize(TRAINER_STRATA_REVIEW_ACT1), 624);               // 4 x 13 x 12
+    EXPECT_EQ(Prize(TRAINER_STRATA_REVIEW_ACT8), 2208);              // 4 x 46 x 12
+    EXPECT_EQ(Prize(TRAINER_STRATA_THEO_ACT8), 3600);                // a double battle: 4 x 45 x 10 x 2
+    EXPECT_EQ(Prize(TRAINER_STRATA_HALVORSEN), 2912);                // 4 x 52 x 14
     for (act = 1; act <= STRATA_REVIEWER_COUNT; act++)
     {
         // At least two capsules in act 1, and every act pays more than the one before.

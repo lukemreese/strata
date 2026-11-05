@@ -32,7 +32,7 @@ Double Battle: No
 AI: Basic Trainer
 
 SPECIES_ASTERIORNIS
-Level: 5
+Level: 4
 IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
 
 === TRAINER_STRATA_THEO_ACT0_TURTLE ===
@@ -122,19 +122,19 @@ Double Battle: Yes
 AI: Basic Trainer
 
 SPECIES_CANIS
-Level: 44
+Level: 42
 IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
 
 SPECIES_MELEAGRIS
-Level: 45
+Level: 43
 IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
 
 SPECIES_OVIS
-Level: 46
+Level: 44
 IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
 
 SPECIES_EQUUS
-Level: 47
+Level: 45
 IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
 
 /* --------------------------------------------------------------------------- */
@@ -152,15 +152,15 @@ Double Battle: No
 AI: Basic Trainer
 
 SPECIES_AVISAURUS
-Level: 7
+Level: 11
 IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
 
 SPECIES_ANZU
-Level: 8
+Level: 12
 IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
 
 SPECIES_ASTERIORNIS
-Level: 9
+Level: 13
 IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
 
 /* Act 2, impact winter: the palynologist. */
@@ -174,15 +174,15 @@ Double Battle: No
 AI: Basic Trainer
 
 SPECIES_MESODMA
-Level: 13
+Level: 15
 IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
 
 SPECIES_CHAMPSOSAUR
-Level: 14
+Level: 16
 IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
 
 SPECIES_EMARGINACHEL
-Level: 15
+Level: 17
 IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
 
 /* Act 3, Corral Bluffs: the mammalogist. */
@@ -240,19 +240,19 @@ Double Battle: No
 AI: Basic Trainer
 
 SPECIES_KNIGHTIA
-Level: 28
+Level: 27
 IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
 
 SPECIES_HELIOBATIS
-Level: 29
+Level: 28
 IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
 
 SPECIES_LEPISOSTEUS
-Level: 30
+Level: 29
 IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
 
 SPECIES_PRESBYORNIS
-Level: 31
+Level: 30
 IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
 
 /* Act 6, White River: the ichnologist (trackways). */
@@ -310,19 +310,19 @@ Double Battle: No
 AI: Basic Trainer
 
 SPECIES_EQUUS
-Level: 44
+Level: 43
 IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
 
 SPECIES_ANTILOCAPRA
-Level: 45
+Level: 44
 IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
 
 SPECIES_CAMELOPS
-Level: 46
+Level: 45
 IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
 
 SPECIES_OVIBOS
-Level: 47
+Level: 46
 IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
 
 /* --------------------------------------------------------------------------- */
@@ -339,25 +339,25 @@ Double Battle: No
 AI: Basic Trainer
 
 SPECIES_CHELYDRA
-Level: 47
+Level: 46
 IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
 
 SPECIES_TELEOCERAS
-Level: 48
+Level: 47
 IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
 
 SPECIES_EPICYON
-Level: 49
+Level: 48
 IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
 
 SPECIES_UINTATHERIUM
-Level: 50
+Level: 49
 IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
 
 SPECIES_ARCTODUS
-Level: 51
+Level: 50
 IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
 
 SPECIES_TYRANNOSAUR
-Level: 53
+Level: 52
 IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe

@@ -401,7 +401,7 @@ The **window** is when pressure accumulates for that descent: from the previous 
 | Asteriornis → (A4) | Gallinuloid | Presbyornis (W ≥ 64); Gastornis (P ≥ 64) | A1–3 | shores; ferns, palms, legumes | existing; needs W/P sources |
 | Gallinuloid → (A8) | Meleagris | **Centrocercus** (O ≥ 96) | A4–7 | White River and Ashfall grassland | ✅ added (F8) |
 | Emarginachel → (A3) | Protochelyd | none | A1–2 | n/a | existing |
-| Protochelyd → (A7) | Chelydra | **Macrochelys** (heat ≥ 160) | A3–6 | carry it through the PETM (heat 2/tick); keep it in the PC to avoid | ✅ added (F8). A party turtle gets there in ~80 PETM ticks (~2,600 steps), so it is close to the default for a carried turtle; revisit after the playtest (Q2) |
+| Protochelyd → (A7) | Chelydra | **Macrochelys** (heat ≥ 160) | A3–6 | carry it through the PETM (heat 2/tick); keep it in the PC to avoid | ✅ added (F8). A party turtle gets there in ~80 PETM ticks (~2,600 steps), so it is close to the default for a carried turtle; still open: the Q2 starter runs play the default paths only |
 | Sifrhippus → (A5) | Eohippus | none | A4 | n/a | existing |
 | Eohippus → (A6) | Mesohippus | none | A5 | n/a | existing |
 | Mesohippus → (A7) | Protohippus | **Hypohippus** (F ≥ 64) | A6 | Gallery Forest | ✅ added (F8) |
@@ -479,18 +479,27 @@ primate, ~29 Ma, SD) as a White River field note, not a species.
 
 ### 3.1 Difficulty and level curve
 
-| Act | Wild levels (now → proposed) | Mini-boss | Boss (Lv) | Expected party Lv at the boss | **Era floor** on load |
-|---|---|---|---|---|---|
-| 0 | none | Theo sim Lv 5 | none | 5 | 5 (starter) |
-| 1 | 3–10 → 3–10 | Acheroraptor pair (double, 8/8) | T. rex 14 (survival) | 10 | 5 |
-| 2 | 10–16 → 9–15 | none | gauntlet 14/15/17 | 15 | 10 |
-| 3 | 15–20 → 14–21 | Taeniolabis 20 | Eoconodon 22 | 21 | 14 |
-| 4 | 20–28 → 20–27 | Oxyaena 26 | Coryphodon 28 + calf 24 | 27 | 20 |
-| 5 | 26–34 → 26–33 | Patriofelis 32 | Uintatherium 34 | 33 | 26 |
-| 6 | 34–39 → 32–39 | Hyaenodon 38 | Archaeotherium 40 | 39 | 32 |
-| 7 | 40–45 → 38–45 | Epicyon 44 | Teleoceras 46 + cow 42 | 45 | 38 |
-| 8 | 46–51 → 44–51 | Panthera pair 48/48 | Arctodus 52 | 51 | 44 |
-| E | 46–54 → 46–54 | none | Halvorsen 55 (peer review) | 55 | 46 |
+**Actual values after the Q2 balance pass** (the "TEAM Lv" columns are the EXP model in
+`tools/strata/balance.py`: what a normal player reaches with 20 wild knockouts per act; the
+peer review comes after the boss, at the review level):
+
+| Act | Wild levels | Set piece (Lv) | Boss (Lv) | TEAM Lv at set piece / boss / review | **Era floor** on load | Peer reviews (last Lv) |
+|---|---|---|---|---|---|---|
+| 0 | none | Theo #0 (Lv 4–5) | none | 5 | 0 (starter Lv 5) | Theo 4–5 |
+| 1 | 3–10 | Acheroraptor pair (double, 11/11) | T. rex 20 (survival) | 12 / 14 / 15 | 0 | Arlo 13 |
+| 2 | 10–16 | none | gauntlet 17/18/19 | 17 / 19 / 20 | 10 | Priya 17 |
+| 3 | 14–21 | Taeniolabis 22 | Eoconodon 25 | 22 / 23 / 24 | 14 | Tomas 20, Theo 21 |
+| 4 | 20–27 | Oxyaena 28 | Coryphodon 28 + calf 21 | 26 / 28 / 28 | 20 | Ingrid 26 |
+| 5 | 26–33 | Patriofelis 32 | Uintatherium 34 | 30 / 31 / 31 | 26 | Keola 30 |
+| 6 | 32–39 | Hyaenodon 37 | Archaeotherium 39 | 33 / 35 / 35 | 32 | Oskar 35, Theo 35 |
+| 7 | 38–46 | Epicyon 44 | Teleoceras 46 + cow 42 | 39 / 41 / 41 | 38 | Hollis 42 |
+| 8 | 44–51 | Panthera pair 48/48 | Arctodus 52 | 45 / 46 / 46 | 44 | Asha 46, Theo 45 (double) |
+| E | 46–54 | Mustela 48 (a catch) | Halvorsen 46–52 (final review) | 47 / 48 / 48; review tested at 52 and 55 | 46 | Halvorsen 52 |
+
+The bosses sit 0–6 levels above the TEAM: from act 5 on, the floors bind (the player arrives at
+the floor and gains about three levels per act, because scaled EXP falls off once the TEAM
+matches the wilds). A TEAM of 4–6 still wins with the boss's totem boost and smart AI. That
+is checked by the headless starter runs (Q2, §6 M5), not just by stat totals.
 
 **Era floor** (coordinate with the in-flight floor work; these are the target values):
 on `Lineage_AdvanceToEra` completion, every party and PC mon below `sEraLevelFloor[era]`
@@ -523,10 +532,12 @@ smallest and largest species, too much for a game where a 0.04 kg bat meets an
    everything, but the spread drops to about 2×.
 2. **Focal lineage bonus +40** for the 16 starter-line species (new roster field
    `focal=True`). It's a game concession, and documented as such in the design doc.
-3. **Lineage resilience:** each era a mon *survives* (party or PC), raise each IV by +3
+3. ✅ **Lineage resilience (F7, done in Q2):** each era a mon *survives* (party or PC), raise each IV by +3
    (cap 31). +1 more if its species did not change that era (stabilising-selection
-   flavour for the turtle). IVs avoid the 510 EV cap. Implement it in
-   `Lineage_AdvanceToEra` after `ApplyExtinctions`. Test it.
+   flavour for the turtle). IVs avoid the 510 EV cap. In `Lineage_AdvanceToEra`, with the
+   descent (before the filter, so a lost lineage gains nothing; a Gentle replacement keeps
+   it); `RESILIENCE_IV_PER_ERA`/`_STASIS_BONUS` in `include/lineage.h`;
+   `test/lineage_resilience.c`. A starter carried from Hell Creek reaches IV 31 by Ashfall.
 
 Selected results (old → new incl. focal): Cimolestes 279→365, Asteriornis 272→360,
 Gallinuloid 263→354, Leptocyon 321→395, Canis 378→436, Emarginachel 363→425,
@@ -830,7 +841,7 @@ Ordered by leverage ÷ risk. Tasks inside a milestone can run in parallel unless
 | F4 | ✅ **Done.** Extinction list message (one message per loss with its reason) + Fossil Case key item + fossil flags (no extra save space), Hall plaques per player (§3.5); `test/strata_fossils.c`, harness `extinction_smoke` | M | none | SYS |
 | F5 | Map popup age/window line. Hook: add an `age=` string key per map and a `const u8 *age` field to `struct StrataMapInfo` (`include/strata_map.h`, written by `write_map_info` in `gen_maps.py`), then print it in `map_name_popup.c` | S | R4 | SYS |
 | F6 | ✅ **Done** with R4. `light=` overrides the clock in `UpdateTimeOfDay`; `none` turns tinting off (`MapHasNaturalLight`) | S | R4 | SYS |
-| F7 | Lineage resilience (IV raise per era survived) | S | none | SYS |
+| F7 | ✅ **Done (in Q2).** Lineage resilience (IV raise per era survived): §3.2 part 3 | S | none | SYS |
 | F8 | ✅ **Done.** Lineage table additions/changes from §2.11 (data only; needs the new species), new extinctions, H4; tests | S | C1 | SYS |
 
 ### M2: Content (parallel by act once R0 lands)
@@ -873,7 +884,7 @@ Ordered by leverage ÷ risk. Tasks inside a milestone can run in parallel unless
 | ID | Task | Size | Deps | Track |
 |---|---|---|---|---|
 | Q1 | Work through the §5 table; update roster sites/ages/notes | L | none | SCI |
-| Q2 | Balance pass: `balance.py` report per act + a full playtest on each starter | M | M2 | SYS |
+| Q2 | ✅ **Done.** Balance pass: `balance.py` report per act (now with the EXP model and `--playtest`) + a headless playtest on each starter (`starter_run_mammal/_bird/_turtle`: all 29 bosses, set pieces and peer reviews). Floors raised to the wild minimum, boss/set-piece/review levels retuned, lineage resilience (F7), Asteriornis gets Mud-Slap at 5 (its Peck was useless against Theo's turtle). Rerun: `make -j8 playtest`, then `STRATA_Q2_REPEAT=3 python3 tools/strata/playtest/run.py starter_runs --out <dir>` (~5 min with 3 attempts) and `python3 tools/strata/balance.py --playtest <dir>`. Results and open points: docs/strata_design.md, "Balance pass (Q2)" | M | M2 | SYS |
 | Q3 | Codex text review: every stand-in labelled, every inference tagged | M | Q1, C14 | SCI + TXT |
 
 ### Top 8, in order

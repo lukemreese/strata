@@ -29,7 +29,7 @@ def expand(name):
     if name == "all":
         return ["watchdog_selftest", "new_game_smoke", "battle_smoke", "forecast_smoke", "pressure_chart_smoke",
                 "peer_review_smoke", "act_tour", "extinction_smoke", "story_interludes"] \
-            + [f"boss_{a}" for a in range(1, 9)] + ["colby_gate", "ending_smoke"]
+            + [f"boss_{a}" for a in range(1, 9)] + ["colby_gate", "ending_smoke", "starter_run_smoke"]
     if name in REGISTRY or name.endswith(".txt") or re.fullmatch(r"boss_[1-8]", name):
         return [name]
     raise SystemExit(f"unknown scenario {name} (try --list)")
@@ -217,7 +217,7 @@ def peer_review_smoke(g, args):
     g.screenshot("end")
     g.check(g.trainer_defeated("TRAINER_STRATA_REVIEW_ACT1"), "Arlo's defeat flag is set")
     prize = g.money() - money0
-    g.check(prize == 4 * 9 * 12, f"the prize is 4 x Lv 9 x 12 = 432 (got {prize})")
+    g.check(prize == 4 * 13 * 12, f"the prize is 4 x Lv 13 x 12 = 624 (got {prize})")
     # Talking again does not start another battle.
     g.press("A")
     r = g.talk(stop_at_menu=False)
@@ -1047,7 +1047,8 @@ Q2_REPEAT = int(os.environ.get("STRATA_Q2_REPEAT", "1"))
 Q2_KOS = int(os.environ.get("STRATA_Q2_KOS", "0")) or None
 Q2_ONLY = [f for f in os.environ.get("STRATA_Q2_ONLY", "").split(",") if f]
 Q2_ANIM = os.environ.get("STRATA_Q2_ANIM", "0") == "1"   # battle animations on (slower)
-Q2_FINAL_LEVEL = 52     # Halvorsen's final review: an epilogue TEAM at about Lv 50-55 (§3.1)
+# Halvorsen's final review: an epilogue TEAM at about Lv 50-55 (§3.1); STRATA_Q2_FINAL_LEVEL to vary.
+Q2_FINAL_LEVEL = int(os.environ.get("STRATA_Q2_FINAL_LEVEL", "52"))
 Q2_LINES = {"mammal": 0, "bird": 1, "turtle": 2}   # VAR_STARTER_MON
 # Typical catches, the same for every starter (wild in that act or carried from the last one,
 # never a starter line, mid-table BST). The TEAM size per act is balance.TEAM_SIZE (3 animals
@@ -1130,6 +1131,60 @@ def q2_team(line, act, level, lines, starters, size):
     start = starters[line]
     lead = lines[start][act] if act else start
     return [(f"SPECIES_{sp}", level) for sp in ([lead] + Q2_CATCHES[act])[:size]]
+
+
+def q2_carried_moves(g, line, act, level, lines, starters, model):
+    """The moves the carried starter line knows at this fight: a quick-started animal only gets its
+    own species' last four level-up moves, but a lineage keeps what its ancestors learned. Walks
+    the line act by act (Lv 5 at the dig, the EXP model's levels after), learning each era's
+    species' level-up moves; when four are known, a sensible player forgets the weakest (status
+    moves count as power 0) and skips a new move weaker than all four. [] before act 2."""
+    import balance
+    if act < 2:
+        return []
+    lay = q2_layout(g)
+    path = lines[starters[line]]
+    known = []
+
+    def power(name):
+        return q2_move(g, lay, g.const(f"MOVE_{name}"))[2]
+
+    def learn(name):
+        if name in known:
+            return
+        if len(known) < 4:
+            known.append(name)
+            return
+        weakest = min(known, key=power)
+        if power(name) > power(weakest):
+            known[known.index(weakest)] = name
+
+    prev = 0
+    for k in range(1, act + 1):
+        species = path[k]
+        end = level if k == act else model[k]["review"]
+        start = balance.STARTER_LEVEL if k == 1 else prev
+        for lv, mv in balance.BY_CONST[species]["moves"]:
+            if (k == 1 and lv <= start) or prev < lv <= end:
+                learn(mv)
+        prev = end
+    return known
+
+
+def q2_set_moves(g, slot, moves):
+    """Give TEAM slot `slot` exactly `moves` (names) with full PP: a setmonmove script written to
+    gStringVar4 and started with RUN_SCRIPT (no change to the playtest ROM needed)."""
+    for h in ("constants/script_commands.h",):
+        if h not in harness.Constants.HEADERS:
+            harness.Constants.HEADERS.append(h)
+    ids = [g.const(f"MOVE_{m}") for m in moves] + [g.const("MOVE_NONE")] * (4 - len(moves))
+    code = b"".join(struct.pack("<BBBH", g.const("SCR_OP_SETMONMOVE"), slot, i, mv) for i, mv in enumerate(ids))
+    code += bytes([g.const("SCR_OP_END")])
+    addr = g.sym["gStringVar4"]
+    g.runner.cmd(f"wd {addr:x} {code.hex()}")
+    g._command("RUN_SCRIPT", [addr & 0xFFFF, addr >> 16])
+    g.wait_until(lambda: not g.st["scriptActive"], 600, "the move script")
+    g.wait(4)
 
 
 def q2_ivs(line, act, lines, starters, size):
@@ -1435,7 +1490,7 @@ def q2_start_tile(mi, how, script):
     return best[1], best[2]
 
 
-def q2_fight(g, line, fight, team, rows, ivs=None):
+def q2_fight(g, line, fight, team, rows, ivs=None, lead_moves=()):
     act, fid, kind, map_name, how, script = fight
     ivs = ivs or [15] * len(team)
     mi = world.map_info(map_name)
@@ -1448,7 +1503,9 @@ def q2_fight(g, line, fight, team, rows, ivs=None):
     g.quickstart(mi.id, *tile, story=story, era=act, party=team, items=[("ITEM_POKE_BALL", 5)],
                  flags=flags, vars=vars_, battle_anim=Q2_ANIM)
     q2_normalize_team(g, team, ivs)
-    g.log(f"Q2 {line} {fid}: TEAM {team}, IVs {ivs}")
+    if lead_moves:
+        q2_set_moves(g, 0, lead_moves)
+    g.log(f"Q2 {line} {fid}: TEAM {team}, IVs {ivs}, lead moves {list(lead_moves) or 'its own'}")
     if how == "talk":
         g.face(d)
         g.press("A")
@@ -1512,30 +1569,33 @@ def q2_recover(g, tries=3000):
     raise TestFailure("could not get back to the overworld after a failed fight")
 
 
-def starter_run(g, args, line):
+def starter_run(g, args, line, only=None, repeat=None):
     balance, lines, model = q2_data()
     starters = {name: world.STARTERS[i].removeprefix("SPECIES_") for name, i in Q2_LINES.items()}
-    g.max_frames = 40_000_000 * Q2_REPEAT
+    repeat = repeat or Q2_REPEAT
+    g.max_frames = 40_000_000 * repeat
     rows = []
     try:
-        q2_fights(g, line, balance, lines, model, starters, rows)
+        q2_fights(g, line, balance, lines, model, starters, rows, only or Q2_ONLY, repeat)
     finally:
         q2_write(g, line, rows)
     lost = sorted({r["fight"] for r in rows if r["outcome"] not in ("won", "caught") and r["kind"] != "survival"})
     g.check(not lost, f"{line}: every boss, set piece and review won ({', '.join(lost) or 'all won'})")
+    return rows
 
 
-def q2_fights(g, line, balance, lines, model, starters, rows):
+def q2_fights(g, line, balance, lines, model, starters, rows, only, repeat):
     for fight in Q2_FIGHTS:
         act, fid, kind = fight[:3]
-        if Q2_ONLY and fid not in Q2_ONLY:
+        if only and fid not in only:
             continue
         team = q2_team(line, act, q2_level(act, kind, model), lines, starters, balance.TEAM_SIZE[act])
         ivs = q2_ivs(line, act, lines, starters, len(team))
-        for attempt in range(Q2_REPEAT):
+        lead_moves = q2_carried_moves(g, line, act, team[0][1], lines, starters, model)
+        for attempt in range(repeat):
             n = len(rows)
             try:
-                q2_fight(g, line, fight, team, rows, ivs)
+                q2_fight(g, line, fight, team, rows, ivs, lead_moves)
             except harness.GameCrash:
                 raise
             except TestFailure as e:
@@ -1579,3 +1639,12 @@ def starter_run_bird(g, args):
 def starter_run_turtle(g, args):
     """Q2: the turtle line (Emarginachel) through every boss, set piece and peer review (fights.csv)."""
     starter_run(g, args, "turtle")
+
+
+@scenario
+def starter_run_smoke(g, args):
+    """Q2 harness check (in `all`, ~15 s): the bird's act 4 TEAM (inherited moves, resilience IVs)
+    through a wild set piece and a peer review with the best-damage policy; fights.csv is written."""
+    rows = starter_run(g, args, "bird", only=["oxyaena", "ingrid"], repeat=1)
+    g.check([r["fight"] for r in rows] == ["oxyaena", "ingrid"], f"both fights recorded ({[r['fight'] for r in rows]})")
+    g.check(os.path.exists(os.path.join(g.out, "fights.csv")), "fights.csv written")

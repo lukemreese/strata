@@ -379,7 +379,8 @@ TEST("An extinction brings a survivor from the PC rather than leave the party em
 
     EXPECT_EQ(CalculatePlayerPartyCount(), 1);
     EXPECT_EQ(GetMonData(&gParties[B_TRAINER_PLAYER][0], MON_DATA_SPECIES), SPECIES_LEPISOSTEUS);
-    EXPECT_EQ(GetMonData(&gParties[B_TRAINER_PLAYER][0], MON_DATA_LEVEL), 8);
+    // Lv 8 in the PC, raised to the impact winter's floor (10) like any carried lineage.
+    EXPECT_EQ(GetMonData(&gParties[B_TRAINER_PLAYER][0], MON_DATA_LEVEL), Lineage_GetEraLevelFloor(ERA_IMPACT_WINTER));
     EXPECT_EQ(GetBoxMonData(GetBoxedMonPtr(3, 5), MON_DATA_SPECIES), SPECIES_NONE);
 }
 

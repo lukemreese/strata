@@ -104,16 +104,18 @@ TEST("The era level floor forgets the oldest move when full and skips known move
     ResetStrata();
     VarSet(VAR_STRATA_ERA, ERA_IMPACT_WINTER);
     // Knows Tackle and Tail Whip, plus Bite early. Passes Quick Attack (4),
-    // Bullet Seed (7) and Bite (10) on the way to 12.
+    // Bullet Seed (7), Bite (10) and Dig (13) on the way to 14: Tackle and then
+    // Tail Whip are forgotten, Bite isn't learnt twice.
     CreatePartyMon(mon, SPECIES_MESODMA, 3);
     SetMonMoveSlot(mon, MOVE_BITE, 2);
 
     Lineage_AdvanceToEra(ERA_CORRAL_BLUFFS);
 
-    EXPECT_EQ(GetMonData(mon, MON_DATA_MOVE1), MOVE_TAIL_WHIP);
-    EXPECT_EQ(GetMonData(mon, MON_DATA_MOVE2), MOVE_BITE);
-    EXPECT_EQ(GetMonData(mon, MON_DATA_MOVE3), MOVE_QUICK_ATTACK);
-    EXPECT_EQ(GetMonData(mon, MON_DATA_MOVE4), MOVE_BULLET_SEED);
+    EXPECT_EQ(Lineage_GetEraLevelFloor(ERA_CORRAL_BLUFFS), 14);
+    EXPECT_EQ(GetMonData(mon, MON_DATA_MOVE1), MOVE_BITE);
+    EXPECT_EQ(GetMonData(mon, MON_DATA_MOVE2), MOVE_QUICK_ATTACK);
+    EXPECT_EQ(GetMonData(mon, MON_DATA_MOVE3), MOVE_BULLET_SEED);
+    EXPECT_EQ(GetMonData(mon, MON_DATA_MOVE4), MOVE_DIG);
 }
 
 TEST("The era level floor raises a mon stored in the PC")
@@ -147,20 +149,22 @@ TEST("The era level floor leaves mons at or above it untouched")
     struct Pokemon *atFloor = &gParties[B_TRAINER_PLAYER][1];
     u32 floor = Lineage_GetEraLevelFloor(ERA_CORRAL_BLUFFS);
     u32 exp = ExpForLevel(SPECIES_LEPISOSTEUS, 20) + 5;
-    u32 hp = 3;
+    u32 hp = 3, oldMaxHp;
 
     ResetStrata();
     VarSet(VAR_STRATA_ERA, ERA_IMPACT_WINTER);
     CreatePartyMon(mon, SPECIES_LEPISOSTEUS, 20);
     SetMonData(mon, MON_DATA_EXP, &exp);
     SetMonData(mon, MON_DATA_HP, &hp);
+    oldMaxHp = GetMonData(mon, MON_DATA_MAX_HP);
     CreatePartyMon(atFloor, SPECIES_LEPISOSTEUS, floor);
 
     Lineage_AdvanceToEra(ERA_CORRAL_BLUFFS);
 
     EXPECT_EQ(GetMonData(mon, MON_DATA_LEVEL), 20);
     EXPECT_EQ(GetMonData(mon, MON_DATA_EXP), exp);
-    EXPECT_EQ(GetMonData(mon, MON_DATA_HP), hp);
+    // Not healed: only lineage resilience's higher IVs add what they add to its max HP.
+    EXPECT_EQ(GetMonData(mon, MON_DATA_HP), hp + GetMonData(mon, MON_DATA_MAX_HP) - oldMaxHp);
     EXPECT_EQ(GetMonData(atFloor, MON_DATA_LEVEL), floor);
     EXPECT_EQ(GetMonData(atFloor, MON_DATA_EXP), ExpForLevel(SPECIES_LEPISOSTEUS, floor));
 }

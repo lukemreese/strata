@@ -9,7 +9,7 @@ StrataConcretionBluffs_EventScript_Taeniolabis::
 	playmoncry SPECIES_TAENIOLABIS, CRY_MODE_ENCOUNTER
 	msgbox StrataConcretionBluffs_Text_TaeniolabisAppears, MSGBOX_DEFAULT
 	waitmoncry
-	setwildbattle SPECIES_TAENIOLABIS, 20
+	setwildbattle SPECIES_TAENIOLABIS, 22
 	dowildbattle
 	specialvar VAR_RESULT, GetBattleOutcome
 	goto_if_eq VAR_RESULT, B_OUTCOME_RAN, StrataConcretionBluffs_EventScript_TaeniolabisRan

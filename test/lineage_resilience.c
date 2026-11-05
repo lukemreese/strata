@@ -98,6 +98,8 @@ TEST("A PC lineage gains resilience once per era of a multi-era jump, up to 31")
 
     ResetStrata();
     VarSet(VAR_STRATA_ERA, ERA_HELL_CREEK);
+    // A party mon, so the load doesn't bring the first PC gar out to fill an empty party.
+    CreatePartyMonWithIVs(&gParties[B_TRAINER_PLAYER][0], SPECIES_LEPISOSTEUS, 20, 15);
     CreateBoxMon(boxMon, SPECIES_LEPISOSTEUS, 20, 0, OTID_STRUCT_PLAYER_ID);
     SetAllIVs(boxMon, 10);
     CreateBoxMon(strong, SPECIES_LEPISOSTEUS, 20, 0, OTID_STRUCT_PLAYER_ID);

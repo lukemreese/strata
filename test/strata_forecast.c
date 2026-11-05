@@ -394,7 +394,7 @@ TEST("The forecast covers the load the rig makes")
     EXPECT_EQ(rig.party[0].result, SPECIES_CENTROCERCUS);
     EXPECT_EQ(rig.party[1].fate, FATE_LOST);
     EXPECT_EQ(rig.party[2].result, SPECIES_CANIS);
-    EXPECT_EQ(rig.party[2].newLevel, 43);
+    EXPECT_EQ(rig.party[2].newLevel, 44); // the Ice Age floor
     RUN_OVERWORLD_SCRIPT(
         special Strata_RigLoadNext;
     );

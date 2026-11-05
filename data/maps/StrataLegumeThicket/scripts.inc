@@ -10,7 +10,7 @@ StrataLegumeThicket_EventScript_Eoconodon::
 	msgbox StrataLegumeThicket_Text_EoconodonAppears, MSGBOX_DEFAULT
 	waitmoncry
 	strata_boss_prep atk=1
-	setwildbattle SPECIES_EOCONODON, 24
+	setwildbattle SPECIES_EOCONODON, 25
 	dowildbattle
 	strata_boss_done
 	specialvar VAR_RESULT, GetBattleOutcome

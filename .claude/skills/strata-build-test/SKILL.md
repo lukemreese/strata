@@ -18,7 +18,8 @@ Run everything from `~/projects/strata` (see the strata-shell skill for how).
 | `tools/strata/maps/` (per-act modules) | `gen_maps.py` | layouts, `map.json`s, `map_groups.json`, encounters, `strata_maps.h`, `strata_map_eras.h`, heal locations, `event_scripts.s` includes |
 
 Order: `gen_species.py`, `gen_tilesets.py`, `gen_maps.py`. Then `python3 tools/strata/mapcheck.py`
-(every trigger, sign, forage spot and edge reachable on foot) and `balance.py` (per-act stat report).
+(every trigger, sign, forage spot and edge reachable on foot) and `balance.py` (per-act stat report,
+the EXP model of a normal player's level, and with `--playtest <out>` the headless starter runs).
 After a merge, rerun all three; a clean tree afterwards means generated files are consistent.
 
 ## Build and test
@@ -47,6 +48,18 @@ After a merge, rerun all three; a clean tree afterwards means generated files ar
 - Battle tests use their own `gTrainers` (`test/battle/trainer_control.party`), so the real Strata trainers are
   read by including the generated `../src/data/trainers_strata.h` into a local array (`test/strata_review.c`).
   `EXPECT_*` can't take a bit-field (`Trainer.partySize`, `.battleType`): copy it to a `u32` first.
+- Level numbers are pinned in tests: `test/strata_review.c` (every peer-review trainer's level
+  range and some prizes), `test/strata_forecast.c` (the Ashfall floor 38, the impact-winter refill
+  10), and `peer_review_smoke` (Arlo's prize). Change them together with
+  `src/data/trainers_strata.party` / `sEraLevelFloor`, then rerun `balance.py` and the starter runs
+  (strata-autotest). Boss and set-piece levels live in the hand-written
+  `data/maps/<Map>/scripts.inc` (`setwildbattle`), not in the map modules.
+- Lineage resilience (F7) raises IVs in `Lineage_AdvanceToEra` and recalculates party stats; a
+  test that checks stats after a load must compare against a fresh `CalculateMonStats`, not the
+  pre-load IVs (`test/lineage_resilience.c`).
+- `assertf` shows the crash screen ("PRESS START TO CONTINUE") in the normal and playtest
+  builds and is a no-op only in `make release`. An assert seen in the playtest ROM is one a
+  player of `pokeemerald.gba` sees too.
 - Never run a generator while `make`/`make check` is running in the same worktree: it rewrites
   headers mid-build (even with identical content the timestamps change) and can poison the run.
 
