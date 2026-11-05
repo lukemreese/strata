@@ -48,7 +48,8 @@ struct ExpectedTrainer
 // Levels from the Q2 balance pass (tools/strata/balance.py, the headless starter runs): the last
 // animal at about the level a normal player has after the act's boss (the EXP model: 15, 20, 23,
 // 27, 31, 35, 41, 46), the others a level or two below. Theo's Lv 4 bird is the one the mammal
-// starter faces. Halvorsen's final review is meant to be hard at Lv 52 and won at Lv 55.
+// starter faces. Halvorsen's final review (44-50) gates the ending: fair for a TEAM at about Lv 48,
+// usually won at Lv 52 (7 of 9 harness runs, no items or switching).
 static const struct ExpectedTrainer sExpected[] =
 {
     { TRAINER_STRATA_THEO_ACT0_BIRD,   ERA_HELL_CREEK,     4,  4,  1, 1, FALSE, TRAINER_CLASS_RIVAL, 10 },
@@ -65,7 +66,7 @@ static const struct ExpectedTrainer sExpected[] =
     { TRAINER_STRATA_REVIEW_ACT6,      ERA_WHITE_RIVER,   33, 35,  2, 4, FALSE, TRAINER_CLASS_PKMN_TRAINER_1, 12 },
     { TRAINER_STRATA_REVIEW_ACT7,      ERA_ASHFALL,       41, 42,  2, 4, FALSE, TRAINER_CLASS_PKMN_TRAINER_1, 12 },
     { TRAINER_STRATA_REVIEW_ACT8,      ERA_TRAP_CAVE,     43, 46,  2, 4, FALSE, TRAINER_CLASS_PKMN_TRAINER_1, 12 },
-    { TRAINER_STRATA_HALVORSEN,        ERA_EPILOGUE,      46, 52,  6, 6, FALSE, TRAINER_CLASS_PKMN_TRAINER_2, 14 },
+    { TRAINER_STRATA_HALVORSEN,        ERA_EPILOGUE,      44, 50,  6, 6, FALSE, TRAINER_CLASS_PKMN_TRAINER_2, 14 },
 };
 
 TEST("Peer-review trainers carry only Strata species that exist by their act, at levels in range")
@@ -141,7 +142,7 @@ TEST("Peer-review prizes grow with the acts and are worth a few camp-store purch
     EXPECT_EQ(Prize(TRAINER_STRATA_REVIEW_ACT1), 624);               // 4 x 13 x 12
     EXPECT_EQ(Prize(TRAINER_STRATA_REVIEW_ACT8), 2208);              // 4 x 46 x 12
     EXPECT_EQ(Prize(TRAINER_STRATA_THEO_ACT8), 3600);                // a double battle: 4 x 45 x 10 x 2
-    EXPECT_EQ(Prize(TRAINER_STRATA_HALVORSEN), 2912);                // 4 x 52 x 14
+    EXPECT_EQ(Prize(TRAINER_STRATA_HALVORSEN), 2800);                // 4 x 50 x 14
     for (act = 1; act <= STRATA_REVIEWER_COUNT; act++)
     {
         // At least two capsules in act 1, and every act pays more than the one before.

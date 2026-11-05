@@ -494,7 +494,7 @@ peer review comes after the boss, at the review level):
 | 6 | 32–39 | Hyaenodon 37 | Archaeotherium 39 | 33 / 35 / 35 | 32 | Oskar 35, Theo 35 |
 | 7 | 38–46 | Epicyon 44 | Teleoceras 46 + cow 42 | 39 / 41 / 41 | 38 | Hollis 42 |
 | 8 | 44–51 | Panthera pair 48/48 | Arctodus 52 | 45 / 46 / 46 | 44 | Asha 46, Theo 45 (double) |
-| E | 46–54 | Mustela 48 (a catch) | Halvorsen 46–52 (final review) | 47 / 48 / 48; review tested at 52 and 55 | 46 | Halvorsen 52 |
+| E | 46–54 | Mustela 48 (a catch) | Halvorsen 44–50 (final review) | 47 / 48 / 48; review tested at TEAM Lv 48 (1 of 9 won) and 52 (7 of 9) | 46 | Halvorsen 50 |
 
 The bosses sit 0–6 levels above the TEAM: from act 5 on, the floors bind (the player arrives at
 the floor and gains about three levels per act, because scaled EXP falls off once the TEAM

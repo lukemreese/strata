@@ -182,10 +182,12 @@ animations off; pass `encounters=True`, `collision=False`, `instant_text=False`,
 - Hub-map quick-starts: pass `("VAR_STRATA_SUBPLOT", "SUBPLOT_COUNT - 1")` so no interlude starts;
   Theo offers his earliest review not had, so set the earlier ones' flags as
   `"(TRAINER_FLAGS_START + TRAINER_STRATA_THEO_ACT3)"`; `VAR_STARTER_MON` picks his act 0 animal.
-- Known engine bugs (KO animations, B_ANIMATE_MON_AFTER_KO, launched twice per faint): a debug-build
-  assert screen "disabled species: 48" (`q2_assert_screen` presses START) and a soft-lock with
-  `battlerKOAnimsRunning` stuck (`q2_softlock` clears it). Both are counted in the `engine` column
-  of fights.csv, never hidden. A freeze at `CrashScreen` is the assert screen, not a hang.
+- Engine bug, fixed by config: the after-KO animation (B_ANIMATE_MON_AFTER_KO, launched twice per
+  faint) gave an assert screen "disabled species: 48" and a soft-lock with `battlerKOAnimsRunning`
+  stuck. It is now FALSE in `include/config/battle.h` (0 hits in 93 fights with
+  `STRATA_Q2_ANIM=1`). The workarounds (`q2_assert_screen`, `q2_softlock`) and the `engine` column
+  of fights.csv stay as a tripwire: any non-zero count is a new engine bug. A freeze at
+  `CrashScreen` is an assert screen, not a hang.
 - Several run.py processes can run at once with separate `--out` folders, but warm the
   constants cache (`pokeemerald-playtest.playtest_constants.json`) with one run first.
 - Menus by memory, not by guessing the cursor: the start menu is `sCurrentStartMenuActions`/
