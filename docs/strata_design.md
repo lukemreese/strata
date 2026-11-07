@@ -458,6 +458,11 @@ party and the PC boxes.
 - **Light** (`light=`): deep-time maps have a fixed day/night tint (day, dusk, dark,
   ash), which `UpdateTimeOfDay` uses instead of the wall clock; `none` is never tinted;
   present-day maps follow the real clock (`OW_ENABLE_DNS`).
+- **Age line** (`age=`, F5): the map-name popup shows the layer under the name ("Hell Creek,
+  66.04 Ma") in small type. Each era has a short default (`ERA_POPUP_AGE` in `gen_maps.py`;
+  the rig's longer layer names don't fit the 80 px plate); a map's own `age=` overrides it.
+  The present-day hub and epilogue have none, so their popups are unchanged.
+  `Strata_GetMapAge`; `test/strata_map.c` checks every line's width.
 
 - **Thresholds:** a branch only competes once its counter reaches its `minScore`
   (`DESCENT_MIN_SCORE` = 64 for every branch today). The highest eligible counter wins,

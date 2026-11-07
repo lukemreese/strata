@@ -246,13 +246,29 @@ def write_arrivals():
         f.write("\n".join(lines) + "\n")
 
 
+# The popup age line of each era: shorter than the rig's layer name (Strata_GetLayerName), which is
+# too wide for the 80 px popup plate. A map's own `age=` wins over these.
+ERA_POPUP_AGE = {
+    "ERA_HELL_CREEK": "Hell Creek, 66.04 Ma",
+    "ERA_IMPACT_WINTER": "Tullock Fm, +1 yr",
+    "ERA_CORRAL_BLUFFS": "Denver Fm, ~65.5 Ma",
+    "ERA_BIGHORN_PETM": "Willwood Fm, 56 Ma",
+    "ERA_GREEN_RIVER": "Green River, 50 Ma",
+    "ERA_WHITE_RIVER": "Brule Fm, 32 Ma",
+    "ERA_ASHFALL": "Ashfall, 11.9 Ma",
+    "ERA_TRAP_CAVE": "Trap Cave, 20 ka",
+}
+
+
 def write_map_info():
     """Every Strata map's era (ERA_COUNT: none), habitat and light, for src/strata_map.c."""
     lines = [GENERATED, "// struct StrataMapInfo: include/strata_map.h",
              "static const struct StrataMapInfo sStrataMapInfo[] =", "{"]
     for m in MAPS:
         era = m.get("era", "ERA_COUNT")
-        lines.append(f"    {{ {m['id']}, {era}, {HABITATS[m.get('habitat')]}, {LIGHTS[m.get('light', 'dns')]} }},")
+        text = m.get("age") or ERA_POPUP_AGE.get(era)
+        age = f'COMPOUND_STRING("{text}")' if text else "NULL"
+        lines.append(f"    {{ {m['id']}, {era}, {HABITATS[m.get('habitat')]}, {LIGHTS[m.get('light', 'dns')]}, {age} }},")
     lines.append("};")
     with open(path("src/data/strata_map_eras.h"), "w") as f:
         f.write("\n".join(lines) + "\n")

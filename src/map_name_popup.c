@@ -13,6 +13,7 @@
 #include "region_map.h"
 #include "rtc.h"
 #include "start_menu.h"
+#include "strata_map.h"
 #include "strings.h"
 #include "string_util.h"
 #include "task.h"
@@ -630,9 +631,21 @@ static void ShowMapNamePopUpWindow(void)
     }
     else
     {
-        u32 fontId = GetFontIdToFit(withoutPrefixPtr, FONT_NORMAL, -1, 80);
+        const u8 *age = Strata_GetMapAge();
+        u32 fontId = GetFontIdToFit(withoutPrefixPtr, age != NULL ? FONT_SMALL : FONT_NORMAL, -1, 80);
         x = GetStringCenterAlignXOffset(fontId, withoutPrefixPtr, 80);
-        AddTextPrinterParameterized(GetMapNamePopUpWindowId(), fontId, mapDisplayHeader, x, 3, TEXT_SKIP_DRAW, NULL);
+        AddTextPrinterParameterized(GetMapNamePopUpWindowId(), fontId, mapDisplayHeader, x, age != NULL ? 0 : 3, TEXT_SKIP_DRAW, NULL);
+        if (age != NULL)
+        {
+            // Deep-time maps: the layer's formation and age under the name (Strata_GetMapAge)
+            u8 ageLine[MAP_POPUP_PREFIX_BUFFER_LENGTH + 40];
+
+            memcpy(ageLine, mapDisplayHeader, MAP_POPUP_PREFIX_BUFFER_LENGTH);
+            StringCopy(&ageLine[MAP_POPUP_PREFIX_BUFFER_LENGTH], age);
+            fontId = GetFontIdToFit(&ageLine[MAP_POPUP_PREFIX_BUFFER_LENGTH], FONT_SMALL, 0, 76);
+            x = GetStringCenterAlignXOffset(fontId, &ageLine[MAP_POPUP_PREFIX_BUFFER_LENGTH], 80);
+            AddTextPrinterParameterized(GetMapNamePopUpWindowId(), fontId, ageLine, x, 10, TEXT_SKIP_DRAW, NULL);
+        }
         CopyWindowToVram(GetMapNamePopUpWindowId(), COPYWIN_FULL);
     }
 }
