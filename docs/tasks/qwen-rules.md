@@ -1,0 +1,6 @@
+- Strata is a science-grounded romhack built on pokeemerald-expansion (GBA, C): lineages of real fossil and living animals of the North American West, 66 Ma to today. Design docs: `docs/strata_design.md`, `docs/strata_outline.md`.
+- Never hand-edit generated files. Edit the source, then run its generator, in this order when several apply: `python3 tools/strata/gen_species.py` (roster -> species data), `python3 tools/strata/gen_tilesets.py`, `python3 tools/strata/gen_maps.py` (maps modules -> layouts, map.json, encounters). Then `python3 tools/strata/mapcheck.py` must pass.
+- Build with `make -j12`. The full check is `make check -j12`, which needs 0 FAILED. Stock KNOWN_FAILING and EXPECT_FAILING tests are expected.
+- Player-visible text never says "Pokémon". Use: animal, TEAM, Specimen Capsule (prose: capsule), FIELD STATION, CAMP STORE, CODEX, RESEARCHER, FIELD LOG. Prose is lower case.
+- Science: every number (mass, length, age in Ma), site, diet or name must come from the brief or a fetched source. Flag uncertainty instead of guessing. Never "improve" a fact the brief doesn't ask you to change.
+- Keep C style consistent with the surrounding code. Do not edit shared generator code (`tools/strata/maps/common.py`, `tools/strata/sprites/core/`) unless the brief names it.
