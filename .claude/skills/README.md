@@ -22,3 +22,7 @@ actionable.
 | `strata-autotest` | Scripted headless playtests (preferred): playtest ROM, scenarios, DSL, results |
 | `strata-playtest` | Manual mGBA GUI testing, debug menu, crash hunting |
 | `strata-parallel-agents` | Splitting work across subagents and merging it |
+
+**Local Qwen backlog:** small, test-verifiable tasks can be handed to the owner's local Qwen model, which runs
+unattended and opens draft PRs labelled `qwen` + `do-not-merge`. Write a grounded `docs/tasks/qwen-NN-*.md` brief
+(facts quoted with sources) per `docs/tasks/QWEN.md`. Never merge a draft or `do-not-merge` PR without reviewing it.
