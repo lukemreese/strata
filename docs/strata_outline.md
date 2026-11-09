@@ -845,7 +845,7 @@ Ordered by leverage ÷ risk. Tasks inside a milestone can run in parallel unless
 | F2 | Pressure chart (relabelled condition graph) from the party menu, with branch hints | M | R1 | SYS |
 | F3 | Descent scene via the evolution scene for party mons | M | none | SYS |
 | F4 | ✅ **Done.** Extinction list message (one message per loss with its reason) + Fossil Case key item + fossil flags (no extra save space), Hall plaques per player (§3.5); `test/strata_fossils.c`, harness `extinction_smoke` | M | none | SYS |
-| F5 | Map popup age/window line. Hook: add an `age=` string key per map and a `const u8 *age` field to `struct StrataMapInfo` (`include/strata_map.h`, written by `write_map_info` in `gen_maps.py`), then print it in `map_name_popup.c` | S | R4 | SYS |
+| F5 | ✅ **Done.** Map popup age line: `age=` per map (optional; default `ERA_POPUP_AGE` per era in `gen_maps.py`), `const u8 *age` in `struct StrataMapInfo`, `Strata_GetMapAge`, drawn in small type under the name in `map_name_popup.c` (no age on the present-day hub/epilogue); width test in `test/strata_map.c` | S | R4 | SYS |
 | F6 | ✅ **Done** with R4. `light=` overrides the clock in `UpdateTimeOfDay`; `none` turns tinting off (`MapHasNaturalLight`) | S | R4 | SYS |
 | F7 | ✅ **Done (in Q2).** Lineage resilience (IV raise per era survived): §3.2 part 3 | S | none | SYS |
 | F8 | ✅ **Done.** Lineage table additions/changes from §2.11 (data only; needs the new species), new extinctions, H4; tests | S | C1 | SYS |

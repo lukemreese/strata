@@ -1,4 +1,5 @@
 #include "global.h"
+#include "strata_acts.h"
 #include "strata_map.h"
 #include "constants/map_groups.h"
 #include "constants/rtc.h"
@@ -41,6 +42,15 @@ enum StrataLight Strata_GetMapLight(void)
 {
     const struct StrataMapInfo *info = GetCurrentMapInfo();
     return info != NULL ? info->light : STRATA_LIGHT_DNS;
+}
+
+const u8 *Strata_GetMapAge(void)
+{
+    const struct StrataMapInfo *info = GetCurrentMapInfo();
+
+    if (info == NULL || info->era == ERA_COUNT || info->era == ERA_PRESENT_DIG || info->era == ERA_EPILOGUE)
+        return NULL;
+    return info->age != NULL ? info->age : Strata_GetLayerName(info->era);
 }
 
 // A fixed light is a fixed clock time for the day/night tint (UpdateTimeOfDay in

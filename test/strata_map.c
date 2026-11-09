@@ -4,7 +4,9 @@
 #include "fieldmap.h"
 #include "overworld.h"
 #include "selection.h"
+#include "strata_acts.h"
 #include "strata_map.h"
+#include "text.h"
 #include "test/test.h"
 #include "constants/map_groups.h"
 #include "constants/map_types.h"
@@ -188,4 +190,26 @@ TEST("Maps with light=none are never tinted")
     EXPECT(!MapHasNaturalLight(MAP_TYPE_ROUTE));
     SetMap(MAP_STRATA_LEVEE);
     EXPECT_EQ(MapHasNaturalLight(MAP_TYPE_ROUTE), OW_ENABLE_DNS);
+}
+
+// F5: the popup's age line (`age=`, else the era's layer name) must fit the 80 px plate.
+TEST("Every deep-time map's popup age line fits the plate")
+{
+    u32 i;
+    const struct StrataMapInfo *info = NULL;
+    const u8 *age;
+    for (i = 0; i < ARRAY_COUNT(sStrataMapInfo); i++)
+        PARAMETRIZE { info = &sStrataMapInfo[i]; }
+
+    SetMap(info->map);
+    age = Strata_GetMapAge();
+    if (info->era == ERA_COUNT || info->era == ERA_PRESENT_DIG || info->era == ERA_EPILOGUE)
+    {
+        EXPECT(age == NULL);
+    }
+    else
+    {
+        ASSUME(age != NULL);
+        EXPECT_LE(GetStringWidth(GetFontIdToFit(age, FONT_SMALL, 0, 76), age, 0), 76);
+    }
 }
