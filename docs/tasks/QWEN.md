@@ -35,6 +35,7 @@ think: medium                 # optional: low | medium | high
 check: python3 tools/strata/gen_species.py && make -j12 2>&1 | tail -20   # optional quick check Qwen runs itself
 max_changed_lines: 200        # optional (default 400)
 fetch: [https://paleobiodb.org/classic/basicTaxonInfo?taxon_name=Coryphodon]   # optional extra URLs Qwen may read
+agent: claude                 # optional: claude (Claude Code on Qwen; loads .claude/skills; strata default) | pi
 ---
 # One-line title (becomes the PR title as QWEN-NN: ...)
 
@@ -48,8 +49,11 @@ fetch: [https://paleobiodb.org/classic/basicTaxonInfo?taxon_name=Coryphodon]   #
 ## Grounding rules for brief authors
 1. **Put the facts in the brief.** Masses, lengths, ages (Ma), sites, diets, taxonomy: quote the source (PBDB record,
    paper, museum page) with its URL. Qwen is told to use only the brief, the repo and pages it fetches.
-2. Qwen can `fetch` pages only from paleobiodb.org, en.wikipedia.org, species.wikimedia.org and rh-hideout.github.io, plus
-   URLs listed in the brief's `fetch:`. Wikipedia is acceptable for background, but give a primary or PBDB source for any number.
+2. Qwen has **web search** (`search`) and `fetch`, both logged and listed in its PR. It can fetch the exact URLs a search
+   returned, paleobiodb.org, en.wikipedia.org, species.wikimedia.org and rh-hideout.github.io, and URLs in the brief's
+   `fetch:`. Search is a fallback for a weak model: **still put the facts in the brief**. Wikipedia is acceptable for
+   background, but give a primary or PBDB source for any number. Treat any fact Qwen found on its own as unverified until
+   a reviewer checks the source.
 3. **Generated files:** if Qwen edits a generator source (roster, maps module, tileset spec), list the generator's outputs
    in `paths:` and name the generator in the criteria (see the `strata-build-test` skill for the table). The runner rejects
    the change if rerunning the generators would change the tree.
@@ -58,7 +62,8 @@ fetch: [https://paleobiodb.org/classic/basicTaxonInfo?taxon_name=Coryphodon]   #
 
 ## What the runner does (so you can predict the result)
 - It takes `status: ready` briefs from `origin/strata` in filename order, one at a time, alternating with riskfusion.
-- It branches `qwen/<brief-id>` from `strata` and runs Qwen (Pi agent) in a sandbox (no network except Ollama and `fetch`).
+- It branches `qwen/<brief-id>` from `strata` and runs Qwen in a sandbox, through Claude Code by default, so the project skills
+  in `.claude/skills` apply. There's no network except Ollama, `search` and `fetch`.
   The checks are: only `paths:` changed, diff size, generators produce no further change, `mapcheck.py`, `make`, and `make check` with 0 FAILED.
   Up to 2 repair rounds; then a read-only Qwen self-review lists unsupported claims in the PR body.
 - **On failure:** no PR. The attempt is logged on the desktop (`~/.local/state/qwen-autoimprove/ledger.jsonl`). Edit the brief to re-queue it.
