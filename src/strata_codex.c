@@ -510,6 +510,8 @@ u32 Codex_FormatLineageDetail(const struct CodexLineageRow *rows, u32 count, u32
             children++;
         }
         StringCopy(end, COMPOUND_STRING("."));
+        // Outline 5 M7, M8, L5: a descent in the model is a grade, not a proven ancestor.
+        StringCopy(lines[n++], COMPOUND_STRING("Model grade, not proven ancestry."));
         break;
     }
     case CODEX_FATE_LOST:

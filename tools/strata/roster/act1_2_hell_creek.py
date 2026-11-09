@@ -66,7 +66,7 @@ SPECIES = [
         borrow="rampardos",
         moves=[(1, "TACKLE"), (1, "LEER"), (5, "HEADBUTT"), (11, "FOCUS_ENERGY"), (18, "ZEN_HEADBUTT"),
                (25, "TAKE_DOWN"), (33, "IRON_HEAD"), (42, "HEAD_SMASH")],
-        dex="Its skull was capped by a dome of solid bone up to 25 cm thick. Healed injuries suggest it butted heads or flanks with rivals.",
+        dex="Its skull was capped by a dome of solid bone about 22 cm thick. Healed injuries suggest it butted heads or flanks with rivals.",
     ),
     dict(
         name="Thescelosaur", genus="Thescelosaurus neglectus", site="Hell Creek Fm, MT", age="66.1 Ma",
@@ -115,7 +115,7 @@ SPECIES = [
         borrow="linoone",
         moves=[(1, "SCRATCH"), (1, "BITE"), (6, "SAND_ATTACK"), (12, "FURY_SWIPES"), (18, "CRUNCH"),
                (25, "AQUA_JET"), (32, "JAW_LOCK")],
-        dex="An otter-like relative of marsupials with a bite stronger, for its size, than any living mammal's. It cracked snails and small turtles.",
+        dex="An opossum-sized relative of marsupials with a very strong bite for its size. It likely cracked snails and small vertebrates.",
     ),
     dict(
         name="Mesodma", genus="Mesodma", site="Hell Creek Fm, MT", age="66.1 Ma",
@@ -127,7 +127,7 @@ SPECIES = [
         borrow="rattata",
         moves=[(1, "TACKLE"), (1, "TAIL_WHIP"), (4, "QUICK_ATTACK"), (7, "BULLET_SEED"), (10, "BITE"),
                (13, "DIG"), (16, "HYPER_FANG"), (20, "SUPER_FANG")],
-        dex="A tiny, rodent-like multituberculate that gnawed seeds and fruit. Its family survived the impact and ruled the Paleocene.",
+        dex="A tiny, rodent-like multituberculate that gnawed seeds and fruit. Its family survived the impact and thrived in the Paleocene.",
     ),
     dict(
         name="Champsosaur", genus="Champsosaurus", site="Hell Creek Fm, MT", age="66.1 Ma",

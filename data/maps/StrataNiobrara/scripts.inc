@@ -28,11 +28,13 @@ StrataNiobrara_Text_NoteTurtles:
 	.string "FIELD NOTE: Snapping turtles\p"
 	.string "MACROCHELYS, the alligator snapping\n"
 	.string "turtle, is known from the Miocene\l"
-	.string "of Nebraska. The species and the\l"
-	.string "exact site are uncertain.\p"
+	.string "of Nebraska: M. schmidti, about 18\l"
+	.string "to 16 million years old.\p"
+	.string "No snapping turtle is known from\n"
+	.string "the Ashfall bed, so the rig uses\l"
+	.string "this older animal as a stand-in.\p"
 	.string "Today it lives only in the\n"
-	.string "southeastern US. The lineage\l"
-	.string "survived, but not here.$"
+	.string "southeastern US.$"
 
 StrataNiobrara_Text_NoteRhinos:
 	.string "FIELD NOTE: Two kinds of rhino\p"

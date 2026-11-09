@@ -44,10 +44,9 @@ StrataSavanna_Text_NoteBrowsers:
 	.string "leaf-eater's teeth, in a horse. It\l"
 	.string "lived in woodland while other\l"
 	.string "horses took to the grass.\p"
-	.string "It is known from the Miocene of the\n"
-	.string "Great Plains, but not from the\l"
-	.string "Ashfall bed itself. The rig lets it\l"
-	.string "stand here for contrast.$"
+	.string "It is listed in the Ashfall ash\n"
+	.string "bed, where it was nearly extinct\l"
+	.string "already.$"
 
 StrataSavanna_Text_NoteDogs:
 	.string "FIELD NOTE: Bone-crushing dogs\p"

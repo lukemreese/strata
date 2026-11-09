@@ -204,7 +204,7 @@ CRIES = {
                      [("grunt", dict(n=4, k=0.7, gap=0.08)), ("snort", dict(dur=0.2))]),
     "bison":        ("living: bison bull bellow",
                      [("bellow", dict(k=0.7, dur=1.1, rough=0.55))]),
-    "ovibos":       ("living: musk ox snort and roar",
+    "bootherium":   ("relative: living musk oxen (snort and roar)",
                      [("snort", dict(dur=0.25)), ("bellow", dict(k=0.9, dur=0.7))]),
 
     # ---- rhinos

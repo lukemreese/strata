@@ -71,8 +71,8 @@ StrataRedBeds_EventScript_LandBridgeNote::
 StrataRedBeds_Text_CoryphodonAppears:
 	.string "The heat is fierce. A huge shape\n"
 	.string "heaves itself out of the shallows.\p"
-	.string "A CORYPHODON, the largest animal\n"
-	.string "in this hothouse world!$"
+	.string "A CORYPHODON, one of the biggest\n"
+	.string "animals in this hothouse world!$"
 
 StrataRedBeds_Text_CalfAppears:
 	.string "A calf splashes out of the reeds\n"

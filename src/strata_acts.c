@@ -80,15 +80,12 @@ static const u8 *const sMentorLines[STORY_IN_ACT(ERA_EPILOGUE) + 1] =
         "thousand years on, at CORRAL BLUFFS\l"
         "in Colorado. The rig is ready."),
     [STORY_IN_ACT(ERA_CORRAL_BLUFFS)] = COMPOUND_STRING(
-        "Within a few hundred thousand years\n"
-        "the biggest mammals were several\l"
-        "times heavier than any that lived\l"
-        "beside the dinosaurs.\p"
+        "In the first 300,000 years after\n"
+        "the impact, the biggest mammals\l"
+        "tripled in mass.\p"
         "Palms first, then legumes, then\n"
         "bigger plant eaters, then the\l"
-        "predators. The order is solid. The\l"
-        "exact numbers are still being\l"
-        "refined."),
+        "predators. The order is solid."),
     [STORY_ACT_DONE(ERA_CORRAL_BLUFFS)] = COMPOUND_STRING(
         "Next: the Bighorn Basin, Wyoming,\n"
         "56 million years ago.\p"

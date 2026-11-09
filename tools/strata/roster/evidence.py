@@ -33,7 +33,7 @@ EVIDENCE = {
     "CIMOLESTES": dict(
         record="teeth and jaws",
         bones="Teeth and jaw pieces from Hell Creek and other latest Cretaceous beds.",
-        inferred="body, burrowing, fur, mass",
+        inferred="body, habits, fur, mass",
         standin="a grade, not an ancestor",
     ),
     "ASTERIORNIS": dict(
@@ -91,18 +91,20 @@ EVIDENCE = {
     ),
     "DIDELPHODON": dict(
         record="skulls, jaws, teeth",
-        bones="Many teeth and jaws, and skulls and skeletal parts described in 2016.",
+        bones="Many teeth and jaws; a near-complete skull was described in 2016.",
         inferred="habits, fur, bite force",
     ),
     "MESODMA": dict(
         record="teeth and jaws",
         bones="Teeth and jaws, common in sieved Hell Creek sediment.",
         inferred="body, fur, mass, habits",
+        standin="Mesodma-grade after 57 Ma",
     ),
     "CHAMPSOSAUR": dict(
         record="well known",
         bones="Many bones at Hell Creek; whole skeletons come from other beds.",
         inferred="colour, behaviour",
+        standin="past its range in the PETM",
     ),
     "BOREALOSUCH": dict(
         record="skulls, partial skeletons",
@@ -128,9 +130,9 @@ EVIDENCE = {
     ),
     "PROTOCHELYD": dict(
         record="shells and bones",
-        bones="Shells and other bones from Paleocene beds of North Dakota.",
+        bones="Shells, skulls and other bones from Paleocene beds of North Dakota.",
         inferred="colour, why the dome",
-        standin="a stem snapper grade",
+        standin="a grade, kept past its age",
     ),
     "PURGATORIUS": dict(
         record="teeth, jaws, ankles",
@@ -155,7 +157,7 @@ EVIDENCE = {
     "EOCONODON": dict(
         record="skulls and jaws",
         bones="Skulls and jaws from the Denver and San Juan basins.",
-        inferred="body, size, hunting",
+        inferred="body, hunting",
     ),
     # ---- Bighorn Basin (PETM) ----
     "GASTORNIS": dict(
@@ -295,6 +297,7 @@ EVIDENCE = {
         record="well known",
         bones="Many skulls and skeletons from the Chadron and Brule beds.",
         inferred="colour, skin",
+        standin="a grade, not an ancestor",
     ),
     "POEBROTHERE": dict(
         record="skulls, skeletons",
@@ -346,18 +349,20 @@ EVIDENCE = {
     ),
     "CHELYDRA": dict(
         record="living species",
-        bones="A living species, studied alive; its genus has a long fossil record.",
+        bones="Living. The genus is known from the Miocene; the species is younger.",
         inferred="how old the species is",
     ),
     "PROTOHIPPUS": dict(
         record="complete skeletons",
         bones="Complete skeletons buried in the Ashfall ash bed.",
         inferred="coat, colour",
+        standin="a grade, near the Equus line",
     ),
     "TELEOCERAS": dict(
         record="100+ skeletons",
         bones="Over 100 skeletons at Ashfall, some females with unborn young.",
         inferred="skin, hair, colour",
+        standin="immigrant, not a descendant",
     ),
     "PROCAMELUS": dict(
         record="skeletons",
@@ -370,13 +375,13 @@ EVIDENCE = {
         inferred="crown, colour, calls",
     ),
     "ANCHIGYPS": dict(
-        record="partial skeleton",
-        bones="Known from a partial skeleton found in the Ashfall beds.",
+        record="fragments",
+        bones="Fragmentary wing and leg bones and part of a beak, from Nebraska.",
         inferred="habits, colour, size",
     ),
     "HYPOHIPPUS": dict(
         record="skulls, skeletons",
-        bones="Skulls and partial skeletons from Miocene Great Plains beds.",
+        bones="Skulls and skeletons from the Plains; listed in the Ashfall ash bed.",
         inferred="coat, woodland life",
         standin="a branch via Miohippus kin",
     ),
@@ -399,9 +404,9 @@ EVIDENCE = {
     ),
     "MACROCHELYS": dict(
         record="partial fossils",
-        bones="Fossil shells and bones from the Miocene of Nebraska.",
-        inferred="size, lure, colour",
-        note="Mass is the living species'.",
+        bones="A skull from the Marsland Fm of Nebraska, and other Plains fossils.",
+        inferred="mass (living kind's), lure",
+        standin="an older fossil, not Ashfall",
         today="It lives on only in the warm\nSoutheast US, far from Montana.",
     ),
     # ---- Natural Trap Cave (Ice Age) ----
@@ -409,7 +414,7 @@ EVIDENCE = {
         record="very well known",
         bones="Thousands of bones from La Brea, and ancient DNA (2021).",
         inferred="coat, pack life",
-        note="Unverified at Natural Trap Cave",
+        note="Thin record at the cave; debated",
     ),
     "CANIS": dict(
         record="living species",
@@ -420,6 +425,7 @@ EVIDENCE = {
         record="living species",
         bones="A living bird; Ice Age turkey bones come from caves and tar pits.",
         inferred="little, it lives today",
+        note="Unconfirmed at Natural Trap Cave",
     ),
     "EQUUS": dict(
         record="many bones",
@@ -439,26 +445,24 @@ EVIDENCE = {
     ),
     "PANTHERA": dict(
         record="very well known",
-        bones="Many individuals at La Brea; also reported from the cave.",
+        bones="Many individuals at La Brea; also at Natural Trap Cave.",
         inferred="mane, coat, social life",
     ),
     "MAMMUTHUS": dict(
         record="well known",
         bones="Many skeletons across the West; Wyoming has the Colby site.",
         inferred="hair, colour",
-        note="Unverified: the species at the cave",
+        note="At the cave: genus only",
     ),
     "CAMELOPS": dict(
         record="skulls, skeletons",
         bones="Skulls, skeletons and teeth from across the Ice Age West.",
         inferred="hump, coat, colour",
     ),
-    "OVIBOS": dict(
-        record="living species",
-        bones="A living species; Ice Age musk oxen ranged far south of today.",
-        inferred="little, it lives today",
-        note="Unverified: the species at the cave",
-        today="It lives on in the Arctic,\nfar north of its Ice Age range.",
+    "BOOTHERIUM": dict(
+        record="skulls and partial bones",
+        bones="Listed at Natural Trap Cave, and widely across Ice Age North America.",
+        inferred="coat, colour, habits",
     ),
     "OVIS": dict(
         record="living species",
@@ -485,6 +489,7 @@ EVIDENCE = {
         record="living species",
         bones="A living bird, watched on its spring display grounds.",
         inferred="little, it lives today",
+        standin="the grouse branch",
     ),
     # ---- Today ----
     "BISON": dict(

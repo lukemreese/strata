@@ -137,14 +137,14 @@ StrataSteppe_Text_NotePronghorn:
 
 StrataSteppe_Text_NoteWolf:
 	.string "FIELD NOTE: Which wolf?\p"
-	.string "Wolf bones from the cave are\n"
-	.string "usually reported as gray wolves,\l"
-	.string "not dire wolves.\p"
-	.string "The dire wolf, AENOCYON, is known\n"
-	.string "mostly from farther south, so no\l"
-	.string "AENOCYON is wild here. If your dog\l"
+	.string "Most wolf bones measured from the\n"
+	.string "cave are gray wolves, of a Beringian\l"
+	.string "type.\p"
+	.string "Species lists also report the dire\n"
+	.string "wolf, AENOCYON. The record is thin,\l"
+	.string "so none is wild here. If your dog\l"
 	.string "lineage turned meat-hungry, the rig\l"
-	.string "builds one as a stand-in.$"
+	.string "builds one from that thin record.$"
 
 StrataSteppe_Text_NoteSinkhole:
 	.string "FIELD NOTE: Natural Trap Cave\p"

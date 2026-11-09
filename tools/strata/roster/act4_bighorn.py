@@ -68,6 +68,6 @@ SPECIES = [
         borrow="hippowdon",
         moves=[(1, "TACKLE"), (1, "STOMP"), (24, "MUD_SHOT"), (28, "BITE"), (32, "TAKE_DOWN"),
                (36, "CRUNCH"), (42, "BODY_SLAM"), (48, "EARTHQUAKE")],
-        dex="A hippo-like giant with tusks and a tiny brain. It wallowed in the warm swamps and was the largest animal of its world.",
+        dex="A hippo-like giant with tusks and a tiny brain. It probably wallowed in warm swamps and was among the largest animals of its world.",
     ),
 ]

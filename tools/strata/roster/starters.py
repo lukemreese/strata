@@ -19,7 +19,7 @@ SPECIES = [
         borrow="sentret",
         moves=[(1, "SCRATCH"), (1, "TAIL_WHIP"), (4, "QUICK_ATTACK"), (8, "SAND_ATTACK"),
                (12, "BITE"), (16, "DIG"), (20, "FURY_SWIPES"), (25, "CRUNCH")],
-        dex="A small burrowing mammal that lived among the dinosaurs. Its true descendants are unknown, so it stands in for the ancestors of carnivorans.",
+        dex="A small insect-eating mammal that lived among the dinosaurs. Its true descendants are unknown, so it stands in for the ancestors of carnivorans.",
         notes="Stand-in: not a proven ancestor of Carnivora.",
     ),
     dict(
@@ -60,7 +60,7 @@ SPECIES = [
         borrow="poochyena",
         moves=[(1, "TACKLE"), (1, "HOWL"), (7, "BITE"), (11, "QUICK_ATTACK"), (16, "PURSUIT"),
                (21, "ASSURANCE"), (26, "SUCKER_PUNCH"), (32, "CRUNCH")],
-        dex="The earliest true member of the dog family. It looked more like a long-bodied civet than a dog, and hunted small prey.",
+        dex="One of the earliest members of the dog family. It looked more like a long-bodied civet than a dog, and hunted small prey.",
     ),
     dict(
         name="Epicyon", genus="Epicyon", site="Ogallala Gp, NE", age="~12-6 Ma",
@@ -86,7 +86,7 @@ SPECIES = [
         borrow="nickit",
         moves=[(1, "TACKLE"), (1, "HOWL"), (1, "BITE"), (20, "QUICK_ATTACK"), (26, "ASSURANCE"),
                (32, "SUCKER_PUNCH"), (38, "CRUNCH"), (44, "THROAT_CHOP")],
-        dex="A small, fox-like generalist that ate whatever it could find. It is the ancestor of every living dog, wolf and fox.",
+        dex="A small, fox-like generalist that ate whatever it could find. It sits near the root of every living dog, wolf and fox.",
     ),
     dict(
         name="Aenocyon", genus="Aenocyon dirus", site="Natural Trap Cave, WY", age="~20 ka",
@@ -99,9 +99,10 @@ SPECIES = [
         borrow="mightyena",
         moves=[(1, "BITE"), (1, "HOWL"), (1, "PURSUIT"), (34, "CRUNCH"), (40, "JAW_LOCK"),
                (46, "THROAT_CHOP"), (52, "CLOSE_COMBAT")],
-        dex="A heavy wolf that hunted horses and bison. When the Ice Age megafauna vanished, the dire wolf vanished with them.",
+        dex="A heavy wolf that likely hunted horses and bison. When the Ice Age megafauna vanished, the dire wolf vanished with them.",
         notes="A separate lineage from the gray wolf, as shown by ancient DNA. "
-              "Unverified at Natural Trap Cave, whose wolves are reported as gray wolves; check the site (outline §5 H5).",
+              "Listed at Natural Trap Cave (PBDB; Meachen et al. 2023), but the wolves measured there are "
+              "Beringian-type gray wolves (Meachen et al. 2016); hedged, not wild there (outline §5 H5).",
     ),
     dict(
         name="Canis", genus="Canis latrans", site="Living; WY", age="today",
@@ -172,11 +173,11 @@ SPECIES = [
         borrow="pidove",
         moves=[(1, "PECK"), (1, "SAND_ATTACK"), (1, "QUICK_ATTACK"), (30, "WING_ATTACK"), (34, "FEATHER_DANCE"),
                (40, "AERIAL_ACE"), (46, "BRAVE_BIRD")],
-        dex="The oldest known relative of chickens and turkeys. A small ground bird of the Eocene forests around the Green River lakes.",
+        dex="One of the oldest known relatives of chickens. A small ground bird of the Eocene forests around the Green River lakes.",
         notes="Mass estimated. Stands in for the gap in the galliform record until Meleagris.",
     ),
     dict(
-        name="Meleagris", genus="Meleagris gallopavo", site="Natural Trap Cave, WY", age="~20 ka",
+        name="Meleagris", genus="Meleagris gallopavo", site="Living; WY", age="today",
         first_era="TRAP_CAVE", diet="OMNIVORE",
         focal=True,
         mass=8.0, length=1.1,
@@ -203,7 +204,7 @@ SPECIES = [
         borrow="squirtle",
         moves=[(1, "TACKLE"), (1, "WITHDRAW"), (5, "WATER_GUN"), (9, "BITE"), (14, "ROCK_TOMB"),
                (19, "AQUA_JET"), (24, "HEADBUTT"), (30, "CRUNCH")],
-        dex="The earliest known snapping turtle. It lurked in the rivers of Hell Creek, and its kind still lives in Montana today.",
+        dex="Perhaps the earliest known snapping turtle. It lurked in the rivers of Hell Creek, and snappers still live in Montana today.",
         notes="Debated: some studies place it nearer mud and musk turtles.",
     ),
     dict(
@@ -221,7 +222,7 @@ SPECIES = [
     ),
     dict(
         name="Chelydra", genus="Chelydra serpentina", site="Living; MT", age="today",
-        first_era="ASHFALL", diet="OMNIVORE",
+        first_era="TRAP_CAVE", diet="OMNIVORE",  # C. serpentina: no record as old as Ashfall (genus from the Miocene, PBDB)
         focal=True,
         mass=10.0, length=0.5,
         weights=dict(hp=5, atk=6, defn=7, spa=3, spd=6, spe=2),
@@ -230,6 +231,6 @@ SPECIES = [
         borrow="drednaw",
         moves=[(1, "BITE"), (1, "WITHDRAW"), (1, "AQUA_JET"), (40, "CRUNCH"), (46, "JAW_LOCK"),
                (52, "LIQUIDATION"), (58, "HEAD_SMASH")],
-        dex="The common snapping turtle. Its body plan has barely changed in 66 million years: if something works, selection keeps it.",
+        dex="The common snapping turtle. Its line keeps a very old body plan: if something works, selection keeps it.",
     ),
 ]

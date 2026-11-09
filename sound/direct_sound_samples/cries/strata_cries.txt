@@ -65,7 +65,7 @@ miracinonyx adbd763c0f7cf8484e9160947147377c8f563ccc carnivoran 0.511
 panthera cd9206215fa2ba054dd75928783472e2ab076de5 carnivoran 1.458
 mammuthus 5f59455d7ef12d8b7dde9735b3b6d05c1350c8f7 proboscidean 1.427
 camelops 7d0a35aa5c29fff6f1c91cd733a9941abf19932c ungulate 1.135
-ovibos 11e9b40835de25eef19fab2cc0fc7e91fef7f00f hoofed_giant 1.166
+bootherium 8ab0fd2224051639837d540d89b69b0ae14cdb25 hoofed_giant 1.175
 ovis b9494e771fbba3a23a7930ed1a0ec630e233c119 ungulate 0.885
 antilocapra 70a5074b1ced8506b42a0105af8a5e0845fa6d16 ungulate 0.706
 bison 051f1e15b5401e2d87c7a0ac2a29b55789e54d15 hoofed_giant 1.382

@@ -218,17 +218,17 @@ StrataInterpretive2F_Text_StatueLast_Title:
 
 StrataInterpretive2F_Text_StatueLast_List:
 	.string "AENOCYON, ARCTODUS, MIRACINONYX,\n"
-	.string "PANTHERA, MAMMUTHUS and CAMELOPS:\l"
-	.string "the dire wolf, short-faced bear,\l"
-	.string "American cheetah, lion, mammoth\l"
-	.string "and camel.$"
+	.string "PANTHERA, MAMMUTHUS, CAMELOPS and\l"
+	.string "BOOTHERIUM: the dire wolf, short-\l"
+	.string "faced bear, American cheetah, lion,\l"
+	.string "mammoth, camel and helmeted musk\l"
+	.string "ox.$"
 
 StrataInterpretive2F_Text_StatueLast_Why:
-	.string "Horses and musk oxen vanished from\n"
-	.string "the lower 48 but live elsewhere,\l"
-	.string "and horses came back in the 1500s.\l"
-	.string "The cause was climate, people, or\l"
-	.string "both. It is still argued.$"
+	.string "Horses vanished from the lower 48\n"
+	.string "but lived on in Asia, and came back\l"
+	.string "in the 1500s. The cause was climate,\l"
+	.string "people, or both. It is still argued.$"
 
 StrataInterpretive2F_Text_StatueNow:
 	.string "THE CASE THAT IS NOT WRITTEN YET.\p"

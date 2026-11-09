@@ -198,7 +198,7 @@ the folders gained `overworld.png`.
 | `carnivoran` | Protictis, Miacis, Mustela, Hoplophoneus, Miracinonyx, Panthera, Arctodus, Oxyaena, Patriofelis, Hyaenodon, Eoconodon |
 | `equid` | Sifrhippus, Eohippus, Mesohippus, Protohippus, Hypohippus, Cormohipparion, Equus |
 | `ungulate` | Diacodexis, Leptomeryx, Cosoryx, Antilocapra, Poebrotherium, Procamelus, Camelops, Merycoidodon, Ovis |
-| `hoofed_giant` | Coryphodon, Uintatherium, Archaeotherium, Bison, Ovibos |
+| `hoofed_giant` | Coryphodon, Uintatherium, Archaeotherium, Bison, Bootherium |
 | `rhino_brontothere` | Hyrachyus, Subhyracodon, Teleoceras, Aphelops |
 | `proboscidean` | Mammuthus |
 | `bird_ground` | Asteriornis, Gallinuloides, Meleagris, Centrocercus, Gastornis |

@@ -117,10 +117,10 @@ MAPS = [
             obj("LOCALID_STRATA_STEPPE_LION_B", "OBJ_EVENT_GFX_SPECIES(PANTHERA)", _LIONS[1][0], _LIONS[1][1],
                 "StrataSteppe_EventScript_Lions", "MOVEMENT_TYPE_FACE_LEFT", flag="FLAG_UNUSED_0x29C"),
         ],
-        # Aenocyon is not wild here (H5: the dire wolf is not a secure record at the cave).
+        # Aenocyon is not wild here (H5: the dire wolf is listed at the cave, but the record is thin).
         encounters=dict(
             land_mons=mons(("EQUUS", 44, 46), ("OVIS", 44, 46), ("ANTILOCAPRA", 45, 47), ("CANIS", 45, 47),
-                           ("EQUUS", 46, 48), ("CAMELOPS", 46, 48), ("MELEAGRIS", 46, 48), ("OVIBOS", 47, 49),
+                           ("EQUUS", 46, 48), ("CAMELOPS", 46, 48), ("MELEAGRIS", 46, 48), ("BOOTHERIUM", 47, 49),
                            ("MIRACINONYX", 48, 50), ("OVIS", 48, 50), ("PANTHERA", 49, 51), ("MAMMUTHUS", 50, 51)),
             water_mons=mons(("CHELYDRA", 46, 50), ("CHELYDRA", 46, 50), ("CHELYDRA", 47, 50),
                             ("CHELYDRA", 48, 51), ("CHELYDRA", 49, 51)),
@@ -159,8 +159,8 @@ MAPS = [
         connections=[connection("left", "MAP_STRATA_STEPPE")],
         bgs=_MELT_NOTES[1],
         encounters=dict(
-            land_mons=mons(("EQUUS", 45, 47), ("OVIBOS", 45, 47), ("CAMELOPS", 46, 48), ("ANTILOCAPRA", 45, 47),
-                           ("CANIS", 46, 48), ("OVIBOS", 47, 49), ("MELEAGRIS", 46, 48), ("EQUUS", 47, 49),
+            land_mons=mons(("EQUUS", 45, 47), ("BOOTHERIUM", 45, 47), ("CAMELOPS", 46, 48), ("ANTILOCAPRA", 45, 47),
+                           ("CANIS", 46, 48), ("BOOTHERIUM", 47, 49), ("MELEAGRIS", 46, 48), ("EQUUS", 47, 49),
                            ("OVIS", 46, 48), ("PANTHERA", 48, 50), ("MIRACINONYX", 48, 50), ("MAMMUTHUS", 49, 51)),
             water_mons=mons(("CHELYDRA", 45, 49), ("CHELYDRA", 45, 49), ("CHELYDRA", 46, 50),
                             ("CHELYDRA", 47, 51), ("CHELYDRA", 48, 51)),
@@ -181,9 +181,9 @@ MAPS = [
         connections=[connection("down", "MAP_STRATA_STEPPE", -35)],
         bgs=_MARGIN_NOTES[1],
         encounters=dict(
-            land_mons=mons(("OVIBOS", 46, 48), ("OVIS", 46, 48), ("OVIBOS", 47, 49), ("CANIS", 47, 49),
+            land_mons=mons(("BOOTHERIUM", 46, 48), ("OVIS", 46, 48), ("BOOTHERIUM", 47, 49), ("CANIS", 47, 49),
                            ("OVIS", 47, 49), ("MAMMUTHUS", 48, 50), ("EQUUS", 47, 49), ("PANTHERA", 48, 50),
-                           ("CAMELOPS", 48, 50), ("MAMMUTHUS", 49, 51), ("PANTHERA", 49, 51), ("OVIBOS", 50, 51)),
+                           ("CAMELOPS", 48, 50), ("MAMMUTHUS", 49, 51), ("PANTHERA", 49, 51), ("BOOTHERIUM", 50, 51)),
         ),
     ),
     # Coda: the Colby mammoth site, ~13 ka, the Bighorn Basin. A thin late-glacial sub-layer of

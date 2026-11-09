@@ -44,10 +44,10 @@ static const struct StrataFossil sStrataFossils[] =
     { SPECIES_GASTORNIS,    SPECIES_GALLINULOID, COMPOUND_STRING("A giant ground bird of warm\lforests, gone by the mid-Eocene.") },
     { SPECIES_PRESBYORNIS,  SPECIES_GALLINULOID, COMPOUND_STRING("Its lake shores dried up. Its\lduck relatives carried on.") },
     // No choristodere or crocodylian survives in the roster: the turtle is the reptile stand-in.
-    { SPECIES_CHAMPSOSAUR,  SPECIES_PROTOCHELYD, COMPOUND_STRING("Champsosaurs needed warm rivers.\lThe last ones died out.") },
+    { SPECIES_CHAMPSOSAUR,  SPECIES_PROTOCHELYD, COMPOUND_STRING("Its genus is last known from the\llate Paleocene, about 56 Ma.") },
     { SPECIES_BOREALOSUCH,  SPECIES_PROTOCHELYD, COMPOUND_STRING("A croc of warm rivers. The\lcooling pushed crocs south.") },
     // No multituberculate survives: rodents, their ecological successors.
-    { SPECIES_MESODMA,      SPECIES_ISCHYROMYS,  COMPOUND_STRING("The last multituberculates lost\lout to rodents and the cold.") },
+    { SPECIES_MESODMA,      SPECIES_ISCHYROMYS,  COMPOUND_STRING("The last multituberculates faded\las rodents spread and it cooled.") },
     { SPECIES_HYOPSODUS,    SPECIES_MESOHIPPUS,  COMPOUND_STRING("A small archaic hoofed mammal.\lIts kind did not see the cold.") },
     { SPECIES_DIACODEXIS,   SPECIES_LEPTOMERYX,  COMPOUND_STRING("Its genus ended, but even-toed\lhoofed mammals thrived.") },
     // Pantodonts and uintatheres left no relatives: the big browsing rhino is the stand-in.
@@ -71,8 +71,8 @@ static const struct StrataFossil sStrataFossils[] =
     // Oreodonts are often placed near the camels.
     { SPECIES_MERYCOIDODON, SPECIES_PROCAMELUS,  COMPOUND_STRING("The genus ended; later oreodonts\llasted a while longer.") },
     { SPECIES_LEPTOMERYX,   SPECIES_COSORYX,     COMPOUND_STRING("A tiny forest ruminant, lost as\lthe forests gave way to grass.") },
-    // No tortoise in the roster: the snapping turtle.
-    { SPECIES_STYLEMYS,     SPECIES_CHELYDRA,    COMPOUND_STRING("Its tortoise genus ended. Other\ltortoises live on.") },
+    // No tortoise in the roster: the Miocene alligator snapper, the snapping turtle of this layer.
+    { SPECIES_STYLEMYS,     SPECIES_MACROCHELYS,    COMPOUND_STRING("Its tortoise genus ended. Other\ltortoises live on.") },
     { SPECIES_ISCHYROMYS,   SPECIES_DOUGLASSCIUR, COMPOUND_STRING("An archaic rodent, replaced by\lsquirrels and other modern ones.") },
 
     // ---- Pliocene losses (ERA_TRAP_CAVE) ----
@@ -97,6 +97,8 @@ static const struct StrataFossil sStrataFossils[] =
     { SPECIES_MAMMUTHUS,    SPECIES_BISON,       COMPOUND_STRING("Climate, people, or both: the\llast mammoths here were gone.") },
     // Camels and pronghorns are both artiodactyls of the open plains.
     { SPECIES_CAMELOPS,     SPECIES_ANTILOCAPRA, COMPOUND_STRING("Camels began here, but North\lAmerica's last ones died out.") },
+    // Bovids of the same steppe: bighorn is the closest living relative left in the roster. Appended (slots are saves).
+    { SPECIES_BOOTHERIUM,   SPECIES_OVIS,        COMPOUND_STRING("The helmeted musk ox died out\lat the end of the Ice Age.") },
 };
 
 // Per filter: the short age in the Fossil Case list, the sentence on a fossil, and the
@@ -111,7 +113,7 @@ static const struct StrataFossilEra sStrataFossilEras[ERA_COUNT] =
 {
     [ERA_IMPACT_WINTER] = { COMPOUND_STRING("66 Ma"), COMPOUND_STRING("Lost in the K-Pg impact winter,\l66 million years ago.") },
     [ERA_BIGHORN_PETM]  = { COMPOUND_STRING("56 Ma"), COMPOUND_STRING("Gone by the end of the Paleocene,\labout 56 million years ago.") },
-    [ERA_WHITE_RIVER]   = { COMPOUND_STRING("34 Ma"), COMPOUND_STRING("Gone in the Eocene cooling,\labout 34 million years ago.") },
+    [ERA_WHITE_RIVER]   = { COMPOUND_STRING("34 Ma"), COMPOUND_STRING("Gone by the end of the Eocene,\labout 34 million years ago.") },
     [ERA_ASHFALL]       = { COMPOUND_STRING("12 Ma"), COMPOUND_STRING("Gone by the grassland turnover,\labout 12 million years ago.") },
     [ERA_TRAP_CAVE]     = { COMPOUND_STRING("2 Ma"),  COMPOUND_STRING("Gone before the Ice Age, 5 to 2\lmillion years ago.") },
     [ERA_EPILOGUE]      = { COMPOUND_STRING("12 ka"), COMPOUND_STRING("Gone at the end of the Ice Age,\labout 12,000 years ago.") },

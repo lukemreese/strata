@@ -7,7 +7,7 @@ Species (taxonomy.py):
     uintatherium  Uintatherium anceps (Bridger Fm, WY, 2000 kg) Act 5 boss
     archaeothere  Archaeotherium (Brule Fm, SD, 270 kg)         Act 6 boss
     bison         Bison bison (Living; MT, 700 kg)
-    ovibos        Ovibos moschatus (Natural Trap Cave, WY, 300 kg)
+    bootherium    Bootherium bombifrons (Natural Trap Cave, WY, 420 kg)
 
 The engine follows the proportion-driven quadruped of plans/canid.py (and
 imports its Facet, Turned, Path, paint and colour-mark rules read-only) but is

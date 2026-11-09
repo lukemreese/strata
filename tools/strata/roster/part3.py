@@ -151,9 +151,9 @@ SPECIES = [
     # Act 7: Ashfall and the Miocene Great Plains
     # ------------------------------------------------------------------
     dict(
-        name="Hypohippus", genus="Hypohippus", site="Miocene Great Plains, NE", age="~17-11 Ma",
+        name="Hypohippus", genus="Hypohippus", site="Ashfall, NE", age="~11.9 Ma",
         first_era="ASHFALL",
-        mass=200.0, length=1.8, mass_est=True,
+        mass=450.0, length=1.8,  # published 403-600 kg
         weights=dict(hp=6, atk=5, defn=5, spa=4, spd=5, spe=6),
         types=("NORMAL", "GRASS"), abilities=("RUN_AWAY", "SAP_SIPPER"),
         category="Forest Horse", color="BROWN", growth="MEDIUM_SLOW", catch=60, gender=50,
@@ -161,8 +161,8 @@ SPECIES = [
         moves=[(1, "DOUBLE_KICK"), (1, "STOMP"), (40, "MAGICAL_LEAF"), (43, "LEAF_BLADE"), (46, "HIGH_HORSEPOWER"),
                (52, "WOOD_HAMMER")],
         dex="A big three-toed horse that kept browsing leaves in the woodlands while its grazing cousins took over the grassland.",
-        notes="Anchitheriine browser, regional (Great Plains, ~17-11 Ma); not recorded in the Ashfall bed "
-              "itself (outline §5 M9). Descends from Miohippus-grade horses, so a Mesohippus branch is a grade.",
+        notes="Anchitheriine browser, nearly extinct by Ashfall time. The UNSM Ashfall guide lists it in the ash bed; "
+              "PBDB's Ashfall list doesn't. Descends from Miohippus-grade horses, so a Mesohippus branch is a grade.",
     ),
     dict(
         name="Aphelops", genus="Aphelops", site="Ashfall, NE", age="~11.9 Ma",
@@ -188,7 +188,7 @@ SPECIES = [
         borrow="blitzle",
         moves=[(1, "DOUBLE_KICK"), (1, "QUICK_ATTACK"), (40, "MAGICAL_LEAF"), (43, "AGILITY"), (46, "BOUNCE"),
                (50, "HIGH_HORSEPOWER")],
-        dex="A three-toed grazing horse, the commonest horse in the Ashfall ash. Its relatives spread from North America to Asia and Africa.",
+        dex="A three-toed grazing horse, one of five horses in the Ashfall ash. Its relatives spread from North America to Asia and Africa.",
     ),
     dict(
         name="Cosoryx", genus="Cosoryx furcatus", site="Miocene Great Plains, NE", age="~13-11 Ma",
@@ -205,7 +205,7 @@ SPECIES = [
               "bed itself unverified (outline §5 M9).",
     ),
     dict(
-        name="Macrochelys", genus="Macrochelys", site="Miocene Great Plains, NE", age="~12 Ma",
+        name="Macrochelys", genus="Macrochelys", site="Marsland Fm, NE", age="~18-16 Ma",
         first_era="ASHFALL", diet="OMNIVORE",  # fish, plus nuts and fruit
         focal=True,
         mass=80.0, length=0.8,
@@ -216,8 +216,8 @@ SPECIES = [
         moves=[(1, "BITE"), (1, "WITHDRAW"), (1, "AQUA_JET"), (40, "SUCKER_PUNCH"), (44, "CRUNCH"),
                (48, "JAW_LOCK"), (52, "LIQUIDATION"), (58, "HEAD_SMASH")],
         dex="The alligator snapping turtle lures fish with its worm-like tongue. Its kind lived on the Great Plains; today only in the warm Southeast.",
-        notes="Fossils: Macrochelys schmidti, Miocene of Nebraska. Mass is the living species' (big adult "
-              "males); the fossil's is unknown. Lost from the north as climates cooled, survives in the SE US.",
+        notes="M. schmidti (Zangerl 1945), Marsland Fm, Nebraska: Hemingfordian, ~18-16 Ma, so older than Act 7, and "
+              "no record at Ashfall (stand-in there) or in Montana. Mass is the living species' (big adult males).",
     ),
 
     # ------------------------------------------------------------------

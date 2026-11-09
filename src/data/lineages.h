@@ -36,7 +36,7 @@ static const struct DescentOption sDescent_Miacis[] =
 
 static const struct DescentOption sDescent_Hesperocyon[] =
 {
-    DESCENT_DEFAULT(SPECIES_LEPTOCYON), // generalist, ancestor of all living canines
+    DESCENT_DEFAULT(SPECIES_LEPTOCYON), // generalist, near the root of all living canines
     // Bone-crushing borophagine. Steered in Act 6 (Archaeotherium's bone stash).
     DESCENT_BRANCH(SPECIES_EPICYON, PRESSURE_MEAT_DIET, DESCENT_MIN_SCORE),
     DESCENT_END,
@@ -80,14 +80,22 @@ static const struct DescentOption sDescent_Emarginachel[] =
     DESCENT_END,
 };
 
-// Window: Acts 3-6, so the PETM's heat (2 per tick, sEraHeat) counts. A turtle
-// carried in the party through the PETM may well get there; banking it in the PC
-// (which gains no pressure) keeps the common snapper.
+// Entering Ashfall. Window: Acts 3-6, so the PETM's heat (2 per tick, sEraHeat)
+// counts. No default: below the threshold the lineage stays Protochelyd, a labelled
+// stand-in, because there is no Chelydra serpentina as old as Ashfall and no Chelydra
+// at Ashfall itself (outline §5 N1). A turtle carried in the party through the PETM
+// may well reach the branch; banking it in the PC (which gains no pressure) keeps the snapper.
 static const struct DescentOption sDescent_Protochelyd[] =
 {
-    DESCENT_DEFAULT(SPECIES_CHELYDRA),
     // Alligator snapping turtle: Miocene of Nebraska, now only in the warm Southeast.
     DESCENT_BRANCH(SPECIES_MACROCHELYS, PRESSURE_HEAT, 160),
+    DESCENT_END,
+};
+
+// Entering the Ice Age: the common snapping turtle takes over, unconditionally.
+static const struct DescentOption sDescent_Protochelyd2[] =
+{
+    DESCENT_DEFAULT(SPECIES_CHELYDRA),
     DESCENT_END,
 };
 
@@ -205,6 +213,7 @@ static const struct LineageDescent sLineageDescents[] =
     { SPECIES_GALLINULOID,  ERA_TRAP_CAVE,     sDescent_Gallinuloid },
     { SPECIES_EMARGINACHEL, ERA_CORRAL_BLUFFS, sDescent_Emarginachel },
     { SPECIES_PROTOCHELYD,  ERA_ASHFALL,       sDescent_Protochelyd },
+    { SPECIES_PROTOCHELYD,  ERA_TRAP_CAVE,     sDescent_Protochelyd2 },
 };
 
 // Extinction filters: species that do not survive into an era. Applied after that
@@ -298,8 +307,9 @@ static const u16 sExtinctions_TrapCave[] =
     SPECIES_NONE,
 };
 
-// The end-Pleistocene megafauna extinction, ~13-11 ka. Horses and musk oxen
-// vanished from the lower 48 but survived elsewhere, so their lineages live on.
+// The end-Pleistocene megafauna extinction, ~13-11 ka. Horses vanished from the
+// lower 48 but survived in Asia, so their lineage lives on. The helmeted musk ox
+// (Bootherium) did not: a true extinction, unlike the living Arctic Ovibos.
 static const u16 sExtinctions_Epilogue[] =
 {
     SPECIES_AENOCYON,
@@ -308,6 +318,7 @@ static const u16 sExtinctions_Epilogue[] =
     SPECIES_PANTHERA,
     SPECIES_MAMMUTHUS,
     SPECIES_CAMELOPS,
+    SPECIES_BOOTHERIUM,
     SPECIES_NONE,
 };
 

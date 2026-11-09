@@ -35,7 +35,7 @@ PLANS = {
                  ["diacodexis", "leptomeryx", "cosoryx", "antilocapra", "poebrothere", "procamelus", "camelops",
                   "merycoidodon", "ovis"]),
     "hoofed_giant": ("heavy-bodied large herbivores/omnivores: pantodonts, uintatheres, entelodonts, bovines",
-                     ["coryphodon", "uintatherium", "archaeothere", "bison", "ovibos"]),
+                     ["coryphodon", "uintatherium", "archaeothere", "bison", "bootherium"]),
     "rhino_brontothere": ("rhinocerotoids (hornless and horned) and brontotheres",
                           ["hyrachyus", "subhyracodon", "teleoceras", "aphelops"]),
     "proboscidean": ("mammoths and mastodons: trunk, tusks, domed head",

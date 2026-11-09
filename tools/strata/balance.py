@@ -122,7 +122,8 @@ def read_lineages():
         r"struct DescentOption (sDescent_\w+)\[\]\s*=\s*\{[^}]*?DESCENT_DEFAULT\(SPECIES_(\w+)\)", text)}
     descents = {}
     for m in re.finditer(r"\{\s*SPECIES_(\w+),\s*(ERA_\w+),\s*(sDescent_\w+)\s*\}", text):
-        descents[(m.group(1), m.group(2))] = defaults[m.group(3)]
+        if m.group(3) in defaults:  # a branch-only table has no default: the lineage stays
+            descents[(m.group(1), m.group(2))] = defaults[m.group(3)]
     lists = {m.group(1): re.findall(r"SPECIES_(\w+)", m.group(2)) for m in re.finditer(
         r"u16 (sExtinctions_\w+)\[\]\s*=\s*\{(.*?)\};", text, re.S)}
     extinct = {}

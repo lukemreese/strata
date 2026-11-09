@@ -38481,7 +38481,7 @@
               {
                 "min_level": 31,
                 "max_level": 33,
-                "species": "SPECIES_CORYPHODON"
+                "species": "SPECIES_HYRACHYUS"
               },
               {
                 "min_level": 32,
@@ -39461,7 +39461,7 @@
               {
                 "min_level": 40,
                 "max_level": 42,
-                "species": "SPECIES_CHELYDRA"
+                "species": "SPECIES_MACROCHELYS"
               },
               {
                 "min_level": 40,
@@ -39481,7 +39481,7 @@
               {
                 "min_level": 41,
                 "max_level": 43,
-                "species": "SPECIES_CHELYDRA"
+                "species": "SPECIES_MACROCHELYS"
               },
               {
                 "min_level": 41,
@@ -39506,7 +39506,7 @@
               {
                 "min_level": 42,
                 "max_level": 44,
-                "species": "SPECIES_CHELYDRA"
+                "species": "SPECIES_MACROCHELYS"
               },
               {
                 "min_level": 43,
@@ -39536,7 +39536,7 @@
               {
                 "min_level": 39,
                 "max_level": 42,
-                "species": "SPECIES_CHELYDRA"
+                "species": "SPECIES_MACROCHELYS"
               },
               {
                 "min_level": 40,
@@ -39571,7 +39571,7 @@
               {
                 "min_level": 39,
                 "max_level": 41,
-                "species": "SPECIES_CHELYDRA"
+                "species": "SPECIES_MACROCHELYS"
               },
               {
                 "min_level": 39,
@@ -39586,7 +39586,7 @@
               {
                 "min_level": 40,
                 "max_level": 42,
-                "species": "SPECIES_CHELYDRA"
+                "species": "SPECIES_MACROCHELYS"
               },
               {
                 "min_level": 40,
@@ -39615,7 +39615,7 @@
               {
                 "min_level": 43,
                 "max_level": 45,
-                "species": "SPECIES_CHELYDRA"
+                "species": "SPECIES_MACROCHELYS"
               },
               {
                 "min_level": 43,
@@ -39630,7 +39630,7 @@
               {
                 "min_level": 43,
                 "max_level": 45,
-                "species": "SPECIES_CHELYDRA"
+                "species": "SPECIES_MACROCHELYS"
               },
               {
                 "min_level": 43,
@@ -39655,7 +39655,7 @@
               {
                 "min_level": 44,
                 "max_level": 46,
-                "species": "SPECIES_CHELYDRA"
+                "species": "SPECIES_MACROCHELYS"
               },
               {
                 "min_level": 44,
@@ -39690,7 +39690,7 @@
               {
                 "min_level": 42,
                 "max_level": 45,
-                "species": "SPECIES_CHELYDRA"
+                "species": "SPECIES_MACROCHELYS"
               },
               {
                 "min_level": 42,
@@ -39725,7 +39725,7 @@
               {
                 "min_level": 42,
                 "max_level": 44,
-                "species": "SPECIES_CHELYDRA"
+                "species": "SPECIES_MACROCHELYS"
               },
               {
                 "min_level": 42,
@@ -39740,7 +39740,7 @@
               {
                 "min_level": 43,
                 "max_level": 45,
-                "species": "SPECIES_CHELYDRA"
+                "species": "SPECIES_MACROCHELYS"
               },
               {
                 "min_level": 43,
@@ -39755,7 +39755,7 @@
               {
                 "min_level": 44,
                 "max_level": 45,
-                "species": "SPECIES_CHELYDRA"
+                "species": "SPECIES_MACROCHELYS"
               }
             ]
           }
@@ -39952,7 +39952,7 @@
               {
                 "min_level": 42,
                 "max_level": 44,
-                "species": "SPECIES_CHELYDRA"
+                "species": "SPECIES_MACROCHELYS"
               },
               {
                 "min_level": 42,
@@ -39972,7 +39972,7 @@
               {
                 "min_level": 39,
                 "max_level": 42,
-                "species": "SPECIES_CHELYDRA"
+                "species": "SPECIES_MACROCHELYS"
               },
               {
                 "min_level": 38,
@@ -39987,7 +39987,7 @@
               {
                 "min_level": 40,
                 "max_level": 43,
-                "species": "SPECIES_CHELYDRA"
+                "species": "SPECIES_MACROCHELYS"
               },
               {
                 "min_level": 40,
@@ -40017,7 +40017,7 @@
               {
                 "min_level": 39,
                 "max_level": 41,
-                "species": "SPECIES_CHELYDRA"
+                "species": "SPECIES_MACROCHELYS"
               },
               {
                 "min_level": 39,
@@ -40032,7 +40032,7 @@
               {
                 "min_level": 40,
                 "max_level": 42,
-                "species": "SPECIES_CHELYDRA"
+                "species": "SPECIES_MACROCHELYS"
               },
               {
                 "min_level": 40,
@@ -40042,7 +40042,7 @@
               {
                 "min_level": 41,
                 "max_level": 43,
-                "species": "SPECIES_CHELYDRA"
+                "species": "SPECIES_MACROCHELYS"
               },
               {
                 "min_level": 41,
@@ -40096,7 +40096,7 @@
               {
                 "min_level": 43,
                 "max_level": 45,
-                "species": "SPECIES_CHELYDRA"
+                "species": "SPECIES_MACROCHELYS"
               },
               {
                 "min_level": 45,
@@ -40126,7 +40126,7 @@
               {
                 "min_level": 41,
                 "max_level": 44,
-                "species": "SPECIES_CHELYDRA"
+                "species": "SPECIES_MACROCHELYS"
               },
               {
                 "min_level": 41,
@@ -40136,7 +40136,7 @@
               {
                 "min_level": 42,
                 "max_level": 45,
-                "species": "SPECIES_CHELYDRA"
+                "species": "SPECIES_MACROCHELYS"
               },
               {
                 "min_level": 42,
@@ -40156,12 +40156,7 @@
               {
                 "min_level": 41,
                 "max_level": 43,
-                "species": "SPECIES_CHELYDRA"
-              },
-              {
-                "min_level": 41,
-                "max_level": 43,
-                "species": "SPECIES_CHELYDRA"
+                "species": "SPECIES_MACROCHELYS"
               },
               {
                 "min_level": 41,
@@ -40169,6 +40164,11 @@
                 "species": "SPECIES_MACROCHELYS"
               },
               {
+                "min_level": 41,
+                "max_level": 43,
+                "species": "SPECIES_MACROCHELYS"
+              },
+              {
                 "min_level": 42,
                 "max_level": 44,
                 "species": "SPECIES_MACROCHELYS"
@@ -40176,7 +40176,7 @@
               {
                 "min_level": 42,
                 "max_level": 44,
-                "species": "SPECIES_CHELYDRA"
+                "species": "SPECIES_MACROCHELYS"
               },
               {
                 "min_level": 42,
@@ -40186,7 +40186,7 @@
               {
                 "min_level": 43,
                 "max_level": 45,
-                "species": "SPECIES_CHELYDRA"
+                "species": "SPECIES_MACROCHELYS"
               },
               {
                 "min_level": 43,
@@ -40196,7 +40196,7 @@
               {
                 "min_level": 43,
                 "max_level": 45,
-                "species": "SPECIES_CHELYDRA"
+                "species": "SPECIES_MACROCHELYS"
               },
               {
                 "min_level": 44,
@@ -40250,7 +40250,7 @@
               {
                 "min_level": 47,
                 "max_level": 49,
-                "species": "SPECIES_OVIBOS"
+                "species": "SPECIES_BOOTHERIUM"
               },
               {
                 "min_level": 48,
@@ -40319,7 +40319,7 @@
               {
                 "min_level": 45,
                 "max_level": 47,
-                "species": "SPECIES_OVIBOS"
+                "species": "SPECIES_BOOTHERIUM"
               },
               {
                 "min_level": 46,
@@ -40339,7 +40339,7 @@
               {
                 "min_level": 47,
                 "max_level": 49,
-                "species": "SPECIES_OVIBOS"
+                "species": "SPECIES_BOOTHERIUM"
               },
               {
                 "min_level": 46,
@@ -40468,7 +40468,7 @@
               {
                 "min_level": 46,
                 "max_level": 48,
-                "species": "SPECIES_OVIBOS"
+                "species": "SPECIES_BOOTHERIUM"
               },
               {
                 "min_level": 46,
@@ -40478,7 +40478,7 @@
               {
                 "min_level": 47,
                 "max_level": 49,
-                "species": "SPECIES_OVIBOS"
+                "species": "SPECIES_BOOTHERIUM"
               },
               {
                 "min_level": 47,
@@ -40523,7 +40523,7 @@
               {
                 "min_level": 50,
                 "max_level": 51,
-                "species": "SPECIES_OVIBOS"
+                "species": "SPECIES_BOOTHERIUM"
               }
             ]
           }

@@ -1235,22 +1235,22 @@ static const struct SpriteFrameImage sPicTable_Camelops[] = {
 };
 #endif //OW_POKEMON_OBJECT_EVENTS
 
-const u32 gMonFrontPic_Ovibos[] = INCGFX_U32("graphics/pokemon/strata/ovibos/anim_front.png", ".4bpp.smol");
-const u16 gMonPalette_Ovibos[] = INCGFX_U16("graphics/pokemon/strata/ovibos/normal.pal", ".gbapal");
-const u32 gMonBackPic_Ovibos[] = INCGFX_U32("graphics/pokemon/strata/ovibos/back.png", ".4bpp.smol");
-const u16 gMonShinyPalette_Ovibos[] = INCGFX_U16("graphics/pokemon/strata/ovibos/shiny.pal", ".gbapal");
-const u8 gMonIcon_Ovibos[] = INCGFX_U8("graphics/pokemon/strata/ovibos/icon.png", ".4bpp");
+const u32 gMonFrontPic_Bootherium[] = INCGFX_U32("graphics/pokemon/strata/bootherium/anim_front.png", ".4bpp.smol");
+const u16 gMonPalette_Bootherium[] = INCGFX_U16("graphics/pokemon/strata/bootherium/normal.pal", ".gbapal");
+const u32 gMonBackPic_Bootherium[] = INCGFX_U32("graphics/pokemon/strata/bootherium/back.png", ".4bpp.smol");
+const u16 gMonShinyPalette_Bootherium[] = INCGFX_U16("graphics/pokemon/strata/bootherium/shiny.pal", ".gbapal");
+const u8 gMonIcon_Bootherium[] = INCGFX_U8("graphics/pokemon/strata/bootherium/icon.png", ".4bpp");
 #if P_FOOTPRINTS
-const u8 gMonFootprint_Ovibos[] = INCGFX_U8("graphics/pokemon/strata/ovibos/footprint.png", ".1bpp");
+const u8 gMonFootprint_Bootherium[] = INCGFX_U8("graphics/pokemon/strata/bootherium/footprint.png", ".1bpp");
 #endif //P_FOOTPRINTS
 #if OW_POKEMON_OBJECT_EVENTS
-const u32 gObjectEventPic_Ovibos[] = INCGFX_COMP("graphics/pokemon/strata/ovibos/overworld.png", ".4bpp", "-mwidth 4 -mheight 4");
+const u32 gObjectEventPic_Bootherium[] = INCGFX_COMP("graphics/pokemon/strata/bootherium/overworld.png", ".4bpp", "-mwidth 4 -mheight 4");
 #if OW_PKMN_OBJECTS_SHARE_PALETTES == FALSE
-const u16 gOverworldPalette_Ovibos[] = INCGFX_U16("graphics/pokemon/strata/ovibos/normal.pal", ".gbapal");
-const u16 gShinyOverworldPalette_Ovibos[] = INCGFX_U16("graphics/pokemon/strata/ovibos/shiny.pal", ".gbapal");
+const u16 gOverworldPalette_Bootherium[] = INCGFX_U16("graphics/pokemon/strata/bootherium/normal.pal", ".gbapal");
+const u16 gShinyOverworldPalette_Bootherium[] = INCGFX_U16("graphics/pokemon/strata/bootherium/shiny.pal", ".gbapal");
 #endif //OW_PKMN_OBJECTS_SHARE_PALETTES
-static const struct SpriteFrameImage sPicTable_Ovibos[] = {
-    overworld_ascending_frames(gObjectEventPic_Ovibos, 4, 4),
+static const struct SpriteFrameImage sPicTable_Bootherium[] = {
+    overworld_ascending_frames(gObjectEventPic_Bootherium, 4, 4),
 };
 #endif //OW_POKEMON_OBJECT_EVENTS
 

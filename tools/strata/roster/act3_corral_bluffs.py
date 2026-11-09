@@ -36,7 +36,7 @@ SPECIES = [
     dict(
         name="Carsioptych", genus="Carsioptychus", site="Denver Fm, CO", age="~65.7 Ma",
         first_era="CORRAL_BLUFFS",
-        mass=6.0, length=0.6, mass_est=True,
+        mass=25.0, length=1.0,  # Lyson et al. 2019 / DMNS: about 25 kg
         weights=dict(hp=6, atk=5, defn=5, spa=3, spd=5, spe=4),
         types=("GRASS", "NORMAL"), abilities=("THICK_FAT", "GLUTTONY"),
         category="Periptychid", color="BROWN", growth="MEDIUM_FAST", catch=170, gender=50,
@@ -60,7 +60,7 @@ SPECIES = [
     dict(
         name="Eoconodon", genus="Eoconodon", site="Denver Fm, CO", age="~65.4 Ma",
         first_era="CORRAL_BLUFFS", diet="CARNIVORE",
-        mass=30.0, length=1.2, mass_est=True,
+        mass=45.0, length=1.2,  # DMNS: E. coryphaeus about 47 kg (published range 12.6-47)
         weights=dict(hp=6, atk=7, defn=5, spa=3, spd=4, spe=5),
         types=("DARK", "NORMAL"), abilities=("STRONG_JAW", "INTIMIDATE"),
         category="Triisodont", color="BROWN", growth="SLOW", catch=45, gender=50,

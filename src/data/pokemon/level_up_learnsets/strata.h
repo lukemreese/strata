@@ -718,7 +718,7 @@ static const struct LevelUpMove sCamelopsLevelUpLearnset[] = {
     LEVEL_UP_END
 };
 
-static const struct LevelUpMove sOvibosLevelUpLearnset[] = {
+static const struct LevelUpMove sBootheriumLevelUpLearnset[] = {
     LEVEL_UP_MOVE( 1, MOVE_HEADBUTT),
     LEVEL_UP_MOVE( 1, MOVE_POWDER_SNOW),
     LEVEL_UP_MOVE(46, MOVE_TAKE_DOWN),

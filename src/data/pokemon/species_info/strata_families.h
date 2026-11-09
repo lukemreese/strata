@@ -30,8 +30,8 @@
         .height = 3,
         .weight = 5,
         .description = COMPOUND_STRING(
-            "A small burrowing mammal that lived\n"
-            "among the dinosaurs. Its true\n"
+            "A small insect-eating mammal that\n"
+            "lived among the dinosaurs. Its true\n"
             "descendants are unknown, so it stands\n"
             "in for the ancestors of carnivorans."),
         .frontPic = gMonFrontPic_Cimolestes,
@@ -236,7 +236,7 @@
         .height = 8,
         .weight = 20,
         .description = COMPOUND_STRING(
-            "The earliest true member of the dog\n"
+            "One of the earliest members of the dog\n"
             "family. It looked more like a long-\n"
             "bodied civet than a dog, and hunted\n"
             "small prey."),
@@ -370,8 +370,8 @@
         .weight = 20,
         .description = COMPOUND_STRING(
             "A small, fox-like generalist that ate\n"
-            "whatever it could find. It is the\n"
-            "ancestor of every living dog, wolf and\n"
+            "whatever it could find. It sits near\n"
+            "the root of every living dog, wolf and\n"
             "fox."),
         .frontPic = gMonFrontPic_Leptocyon,
         .backPic = gMonBackPic_Leptocyon,
@@ -404,7 +404,7 @@
     },
 
     // Aenocyon dirus | Natural Trap Cave, WY | ~20 ka | 65 kg, 1.6 m | BST 471
-    // Note: A separate lineage from the gray wolf, as shown by ancient DNA. Unverified at Natural Trap Cave, whose wolves are reported as gray wolves; check the site (outline §5 H5).
+    // Note: A separate lineage from the gray wolf, as shown by ancient DNA. Listed at Natural Trap Cave (PBDB; Meachen et al. 2023), but the wolves measured there are Beringian-type gray wolves (Meachen et al. 2016); hedged, not wild there (outline §5 H5).
     [SPECIES_AENOCYON] =
     {
         .baseHP        = 94,
@@ -431,8 +431,8 @@
         .height = 16,
         .weight = 650,
         .description = COMPOUND_STRING(
-            "A heavy wolf that hunted horses and\n"
-            "bison. When the Ice Age megafauna\n"
+            "A heavy wolf that likely hunted horses\n"
+            "and bison. When the Ice Age megafauna\n"
             "vanished, the dire wolf vanished with\n"
             "them."),
         .frontPic = gMonFrontPic_Aenocyon,
@@ -777,10 +777,10 @@
         .height = 3,
         .weight = 3,
         .description = COMPOUND_STRING(
-            "The oldest known relative of chickens\n"
-            "and turkeys. A small ground bird of\n"
-            "the Eocene forests around the Green\n"
-            "River lakes."),
+            "One of the oldest known relatives of\n"
+            "chickens. A small ground bird of the\n"
+            "Eocene forests around the Green River\n"
+            "lakes."),
         .frontPic = gMonFrontPic_Gallinuloid,
         .backPic = gMonBackPic_Gallinuloid,
         .palette = gMonPalette_Gallinuloid,
@@ -817,7 +817,7 @@
         .levelUpLearnset = sGallinuloidLevelUpLearnset,
     },
 
-    // Meleagris gallopavo | Natural Trap Cave, WY | ~20 ka | 8 kg, 1.1 m | BST 425
+    // Meleagris gallopavo | Living; WY | today | 8 kg, 1.1 m | BST 425
     [SPECIES_MELEAGRIS] =
     {
         .baseHP        = 79,
@@ -912,10 +912,10 @@
         .height = 5,
         .weight = 80,
         .description = COMPOUND_STRING(
-            "The earliest known snapping turtle. It\n"
-            "lurked in the rivers of Hell Creek,\n"
-            "and its kind still lives in Montana\n"
-            "today."),
+            "Perhaps the earliest known snapping\n"
+            "turtle. It lurked in the rivers of\n"
+            "Hell Creek, and snappers still live in\n"
+            "Montana today."),
         .frontPic = gMonFrontPic_Emarginachel,
         .backPic = gMonBackPic_Emarginachel,
         .palette = gMonPalette_Emarginachel,
@@ -1046,10 +1046,9 @@
         .height = 5,
         .weight = 100,
         .description = COMPOUND_STRING(
-            "The common snapping turtle. Its body\n"
-            "plan has barely changed in 66 million\n"
-            "years: if something works, selection\n"
-            "keeps it."),
+            "The common snapping turtle. Its line\n"
+            "keeps a very old body plan: if\n"
+            "something works, selection keeps it."),
         .frontPic = gMonFrontPic_Chelydra,
         .backPic = gMonBackPic_Chelydra,
         .palette = gMonPalette_Chelydra,
@@ -1384,7 +1383,7 @@
         .weight = 4000,
         .description = COMPOUND_STRING(
             "Its skull was capped by a dome of\n"
-            "solid bone up to 25 cm thick. Healed\n"
+            "solid bone about 22 cm thick. Healed\n"
             "injuries suggest it butted heads or\n"
             "flanks with rivals."),
         .frontPic = gMonFrontPic_Pachycephalo,
@@ -1661,10 +1660,10 @@
         .height = 6,
         .weight = 50,
         .description = COMPOUND_STRING(
-            "An otter-like relative of marsupials\n"
-            "with a bite stronger, for its size,\n"
-            "than any living mammal's. It cracked\n"
-            "snails and small turtles."),
+            "An opossum-sized relative of\n"
+            "marsupials with a very strong bite for\n"
+            "its size. It likely cracked snails and\n"
+            "small vertebrates."),
         .frontPic = gMonFrontPic_Didelphodon,
         .backPic = gMonBackPic_Didelphodon,
         .palette = gMonPalette_Didelphodon,
@@ -1732,8 +1731,8 @@
         .description = COMPOUND_STRING(
             "A tiny, rodent-like multituberculate\n"
             "that gnawed seeds and fruit. Its\n"
-            "family survived the impact and ruled\n"
-            "the Paleocene."),
+            "family survived the impact and thrived\n"
+            "in the Paleocene."),
         .frontPic = gMonFrontPic_Mesodma,
         .backPic = gMonBackPic_Mesodma,
         .palette = gMonPalette_Mesodma,
@@ -2108,18 +2107,18 @@
         .levelUpLearnset = sLoxolophusLevelUpLearnset,
     },
 
-    // Carsioptychus | Denver Fm, CO | ~65.7 Ma | ~6 kg, 0.6 m | BST 379
+    // Carsioptychus | Denver Fm, CO | ~65.7 Ma | 25 kg, 1 m | BST 410
     [SPECIES_CARSIOPTYCH] =
     {
-        .baseHP        = 81,
-        .baseAttack    = 68,
-        .baseDefense   = 68,
-        .baseSpeed     = 54,
-        .baseSpAttack  = 41,
-        .baseSpDefense = 68,
+        .baseHP        = 88,
+        .baseAttack    = 73,
+        .baseDefense   = 73,
+        .baseSpeed     = 59,
+        .baseSpAttack  = 44,
+        .baseSpDefense = 73,
         .types = MON_TYPES(TYPE_GRASS, TYPE_NORMAL),
         .catchRate = 170,
-        .expYield = 114,
+        .expYield = 123,
         .evYield_HP = 2,
         .genderRatio = PERCENT_FEMALE(50),
         .eggCycles = 20,
@@ -2132,8 +2131,8 @@
         .cryId = CRY_CARSIOPTYCH,
         .natDexNum = NATIONAL_DEX_CARSIOPTYCH,
         .categoryName = _("Periptychid"),
-        .height = 6,
-        .weight = 60,
+        .height = 10,
+        .weight = 250,
         .description = COMPOUND_STRING(
             "A stout plant eater with swollen,\n"
             "crushing cheek teeth. It cracked the\n"
@@ -2240,18 +2239,18 @@
         .levelUpLearnset = sTaeniolabisLevelUpLearnset,
     },
 
-    // Eoconodon | Denver Fm, CO | ~65.4 Ma | ~30 kg, 1.2 m | BST 414
+    // Eoconodon | Denver Fm, CO | ~65.4 Ma | 45 kg, 1.2 m | BST 423
     [SPECIES_EOCONODON] =
     {
-        .baseHP        = 83,
-        .baseAttack    = 97,
-        .baseDefense   = 69,
-        .baseSpeed     = 69,
-        .baseSpAttack  = 41,
-        .baseSpDefense = 55,
+        .baseHP        = 85,
+        .baseAttack    = 99,
+        .baseDefense   = 70,
+        .baseSpeed     = 70,
+        .baseSpAttack  = 42,
+        .baseSpDefense = 56,
         .types = MON_TYPES(TYPE_DARK, TYPE_NORMAL),
         .catchRate = 45,
-        .expYield = 124,
+        .expYield = 127,
         .evYield_Attack = 2,
         .genderRatio = PERCENT_FEMALE(50),
         .eggCycles = 20,
@@ -2265,7 +2264,7 @@
         .natDexNum = NATIONAL_DEX_EOCONODON,
         .categoryName = _("Triisodont"),
         .height = 12,
-        .weight = 300,
+        .weight = 450,
         .description = COMPOUND_STRING(
             "A wolf-sized meat eater with heavy\n"
             "jaws. It was among the first large\n"
@@ -2602,9 +2601,9 @@
         .weight = 5000,
         .description = COMPOUND_STRING(
             "A hippo-like giant with tusks and a\n"
-            "tiny brain. It wallowed in the warm\n"
-            "swamps and was the largest animal of\n"
-            "its world."),
+            "tiny brain. It probably wallowed in\n"
+            "warm swamps and was among the largest\n"
+            "animals of its world."),
         .frontPic = gMonFrontPic_Coryphodon,
         .backPic = gMonBackPic_Coryphodon,
         .palette = gMonPalette_Coryphodon,
@@ -3160,8 +3159,8 @@
         .description = COMPOUND_STRING(
             "Nicknamed the hell pig: a huge-headed\n"
             "omnivore with bony cheek flanges. Bite\n"
-            "marks show it cached carcasses to eat\n"
-            "later."),
+            "marks suggest it cached carcasses to\n"
+            "eat later."),
         .frontPic = gMonFrontPic_Archaeothere,
         .backPic = gMonBackPic_Archaeothere,
         .palette = gMonPalette_Archaeothere,
@@ -3292,9 +3291,9 @@
         .height = 14,
         .weight = 1000,
         .description = COMPOUND_STRING(
-            "A sheep-sized plant eater that lived\n"
-            "in herds. Oreodonts are among the most\n"
-            "common fossils in the White River\n"
+            "A sheep-sized plant eater, probably a\n"
+            "herd animal. Oreodonts are among the\n"
+            "most common fossils in the White River\n"
             "badlands."),
         .frontPic = gMonFrontPic_Merycoidodon,
         .backPic = gMonBackPic_Merycoidodon,
@@ -3330,18 +3329,18 @@
         .levelUpLearnset = sMerycoidodonLevelUpLearnset,
     },
 
-    // Subhyracodon | Brule Fm, SD | ~32 Ma | ~500 kg, 2.5 m | BST 475
+    // Subhyracodon | Brule Fm, SD | ~32 Ma | ~380 kg, 2.5 m | BST 469
     [SPECIES_SUBHYRACODON] =
     {
-        .baseHP        = 104,
-        .baseAttack    = 89,
-        .baseDefense   = 104,
+        .baseHP        = 103,
+        .baseAttack    = 88,
+        .baseDefense   = 103,
         .baseSpeed     = 59,
-        .baseSpAttack  = 30,
-        .baseSpDefense = 89,
+        .baseSpAttack  = 29,
+        .baseSpDefense = 88,
         .types = MON_TYPES(TYPE_GROUND, TYPE_NORMAL),
         .catchRate = 60,
-        .expYield = 142,
+        .expYield = 141,
         .evYield_HP = 2,
         .genderRatio = PERCENT_FEMALE(50),
         .eggCycles = 20,
@@ -3355,7 +3354,7 @@
         .natDexNum = NATIONAL_DEX_SUBHYRACODON,
         .categoryName = _("Rhinoceros"),
         .height = 25,
-        .weight = 5000,
+        .weight = 3800,
         .description = COMPOUND_STRING(
             "A hornless rhino the size of a cow.\n"
             "Rhinos were once common across North\n"
@@ -3663,7 +3662,7 @@
         .levelUpLearnset = sIschyromysLevelUpLearnset,
     },
 
-    // Protohippus simus | Ashfall, NE | ~11.9 Ma | ~100 kg, 1.6 m | BST 440
+    // Protohippus supremus | Ashfall, NE | ~11.9 Ma | ~100 kg, 1.6 m | BST 440
     // Note: High-crowned (hypsodont) teeth as a response to grass and grit.
     [SPECIES_PROTOHIPPUS] =
     {
@@ -4090,7 +4089,7 @@
         .weight = 9000,
         .description = COMPOUND_STRING(
             "The giant short-faced bear: one of the\n"
-            "largest land carnivores of the Ice\n"
+            "largest land carnivorans of the Ice\n"
             "Age. Standing up, it reached over\n"
             "three metres."),
         .frontPic = gMonFrontPic_Arctodus,
@@ -4158,8 +4157,8 @@
         .description = COMPOUND_STRING(
             "The American cheetah, a fast cat built\n"
             "much like the African cheetah. It\n"
-            "chased pronghorn across the open\n"
-            "steppe."),
+            "likely chased pronghorn across the\n"
+            "open steppe."),
         .frontPic = gMonFrontPic_Miracinonyx,
         .backPic = gMonBackPic_Miracinonyx,
         .palette = gMonPalette_Miracinonyx,
@@ -4196,18 +4195,18 @@
         .levelUpLearnset = sMiracinonyxLevelUpLearnset,
     },
 
-    // Panthera atrox | Natural Trap Cave, WY | ~20 ka | ~350 kg, 2.5 m | BST 467
+    // Panthera atrox | Natural Trap Cave, WY | ~20 ka | 250 kg, 2.5 m | BST 460
     [SPECIES_PANTHERA] =
     {
-        .baseHP        = 85,
-        .baseAttack    = 113,
-        .baseDefense   = 71,
-        .baseSpeed     = 85,
+        .baseHP        = 84,
+        .baseAttack    = 112,
+        .baseDefense   = 70,
+        .baseSpeed     = 84,
         .baseSpAttack  = 42,
-        .baseSpDefense = 71,
+        .baseSpDefense = 70,
         .types = MON_TYPES(TYPE_DARK, TYPE_FIGHTING),
         .catchRate = 25,
-        .expYield = 140,
+        .expYield = 138,
         .evYield_Attack = 2,
         .genderRatio = PERCENT_FEMALE(50),
         .eggCycles = 20,
@@ -4221,11 +4220,12 @@
         .natDexNum = NATIONAL_DEX_PANTHERA,
         .categoryName = _("Lion"),
         .height = 25,
-        .weight = 3500,
+        .weight = 2500,
         .description = COMPOUND_STRING(
             "The American lion, larger than any\n"
-            "living lion. It hunted horses and\n"
-            "bison across Ice Age North America."),
+            "living lion. It likely hunted horses\n"
+            "and bison across Ice Age North\n"
+            "America."),
         .frontPic = gMonFrontPic_Panthera,
         .backPic = gMonBackPic_Panthera,
         .palette = gMonPalette_Panthera,
@@ -4261,7 +4261,7 @@
         .levelUpLearnset = sPantheraLevelUpLearnset,
     },
 
-    // Mammuthus columbi | Natural Trap Cave, WY | ~20 ka | ~9000 kg, 4.5 m | BST 538
+    // Mammuthus | Natural Trap Cave, WY | ~20 ka | ~9000 kg, 4.5 m | BST 538
     [SPECIES_MAMMUTHUS] =
     {
         .baseHP        = 130,
@@ -4288,9 +4288,10 @@
         .height = 45,
         .weight = 65535, // real mass 9000 kg exceeds the u16 field (battle clamp); the Codex uses strata_codex.h
         .description = COMPOUND_STRING(
-            "The Columbian mammoth, taller than an\n"
-            "African elephant. It grazed the\n"
-            "grasslands south of the ice sheets."),
+            "A mammoth, taller than an African\n"
+            "elephant. The cave's bones name only\n"
+            "the genus; Columbian mammoths grazed\n"
+            "this far south."),
         .frontPic = gMonFrontPic_Mammuthus,
         .backPic = gMonBackPic_Mammuthus,
         .palette = gMonPalette_Mammuthus,
@@ -4327,7 +4328,7 @@
         .levelUpLearnset = sMammuthusLevelUpLearnset,
     },
 
-    // Camelops | Wyoming | ~20 ka | ~800 kg, 3 m | BST 485
+    // Camelops | Natural Trap Cave, WY | ~20 ka | ~800 kg, 3 m | BST 485
     [SPECIES_CAMELOPS] =
     {
         .baseHP        = 106,
@@ -4396,18 +4397,19 @@
         .levelUpLearnset = sCamelopsLevelUpLearnset,
     },
 
-    // Ovibos moschatus | Natural Trap Cave, WY | ~20 ka | 300 kg, 2.2 m | BST 464
-    [SPECIES_OVIBOS] =
+    // Bootherium bombifrons | Natural Trap Cave, WY | ~20 ka | 420 kg, 2.2 m | BST 471
+    // Note: Replaces Ovibos: PBDB lists Bootherium at the cave, and no Wyoming Ovibos was found. Extinct, so it is lost at the Epilogue filter.
+    [SPECIES_BOOTHERIUM] =
     {
-        .baseHP        = 109,
-        .baseAttack    = 82,
-        .baseDefense   = 96,
-        .baseSpeed     = 41,
-        .baseSpAttack  = 41,
-        .baseSpDefense = 96,
+        .baseHP        = 111,
+        .baseAttack    = 83,
+        .baseDefense   = 97,
+        .baseSpeed     = 42,
+        .baseSpAttack  = 42,
+        .baseSpDefense = 97,
         .types = MON_TYPES(TYPE_ICE, TYPE_NORMAL),
         .catchRate = 45,
-        .expYield = 139,
+        .expYield = 141,
         .evYield_HP = 2,
         .genderRatio = PERCENT_FEMALE(50),
         .eggCycles = 20,
@@ -4416,21 +4418,22 @@
         .eggGroups = MON_EGG_GROUPS(EGG_GROUP_NO_EGGS_DISCOVERED),
         .abilities = { ABILITY_THICK_FAT, ABILITY_SNOW_CLOAK, ABILITY_NONE },
         .bodyColor = BODY_COLOR_BROWN,
-        .speciesName = _("Ovibos"),
-        .cryId = CRY_OVIBOS,
-        .natDexNum = NATIONAL_DEX_OVIBOS,
+        .speciesName = _("Bootherium"),
+        .cryId = CRY_BOOTHERIUM,
+        .natDexNum = NATIONAL_DEX_BOOTHERIUM,
         .categoryName = _("Musk Ox"),
         .height = 22,
-        .weight = 3000,
+        .weight = 4200,
         .description = COMPOUND_STRING(
-            "A shaggy, cold-adapted ox. It survives\n"
-            "today in the Arctic, far north of\n"
-            "where its Ice Age herds once grazed."),
-        .frontPic = gMonFrontPic_Ovibos,
-        .backPic = gMonBackPic_Ovibos,
-        .palette = gMonPalette_Ovibos,
-        .shinyPalette = gMonShinyPalette_Ovibos,
-        .iconSprite = gMonIcon_Ovibos,
+            "The helmeted musk ox, taller and\n"
+            "leaner than the living kind, its horn\n"
+            "bases fused across the skull. It died\n"
+            "out about 11,000 years ago."),
+        .frontPic = gMonFrontPic_Bootherium,
+        .backPic = gMonBackPic_Bootherium,
+        .palette = gMonPalette_Bootherium,
+        .shinyPalette = gMonShinyPalette_Bootherium,
+        .iconSprite = gMonIcon_Bootherium,
         // Own art (tools/strata/gen_sprite.py); other presentation borrowed from SPECIES_DUBWOOL
         .pokemonScale = 272,
         .pokemonOffset = 3,
@@ -4443,17 +4446,17 @@
         .backPicYOffset = 13,
         .iconPalIndex = 2,
         SHADOW(2, 8, SHADOW_SIZE_M)
-        FOOTPRINT(Ovibos)
+        FOOTPRINT(Bootherium)
         OVERWORLD(
-            sPicTable_Ovibos,
+            sPicTable_Bootherium,
             SIZE_32x32,
             SHADOW_SIZE_M,
             TRACKS_FOOT,
             sAnimTable_Following,
-            gOverworldPalette_Ovibos,
-            gShinyOverworldPalette_Ovibos
+            gOverworldPalette_Bootherium,
+            gShinyOverworldPalette_Bootherium
         )
-        .levelUpLearnset = sOvibosLevelUpLearnset,
+        .levelUpLearnset = sBootheriumLevelUpLearnset,
     },
 
     // Ovis canadensis | Natural Trap Cave, WY | ~20 ka | 100 kg, 1.6 m | BST 440
@@ -5348,19 +5351,19 @@
         .levelUpLearnset = sDouglassciurLevelUpLearnset,
     },
 
-    // Hypohippus | Miocene Great Plains, NE | ~17-11 Ma | ~200 kg, 1.8 m | BST 455
-    // Note: Anchitheriine browser, regional (Great Plains, ~17-11 Ma); not recorded in the Ashfall bed itself (outline §5 M9). Descends from Miohippus-grade horses, so a Mesohippus branch is a grade.
+    // Hypohippus | Ashfall, NE | ~11.9 Ma | 450 kg, 1.8 m | BST 473
+    // Note: Anchitheriine browser, nearly extinct by Ashfall time. The UNSM Ashfall guide lists it in the ash bed; PBDB's Ashfall list doesn't. Descends from Miohippus-grade horses, so a Mesohippus branch is a grade.
     [SPECIES_HYPOHIPPUS] =
     {
-        .baseHP        = 88,
-        .baseAttack    = 73,
-        .baseDefense   = 73,
-        .baseSpeed     = 88,
-        .baseSpAttack  = 59,
-        .baseSpDefense = 73,
+        .baseHP        = 92,
+        .baseAttack    = 76,
+        .baseDefense   = 76,
+        .baseSpeed     = 92,
+        .baseSpAttack  = 61,
+        .baseSpDefense = 76,
         .types = MON_TYPES(TYPE_NORMAL, TYPE_GRASS),
         .catchRate = 60,
-        .expYield = 136,
+        .expYield = 142,
         .evYield_HP = 2,
         .genderRatio = PERCENT_FEMALE(50),
         .eggCycles = 20,
@@ -5374,7 +5377,7 @@
         .natDexNum = NATIONAL_DEX_HYPOHIPPUS,
         .categoryName = _("Forest Horse"),
         .height = 18,
-        .weight = 2000,
+        .weight = 4500,
         .description = COMPOUND_STRING(
             "A big three-toed horse that kept\n"
             "browsing leaves in the woodlands while\n"
@@ -5513,10 +5516,10 @@
         .height = 16,
         .weight = 1000,
         .description = COMPOUND_STRING(
-            "A three-toed grazing horse, the\n"
-            "commonest horse in the Ashfall ash.\n"
-            "Its relatives spread from North\n"
-            "America to Asia and Africa."),
+            "A three-toed grazing horse, one of\n"
+            "five horses in the Ashfall ash. Its\n"
+            "relatives spread from North America to\n"
+            "Asia and Africa."),
         .frontPic = gMonFrontPic_Cormohippari,
         .backPic = gMonBackPic_Cormohippari,
         .palette = gMonPalette_Cormohippari,
@@ -5624,8 +5627,8 @@
         .levelUpLearnset = sCosoryxLevelUpLearnset,
     },
 
-    // Macrochelys | Miocene Great Plains, NE | ~12 Ma | 80 kg, 0.8 m | BST 475
-    // Note: Fossils: Macrochelys schmidti, Miocene of Nebraska. Mass is the living species' (big adult males); the fossil's is unknown. Lost from the north as climates cooled, survives in the SE US.
+    // Macrochelys | Marsland Fm, NE | ~18-16 Ma | 80 kg, 0.8 m | BST 475
+    // Note: M. schmidti (Zangerl 1945), Marsland Fm, Nebraska: Hemingfordian, ~18-16 Ma, so older than Act 7, and no record at Ashfall (stand-in there) or in Montana. Mass is the living species' (big adult males).
     [SPECIES_MACROCHELYS] =
     {
         .baseHP        = 92,

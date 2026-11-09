@@ -40,7 +40,7 @@ def lineages():
         return x
 
     for m in re.finditer(r"sDescent_(\w+)\[\]\s*=\s*\{(.*?)\};", text, re.S):
-        src = m.group(1).lower()
+        src = re.sub(r"\d+$", "", m.group(1).lower())  # sDescent_Protochelyd2 is still Protochelyd
         for d in re.findall(r"DESCENT_(?:DEFAULT|BRANCH)\(SPECIES_(\w+)", m.group(2)):
             a, b = root(src), root(d.lower())
             if a != b:

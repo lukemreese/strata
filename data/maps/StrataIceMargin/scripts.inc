@@ -19,12 +19,13 @@ StrataIceMargin_Text_NoteIce:
 	.string "FIELD NOTE: The ice\p"
 	.string "The Laurentide Ice Sheet buried\n"
 	.string "most of Canada and the northern\l"
-	.string "US, kilometres thick near its\l"
-	.string "centre.\p"
-	.string "At this latitude it ended hundreds\n"
-	.string "of km north of the cave. The rig\l"
-	.string "draws it close, for the story. The\l"
-	.string "ice nearby is mountain glaciers.$"
+	.string "US, up to about 3 km thick at its\l"
+	.string "centre, thinner here at the edge.\p"
+	.string "At this latitude the real edge lay\n"
+	.string "hundreds of km north of the cave.\l"
+	.string "The rig draws it close, for the\l"
+	.string "story. The ice nearby is mountain\l"
+	.string "glaciers.$"
 
 StrataIceMargin_Text_NoteSeaLevel:
 	.string "FIELD NOTE: Locked-up water\p"
@@ -39,9 +40,10 @@ StrataIceMargin_Text_NoteSeaLevel:
 
 StrataIceMargin_Text_NoteEdge:
 	.string "FIELD NOTE: Odd neighbours\p"
-	.string "Musk oxen and bighorn favour cold,\n"
-	.string "broken ground. Mammoths and horses\l"
-	.string "prefer open grass.\p"
+	.string "Bighorn favour steep, broken\n"
+	.string "ground. Mammoths, horses and\l"
+	.string "helmeted musk oxen prefer open\l"
+	.string "country.\p"
 	.string "The ice edge squeezes them into the\n"
 	.string "same valleys. A mixed bone bed is\l"
 	.string "not always a mixed herd.$"

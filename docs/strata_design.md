@@ -139,7 +139,7 @@ largest extinction in the epilogue is the one humans were present for.
 | Ice Age Steppe | ~20 ka | Route 118, `*_ice_age` palettes, snow | Act 8 hub (80x20): arrival and anchor; the *Panthera* pair set piece (wild double Lv 48/48, once, in the only corridor to the sinkhole); 4 field notes; the sinkhole drops into the trap cave; Meltwater River east, Ice Margin north; the sub-layer marker by the anchor opens Colby once the boss is done |
 | Natural Trap Cave | ~20 ka | Granite Cave 1F | Act 8; *Arctodus* boss (Lv 52); 3 field notes; a rope climbs back out |
 | Meltwater River | ~20 ka | Route 118 west half, `*_ice_age` palettes, snow, sand-bar ford patched across the channel | Act 8; braided outwash, water habitat; *Chelydra* stand-in (surf and fishing), glacial-edge grazers on land; 3 field notes |
-| Ice Margin | ~20 ka | Route 111 desert rows 60-83, `*_ice_age` palettes, snow | Act 8; open habitat; *Ovibos*, *Mammuthus*, *Panthera*, *Ovis*; the ice, sea-level and mixed-bone-bed notes. Not a Laurentide front (that was hundreds of km north): mountain glaciers, drawn close |
+| Ice Margin | ~20 ka | Route 111 desert rows 60-83, `*_ice_age` palettes, snow | Act 8; open habitat; *Bootherium* (helmeted musk ox), *Mammuthus*, *Panthera*, *Ovis*; the ice, sea-level and mixed-bone-bed notes. Not a Laurentide front (that was hundreds of km north): mountain glaciers, drawn close |
 | Colby Site | ~13 ka | Route 118 east crop, `*_ice_age` palettes, no snow | Act 8 coda (same era, a late-glacial sub-layer reached by a marker, not a connection); no encounters; mammoth bone pile (the meat-cache reading, flagged as debated) and a Clovis point (the stock fossil stone; reading it sets `FLAG_STRATA_COLBY_SEEN`, which the rig needs before "Today", §7.9); an evidence-for-and-against note |
 | Montana Prairie | today | Route 102 | Epilogue; open once the present layer is loaded, via the highway west of Jordan. Prairie-dog town and a one-time black-footed ferret encounter (`FLAG_STRATA_EPI_FERRET_MET`), swift fox, sage-grouse, bison, pronghorn; 4 field notes; the Interpretive Center is the building in the east half (door warp); east edge opens to the Breaks, south edge to the Pryor Mountains |
 | Missouri Breaks | today | Route 114 top (river, badlands ground; house, berry plots and bridge removed) | Epilogue; water habitat: *Chelydra*, *Lepisosteus*, *Ovis*, *Meleagris*; 3 field notes (the same Hell Creek rock eroding today) |
@@ -216,14 +216,14 @@ Ground-dwelling birds survived the impact. Tree-dwelling birds mostly did not.
 Lesson: one survivor radiates into many body plans. Big and flightless is a dead end here.
 
 ### 🐢 Reptile: Snapping turtle line (stasis)
-Snapping turtles have lived in Montana from the Cretaceous to today with very little change.
+A snapper-grade body plan runs from the Cretaceous to today: stand-ins in between, and the real common snapper only from the Ice Age load on.
 
 | Stage | Act | Species | Notes |
 |---|---|---|---|
 | 1 | 1–3 | *Emarginachelys cretacea* | Hell Creek chelydrid |
-| 2 | 4–6 | *Protochelydra zangerli* | Paleocene, North Dakota |
-| 3 | 7–E | *Chelydra serpentina* | Common snapping turtle |
-| 3b | 7–E | *Macrochelys* (alligator snapper) | Heat branch (HEAT ≥ 160 over Acts 3–6, i.e. carried through the PETM); Miocene fossils in Nebraska, today only in the warm Southeast |
+| 2 | 4–7 | *Protochelydra zangerli* | Paleocene, North Dakota; a labelled stand-in past its real age |
+| 3 | 8–E | *Chelydra serpentina* | Common snapping turtle (no record of this species as old as Ashfall; genus reported from the Miocene, PBDB) |
+| 3b | 7–E | *Macrochelys* (alligator snapper) | Heat branch at the Act 7 load (HEAT ≥ 160 over Acts 3–6, i.e. carried through the PETM; a branch-only table, so below that the lineage stays *Protochelydra*); *M. schmidti*, Marsland Fm, Nebraska, ~18–16 Ma (no Ashfall record); today only in the warm Southeast |
 
 Lesson: if a body plan works, **stabilising selection** keeps it. This line
 changes form rarely, but gets big stat boosts from surviving every extinction filter.
@@ -238,7 +238,7 @@ It is the "hard mode / safe mode" starter.
   In the game: *Sifrhippus* → *Eohippus* → *Mesohippus* → *Protohippus* (default) → *Equus*,
   or the forest browser *Hypohippus* (FOREST ≥ 64 in Act 6; dies by the Ice Age).
 - **Camel line** (also North American in origin): *Poebrotherium* → *Procamelus* → *Aepycamelus* → *Camelops*.
-- **Multituberculates**: *Mesodma* → *Taeniolabis* → *Ptilodus* → extinct by ~34 Ma.
+- **Multituberculates**: *Mesodma*, *Taeniolabis* and *Ptilodus* are three families, not a line of descent; the group is extinct by ~34 Ma.
   They were the most long-lived mammal order of all time. Their dying out is a midgame story beat.
 - **Rhinos**: *Hyrachyus* (Bridger) → *Subhyracodon* → *Teleoceras* (barrel-bodied, preserved
   at Ashfall) or the open-country *Aphelops* (OPEN ≥ 64 in Act 6) → both extinct in NA.
@@ -336,7 +336,7 @@ model in `balance.py`), the others a level or two below, checked with the headle
 | OSKAR, ichnologist | Jordan (13, 10) | act 6 done | Stylemys 33, Merycoidodon 34, Mesohippus 35 | 1680 |
 | Theo #2 | Hell Creek Camp | act 6 done | Stylemys 32, Leptomeryx 33, Mesohippus 34, Hesperocyon 35 | 1400 |
 | HOLLIS, volcanologist | Jordan (3, 13) | act 7 done | Balearica 41, Hypohippus 42, Procamelus 42 | 2016 |
-| ASHA, Quaternary ecologist | Lindqvist Ranch (53, 10) | act 8 done | Equus 43, Antilocapra 44, Camelops 45, Ovibos 46 | 2208 |
+| ASHA, Quaternary ecologist | Lindqvist Ranch (53, 10) | act 8 done | Equus 43, Antilocapra 44, Camelops 45, Bootherium 46 | 2208 |
 | Theo #3 | Hell Creek Camp | act 8 done | double battle with Josie's pair: Canis 42, Meleagris 43, Ovis 44, Equus 45 | 3600 |
 | Dr. Halvorsen | Interpretive Center | epilogue (`FLAG_STRATA_EPI_PEER_REVIEW_DONE`) | Chelydra 46, Teleoceras 47, Epicyon 48, Uintatherium 49, Arctodus 50, Tyrannosaur 52 | 2912 |
 
@@ -750,8 +750,9 @@ set behaves the same), so there is one dex and it lists only Strata animals.
     scroll (arrows mark more rows). The box below: where it comes from ("Root of the line, at
     Hell Creek", "From Hesperocyon at Ashfall: MEAT", "No descents: a line of its own."), its
     fate ("Descends: Canis, Aenocyon or Vulpes.", "Lost at the K-Pg boundary." with the fossil
-    reason from `sStrataFossils`, "Living today." with the evidence file's `today` note, e.g.
-    *Macrochelys*, *Equus*, *Ovibos*). **Spoilers:** an animal not yet seen in the Codex is "?"
+    reason from `sStrataFossils`, "Model grade, not proven ancestry." on descending rows (outline
+    §5 M7, M8), "Living today." with the evidence file's `today` note, e.g.
+    *Macrochelys*, *Equus*). **Spoilers:** an animal not yet seen in the Codex is "?"
     in its row and in other rows' details, its fate column is "?", and its detail says "Not yet
     seen in the Codex."; its branch tag stays (the pressure chart already hints branches).
 - **Tests:** `test/strata_codex.c` (unique 001-087 numbers, no stock species, era order,

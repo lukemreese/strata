@@ -520,9 +520,9 @@ def forecast_smoke(g, args):
     party = [(m["species"], m["level"]) for m in g.party()]
     g.log(f"TEAM after the load {party}")
     g.check(party == expected, f"the TEAM after the load is the forecast ({party} vs {expected})")
-    want = {"SPECIES_LEPTOCYON", "SPECIES_HYPOHIPPUS", "SPECIES_CHELYDRA", "SPECIES_GALLINULOID", "SPECIES_APHELOPS"}
+    want = {"SPECIES_LEPTOCYON", "SPECIES_HYPOHIPPUS", "SPECIES_PROTOCHELYD", "SPECIES_GALLINULOID", "SPECIES_APHELOPS"}
     g.check(sorted(s for s, _ in party) == sorted(g.const(s) for s in want),
-            "Leptocyon, Hypohippus, Chelydra, Gallinuloid and Aphelops; Ischyromys lost")
+            "Leptocyon, Hypohippus, Protochelyd, Gallinuloid and Aphelops; Ischyromys lost")
 
 
 def open_team_menu(g):
@@ -1773,3 +1773,43 @@ def starter_run_smoke(g, args):
     rows = starter_run(g, args, "bird", only=["oxyaena", "ingrid"], repeat=1)
     g.check([r["fight"] for r in rows] == ["oxyaena", "ingrid"], f"both fights recorded ({[r['fight'] for r in rows]})")
     g.check(os.path.exists(os.path.join(g.out, "fights.csv")), "fights.csv written")
+
+# ---------------------------------------------------------------------------
+# Q1/Q3: the corrected science text, for review (screenshots).
+# ---------------------------------------------------------------------------
+Q3_SPECIES = ["SPECIES_BOOTHERIUM", "SPECIES_MACROCHELYS", "SPECIES_PROTOCHELYD",
+              "SPECIES_HYPOHIPPUS", "SPECIES_AENOCYON", "SPECIES_MESODMA"]
+Q3_NOTES = ["StrataIceMargin_EventScript_NoteIce", "StrataIceMargin_EventScript_NoteEdge",
+            "StrataMeltwater_EventScript_NoteMuskOx", "StrataMeltwater_EventScript_NoteTurtle",
+            "StrataNiobrara_EventScript_NoteTurtles", "StrataSavanna_EventScript_NoteBrowsers",
+            "StrataSteppe_EventScript_NoteWolf"]
+
+
+@scenario
+def q3_codex(g, args):
+    """Codex EVIDENCE and LINEAGE pages of the animals the Q1 fact-check changed."""
+    # One animal per run: codex_goto's position count drifts over long list moves, and a second
+    # quick-start from inside the Codex hangs. STRATA_Q3_SPECIES names it (default: the first).
+    species = os.environ.get("STRATA_Q3_SPECIES", Q3_SPECIES[0])
+    name = species.replace("SPECIES_", "").lower()
+    g.quickstart("MAP_STRATA_FIELD_STATION", 6, 6, story=3, era=1, party=[(s, 30) for s in Q3_SPECIES])
+    codex_open(g)
+    codex_goto(g, species, [0])
+    codex_bar_open(g, 0)
+    codex_wait(g, "Task_HandleCodexPageInput", "the EVIDENCE page")
+    g.screenshot(f"{name}_evidence")
+    g.press("RIGHT", 2, 10)
+    codex_wait(g, "Task_HandleCodexPageInput", "the LINEAGE page")
+    g.screenshot(f"{name}_lineage")
+
+
+@scenario
+def q3_notes(g, args):
+    """The field notes the Q1 fact-check changed, a screenshot per box."""
+    g.quickstart("MAP_STRATA_FIELD_STATION", 6, 6, story=3, era=1, party=[("SPECIES_CIMOLESTES", 30)])
+    for script in Q3_NOTES:
+        g.run_script(script)
+        start = g.frame
+        msgs = read_messages(g, script.split("_")[-1], lambda: g.frame - start > 30 and not g.st["scriptActive"])
+        g.check(len(msgs) >= 1, f"{script} shows its text")
+        g.wait_overworld()

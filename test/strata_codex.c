@@ -383,7 +383,8 @@ TEST("The Codex's grades and stand-ins are labelled as stand-ins")
         SPECIES_CIMOLESTES, SPECIES_PROTICTIS, SPECIES_MIACIS, SPECIES_HESPEROCYON, SPECIES_LEPTOCYON,
         SPECIES_ASTERIORNIS, SPECIES_GALLINULOID, SPECIES_PROTOCHELYD, SPECIES_OMOMYS, SPECIES_PARAMYS,
         SPECIES_HYRACHYUS, SPECIES_APHELOPS, SPECIES_HYPOHIPPUS, SPECIES_DOUGLASSCIUR, SPECIES_COSORYX,
-        SPECIES_VULPES,
+        SPECIES_VULPES, SPECIES_SUBHYRACODON, SPECIES_TELEOCERAS, SPECIES_PROTOHIPPUS, SPECIES_CENTROCERCUS,
+        SPECIES_MACROCHELYS,
     };
     enum Species species = SPECIES_NONE;
     const struct StrataEvidence *evidence;
@@ -587,7 +588,7 @@ TEST("LINEAGE: rows and details name the branch, its pressure and the fate")
     EXPECT_EQ(StringCompare(lines[0], COMPOUND_STRING("Root of the line, at Hell Creek")), 0);
 }
 
-TEST("LINEAGE: a living end with a status note shows it (lost from Montana, alive elsewhere)")
+TEST("LINEAGE: a living end with a status note shows it (alive far from here)")
 {
     u8 lines[CODEX_LINEAGE_DETAIL_LINES][CODEX_LINE_SIZE];
     struct CodexLineageRow rows[CODEX_LINEAGE_MAX_ROWS];

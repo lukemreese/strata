@@ -9435,9 +9435,9 @@ Cry_StrataCamelops::
 .endif
 
 	.align 2
-Cry_StrataOvibos::
+Cry_StrataBootherium::
 .if TESTING == FALSE
-	.incbin "sound/direct_sound_samples/cries/strata_ovibos.bin"
+	.incbin "sound/direct_sound_samples/cries/strata_bootherium.bin"
 .endif
 
 	.align 2

@@ -130,7 +130,7 @@ MAPS = [
         encounters=dict(
             land_mons=mons(("EOHIPPUS", 28, 30), ("HYRACHYUS", 28, 31), ("HYOPSODUS", 28, 30), ("EOHIPPUS", 29, 31),
                            ("HYRACHYUS", 29, 32), ("PRESBYORNIS", 29, 31), ("DIACODEXIS", 29, 31), ("HYOPSODUS", 30, 32),
-                           ("HYRACHYUS", 30, 33), ("BOREALOSUCH", 30, 32), ("CORYPHODON", 31, 33), ("UINTATHERIUM", 32, 33)),
+                           ("HYRACHYUS", 30, 33), ("BOREALOSUCH", 30, 32), ("HYRACHYUS", 31, 33), ("UINTATHERIUM", 32, 33)),
             water_mons=mons(("KNIGHTIA", 28, 32), ("HELIOBATIS", 28, 32), ("PRESBYORNIS", 29, 33),
                             ("BOREALOSUCH", 30, 33), ("BOREALOSUCH", 31, 34)),
             fishing_mons=mons(("KNIGHTIA", 26, 29), ("KNIGHTIA", 26, 29), ("KNIGHTIA", 27, 30), ("LEPISOSTEUS", 27, 30),

@@ -83,14 +83,12 @@ SPECS = {
                         ramp="horn", z=-0.3, mirror=True)]),
         footprint=FOOTPRINTS["cloven"],
     ),
-    # Ovibos moschatus, Natural Trap Cave (~20 ka; living in the Arctic), ~300 kg,
-    # 2.2 m. Known colours: long dark-brown guard hair hanging as a skirt almost
-    # to the ground, a pale cream saddle, whitish stockings, a pale muzzle;
-    # horns with a broad boss across the forehead that sweep down beside the
-    # face and hook forward and up, cream with dark tips. Frame 2: head lowered
-    # to present the horns. Variant: a paler, greyer coat (white-faced musk oxen
-    # and paler populations occur).
-    "ovibos": dict(
+    # Bootherium bombifrons, Natural Trap Cave (~20 ka; extinct ~11 ka), ~420 kg.
+    # The helmeted musk ox: taller and leaner than Ovibos, with a shorter coat
+    # (coat colours are speculative, after living musk oxen), a longer snout, and
+    # horn bases fused across the top of the skull into a helmet, curving down.
+    # Frame 2: head lowered to present the helmet. Variant: a paler, greyer coat.
+    "bootherium": dict(
         ramps={
             "outline": ramp("1a120c"),
             "fur": ramp("2a1c12", "44301e", "60462e", "7c6040"),
@@ -101,9 +99,9 @@ SPECS = {
         },
         front=1.25, back=1.3, icon=0.62,
         shiny={"fur": dict(deg=6, sat=0.45, val=1.55), "pale": dict(deg=0, sat=0.5, val=1.05)},
-        body=dict(L=19.0, top_s=-13.0, top_h=-10.5, chest=16.5, waist=14.0, hip=13.5, sag=0.2,
+        body=dict(L=19.0, top_s=-13.0, top_h=-10.5, chest=15.0, waist=12.6, hip=12.2, sag=0.2,
                   chest_w=1.05, rump_w=1.0, hump=(2.0, 2.0, 7.0, 5.0)),
-        leg=dict(h=8.0, fr=(3.2, 2.0, 1.8), hr=(3.4, 2.0, 1.8), fx=2.5, hx=0.0, far=(3.0, -2.5),
+        leg=dict(h=10.0, fr=(3.0, 1.9, 1.7), hr=(3.2, 1.9, 1.7), fx=2.5, hx=0.0, far=(3.0, -2.5),
                  elbow=0.8, knee=2.0, hock=1.6, wrist=0.3, hockh=0.45, thigh=0.0,
                  foot=dict(kind="hoof", l=3.2, h=2.0)),
         neck=dict(r0=7.0, r1=5.8, base=(-1.0, 6.0)),
@@ -118,17 +116,17 @@ SPECS = {
         belly=(99.0, 0.0), throat=(99.0, 0.0),
         hair=dict(ramps=("fur",), period=3, run=3),
         extras=[
-            # the skirt of guard hair, hanging over the upper legs
+            # a shorter coat than Ovibos' skirt: it stops above the knees
             dict(kind="fringe", on="body", top=[(-16.0, -2.0), (-6.0, -2.0), (6.0, -3.0), (14.5, -4.0)],
-                 bottom=[(-15.5, 7.0), (-5.0, 8.0), (6.0, 8.0), (14.5, 6.5)],
+                 bottom=[(-15.5, 3.5), (-5.0, 4.5), (6.0, 4.5), (14.5, 3.0)],
                  teeth=6, depth=1.6, r=2.5, ramp="fur", z=2.3),
             # chin and throat ruff
             dict(kind="fringe", on="head", top=[(-5.5, 4.0), (0.5, 4.5)], bottom=[(-5.0, 6.5), (1.5, 8.0)],
                  teeth=3, depth=1.8, r=1.4, ramp="fur", z=2.95),
-            # horn boss and the hooked horn
-            dict(kind="ell", on="head", e=(0.2, -4.2, 4.2, 1.9, -8), ramp="horn", z=3.45),
-            dict(kind="tube", on="head", pts=[(1.4, -3.2), (2.4, -0.6), (1.6, 2.8), (-0.6, 4.0), (-2.4, 3.0)],
-                 radii=[1.9, 1.6, 1.25, 0.9, 0.5], ramp="horn", tip=(0.8, "dark"), z=3.5),
+            # the helmet: horn bases fused across the skull, and a horn curving down
+            dict(kind="ell", on="head", e=(0.2, -4.4, 4.6, 2.4, -8), ramp="horn", z=3.45),
+            dict(kind="tube", on="head", pts=[(1.4, -3.2), (2.2, -0.8), (1.6, 1.8), (0.4, 2.8)],
+                 radii=[1.9, 1.5, 1.1, 0.6], ramp="horn", tip=(0.8, "dark"), z=3.5),
         ],
         action=dict(tilt=-10.0, tail=0.0),
         ow_end=dict(head=1.7, hump=0.55, head_dy=0.35, ear=0.7, head_inner="outline", muzzle=0.85,

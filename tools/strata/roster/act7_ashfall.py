@@ -10,7 +10,7 @@ SPECIES = [
     # Grassland waterhole buried by ash from a Yellowstone-hotspot eruption in Idaho.
     # ------------------------------------------------------------------
     dict(
-        name="Protohippus", genus="Protohippus simus", site="Ashfall, NE", age="~11.9 Ma",
+        name="Protohippus", genus="Protohippus supremus", site="Ashfall, NE", age="~11.9 Ma",
         first_era="ASHFALL",
         mass=100.0, length=1.6, mass_est=True,
         weights=dict(hp=6, atk=5, defn=4, spa=4, spd=4, spe=8),

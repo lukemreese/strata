@@ -292,7 +292,7 @@ Rename the existing map **"Bridger Shore"**. Most of its lake fauna is from *Fos
 | Map | Status | Layout | Habitat | Species | Notes |
 |---|---|---|---|---|---|
 | **Fossil Lake** (NEW) | NEW | `Route103` (lake + shore) | W | Knightia, Heliobatis, Presbyornis, Onychonycter, Gallinuloid; fishing: Knightia, Lepisosteus | Lagerstätte. Signs: "schools of fish died at once"; "the oldest bats". Mass-mortality cutscene (lake turnover, labelled hypothesis) |
-| Bridger Shore | built (rename) | Route 104 | W / O | Eohippus, Uintatherium, Coryphodon ⚠, Borealosuch, **Hyrachyus** (NEW, early rhino relative) | Boss here |
+| Bridger Shore | built (rename) | Route 104 | W / O | Eohippus, Uintatherium, Borealosuch, **Hyrachyus** (NEW, early rhino relative) | Boss here |
 | **Bridger Forest** (NEW) | NEW | `ThreeIsland_BerryForest_Frlg` | F | Notharctus, **Omomys** (NEW), Miacis, Eohippus, Hyopsodus | Canopy primates. P forage (palm fruit, leaves) |
 | **Oil-Shale Cliffs** (NEW, optional) | NEW | `Route115` north cliffs | O | **Patriofelis** (NEW predator mini-boss), Diacodexis | Varved shale: "one stripe = one year" |
 
@@ -309,7 +309,7 @@ Heliobatis, Knightia, Notharctus, Uintatherium; NEW: Omomys, Oxyaena, Patriofeli
 | Map | Status | Layout | Habitat | Species | Notes |
 |---|---|---|---|---|---|
 | White River | built | Route 114 S, Oligocene palettes | O | Mesohippus, Merycoidodon, Leptomeryx, Ischyromys, Stylemys, Poebrothere, Hesperocyon, Subhyracodon, Hoplophoneus, Archaeothere | Boss at the bone stash |
-| **Badlands Wall** (NEW) | NEW | `SixIsland_RuinValley_Frlg` (patch out ruins) + Oligocene palette | O | Merycoidodon herds, Stylemys, **Palaeolagus** (NEW, rabbit) | A cliff sign at the **Chadron / Brule contact**: "the Eocene–Oligocene boundary is in this cliff" ⚠ |
+| **Badlands Wall** (NEW) | NEW | `SixIsland_RuinValley_Frlg` (patch out ruins) + Oligocene palette | O | Merycoidodon herds, Stylemys, **Palaeolagus** (NEW, rabbit) | A cliff sign at the **Chadron / Brule contact**: "the Eocene–Oligocene boundary lies near this contact" |
 | **Gallery Forest** (NEW) | NEW | `Route119` north forest band + Oligocene palette | F / W | Mesohippus, Leptomeryx, Hesperocyon, **Douglassciurus** (NEW, the first squirrels ⚠) | Forest strips along the rivers in open country. **This is where the horse's forest branch is steered** |
 | **Toadstool Trackways** (NEW) | NEW | `DesertRuins` or `Route111` rocky crop | O | Subhyracodon, **Hyaenodon** (NEW, mini-boss), Poebrothere | Fossil trackways. Hidden items = track casts (Codex) |
 
@@ -334,9 +334,9 @@ maps.
 
 | Map | Status | Layout | Habitat | Species | Notes |
 |---|---|---|---|---|---|
-| Grassland | built (pre-ash version needed) | Route 113 | O | Protohippus, **Cormohipparion** (NEW), Procamelus, Leptocyon, Balearica, **Cosoryx** (NEW, pronghorn relative ⚠), Epicyon. **Remove Gallinuloid** (anachronism, §5) | Grass and grazers. Sign: "high-crowned teeth vs grit" |
-| **Niobrara River** (NEW) | NEW | `Route120` north river or `Route25_Frlg` | W | Chelydra ⚠, Lepisosteus, Teleoceras, **Aphelops** (NEW) | Turtle fishing spot |
-| **Savanna Woodland** (NEW) | NEW | `SafariZone_South` / `North` | O / F | Procamelus, **Hypohippus** (NEW ⚠), Anchigyps, Leptocyon | Mixed browsers and grazers |
+| Grassland | built (pre-ash version needed) | Route 113 | O | Protohippus, **Cormohipparion** (NEW), Procamelus, Leptocyon, Balearica, **Cosoryx** (NEW, pronghorn relative ⚠), Epicyon. Gallinuloid removed (anachronism, §5) | Grass and grazers. Sign: "high-crowned teeth vs grit" |
+| **Niobrara River** (NEW) | NEW | `Route120` north river or `Route25_Frlg` | W | Macrochelys (labelled stand-in, Act 7 tables; N1), Lepisosteus, Teleoceras, **Aphelops** (NEW) | Turtle fishing spot |
+| **Savanna Woodland** (NEW) | NEW | `SafariZone_South` / `North` | O / F | Procamelus, **Hypohippus** (NEW; UNSM lists it in the ash bed), Anchigyps, Leptocyon | Mixed browsers and grazers |
 | **The Waterhole** (NEW, split from Grassland east) | NEW | `SafariZone_Southwest` (pond) | W | Teleoceras herd | Boss arena. After the boss it becomes the "rhino barn" view (field note about the real excavation shelter) |
 
 **Boss: *Teleoceras* bull + cow, wild double** (46/42) at the waterhole, with the ash
@@ -348,15 +348,16 @@ in their tables beyond the survivors at higher levels. That is the point.
 O → *Vulpes* (NEW); horse Protohippus → Equus at the Act 8 load (no branch).
 **Extinction leaving the act (Act 8 load, existing + NEW):** Teleoceras, Epicyon,
 Balearica, Anchigyps; NEW: Aphelops, Hypohippus, Cormohipparion.
+**Turtle:** *Protochelyd* stays the labelled stand-in through this act (branch-only descent table at the Act 7 load: heat → *Macrochelys*, else stasis); the common snapper arrives at the Act 8 load (§2.11, N1).
 
 ### 2.9 Act 8: Ice Age Wyoming (~20 ka), with a ~13 ka coda
 
 | Map | Status | Layout | Habitat | Species | Notes |
 |---|---|---|---|---|---|
-| Ice Age Steppe | built | Route 118, ice palettes | O | as built; **drop Aenocyon** ⚠ (or keep with a note) | Sinkhole entrance |
+| Ice Age Steppe | built | Route 118, ice palettes | O | as built; *Aenocyon* stays off the wild table (H5, hedged) | Sinkhole entrance |
 | Natural Trap Cave | built | Granite Cave 1F | none | (boss only) | Rope back out |
-| **Meltwater River** (NEW) | NEW | `Route119` (ice palettes) | W | Chelydra, Lepisosteus, Ovibos ⚠ | Braided glacial outwash |
-| **Ice Margin** (NEW) | NEW | `FourIsland_IcefallCave_Entrance_Frlg` + exterior strip | O | Ovibos, Mammuthus, Panthera | The Laurentide ice front to the north (sign: "~1–2 km thick") ⚠ |
+| **Meltwater River** (NEW) | NEW | `Route119` (ice palettes) | W | Chelydra, Lepisosteus (left out of tables), *Bootherium* | Braided glacial outwash |
+| **Ice Margin** (NEW) | NEW | `FourIsland_IcefallCave_Entrance_Frlg` + exterior strip | O | *Bootherium*, Mammuthus, Panthera | The Laurentide ice front to the north (sign: up to about 3 km thick at its centre, thinner here at the edge; the real edge lay hundreds of km north) |
 | **Colby Site, ~13 ka** (NEW coda) | NEW | small `Route118` east crop, late-glacial palette (less snow) | none | no encounters | Mammoth bones and a **Clovis point**. The rig can't render the people (rule R-g). A sign on the evidence for and against a human role ⚠. Leads to the epilogue |
 
 **Boss: *Arctodus*** Lv 52 in the cave (keep). Add a mini-boss on the steppe: an
@@ -369,7 +370,7 @@ Act 8's pressures steer nothing. Say so in the rig text: "This last step is abou
 left." The bird's *Centrocercus* branch happens at the Act 8 load, steered in the Act 6–7
 grasslands.
 **Extinction leaving the act (epilogue load, existing):** Aenocyon, Arctodus,
-Miracinonyx, Panthera, Mammuthus, Camelops.
+Miracinonyx, Panthera, Mammuthus, Camelops, *Bootherium* (added Q1: the helmeted musk ox is a real extinction).
 
 ### 2.10 Epilogue: Montana today
 
@@ -401,7 +402,7 @@ The **window** is when pressure accumulates for that descent: from the previous 
 | Asteriornis → (A4) | Gallinuloid | Presbyornis (W ≥ 64); Gastornis (P ≥ 64) | A1–3 | shores; ferns, palms, legumes | existing; needs W/P sources |
 | Gallinuloid → (A8) | Meleagris | **Centrocercus** (O ≥ 96) | A4–7 | White River and Ashfall grassland | ✅ added (F8) |
 | Emarginachel → (A3) | Protochelyd | none | A1–2 | n/a | existing |
-| Protochelyd → (A7) | Chelydra | **Macrochelys** (heat ≥ 160) | A3–6 | carry it through the PETM (heat 2/tick); keep it in the PC to avoid | ✅ added (F8). A party turtle gets there in ~80 PETM ticks (~2,600 steps), so it is close to the default for a carried turtle; still open: the Q2 starter runs play the default paths only |
+| Protochelyd → (A7, no default: else stasis) (A8) | (A8) Chelydra | (A7) **Macrochelys** (heat ≥ 160) | A3–6 | carry it through the PETM (heat 2/tick); keep it in the PC to avoid | ✅ added (F8). A party turtle gets there in ~80 PETM ticks (~2,600 steps), so it is close to the default for a carried turtle; the default moved from A7 to A8 in Q1 (N1); still open: the Q2 starter runs play the default paths only |
 | Sifrhippus → (A5) | Eohippus | none | A4 | n/a | existing |
 | Eohippus → (A6) | Mesohippus | none | A5 | n/a | existing |
 | Mesohippus → (A7) | Protohippus | **Hypohippus** (F ≥ 64) | A6 | Gallery Forest | ✅ added (F8) |
@@ -442,14 +443,14 @@ Protochelyd→Macrochelys), and Oxyaena doesn't look like the player's Protictis
 | *Hyaenodon horridus* | 6 | ~40 (est) | 420 | DARK | carnivore | `mightyena` | WHITE_RIVER | Brule Fm ✓; NA species gone by the late Oligocene |
 | *Palaeolagus haydeni* | 6 | ~0.8 (est) | 335 | NORMAL | herbivore | `buneary` | WHITE_RIVER | Brule Fm ✓, very common |
 | *Douglassciurus jeffersoni* | 6 | ~0.3 (est) | 314 | NORMAL | herbivore | `pachirisu` | WHITE_RIVER (`last_era` WHITE_RIVER) | ⚠ kept: Chadron Fm, Flagstaff Rim WY, ~36 Ma (late Eocene; slightly older than the act). Tree-squirrel grade standing in for the prairie-dog line; wild in Act 6 only |
-| *Hypohippus* | 7 | ~200 (est) | 455 | NORMAL/GRASS | herbivore | `ponyta` | ASHFALL | ⚠ kept with site "Miocene Great Plains, NE" (~17–11 Ma): not recorded in the Ashfall bed itself (M9) |
+| *Hypohippus* | 7 | ~450 | 473 | NORMAL/GRASS | herbivore | `ponyta` | ASHFALL | ✓ "Ashfall, NE", ~11.9 Ma, listed in the ash bed by the UNSM guide (not on PBDB's Ashfall list; M9). 403–600 kg |
 | *Aphelops* | 7 | ~1,500 (est) | 499 | GROUND | herbivore | `rhyhorn` | ASHFALL | ⚠ kept: present but rare at Ashfall beside *Teleoceras*; the open-country contrast is interpretive |
-| *Cormohipparion occidentale* | 7 | ~100 (est) | 440 | NORMAL/GRASS | herbivore | `blitzle` | ASHFALL | ⚠ kept: a common Ashfall horse ✓ |
-| *Cosoryx furcatus* | 7 | ~20 (est) | 405 | NORMAL | herbivore | `girafarig` | ASHFALL | ⚠ kept as "Miocene Great Plains, NE" (~13–11 Ma); in the Ashfall bed unverified. Merycodontine stand-in for *Antilocapra* |
-| *Macrochelys* | 7 | 80 | 475 (focal) | WATER/ROCK | omnivore | `carracosta` | ASHFALL | ⚠ kept: *M. schmidti*, Miocene of Nebraska ✓. Survives today only in the Southeast; the lineage is not removed at A8 (Codex: "lost from Montana, survives elsewhere") |
-| *Vulpes velox* | 8, E | 2.2 | 397 (focal) | NORMAL/DARK | omnivore | `fennekin` | TRAP_CAVE | ⚠ kept: reintroduced (Canada from 1983, Montana from 1998); check dates (M12). Not wild in Act 8 until a Pleistocene WY record is cited |
+| *Cormohipparion occidentale* | 7 | ~100 (est) | 440 | NORMAL/GRASS | herbivore | `blitzle` | ASHFALL | ✓ one of five horses in the Ashfall ash (Pseudhipparion is the commonest) |
+| *Cosoryx furcatus* | 7 | ~20 (est) | 405 | NORMAL | herbivore | `girafarig` | ASHFALL | ✓ kept as "Miocene Great Plains, NE" (~13–11 Ma): on neither Ashfall list. Merycodontine stand-in for *Antilocapra* |
+| *Macrochelys* | 7 | 80 | 475 (focal) | WATER/ROCK | omnivore | `carracosta` | ASHFALL | ✓ *M. schmidti*, Marsland Fm, Nebraska, ~18–16 Ma (older than Act 7, no Ashfall or Montana record: labelled stand-in). Survives today only in the Southeast; the lineage is not removed at A8 |
+| *Vulpes velox* | 8, E | 2.2 | 397 (focal) | NORMAL/DARK | omnivore | `fennekin` | TRAP_CAVE | ✓ reintroduced (Canada from 1983, Montana from 1998; M12). Not wild in Act 8 until a Pleistocene WY record is cited |
 | *Centrocercus urophasianus* | 8, E | 2.5 | 400 (focal) | NORMAL/FLYING | herbivore | `starly` | TRAP_CAVE | Mass is a large male's. ~44% range loss (Schroeder et al. 2004) |
-| *Mustela nigripes* | E | 0.9 | 338 | DARK | carnivore | `furret` | EPILOGUE | ⚠ kept: rediscovered 1981 near Meeteetse, WY (Bighorn Basin ✓); reintroduced in Montana from 1994; check (M12) |
+| *Mustela nigripes* | E | 0.9 | 338 | DARK | carnivore | `furret` | EPILOGUE | ✓ rediscovered 1981 near Meeteetse, WY (Bighorn Basin ✓); reintroduced in Montana from 1994 (M12) |
 
 **Suggested encounter placement** (for the C3–C10 / C12 content agents; levels within the
 §3.1 bands; `test/strata_region.c` enforces `first_era`, `last_era` and extinctions):
@@ -782,32 +783,33 @@ plausible but unverified co-occurrence or timing; **Low** = wording.
 
 | # | Risk | Claim (where) | Concern | Action |
 |---|---|---|---|---|
-| H1 | High | Act 3 = "Denver Fm, 65.7 Ma", "~300 kyr" (`strata_acts.c`, design doc), while the boss *Eoconodon* and *Taeniolabis* are listed ~65.4 Ma (roster) | Corral Bluffs reporting puts *Taeniolabis* (with the oldest legumes) ~700 kyr post-impact; *Eoconodon* is in the same study | Relabel Act 3 to ~65.4 Ma, or say the window spans ~300–700 kyr. Check Lyson et al. 2019 (*Science*). **Layer name, roster, maps and design doc relabelled 65.7–65.4 Ma (R7)**; mentor lines now say "a few hundred thousand years" (S2); the boss line still says 300,000 years |
-| H2 | High | *Ovibos* wild on the present-day Montana prairie (`maps.py`) | Musk oxen don't live in Montana today | Remove it from the epilogue tables. **Done (R7)**: still wild on the Ice Age Steppe |
-| H3 | High | *Gallinuloides* wild at Ashfall, 11.9 Ma (`maps.py`); it's a ~52 Ma Green River bird | ~40 Myr anachronism. It's only there as a stasis placeholder | Remove it from the Act 7 wild table; keep it as a lineage only. Add a `first_era`/`last_era` test. **Removed (R7)**; **test done (C1)**: roster `first_era`/`last_era` → `sStrataSpeciesEras`, checked against every encounter table (Gallinuloid `last_era` = Green River) |
-| H4 | High | Teilhardina → Notharctus descent (`lineages.h`) | *Teilhardina* is omomyiform-grade; *Notharctus* is an adapiform: different primate groups | Descend to *Omomys* (NEW); Notharctus stays a wild species. **Done (C1/F8)**: Teilhardina → Omomys at the Act 5 load; Omomys dies at the Act 6 load |
-| H5 | High | *Aenocyon dirus* at Natural Trap Cave (roster site, steppe table) | Summaries of the cave's fauna list a Beringian-type wolf, not the dire wolf | Verify against the primary NTC faunal lists. If absent, change the site to another Wyoming/region locality and keep it regionally |
-| H6 | High | Ischyromys dex: "Rodents spread just as the last multituberculates vanished, and may have outcompeted them" | Rodents arrived in NA around the PETM, ~20 Myr before the last multis; competitive replacement is debated | Rewrite; *Paramys* (NEW) carries the arrival story. **Dex rewritten (R7)** |
-| H7 | High | PETM vs today's carbon-release rate (planned Act 4 line) | Needs a citable figure (e.g. "~10× faster today") | Cite before shipping (Zeebe et al. 2016 is the usual source). Halvorsen (S2) and Ingrid both hedge it: "roughly ten times faster, by current estimates" |
-| M1 | Med | *Protictis* wild in the PETM Willwood (Act 4 table) | *Protictis* is mainly a mid/late Paleocene genus; Willwood viverravids are *Didymictis*, *Viverravus* | Remove it from Act 4 (done in §2.5). Keep it as the dog-line stand-in, labelled. **Done (R7)**: still wild in Act 3 |
-| M2 | Med | *Mesodma* in the PETM and at Green River (Acts 4–5) | Last appearance of *Mesodma* specifically (vs *Ectypodus*) | Check PBDB; if needed, show it as "multituberculate (Mesodma-grade)" |
-| M3 | Med | *Champsosaurus* at Green River ~50 Ma (Act 5 water) | Eocene champsosaurs are known mostly from the high Arctic; Wyoming Eocene uncertain | Check, or drop it from Act 5 |
-| M4 | Med | *Coryphodon* at Green River/Bridger ~50–46 Ma | Mostly a Wasatchian (~55–50 Ma) genus | Keep in Fossil Lake only if it fits the dates |
-| M5 | Med | Map named "Lake Gosiute shore" with Fossil Lake fauna (Knightia, Heliobatis, Onychonycteris) | They're mostly Fossil Butte (Fossil Lake) | Split the maps (§2.6) |
-| M6 | Med | Natural Trap Cave co-occurrence: *Mammuthus columbi*, *Ovibos*, *Camelops* (site "Wyoming"), *Meleagris*, *Panthera atrox* | Some summaries list mammoth, musk-ox, camels and lions; species-level identities need checking | Verify each at species level; set `site` to the true locality |
-| M7 | Med | Subhyracodon → Teleoceras presented as a descent | *Teleoceras* is a teleoceratine, likely an Old World immigrant, not a descendant of *Subhyracodon* | Codex: "rhino grade, not a direct ancestor" |
-| M8 | Med | Dog chain Cimolestes → Protictis → Miacis → Hesperocyon → Leptocyon/Epicyon | Each step is a grade, not an ancestor; Hesperocyon, Borophaginae and Caninae are sister subfamilies | Make sure every Codex entry says "stand-in / grade" (rule §8.2 of the design doc) |
-| M9 | Med | All NEW Act 7 species at Ashfall specifically (Aphelops, Cormohipparion, Hypohippus, Cosoryx, Macrochelys) and Douglassciurus timing | Locality and age unverified | Verify before adding to the roster; fall back to "Great Plains, ~12 Ma" sites. **C1:** Aphelops and Cormohipparion kept at "Ashfall, NE"; Hypohippus, Cosoryx and Macrochelys use "Miocene Great Plains, NE"; Douglassciurus is Chadron Fm, ~36 Ma (`notes` say so). Primary-source check still open |
-| M10 | Med | Tanis / "the first hour after impact" (if anyone writes Act 1 impact text) | Contested site and data | Don't depend on it; describe ejecta reentry generically |
-| M11 | Med | Montana fossil ownership ("belong to the surface owner"), and PRPA 2009 on BLM land | Legal claims in dialogue | Phrase them generally; check the current state law and PRPA wording |
-| M12 | Med | Black-footed ferret rediscovery (Meeteetse, WY, 1981) and swift fox / ferret reintroductions in Montana | Dates and places in the epilogue text | Check with USFWS / state sources |
-| L1 | Low | "Ash from 1,600 km away; Bruneau–Jarbidge; supereruption" | Distance and source fine; "supereruption" magnitude wording | Say "massive eruption" unless a VEI-8 source is cited. **Halvorsen's Act 7 line done (S2)** |
-| L2 | Low | Mentor: "In 300,000 years the biggest mammals tripled in size" | Exact multiples from Lyson et al. | Check the figure. **Reworded (S2)**: "within a few hundred thousand years ... several times heavier", with "the exact numbers are still being refined" |
-| L3 | Low | Onychonycteris "probably could not echolocate" | Debated since 2008 | Add "debated". **Done (R7)** |
-| L4 | Low | Masses: Triceratops 9 t, T. rex 8 t, Arctodus 900 kg, Uintatherium 2 t | Upper-range picks | Fine; show ranges in the Codex |
-| L5 | Low | Design doc multituberculate chain "Mesodma → Taeniolabis → Ptilodus" | Not ancestral; Ptilodus is mid-Paleocene | Fix the design doc wording |
-| L6 | Low | "Time-averaging window" values (§3.9) | New text | Check per act |
-| L7 | Low | The Act 8 Colby site (~13 ka, Clovis mammoth kill, Worland WY) | Age and interpretation ("kill" vs scavenging debated) | Word it as "mammoth bones with Clovis tools" |
+| H1 | High | Act 3 = "Denver Fm, 65.7 Ma", "~300 kyr" (`strata_acts.c`, design doc), while the boss *Eoconodon* and *Taeniolabis* are listed ~65.4 Ma (roster) | Corral Bluffs reporting puts *Taeniolabis* (with the oldest legumes) ~700 kyr post-impact; *Eoconodon* is in the same study | Relabel Act 3 to ~65.4 Ma, or say the window spans ~300–700 kyr. Check Lyson et al. 2019 (*Science*). **Layer name, roster, maps and design doc relabelled 65.7–65.4 Ma (R7)**; mentor lines now say "a few hundred thousand years" (S2); the boss line still says 300,000 years. **Q1 ✅**: Act 3 reads 65.7–65.4 Ma; no boss line says a flat "300,000 years" now. The ~300 ka figure lives in the mentor line (L2) |
+| H2 | High | *Ovibos* wild on the present-day Montana prairie (`maps.py`) | Musk oxen don't live in Montana today | Remove it from the epilogue tables. **Done (R7)**: still wild on the Ice Age Steppe. **Q1 ✅**: the Act 8 slot is now the helmeted musk ox *Bootherium bombifrons* (issue #1: PBDB's NTC list), extinct at the Epilogue filter |
+| H3 | High | *Gallinuloides* wild at Ashfall, 11.9 Ma (`maps.py`); it's a ~52 Ma Green River bird | ~40 Myr anachronism. It's only there as a stasis placeholder | Remove it from the Act 7 wild table; keep it as a lineage only. Add a `first_era`/`last_era` test. **Removed (R7)**; **test done (C1)**: roster `first_era`/`last_era` → `sStrataSpeciesEras`, checked against every encounter table (Gallinuloid `last_era` = Green River). **Q1 ✅** |
+| H4 | High | Teilhardina → Notharctus descent (`lineages.h`) | *Teilhardina* is omomyiform-grade; *Notharctus* is an adapiform: different primate groups | Descend to *Omomys* (NEW); Notharctus stays a wild species. **Done (C1/F8)**: Teilhardina → Omomys at the Act 5 load; Omomys dies at the Act 6 load. **Q1 ✅** (issue #1 agrees) |
+| H5 | High | *Aenocyon dirus* at Natural Trap Cave (roster site, steppe table) | Summaries of the cave's fauna list a Beringian-type wolf, not the dire wolf | Verify against the primary NTC faunal lists. If absent, change the site to another Wyoming/region locality and keep it regionally. **Q1 open, hedged**: PBDB and the 2023 NTC volume list the dire wolf; the measured wolves are Beringian-type gray wolves (Meachen 2016). Codex note and Steppe note call the record thin; not wild there |
+| H6 | High | Ischyromys dex: "Rodents spread just as the last multituberculates vanished, and may have outcompeted them" | Rodents arrived in NA around the PETM, ~20 Myr before the last multis; competitive replacement is debated | Rewrite; *Paramys* (NEW) carries the arrival story. **Dex rewritten (R7)**. **Q1 ✅** |
+| H7 | High | PETM vs today's carbon-release rate (planned Act 4 line) | Needs a citable figure (e.g. "~10× faster today") | Cite before shipping (Zeebe et al. 2016 is the usual source). Halvorsen (S2) and Ingrid both hedge it: "roughly ten times faster, by current estimates". **Q1 ✅**: consistent with Zeebe et al. 2016 (issue #1); text stays hedged |
+| M1 | Med | *Protictis* wild in the PETM Willwood (Act 4 table) | *Protictis* is mainly a mid/late Paleocene genus; Willwood viverravids are *Didymictis*, *Viverravus* | Remove it from Act 4 (done in §2.5). Keep it as the dog-line stand-in, labelled. **Done (R7)**: still wild in Act 3. **Q1 ✅** |
+| M2 | Med | *Mesodma* in the PETM and at Green River (Acts 4–5) | Last appearance of *Mesodma* specifically (vs *Ectypodus*) | Check PBDB; if needed, show it as "multituberculate (Mesodma-grade)". **Q1 ✅**: PBDB's youngest *Mesodma* is Tiffanian (~57.5 Ma), none Eocene. Still wild in Act 4 as a labelled Mesodma-grade stand-in (Evidence); table and filter unchanged |
+| M3 | Med | *Champsosaurus* at Green River ~50 Ma (Act 5 water) | Eocene champsosaurs are known mostly from the high Arctic; Wyoming Eocene uncertain | Check, or drop it from Act 5. **Q1 ✅ for Act 5** (not there since C7). Still wild in Act 4 (~56 Ma; PBDB ends Thanetian): kept, labelled in Evidence, and its fossil reason says "last known from the late Paleocene". Open: dropping it from Act 4 is a table/filter change |
+| M4 | Med | *Coryphodon* at Green River/Bridger ~50–46 Ma | Mostly a Wasatchian (~55–50 Ma) genus | Keep in Fossil Lake only if it fits the dates. **Q1 ✅**: off Bridger Shore (*Hyrachyus* takes the slot); not added to Fossil Lake |
+| M5 | Med | Map named "Lake Gosiute shore" with Fossil Lake fauna (Knightia, Heliobatis, Onychonycteris) | They're mostly Fossil Butte (Fossil Lake) | Split the maps (§2.6). **Q1 ✅** (split in C7) |
+| M6 | Med | Natural Trap Cave co-occurrence: *Mammuthus columbi*, *Ovibos*, *Camelops* (site "Wyoming"), *Meleagris*, *Panthera atrox* | Some summaries list mammoth, musk-ox, camels and lions; species-level identities need checking | Verify each at species level; set `site` to the true locality. **Q1 ✅**: per PBDB's NTC list: *Bootherium* (not Ovibos); *Mammuthus* genus only (Codex note, genus field); *Camelops* site set to the cave; *P. atrox* confirmed. *Meleagris* unconfirmed there: roster site is the living bird, Codex note added |
+| M7 | Med | Subhyracodon → Teleoceras presented as a descent | *Teleoceras* is a teleoceratine, likely an Old World immigrant, not a descendant of *Subhyracodon* | Codex: "rhino grade, not a direct ancestor". **Q3 ✅**: Evidence `Stand-in:` on Subhyracodon, Teleoceras, Aphelops; the LINEAGE page adds "Model grade, not proven ancestry." to every descending row |
+| M8 | Med | Dog chain Cimolestes → Protictis → Miacis → Hesperocyon → Leptocyon/Epicyon | Each step is a grade, not an ancestor; Hesperocyon, Borophaginae and Caninae are sister subfamilies | Make sure every Codex entry says "stand-in / grade" (rule §8.2 of the design doc). **Q3 ✅**: every chain link has `Stand-in:`, and the same LINEAGE line |
+| M9 | Med | All NEW Act 7 species at Ashfall specifically (Aphelops, Cormohipparion, Hypohippus, Cosoryx, Macrochelys) and Douglassciurus timing | Locality and age unverified | Verify before adding to the roster; fall back to "Great Plains, ~12 Ma" sites. **C1:** Aphelops and Cormohipparion kept at "Ashfall, NE"; Hypohippus, Cosoryx and Macrochelys use "Miocene Great Plains, NE"; Douglassciurus is Chadron Fm, ~36 Ma (`notes` say so). Primary-source check still open. **Q1 ✅**: Aphelops, Cormohipparion at Ashfall (PBDB). Hypohippus back to "Ashfall, NE" per the UNSM guide (PBDB's Ashfall list omits it). Cosoryx stays "Miocene Great Plains, NE" (on neither Ashfall list). Macrochelys: M. schmidti, Marsland Fm, ~18–16 Ma, no Ashfall record: labelled stand-in in Act 7. Douglassciurus as noted |
+| M10 | Med | Tanis / "the first hour after impact" (if anyone writes Act 1 impact text) | Contested site and data | Don't depend on it; describe ejecta reentry generically. **Q1 ✅**: no Tanis text in the game |
+| M11 | Med | Montana fossil ownership ("belong to the surface owner"), and PRPA 2009 on BLM land | Legal claims in dialogue | Phrase them generally; check the current state law and PRPA wording. **Q1 partly**: surface-owner rule confirmed (Murray v. BEJ Minerals, Mont. 2020); PRPA wording not re-checked (game text doesn't cite it) |
+| M12 | Med | Black-footed ferret rediscovery (Meeteetse, WY, 1981) and swift fox / ferret reintroductions in Montana | Dates and places in the epilogue text | Check with USFWS / state sources. **Q1 ✅** (issue #1 confirms the dates) |
+| L1 | Low | "Ash from 1,600 km away; Bruneau–Jarbidge; supereruption" | Distance and source fine; "supereruption" magnitude wording | Say "massive eruption" unless a VEI-8 source is cited. **Halvorsen's Act 7 line done (S2)**. **Q1 ✅** |
+| L2 | Low | Mentor: "In 300,000 years the biggest mammals tripled in size" | Exact multiples from Lyson et al. | Check the figure. **Reworded (S2)**: "within a few hundred thousand years ... several times heavier", with "the exact numbers are still being refined". **Q1 ✅ restored**: Lyson et al. 2019 abstract: a threefold rise in maximum mammal body mass at ~300 ka. Mentor now says "tripled in mass"; mass is what the paper measures |
+| L3 | Low | Onychonycteris "probably could not echolocate" | Debated since 2008 | Add "debated". **Done (R7)**. **Q1 ✅** |
+| L4 | Low | Masses: Triceratops 9 t, T. rex 8 t, Arctodus 900 kg, Uintatherium 2 t | Upper-range picks | Fine; show ranges in the Codex. **Q1 ✅ for *Panthera*** (~250 kg, issue #1); others unchanged; open (cosmetic): the Codex shows one figure, not a range |
+| L5 | Low | Design doc multituberculate chain "Mesodma → Taeniolabis → Ptilodus" | Not ancestral; Ptilodus is mid-Paleocene | Fix the design doc wording. **Q1 ✅**: design doc reworded |
+| L6 | Low | "Time-averaging window" values (§3.9) | New text | Check per act. **Q1 n/a**: design text, no factual claim yet |
+| N1 | Med | *Chelydra* at Ashfall (wild tables and the turtle's Act 7 default; issue #1 warn-L338) | Issue #1 says no North American record before the Pleistocene (Zangerl 1945). **PBDB disagrees**: genus-level *Chelydra* in the Barstovian of Nebraska and Clarendonian of Florida, and *C. serpentina* from the Blancan. None at Ashfall (PBDB's list has *Chrysemys* and *Sternotherus*) | **Q1 ✅**, for the true reason (no record at Ashfall, no *C. serpentina* this old): *Macrochelys* replaces it in every Act 7 table (a labelled stand-in), and the turtle's default descent moved to the Act 8 load; `Protochelyd` stays the labelled stand-in through Act 7 |
+| L7 | Low | The Act 8 Colby site (~13 ka, Clovis mammoth kill, Worland WY) | Age and interpretation ("kill" vs scavenging debated) | Word it as "mammoth bones with Clovis tools". **Q1 ✅**: Waters et al. 2020 (issue #1); text says bones with Clovis tools and hedges kill vs cache |
 
 Process: one research agent works through this table using the Paleobiology Database and primary
 papers, and writes results into the roster `notes` / `site` / `age` fields. It runs **in parallel
@@ -889,9 +891,9 @@ Ordered by leverage ÷ risk. Tasks inside a milestone can run in parallel unless
 
 | ID | Task | Size | Deps | Track |
 |---|---|---|---|---|
-| Q1 | Work through the §5 table; update roster sites/ages/notes | L | none | SCI |
+| Q1 | ✅ **Done** (with issue #1). §5 has a status per row (open: H5 hedged, M3 Act 4, M11 PRPA, L4 ranges). Changes that touch play: Ovibos → *Bootherium bombifrons* (rename in place, extinct at the Epilogue filter, new fossil row), *Chelydra* out of Act 7 and the turtle default moved to the Act 8 load, *Coryphodon* off Bridger Shore. Corrections and sources: roster notes, `evidence.py`, field notes | L | none | SCI |
 | Q2 | ✅ **Done.** Balance pass: `balance.py` report per act (now with the EXP model and `--playtest`) + a headless playtest on each starter (`starter_run_mammal/_bird/_turtle`: all 29 bosses, set pieces and peer reviews). Floors raised to the wild minimum, boss/set-piece/review levels retuned, lineage resilience (F7), Asteriornis gets Mud-Slap at 5 (its Peck was useless against Theo's turtle). Rerun: `make -j8 playtest`, then `STRATA_Q2_REPEAT=3 python3 tools/strata/playtest/run.py starter_runs --out <dir>` (~5 min with 3 attempts) and `python3 tools/strata/balance.py --playtest <dir>`. Results and open points: docs/strata_design.md, "Balance pass (Q2)" | M | M2 | SYS |
-| Q3 | Codex text review: every stand-in labelled, every inference tagged | M | Q1, C14 | SCI + TXT |
+| Q3 | ✅ **Done.** All 87 entries reviewed: `Inferred:` on every page, `Stand-in:` on every grade and placement stand-in (the list in `test/strata_codex.c` grew), LINEAGE descending rows say "Model grade, not proven ancestry.", strongest dex inferences hedged | M | Q1, C14 | SCI + TXT |
 
 ### Top 8, in order
 

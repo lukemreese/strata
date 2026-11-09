@@ -993,7 +993,7 @@ static void DrawPressureChart(void)
     case FATE_DESCENDS:
     {
         const struct DescentOption *option = Lineage_GetDescentOptions(species, era);
-        bool32 onDefault = TRUE;
+        bool32 onDefault = TRUE, hasDefault = FALSE;
 
         for (j = 0; j < hintCount; j++)
         {
@@ -1010,8 +1010,12 @@ static void DrawPressureChart(void)
             end = StringCopy(buffer, GetSpeciesName(option->species));
             StringAppend(end, onDefault ? COMPOUND_STRING(" by default, on course.") : COMPOUND_STRING(" by default."));
             DrawChartHint(line++, buffer);
+            hasDefault = TRUE;
             break;
         }
+        // Only a branch here (Protochelyd entering Ashfall): below it, the lineage stays as it is.
+        if (!hasDefault)
+            DrawChartHint(line++, onDefault ? COMPOUND_STRING("Stays as it is by default, on course.") : COMPOUND_STRING("Stays as it is by default."));
         for (j = 0; j < hintCount; j++)
         {
             FormatHint(buffer, &hints[j]);

@@ -2619,7 +2619,7 @@ gCryTable::
 	cry Cry_StrataPanthera
 	cry Cry_StrataMammuthus
 	cry Cry_StrataCamelops
-	cry Cry_StrataOvibos
+	cry Cry_StrataBootherium
 	cry Cry_StrataOvis
 	cry Cry_StrataAntilocapra
 	cry Cry_StrataBison
@@ -5265,7 +5265,7 @@ gCryTable_Reverse::
 	cry_reverse Cry_StrataPanthera
 	cry_reverse Cry_StrataMammuthus
 	cry_reverse Cry_StrataCamelops
-	cry_reverse Cry_StrataOvibos
+	cry_reverse Cry_StrataBootherium
 	cry_reverse Cry_StrataOvis
 	cry_reverse Cry_StrataAntilocapra
 	cry_reverse Cry_StrataBison

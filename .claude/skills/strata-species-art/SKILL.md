@@ -36,6 +36,23 @@ description: Adding or changing Strata species and their art and cries — roste
 - Lineages and extinctions: `src/data/lineages.h` (`DESCENT_DEFAULT`, `DESCENT_BRANCH(sp, pressure,
   minScore)`, `DESCENT_END`; per-era extinction lists; `sEraLevelFloor`). Branch thresholds must stay
   above the knockout cap (24).
+- **Branch-only descents:** a table with no `DESCENT_DEFAULT` means "stasis below the threshold"
+  (`sDescent_Protochelyd` at the Ashfall load: Macrochelys on HEAT, otherwise it stays). A lineage
+  may have several tables (one per era); name the extras with a digit suffix (`sDescent_Protochelyd2`):
+  `cries/build.py` strips it to find the lineage, `balance.py` skips tables with no default, and
+  the pressure chart says "Stays as it is by default."
+- **Renaming a species in place** (keeps its ID): edit the roster entry and `evidence.py`, `git mv`
+  its `graphics/pokemon/strata/<old>` folder and `strata_<old>.wav`, rename the keys in
+  `cries/specs.py`, `sprites/taxonomy.py`, `sprites/specs/`, then `gen_sprite.py <new>`,
+  `gen_cry.py <new>` (rewrites the manifest), `gen_species.py`, and update map tables, `.party`
+  files and tests. If the new identity is extinct and the old one lived, it also needs an
+  extinction-list entry and an **appended** `sStrataFossils` row (slots are saves) with a gentle
+  relative, and any "lives on" text goes.
+- **Check claims at the source:** PBDB answers "where and when" directly:
+  `paleobiodb.org/data1.2/occs/list.txt?base_name=<Genus>&show=loc,time`,
+  `...?coll_re=<site>`. A fact-check note can be stale: "no record before the Pleistocene"
+  (from a 1945 paper) was contradicted by PBDB's Miocene *Chelydra*. Genus-level and species-level
+  records are different claims; say which one the text makes.
 
 ## Codex: evidence and lineage pages (C14; design doc 7.8)
 
@@ -48,7 +65,7 @@ Every species needs an EVIDENCE entry, or `gen_species.py` stops ("roster/eviden
   R-e: "colour, calls, habits"; living species: "little, it lives today"), optional `standin`
   (every grade or stand-in descent: shown as "Stand-in: ..."), `note` (a caveat line written in
   full: "Debated: ...", "Unverified: ..."), `today` (a living end's status for the LINEAGE page,
-  ≤ 2 lines split by `\n`, e.g. "lost from Montana, alive elsewhere").
+  ≤ 2 lines split by `\n`, e.g. "lost here, alive elsewhere").
 - The page also shows the roster's `genus`, `site`, `age` and `mass_est`; don't repeat them. The
   body must wrap to 2-4 lines of ≤ 38 characters. No `~` (the game font has no glyph; ages get
   "about" automatically). Say less rather than guess: no specimen numbers, counts or years you

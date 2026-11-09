@@ -31,7 +31,7 @@ SPECIES = [
         borrow="pignite",
         moves=[(1, "BITE"), (1, "TACKLE"), (34, "CRUNCH"), (38, "DIG"), (42, "JAW_LOCK"),
                (48, "STOMPING_TANTRUM"), (54, "HEAD_SMASH")],
-        dex="Nicknamed the hell pig: a huge-headed omnivore with bony cheek flanges. Bite marks show it cached carcasses to eat later.",
+        dex="Nicknamed the hell pig: a huge-headed omnivore with bony cheek flanges. Bite marks suggest it cached carcasses to eat later.",
         notes="Caching carcasses: interpretation of Brule Fm bone accumulations.",
     ),
     dict(
@@ -56,12 +56,12 @@ SPECIES = [
         borrow="mudbray",
         moves=[(1, "TACKLE"), (1, "GROWL"), (34, "SEED_BOMB"), (38, "STOMP"), (42, "TAKE_DOWN"),
                (48, "BODY_SLAM")],
-        dex="A sheep-sized plant eater that lived in herds. Oreodonts are among the most common fossils in the White River badlands.",
+        dex="A sheep-sized plant eater, probably a herd animal. Oreodonts are among the most common fossils in the White River badlands.",
     ),
     dict(
         name="Subhyracodon", genus="Subhyracodon", site="Brule Fm, SD", age="~32 Ma",
         first_era="WHITE_RIVER",
-        mass=500.0, length=2.5, mass_est=True,
+        mass=380.0, length=2.5, mass_est=True,  # about 381 kg in the literature
         weights=dict(hp=7, atk=6, defn=7, spa=2, spd=6, spe=4),
         types=("GROUND", "NORMAL"), abilities=("STURDY", "THICK_FAT"),
         category="Rhinoceros", color="GRAY", growth="SLOW", catch=60, gender=50,

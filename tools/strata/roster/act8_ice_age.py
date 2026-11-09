@@ -24,7 +24,7 @@ SPECIES = [
     ),
     dict(
         name="Arctodus", genus="Arctodus simus", site="Natural Trap Cave, WY", age="~20 ka",
-        first_era="TRAP_CAVE", diet="CARNIVORE",  # carnivore-scavenger (debated)
+        first_era="TRAP_CAVE", diet="OMNIVORE",  # mostly meat, plus plants (Wikipedia and refs)
         mass=900.0, length=3.0, mass_est=True,
         weights=dict(hp=8, atk=8, defn=6, spa=3, spd=5, spe=5),
         types=("DARK", "NORMAL"), abilities=("INTIMIDATE", "THICK_FAT"),
@@ -32,7 +32,7 @@ SPECIES = [
         borrow="ursaring",
         moves=[(1, "SLASH"), (1, "SCARY_FACE"), (46, "CRUNCH"), (50, "HAMMER_ARM"), (56, "CRUSH_CLAW"),
                (62, "GIGA_IMPACT")],
-        dex="The giant short-faced bear: one of the largest land carnivores of the Ice Age. Standing up, it reached over three metres.",
+        dex="The giant short-faced bear: one of the largest land carnivorans of the Ice Age. Standing up, it reached over three metres.",
     ),
     dict(
         name="Miracinonyx", genus="Miracinonyx trumani", site="Natural Trap Cave, WY", age="~20 ka",
@@ -44,23 +44,23 @@ SPECIES = [
         borrow="persian",
         moves=[(1, "QUICK_ATTACK"), (1, "SCRATCH"), (46, "NIGHT_SLASH"), (50, "SUCKER_PUNCH"), (54, "AGILITY"),
                (60, "THROAT_CHOP")],
-        dex="The American cheetah, a fast cat built much like the African cheetah. It chased pronghorn across the open steppe.",
+        dex="The American cheetah, a fast cat built much like the African cheetah. It likely chased pronghorn across the open steppe.",
         notes="Cheetah-like build evolved convergently; closest relative is the puma.",
     ),
     dict(
         name="Panthera", genus="Panthera atrox", site="Natural Trap Cave, WY", age="~20 ka",
         first_era="TRAP_CAVE", diet="CARNIVORE",
-        mass=350.0, length=2.5, mass_est=True,
+        mass=250.0, length=2.5,  # average male about 247 kg (range 235-523)
         weights=dict(hp=6, atk=8, defn=5, spa=3, spd=5, spe=6),
         types=("DARK", "FIGHTING"), abilities=("INTIMIDATE", "MOXIE"),
         category="Lion", color="YELLOW", growth="SLOW", catch=25, gender=50,
         borrow="pyroar",
         moves=[(1, "BITE"), (1, "ROAR"), (46, "CRUNCH"), (50, "CLOSE_COMBAT"), (56, "THROAT_CHOP"),
                (62, "GIGA_IMPACT")],
-        dex="The American lion, larger than any living lion. It hunted horses and bison across Ice Age North America.",
+        dex="The American lion, larger than any living lion. It likely hunted horses and bison across Ice Age North America.",
     ),
     dict(
-        name="Mammuthus", genus="Mammuthus columbi", site="Natural Trap Cave, WY", age="~20 ka",
+        name="Mammuthus", genus="Mammuthus", site="Natural Trap Cave, WY", age="~20 ka",
         first_era="TRAP_CAVE",
         mass=9000.0, length=4.5, mass_est=True,
         weights=dict(hp=8, atk=7, defn=6, spa=3, spd=6, spe=3),
@@ -69,10 +69,10 @@ SPECIES = [
         borrow="mamoswine",
         moves=[(1, "STOMP"), (1, "ICE_SHARD"), (46, "AVALANCHE"), (50, "HIGH_HORSEPOWER"), (56, "ICICLE_CRASH"),
                (62, "EARTHQUAKE")],
-        dex="The Columbian mammoth, taller than an African elephant. It grazed the grasslands south of the ice sheets.",
+        dex="A mammoth, taller than an African elephant. The cave's bones name only the genus; Columbian mammoths grazed this far south.",
     ),
     dict(
-        name="Camelops", genus="Camelops", site="Wyoming", age="~20 ka",
+        name="Camelops", genus="Camelops", site="Natural Trap Cave, WY", age="~20 ka",
         first_era="TRAP_CAVE",
         mass=800.0, length=3.0, mass_est=True,
         weights=dict(hp=7, atk=6, defn=5, spa=3, spd=6, spe=5),
@@ -83,16 +83,17 @@ SPECIES = [
         dex="The western camel, the last of the camels' long North American story. It vanished with the other Ice Age giants.",
     ),
     dict(
-        name="Ovibos", genus="Ovibos moschatus", site="Natural Trap Cave, WY", age="~20 ka",
+        name="Bootherium", genus="Bootherium bombifrons", site="Natural Trap Cave, WY", age="~20 ka",
         first_era="TRAP_CAVE",
-        mass=300.0, length=2.2,
+        mass=420.0, length=2.2,  # published estimate about 424 kg
         weights=dict(hp=8, atk=6, defn=7, spa=3, spd=7, spe=3),
         types=("ICE", "NORMAL"), abilities=("THICK_FAT", "SNOW_CLOAK"),
         category="Musk Ox", color="BROWN", growth="SLOW", catch=45, gender=50,
         borrow="dubwool",
         moves=[(1, "HEADBUTT"), (1, "POWDER_SNOW"), (46, "TAKE_DOWN"), (50, "AVALANCHE"), (56, "IRON_HEAD"),
                (62, "HEAD_SMASH")],
-        dex="A shaggy, cold-adapted ox. It survives today in the Arctic, far north of where its Ice Age herds once grazed.",
+        dex="The helmeted musk ox, taller and leaner than the living kind, its horn bases fused across the skull. It died out about 11,000 years ago.",
+        notes="Replaces Ovibos: PBDB lists Bootherium at the cave, and no Wyoming Ovibos was found. Extinct, so it is lost at the Epilogue filter.",
     ),
     dict(
         name="Ovis", genus="Ovis canadensis", site="Natural Trap Cave, WY", age="~20 ka",
