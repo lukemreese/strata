@@ -37,6 +37,16 @@ static const struct SpriteFrameImage sPicTable_TallGrass_HellCreek[] = { overwor
 static const u32 sFieldEffectPic_LongGrass_HellCreek[] = INCGFX_U32("graphics/field_effects/pics/strata/long_grass_hell_creek.png", ".4bpp", "-mwidth 2 -mheight 2");
 static const struct SpriteFrameImage sPicTable_LongGrass_HellCreek[] = { overworld_ascending_frames(sFieldEffectPic_LongGrass_HellCreek, 2, 2), };
 
+static const struct StrataEraArt sStrataArt_HellCreek =
+{
+    .battleEnvPalettes = sBattleEnvPals_HellCreek,
+    .fieldEffectPal1 = &sFieldEffectSpritePal1_HellCreek,
+    .battleEnvTiles = sBattleEnvTiles_HellCreek,
+    .battleEnvAnimTiles = sBattleEnvAnimTiles_HellCreek,
+    .tallGrassPics = sPicTable_TallGrass_HellCreek,
+    .longGrassPics = sPicTable_LongGrass_HellCreek,
+};
+
 static const u16 sBattleEnvPal_ImpactWinter_TallGrass[] = INCGFX_U16("graphics/battle_environment/strata/impact_winter/tall_grass.pal", ".gbapal");
 static const u16 sBattleEnvPal_ImpactWinter_LongGrass[] = INCGFX_U16("graphics/battle_environment/strata/impact_winter/long_grass.pal", ".gbapal");
 static const u16 sBattleEnvPal_ImpactWinter_Sand[] = INCGFX_U16("graphics/battle_environment/strata/impact_winter/sand.pal", ".gbapal");
@@ -84,6 +94,16 @@ static const struct SpriteFrameImage sPicTable_TallGrass_ImpactWinter[] = { over
 static const u32 sFieldEffectPic_LongGrass_ImpactWinter[] = INCGFX_U32("graphics/field_effects/pics/strata/long_grass_impact_winter.png", ".4bpp", "-mwidth 2 -mheight 2");
 static const struct SpriteFrameImage sPicTable_LongGrass_ImpactWinter[] = { overworld_ascending_frames(sFieldEffectPic_LongGrass_ImpactWinter, 2, 2), };
 
+static const struct StrataEraArt sStrataArt_ImpactWinter =
+{
+    .battleEnvPalettes = sBattleEnvPals_ImpactWinter,
+    .fieldEffectPal1 = &sFieldEffectSpritePal1_ImpactWinter,
+    .battleEnvTiles = sBattleEnvTiles_ImpactWinter,
+    .battleEnvAnimTiles = sBattleEnvAnimTiles_ImpactWinter,
+    .tallGrassPics = sPicTable_TallGrass_ImpactWinter,
+    .longGrassPics = sPicTable_LongGrass_ImpactWinter,
+};
+
 static const u16 sBattleEnvPal_CorralBluffs_TallGrass[] = INCGFX_U16("graphics/battle_environment/strata/corral_bluffs/tall_grass.pal", ".gbapal");
 static const u16 sBattleEnvPal_CorralBluffs_LongGrass[] = INCGFX_U16("graphics/battle_environment/strata/corral_bluffs/long_grass.pal", ".gbapal");
 static const u16 sBattleEnvPal_CorralBluffs_Plain[] = INCGFX_U16("graphics/battle_environment/strata/corral_bluffs/plain.pal", ".gbapal");
@@ -118,6 +138,16 @@ static const u32 sFieldEffectPic_TallGrass_CorralBluffs[] = INCGFX_U32("graphics
 static const struct SpriteFrameImage sPicTable_TallGrass_CorralBluffs[] = { overworld_ascending_frames(sFieldEffectPic_TallGrass_CorralBluffs, 2, 2), };
 static const u32 sFieldEffectPic_LongGrass_CorralBluffs[] = INCGFX_U32("graphics/field_effects/pics/strata/long_grass_corral_bluffs.png", ".4bpp", "-mwidth 2 -mheight 2");
 static const struct SpriteFrameImage sPicTable_LongGrass_CorralBluffs[] = { overworld_ascending_frames(sFieldEffectPic_LongGrass_CorralBluffs, 2, 2), };
+
+static const struct StrataEraArt sStrataArt_CorralBluffs =
+{
+    .battleEnvPalettes = sBattleEnvPals_CorralBluffs,
+    .fieldEffectPal1 = &sFieldEffectSpritePal1_CorralBluffs,
+    .battleEnvTiles = sBattleEnvTiles_CorralBluffs,
+    .battleEnvAnimTiles = sBattleEnvAnimTiles_CorralBluffs,
+    .tallGrassPics = sPicTable_TallGrass_CorralBluffs,
+    .longGrassPics = sPicTable_LongGrass_CorralBluffs,
+};
 
 static const u16 sBattleEnvPal_Petm_TallGrass[] = INCGFX_U16("graphics/battle_environment/strata/petm/tall_grass.pal", ".gbapal");
 static const u16 sBattleEnvPal_Petm_LongGrass[] = INCGFX_U16("graphics/battle_environment/strata/petm/long_grass.pal", ".gbapal");
@@ -166,6 +196,16 @@ static const struct SpriteFrameImage sPicTable_TallGrass_Petm[] = { overworld_as
 static const u32 sFieldEffectPic_LongGrass_Petm[] = INCGFX_U32("graphics/field_effects/pics/strata/long_grass_petm.png", ".4bpp", "-mwidth 2 -mheight 2");
 static const struct SpriteFrameImage sPicTable_LongGrass_Petm[] = { overworld_ascending_frames(sFieldEffectPic_LongGrass_Petm, 2, 2), };
 
+static const struct StrataEraArt sStrataArt_Petm =
+{
+    .battleEnvPalettes = sBattleEnvPals_Petm,
+    .fieldEffectPal1 = &sFieldEffectSpritePal1_Petm,
+    .battleEnvTiles = sBattleEnvTiles_Petm,
+    .battleEnvAnimTiles = sBattleEnvAnimTiles_Petm,
+    .tallGrassPics = sPicTable_TallGrass_Petm,
+    .longGrassPics = sPicTable_LongGrass_Petm,
+};
+
 static const u16 sBattleEnvPal_GreenRiver_TallGrass[] = INCGFX_U16("graphics/battle_environment/strata/green_river/tall_grass.pal", ".gbapal");
 static const u16 sBattleEnvPal_GreenRiver_LongGrass[] = INCGFX_U16("graphics/battle_environment/strata/green_river/long_grass.pal", ".gbapal");
 static const u16 sBattleEnvPal_GreenRiver_Plain[] = INCGFX_U16("graphics/battle_environment/strata/green_river/plain.pal", ".gbapal");
@@ -201,6 +241,16 @@ static const struct SpriteFrameImage sPicTable_TallGrass_GreenRiver[] = { overwo
 static const u32 sFieldEffectPic_LongGrass_GreenRiver[] = INCGFX_U32("graphics/field_effects/pics/strata/long_grass_green_river.png", ".4bpp", "-mwidth 2 -mheight 2");
 static const struct SpriteFrameImage sPicTable_LongGrass_GreenRiver[] = { overworld_ascending_frames(sFieldEffectPic_LongGrass_GreenRiver, 2, 2), };
 
+static const struct StrataEraArt sStrataArt_GreenRiver =
+{
+    .battleEnvPalettes = sBattleEnvPals_GreenRiver,
+    .fieldEffectPal1 = &sFieldEffectSpritePal1_GreenRiver,
+    .battleEnvTiles = sBattleEnvTiles_GreenRiver,
+    .battleEnvAnimTiles = sBattleEnvAnimTiles_GreenRiver,
+    .tallGrassPics = sPicTable_TallGrass_GreenRiver,
+    .longGrassPics = sPicTable_LongGrass_GreenRiver,
+};
+
 static const u16 sBattleEnvPal_Oligocene_TallGrass[] = INCGFX_U16("graphics/battle_environment/strata/oligocene/tall_grass.pal", ".gbapal");
 static const u16 sBattleEnvPal_Oligocene_LongGrass[] = INCGFX_U16("graphics/battle_environment/strata/oligocene/long_grass.pal", ".gbapal");
 static const u16 sBattleEnvPal_Oligocene_Sand[] = INCGFX_U16("graphics/battle_environment/strata/oligocene/sand.pal", ".gbapal");
@@ -226,6 +276,12 @@ static const u16 *const sBattleEnvPals_Oligocene[BATTLE_ENVIRONMENT_COUNT] =
 
 static const u16 sFieldEffectPal1_Oligocene[] = INCGFX_U16("graphics/field_effects/palettes/strata/general_1_oligocene.pal", ".gbapal");
 static const struct SpritePalette sFieldEffectSpritePal1_Oligocene = {sFieldEffectPal1_Oligocene, FLDEFF_PAL_TAG_GENERAL_1};
+
+static const struct StrataEraArt sStrataArt_Oligocene =
+{
+    .battleEnvPalettes = sBattleEnvPals_Oligocene,
+    .fieldEffectPal1 = &sFieldEffectSpritePal1_Oligocene,
+};
 
 static const u16 sBattleEnvPal_IceAge_TallGrass[] = INCGFX_U16("graphics/battle_environment/strata/ice_age/tall_grass.pal", ".gbapal");
 static const u16 sBattleEnvPal_IceAge_LongGrass[] = INCGFX_U16("graphics/battle_environment/strata/ice_age/long_grass.pal", ".gbapal");
@@ -253,13 +309,99 @@ static const u16 *const sBattleEnvPals_IceAge[BATTLE_ENVIRONMENT_COUNT] =
 static const u16 sFieldEffectPal1_IceAge[] = INCGFX_U16("graphics/field_effects/palettes/strata/general_1_ice_age.pal", ".gbapal");
 static const struct SpritePalette sFieldEffectSpritePal1_IceAge = {sFieldEffectPal1_IceAge, FLDEFF_PAL_TAG_GENERAL_1};
 
-static const struct StrataEraArt sStrataEraArt[ERA_COUNT] =
+static const struct StrataEraArt sStrataArt_IceAge =
 {
-    [ERA_HELL_CREEK] = { .battleEnvPalettes = sBattleEnvPals_HellCreek, .fieldEffectPal1 = &sFieldEffectSpritePal1_HellCreek, .battleEnvTiles = sBattleEnvTiles_HellCreek, .battleEnvAnimTiles = sBattleEnvAnimTiles_HellCreek, .tallGrassPics = sPicTable_TallGrass_HellCreek, .longGrassPics = sPicTable_LongGrass_HellCreek },
-    [ERA_IMPACT_WINTER] = { .battleEnvPalettes = sBattleEnvPals_ImpactWinter, .fieldEffectPal1 = &sFieldEffectSpritePal1_ImpactWinter, .battleEnvTiles = sBattleEnvTiles_ImpactWinter, .battleEnvAnimTiles = sBattleEnvAnimTiles_ImpactWinter, .tallGrassPics = sPicTable_TallGrass_ImpactWinter, .longGrassPics = sPicTable_LongGrass_ImpactWinter },
-    [ERA_CORRAL_BLUFFS] = { .battleEnvPalettes = sBattleEnvPals_CorralBluffs, .fieldEffectPal1 = &sFieldEffectSpritePal1_CorralBluffs, .battleEnvTiles = sBattleEnvTiles_CorralBluffs, .battleEnvAnimTiles = sBattleEnvAnimTiles_CorralBluffs, .tallGrassPics = sPicTable_TallGrass_CorralBluffs, .longGrassPics = sPicTable_LongGrass_CorralBluffs },
-    [ERA_BIGHORN_PETM] = { .battleEnvPalettes = sBattleEnvPals_Petm, .fieldEffectPal1 = &sFieldEffectSpritePal1_Petm, .battleEnvTiles = sBattleEnvTiles_Petm, .battleEnvAnimTiles = sBattleEnvAnimTiles_Petm, .tallGrassPics = sPicTable_TallGrass_Petm, .longGrassPics = sPicTable_LongGrass_Petm },
-    [ERA_GREEN_RIVER] = { .battleEnvPalettes = sBattleEnvPals_GreenRiver, .fieldEffectPal1 = &sFieldEffectSpritePal1_GreenRiver, .battleEnvTiles = sBattleEnvTiles_GreenRiver, .battleEnvAnimTiles = sBattleEnvAnimTiles_GreenRiver, .tallGrassPics = sPicTable_TallGrass_GreenRiver, .longGrassPics = sPicTable_LongGrass_GreenRiver },
-    [ERA_WHITE_RIVER] = { .battleEnvPalettes = sBattleEnvPals_Oligocene, .fieldEffectPal1 = &sFieldEffectSpritePal1_Oligocene },
-    [ERA_TRAP_CAVE] = { .battleEnvPalettes = sBattleEnvPals_IceAge, .fieldEffectPal1 = &sFieldEffectSpritePal1_IceAge },
+    .battleEnvPalettes = sBattleEnvPals_IceAge,
+    .fieldEffectPal1 = &sFieldEffectSpritePal1_IceAge,
+};
+
+static const u16 sBattleEnvPal_Prairie_TallGrass[] = INCGFX_U16("graphics/battle_environment/strata/prairie/tall_grass.pal", ".gbapal");
+static const u16 sBattleEnvPal_Prairie_LongGrass[] = INCGFX_U16("graphics/battle_environment/strata/prairie/long_grass.pal", ".gbapal");
+static const u16 sBattleEnvPal_Prairie_Sand[] = INCGFX_U16("graphics/battle_environment/strata/prairie/sand.pal", ".gbapal");
+static const u16 sBattleEnvPal_Prairie_Underwater[] = INCGFX_U16("graphics/battle_environment/strata/prairie/underwater.pal", ".gbapal");
+static const u16 sBattleEnvPal_Prairie_Water[] = INCGFX_U16("graphics/battle_environment/strata/prairie/water.pal", ".gbapal");
+static const u16 sBattleEnvPal_Prairie_PondWater[] = INCGFX_U16("graphics/battle_environment/strata/prairie/pond_water.pal", ".gbapal");
+static const u16 sBattleEnvPal_Prairie_Rock[] = INCGFX_U16("graphics/battle_environment/strata/prairie/rock.pal", ".gbapal");
+static const u16 sBattleEnvPal_Prairie_Cave[] = INCGFX_U16("graphics/battle_environment/strata/prairie/cave.pal", ".gbapal");
+static const u16 sBattleEnvPal_Prairie_Plain[] = INCGFX_U16("graphics/battle_environment/strata/prairie/plain.pal", ".gbapal");
+
+static const u16 *const sBattleEnvPals_Prairie[BATTLE_ENVIRONMENT_COUNT] =
+{
+    [BATTLE_ENVIRONMENT_GRASS] = sBattleEnvPal_Prairie_TallGrass,
+    [BATTLE_ENVIRONMENT_LONG_GRASS] = sBattleEnvPal_Prairie_LongGrass,
+    [BATTLE_ENVIRONMENT_SAND] = sBattleEnvPal_Prairie_Sand,
+    [BATTLE_ENVIRONMENT_UNDERWATER] = sBattleEnvPal_Prairie_Underwater,
+    [BATTLE_ENVIRONMENT_WATER] = sBattleEnvPal_Prairie_Water,
+    [BATTLE_ENVIRONMENT_POND] = sBattleEnvPal_Prairie_PondWater,
+    [BATTLE_ENVIRONMENT_MOUNTAIN] = sBattleEnvPal_Prairie_Rock,
+    [BATTLE_ENVIRONMENT_CAVE] = sBattleEnvPal_Prairie_Cave,
+    [BATTLE_ENVIRONMENT_PLAIN] = sBattleEnvPal_Prairie_Plain,
+};
+
+static const u16 sFieldEffectPal1_Prairie[] = INCGFX_U16("graphics/field_effects/palettes/strata/general_1_prairie.pal", ".gbapal");
+static const struct SpritePalette sFieldEffectSpritePal1_Prairie = {sFieldEffectPal1_Prairie, FLDEFF_PAL_TAG_GENERAL_1};
+
+static const struct StrataEraArt sStrataArt_Prairie =
+{
+    .battleEnvPalettes = sBattleEnvPals_Prairie,
+    .fieldEffectPal1 = &sFieldEffectSpritePal1_Prairie,
+};
+
+static const u16 sBattleEnvPal_LateGlacial_TallGrass[] = INCGFX_U16("graphics/battle_environment/strata/late_glacial/tall_grass.pal", ".gbapal");
+static const u16 sBattleEnvPal_LateGlacial_LongGrass[] = INCGFX_U16("graphics/battle_environment/strata/late_glacial/long_grass.pal", ".gbapal");
+static const u16 sBattleEnvPal_LateGlacial_Sand[] = INCGFX_U16("graphics/battle_environment/strata/late_glacial/sand.pal", ".gbapal");
+static const u16 sBattleEnvPal_LateGlacial_Underwater[] = INCGFX_U16("graphics/battle_environment/strata/late_glacial/underwater.pal", ".gbapal");
+static const u16 sBattleEnvPal_LateGlacial_Water[] = INCGFX_U16("graphics/battle_environment/strata/late_glacial/water.pal", ".gbapal");
+static const u16 sBattleEnvPal_LateGlacial_PondWater[] = INCGFX_U16("graphics/battle_environment/strata/late_glacial/pond_water.pal", ".gbapal");
+static const u16 sBattleEnvPal_LateGlacial_Rock[] = INCGFX_U16("graphics/battle_environment/strata/late_glacial/rock.pal", ".gbapal");
+static const u16 sBattleEnvPal_LateGlacial_Cave[] = INCGFX_U16("graphics/battle_environment/strata/late_glacial/cave.pal", ".gbapal");
+static const u16 sBattleEnvPal_LateGlacial_Plain[] = INCGFX_U16("graphics/battle_environment/strata/late_glacial/plain.pal", ".gbapal");
+
+static const u16 *const sBattleEnvPals_LateGlacial[BATTLE_ENVIRONMENT_COUNT] =
+{
+    [BATTLE_ENVIRONMENT_GRASS] = sBattleEnvPal_LateGlacial_TallGrass,
+    [BATTLE_ENVIRONMENT_LONG_GRASS] = sBattleEnvPal_LateGlacial_LongGrass,
+    [BATTLE_ENVIRONMENT_SAND] = sBattleEnvPal_LateGlacial_Sand,
+    [BATTLE_ENVIRONMENT_UNDERWATER] = sBattleEnvPal_LateGlacial_Underwater,
+    [BATTLE_ENVIRONMENT_WATER] = sBattleEnvPal_LateGlacial_Water,
+    [BATTLE_ENVIRONMENT_POND] = sBattleEnvPal_LateGlacial_PondWater,
+    [BATTLE_ENVIRONMENT_MOUNTAIN] = sBattleEnvPal_LateGlacial_Rock,
+    [BATTLE_ENVIRONMENT_CAVE] = sBattleEnvPal_LateGlacial_Cave,
+    [BATTLE_ENVIRONMENT_PLAIN] = sBattleEnvPal_LateGlacial_Plain,
+};
+
+static const u16 sFieldEffectPal1_LateGlacial[] = INCGFX_U16("graphics/field_effects/palettes/strata/general_1_late_glacial.pal", ".gbapal");
+static const struct SpritePalette sFieldEffectSpritePal1_LateGlacial = {sFieldEffectPal1_LateGlacial, FLDEFF_PAL_TAG_GENERAL_1};
+
+static const struct StrataEraArt sStrataArt_LateGlacial =
+{
+    .battleEnvPalettes = sBattleEnvPals_LateGlacial,
+    .fieldEffectPal1 = &sFieldEffectSpritePal1_LateGlacial,
+};
+
+static const struct StrataEraArt *const sStrataEraArt[ERA_COUNT] =
+{
+    [ERA_HELL_CREEK] = &sStrataArt_HellCreek,
+    [ERA_IMPACT_WINTER] = &sStrataArt_ImpactWinter,
+    [ERA_CORRAL_BLUFFS] = &sStrataArt_CorralBluffs,
+    [ERA_BIGHORN_PETM] = &sStrataArt_Petm,
+    [ERA_GREEN_RIVER] = &sStrataArt_GreenRiver,
+    [ERA_WHITE_RIVER] = &sStrataArt_Oligocene,
+    [ERA_TRAP_CAVE] = &sStrataArt_IceAge,
+    [ERA_EPILOGUE] = &sStrataArt_Prairie,
+};
+
+// Per-map art, checked before the era's (MAP_ART in gen_tilesets.py).
+static const struct StrataMapArt sStrataMapArt[] =
+{
+    { MAP_STRATA_COLBY, &sStrataArt_LateGlacial },
+    { MAP_STRATA_GRASSLAND, &sStrataArt_Oligocene },
+    { MAP_STRATA_NIOBRARA, &sStrataArt_Oligocene },
+    { MAP_STRATA_SAVANNA, &sStrataArt_Oligocene },
+    { MAP_STRATA_WATERHOLE, &sStrataArt_Oligocene },
+    { MAP_STRATA_FIELD_CAMP, &sStrataArt_Prairie },
+    { MAP_STRATA_BADLANDS, &sStrataArt_Prairie },
+    { MAP_STRATA_JORDAN, &sStrataArt_Prairie },
+    { MAP_STRATA_LINDQVIST_RANCH, &sStrataArt_Prairie },
+    { MAP_STRATA_SAND_ARROYO, &sStrataArt_Prairie },
 };

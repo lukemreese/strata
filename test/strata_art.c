@@ -33,7 +33,7 @@ TEST("Battles in a recoloured era use that era's background palette")
     EXPECT(Strata_GetBattleEnvironmentPalette(BATTLE_ENVIRONMENT_GRASS, grass) != grass);
     EXPECT(Strata_GetBattleEnvironmentPalette(BATTLE_ENVIRONMENT_BUILDING, building) == building);
 
-    SetMap(MAP_STRATA_FIELD_CAMP);
+    SetMap(MAP_STRATA_FIELD_STATION);   // an interior in the hub: no era art, no map art
     EXPECT_EQ(Strata_GetMapEra(), ERA_COUNT);
     EXPECT(Strata_GetBattleEnvironmentPalette(BATTLE_ENVIRONMENT_GRASS, grass) == grass);
 }
@@ -49,8 +49,65 @@ TEST("Grass field effects in a recoloured era use that era's palette")
     EXPECT_EQ(pal->tag, FLDEFF_PAL_TAG_GENERAL_1);
     EXPECT(Strata_GetFieldEffectPalette(&gSpritePalette_GeneralFieldEffect0) == &gSpritePalette_GeneralFieldEffect0);
 
-    SetMap(MAP_STRATA_PRAIRIE);
+    SetMap(MAP_STRATA_PRAIRIE);     // the present-day prairie palette
+    EXPECT(Strata_GetFieldEffectPalette(stock) != stock);
+    SetMap(MAP_STRATA_FIELD_STATION);   // an interior: no era art
     EXPECT(Strata_GetFieldEffectPalette(stock) == stock);
+}
+
+// The late-glacial Colby sub-layer shares the Ice Age's era but not its palette; Ashfall's clear
+// maps wear the Oligocene art (their tilesets) and its ash maps keep the stock art; the present-day
+// hub and the epilogue prairie share one set (gen_tilesets.py MAP_ART / ERA_ART).
+TEST("Per-map art wins over the era's: Colby, Ashfall clear and ash, the present-day maps")
+{
+    const struct SpritePalette *stock = &gSpritePalette_GeneralFieldEffect1;
+    const void *grass = gBattleEnvironmentInfo[BATTLE_ENVIRONMENT_GRASS].palette;
+    const struct SpritePalette *steppePal, *colbyPal, *whiteRiverPal, *prairiePal;
+    const void *steppeBg, *colbyBg, *whiteRiverBg, *prairieBg;
+
+    SetMap(MAP_STRATA_STEPPE);
+    EXPECT_EQ(Strata_GetMapEra(), ERA_TRAP_CAVE);
+    steppePal = Strata_GetFieldEffectPalette(stock);
+    steppeBg = Strata_GetBattleEnvironmentPalette(BATTLE_ENVIRONMENT_GRASS, grass);
+    EXPECT(steppePal != stock);
+    EXPECT(steppeBg != grass);
+
+    SetMap(MAP_STRATA_COLBY);
+    EXPECT_EQ(Strata_GetMapEra(), ERA_TRAP_CAVE);
+    colbyPal = Strata_GetFieldEffectPalette(stock);
+    colbyBg = Strata_GetBattleEnvironmentPalette(BATTLE_ENVIRONMENT_GRASS, grass);
+    EXPECT(colbyPal != stock);
+    EXPECT(colbyPal != steppePal);
+    EXPECT(colbyBg != grass);
+    EXPECT(colbyBg != steppeBg);
+    EXPECT_EQ(colbyPal->tag, FLDEFF_PAL_TAG_GENERAL_1);
+
+    SetMap(MAP_STRATA_WHITE_RIVER);
+    whiteRiverPal = Strata_GetFieldEffectPalette(stock);
+    whiteRiverBg = Strata_GetBattleEnvironmentPalette(BATTLE_ENVIRONMENT_GRASS, grass);
+    EXPECT(whiteRiverBg != grass);
+    SetMap(MAP_STRATA_GRASSLAND);       // Ashfall, clear: the same Oligocene set
+    EXPECT_EQ(Strata_GetMapEra(), ERA_ASHFALL);
+    EXPECT(Strata_GetFieldEffectPalette(stock) == whiteRiverPal);
+    EXPECT(Strata_GetBattleEnvironmentPalette(BATTLE_ENVIRONMENT_GRASS, grass) == whiteRiverBg);
+    SetMap(MAP_STRATA_SAVANNA);
+    EXPECT(Strata_GetFieldEffectPalette(stock) == whiteRiverPal);
+    SetMap(MAP_STRATA_GRASSLAND_ASH);   // Ashfall, ash: stock tiles, stock art
+    EXPECT(Strata_GetFieldEffectPalette(stock) == stock);
+    EXPECT(Strata_GetBattleEnvironmentPalette(BATTLE_ENVIRONMENT_GRASS, grass) == grass);
+
+    SetMap(MAP_STRATA_PRAIRIE);
+    prairiePal = Strata_GetFieldEffectPalette(stock);
+    prairieBg = Strata_GetBattleEnvironmentPalette(BATTLE_ENVIRONMENT_GRASS, grass);
+    EXPECT(prairieBg != grass);
+    EXPECT(prairiePal != steppePal);
+    EXPECT(prairiePal != whiteRiverPal);
+    SetMap(MAP_STRATA_FIELD_CAMP);      // the hub's era has no art, its map does
+    EXPECT_EQ(Strata_GetMapEra(), ERA_COUNT);
+    EXPECT(Strata_GetFieldEffectPalette(stock) == prairiePal);
+    EXPECT(Strata_GetBattleEnvironmentPalette(BATTLE_ENVIRONMENT_GRASS, grass) == prairieBg);
+    SetMap(MAP_STRATA_JORDAN_STORE);    // an interior in the hub
+    EXPECT(Strata_GetBattleEnvironmentPalette(BATTLE_ENVIRONMENT_GRASS, grass) == grass);
 }
 
 // Before grasslands (Acts 1-5) the grass is drawn as each era's undergrowth

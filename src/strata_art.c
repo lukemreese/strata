@@ -3,6 +3,7 @@
 #include "strata_map.h"
 #include "constants/battle.h"
 #include "constants/field_effects.h"
+#include "constants/map_groups.h"
 #include "constants/strata.h"
 
 struct StrataEraArt
@@ -15,12 +16,27 @@ struct StrataEraArt
     const struct SpriteFrameImage *longGrassPics; // FLDEFFOBJ_LONG_GRASS frames, NULL keeps stock
 };
 
+struct StrataMapArt
+{
+    u16 map;
+    const struct StrataEraArt *art;
+};
+
 #include "data/strata_era_art.h"
 
+// A map's own art (the Colby sub-layer, Ashfall's clear maps) wins over its era's.
 static const struct StrataEraArt *GetEraArt(void)
 {
-    u32 era = Strata_GetMapEra();
-    return era < ERA_COUNT ? &sStrataEraArt[era] : NULL;
+    u16 map = (gSaveBlock1Ptr->location.mapGroup << 8) | gSaveBlock1Ptr->location.mapNum;
+    u32 era, i;
+
+    for (i = 0; i < ARRAY_COUNT(sStrataMapArt); i++)
+    {
+        if (sStrataMapArt[i].map == map)
+            return sStrataMapArt[i].art;
+    }
+    era = Strata_GetMapEra();
+    return era < ERA_COUNT ? sStrataEraArt[era] : NULL;
 }
 
 static const void *FromEnvTable(const void *const *table, u32 environment, const void *stock)

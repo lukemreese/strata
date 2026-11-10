@@ -79,7 +79,32 @@ def ice_age(r, g, b):
     return clamp(r * 0.85 + 34, g * 0.90 + 36, b * 0.95 + 52)
 
 
-TRANSFORMS = {"impact_winter": impact_winter, "petm": petm, "oligocene": oligocene, "ice_age": ice_age}
+def late_glacial(r, g, b):
+    """The Colby coda, ~13 ka: the ice is going. Less frost than ice_age (a small cool lift
+    instead of its big one, colour kept), greens turned to muted olive-brown tundra and
+    steppe, light still cool."""
+    l = lum(r, g, b)
+    if is_green(r, g, b):
+        # Pale greens (the battle sky) keep their coolness: the olive shift fades out above lum 140.
+        k = 1.0 if l < 140 else max(0.15, 1.0 - (l - 140) / 70.0)
+        r, g, b = (c + (n - c) * k for c, n in zip((r, g, b), (r * 1.16 + 16, g * 0.90, b * 0.68)))
+    r, g, b = (l + (c - l) * 0.72 for c in (r, g, b))
+    return clamp(r * 0.92 + 12, g * 0.94 + 14, b * 0.97 + 26)
+
+
+def prairie(r, g, b):
+    """Present-day Montana prairie: the Hoenn greens dried to sage and straw, the rest
+    (rock, soil, roofs, water) nearly untouched."""
+    if is_green(r, g, b):
+        l = lum(r, g, b)
+        r, g, b = r * 1.12 + 14, g * 0.96 + 2, b * 0.70
+        r, g, b = (l + (c - l) * 0.80 for c in (r, g, b))
+        return clamp(r, g, b)
+    return clamp(r + 3, g + 2, b - 2)
+
+
+TRANSFORMS = {"impact_winter": impact_winter, "petm": petm, "oligocene": oligocene, "ice_age": ice_age,
+              "late_glacial": late_glacial, "prairie": prairie}
 
 # variant dir -> (kind, base dir, base symbol suffix, transform or None, ground or None).
 # A ground (gen_era_tiles.GROUNDS) recolours the lawn and, for General, Fortree and the
@@ -108,6 +133,15 @@ VARIANTS = {
     "fallarbor_oligocene":    ("secondary", "fallarbor", "Fallarbor", "oligocene", None),
     "general_ice_age":        ("primary", "general", "General", "ice_age", None),
     "mauville_ice_age":       ("secondary", "mauville", "Mauville", "ice_age", None),
+    # The Colby coda (~13 ka): the same two bases, thawing
+    "general_late_glacial":   ("primary", "general", "General", "late_glacial", None),
+    "mauville_late_glacial":  ("secondary", "mauville", "Mauville", "late_glacial", None),
+    # The present-day Montana prairie (the epilogue maps and the outdoor Act 0 hub maps)
+    "general_prairie":        ("primary", "general", "General", "prairie", None),
+    "petalburg_prairie":      ("secondary", "petalburg", "Petalburg", "prairie", None),
+    "fallarbor_prairie":      ("secondary", "fallarbor", "Fallarbor", "prairie", None),
+    "lavaridge_prairie":      ("secondary", "lavaridge", "Lavaridge", "prairie", None),
+    "mauville_prairie":       ("secondary", "mauville", "Mauville", "prairie", None),
 }
 
 
@@ -179,7 +213,29 @@ ERA_ART = {
     "ERA_GREEN_RIVER":   ("green_river", None, "green_river"),
     "ERA_WHITE_RIVER":   ("oligocene", "oligocene", None),
     "ERA_TRAP_CAVE":     ("ice_age", "ice_age", None),
+    "ERA_EPILOGUE":      ("prairie", "prairie", None),
 }
+
+# Per-map art, which wins over the map's era: a sub-layer or a variant of an era that doesn't
+# recolour every map of it. Same value shape as ERA_ART; maps sharing a name share the art.
+MAP_ART = {
+    # The Colby coda (~13 ka) is the Ice Age's era but not its palette.
+    "MAP_STRATA_COLBY": ("late_glacial", "late_glacial", None),
+    # Ashfall's clear maps use the Oligocene tileset palettes (act7_ashfall.py CLEAR_TILESETS);
+    # the ash maps keep the stock ash tiles and so the stock battle art.
+    "MAP_STRATA_GRASSLAND": ("oligocene", "oligocene", None),
+    "MAP_STRATA_NIOBRARA": ("oligocene", "oligocene", None),
+    "MAP_STRATA_SAVANNA": ("oligocene", "oligocene", None),
+    "MAP_STRATA_WATERHOLE": ("oligocene", "oligocene", None),
+    # The outdoor hub maps (Act 0) wear the same prairie palettes as the epilogue (ERA_EPILOGUE);
+    # the hub's era is ERA_COUNT (no era art), so they are listed here.
+    "MAP_STRATA_FIELD_CAMP": ("prairie", "prairie", None),
+    "MAP_STRATA_BADLANDS": ("prairie", "prairie", None),
+    "MAP_STRATA_JORDAN": ("prairie", "prairie", None),
+    "MAP_STRATA_LINDQVIST_RANCH": ("prairie", "prairie", None),
+    "MAP_STRATA_SAND_ARROYO": ("prairie", "prairie", None),
+}
+
 # ground -> (era, transform), for gen_era_tiles' preview
 GROUND_ERAS = {g: (era, t) for era, (_, t, g) in ERA_ART.items() if g}
 
@@ -187,8 +243,16 @@ GROUND_ERAS = {g: (era, t) for era, (_, t, g) in ERA_ART.items() if g}
 ERA_TRANSFORMS = {era: t for era, (_, t, _) in ERA_ART.items() if t}
 
 
+def art_sets():
+    """The distinct art sets: (name, transform, ground), era sets first, in a stable order."""
+    seen = {}
+    for name, transform, ground in list(ERA_ART.values()) + list(MAP_ART.values()):
+        seen.setdefault(name, (name, transform, ground))
+    return list(seen.values())
+
+
 def era_suffix(ground_or_name):
-    for name, _, g in ERA_ART.values():
+    for name, _, g in art_sets():
         if ground_or_name in (name, g):
             return name
     return ground_or_name
@@ -223,8 +287,7 @@ def gen_era_art():
     """Writes the era palettes and art for battle backgrounds and the grass overlays,
     and src/data/strata_era_art.h, which strata_art.c includes."""
     out = [GENERATED, "// Era variants of the battle backgrounds and the grass field effects.", ""]
-    era_rows = []
-    for era, (name, transform, ground) in ERA_ART.items():
+    for name, transform, ground in art_sets():
         suffix = symbol_suffix(name)
         dst = f"graphics/battle_environment/strata/{name}"
         os.makedirs(os.path.join(ROOT, dst), exist_ok=True)
@@ -282,11 +345,15 @@ def gen_era_art():
                            f"{{ overworld_ascending_frames({sym}, 2, 2), }};")
                 fields.append(f".{field} = sPicTable_{kind.capitalize()}Grass_{suffix}")
             out.append("")
-        era_rows.append(f"    [{era}] = {{ " + ", ".join(fields) + " },")
-        print("wrote era art", era, name)
+        out.append(f"static const struct StrataEraArt sStrataArt_{suffix} =")
+        out += ["{"] + [f"    {f}," for f in fields] + ["};", ""]
+        print("wrote era art", name)
 
-    out.append("static const struct StrataEraArt sStrataEraArt[ERA_COUNT] =")
-    out += ["{"] + era_rows + ["};"]
+    out.append("static const struct StrataEraArt *const sStrataEraArt[ERA_COUNT] =")
+    out += ["{"] + [f"    [{era}] = &sStrataArt_{symbol_suffix(name)}," for era, (name, _, _) in ERA_ART.items()] + ["};", ""]
+    out.append("// Per-map art, checked before the era's (MAP_ART in gen_tilesets.py).")
+    out.append("static const struct StrataMapArt sStrataMapArt[] =")
+    out += ["{"] + [f"    {{ {m}, &sStrataArt_{symbol_suffix(name)} }}," for m, (name, _, _) in MAP_ART.items()] + ["};"]
     with open(os.path.join(ROOT, "src/data/strata_era_art.h"), "w") as f:
         f.write("\n".join(out) + "\n")
 
@@ -324,7 +391,7 @@ def preview(outdir):
         stock = read_pal(os.path.join(ROOT, "graphics/battle_environment", envdir, "palette.pal"))
         panels = [render_battle_bg(envdir, stock)]
         names = []
-        for era, (name, transform, ground) in ERA_ART.items():
+        for name, transform, ground in art_sets():
             pal = os.path.join(ROOT, "graphics/battle_environment/strata", name, f"{envdir}.pal")
             if not os.path.exists(pal):
                 continue
@@ -340,7 +407,7 @@ def preview(outdir):
     from maprender import read_png
     stock = read_pal(os.path.join(ROOT, FIELD_EFFECT_PAL))
     sheets = [("graphics/field_effects/pics/tall_grass.png", stock)]
-    for era, (name, transform, ground) in ERA_ART.items():
+    for name, transform, ground in art_sets():
         pic = f"graphics/field_effects/pics/strata/tall_grass_{ground}.png" if ground else "graphics/field_effects/pics/tall_grass.png"
         sheets.append((pic, read_pal(os.path.join(ROOT, f"graphics/field_effects/palettes/strata/general_1_{name}.pal"))))
     s, bg = 4, (96, 96, 96)

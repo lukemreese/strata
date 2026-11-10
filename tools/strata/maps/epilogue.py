@@ -26,7 +26,9 @@ There is no boss and no epilogue var. Act state lives in the flags below
 their stock FLAG_UNUSED_0x... names since they are assembled without strata.h:
 0x2A4 FERRET_MET, 0x2A5 PAIR_SEEN, 0x2A6 HALL_SEEN, 0x2A7 PEER_REVIEW_DONE).
 
-Present-day maps use the real clock (light="dns") and the stock Hoenn tilesets.
+Present-day maps use the real clock (light="dns"). The three outdoor epilogue maps use the
+prairie palettes (gen_tilesets.py `prairie`: Hoenn's greens dried to sage and straw, shared
+with the outdoor Act 0 hub maps); the Interpretive Center's interiors keep the stock tilesets.
 """
 
 from .common import *  # noqa: F401,F403
@@ -40,6 +42,10 @@ MAP_SECTIONS = [
 
 # General primary tileset: the wooden signpost (a blocked metatile) for field notes.
 SIGNPOST = 0x01B
+
+PRAIRIE_PETALBURG = ("gTileset_GeneralPrairie", "gTileset_PetalburgPrairie")    # Route 102 crop
+PRAIRIE_FALLARBOR = ("gTileset_GeneralPrairie", "gTileset_FallarborPrairie")    # Route 114 crop
+PRAIRIE_LAVARIDGE = ("gTileset_GeneralPrairie", "gTileset_LavaridgePrairie")    # Route 112 crop
 
 
 def signpost(x, y, script, facing="BG_EVENT_PLAYER_FACING_ANY"):
@@ -81,7 +87,7 @@ MAPS = [
         habitat="open", light="dns",
         forage=[forage(20, 9, "SEED_HEAD"), forage(10, 4, "LEGUME_POD"), forage(33, 17, "SEED_HEAD"),
                 forage(46, 9, "LARVAE"), forage(8, 16, "BROWSE")],
-        crop=dict(**{"from": "LAYOUT_ROUTE102"}, rect=(0, 0, 50, 20)),
+        crop=dict(**{"from": "LAYOUT_ROUTE102"}, rect=(0, 0, 50, 20), tilesets=PRAIRIE_PETALBURG),
         patches=[
             dict(rect=(23, 2, 4, 2), metatile=0x001, elevation=3),    # berry-soil plot -> grass
         ] + _CENTER_PATCHES + [p for p, _ in _PRAIRIE_NOTES],
@@ -124,7 +130,7 @@ MAPS = [
         habitat="water", light="dns",
         forage=[forage(14, 4, "LARVAE"), forage(20, 10, "BROWSE"), forage(5, 14, "CARRION"),
                 forage(22, 3, "SEED_HEAD"), forage(16, 7, "FERN_FROND")],
-        crop=dict(**{"from": "LAYOUT_ROUTE114"}, rect=(16, 4, 24, 29)),
+        crop=dict(**{"from": "LAYOUT_ROUTE114"}, rect=(16, 4, 24, 29), tilesets=PRAIRIE_FALLARBOR),
         patches=[
             dict(rect=(12, 0, 4, 3), same_as=(14, 9)),                # the house -> bare ground
             dict(rect=(16, 0, 8, 5), same_as=(14, 9)),                # berry-soil plots -> bare ground
@@ -151,7 +157,7 @@ MAPS = [
         habitat="open", light="dns",
         forage=[forage(10, 8, "SEED_HEAD"), forage(4, 2, "BROWSE"), forage(25, 13, "SEED_HEAD"),
                 forage(20, 9, "LARVAE"), forage(28, 15, "CARRION")],
-        crop=dict(**{"from": "LAYOUT_ROUTE112"}, rect=(9, 36, 31, 17)),
+        crop=dict(**{"from": "LAYOUT_ROUTE112"}, rect=(9, 36, 31, 17), tilesets=PRAIRIE_LAVARIDGE),
         patches=[dict(rect=(2, 0, 1, 1), same_as=(3, 0))] + [p for p, _ in _PRYOR_NOTES],   # the stray cave door -> rock
         music="MUS_ROUTE113", weather="WEATHER_SUNNY", map_type="MAP_TYPE_ROUTE", mapsec="MAPSEC_STRATA_PRYOR",
         connections=[connection("up", "MAP_STRATA_PRAIRIE", -18)],
