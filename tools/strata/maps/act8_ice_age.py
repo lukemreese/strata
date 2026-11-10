@@ -13,7 +13,10 @@ The act (Steppe is the hub; the Colby coda is reached by a marker, not a connect
                              : sub-layer marker (after the boss) --> Colby Site, ~13 ka
 
 All four 20 ka maps use the ice-age palettes (General + Mauville variants, gen_tilesets.py).
-Colby uses the same set without snow: there is no late-glacial palette yet (outline §4.1).
+Colby (~13 ka) has its own late-glacial palettes of the same two tilesets: less frost, thawing
+olive-brown steppe, light still cool. Its battle background and grass palette follow through
+MAP_ART in gen_tilesets.py (src/strata_art.c); it has no encounters, so only the grass
+overlay is ever seen.
 The deposit-wide rule for every species list here: the encounter tables are the roster's
 Trap Cave animals, and the field notes say where a placement is a stand-in.
 
@@ -33,6 +36,7 @@ MAP_SECTIONS = [
 ]
 
 ICE_AGE_TILESETS = ("gTileset_GeneralIceAge", "gTileset_MauvilleIceAge")
+LATE_GLACIAL_TILESETS = ("gTileset_GeneralLateGlacial", "gTileset_MauvilleLateGlacial")
 
 # General primary tileset: the wooden signpost (field notes, and the anchor markers).
 SIGNPOST = 0x01B
@@ -193,7 +197,7 @@ MAPS = [
         id="MAP_STRATA_COLBY", name="StrataColby", era="ERA_TRAP_CAVE",
         habitat=None, light="day",
         forage=[forage(10, 6, "SEED_HEAD"), forage(22, 8, "BROWSE")],
-        crop=dict(**{"from": "LAYOUT_ROUTE118"}, rect=(50, 3, 30, 17), tilesets=ICE_AGE_TILESETS),
+        crop=dict(**{"from": "LAYOUT_ROUTE118"}, rect=(50, 3, 30, 17), tilesets=LATE_GLACIAL_TILESETS),
         patches=_COLBY_NOTES[0],
         music="MUS_ROUTE120", map_type="MAP_TYPE_ROUTE", mapsec="MAPSEC_STRATA_COLBY",
         arrival=(4, 8),

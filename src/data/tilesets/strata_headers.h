@@ -547,3 +547,220 @@ const struct Tileset gTileset_MauvilleIceAge =
     .metatileAttributes = gMetatileAttributes_Mauville,
     .callback = InitTilesetAnim_Mauville,
 };
+
+const u16 ALIGNED(4) gTilesetPalettes_GeneralLateGlacial[][16] =
+{
+    INCGFX_U16("data/tilesets/primary/general_late_glacial/palettes/00.pal", ".gbapal"),
+    INCGFX_U16("data/tilesets/primary/general_late_glacial/palettes/01.pal", ".gbapal"),
+    INCGFX_U16("data/tilesets/primary/general_late_glacial/palettes/02.pal", ".gbapal"),
+    INCGFX_U16("data/tilesets/primary/general_late_glacial/palettes/03.pal", ".gbapal"),
+    INCGFX_U16("data/tilesets/primary/general_late_glacial/palettes/04.pal", ".gbapal"),
+    INCGFX_U16("data/tilesets/primary/general_late_glacial/palettes/05.pal", ".gbapal"),
+    INCGFX_U16("data/tilesets/primary/general_late_glacial/palettes/06.pal", ".gbapal"),
+    INCGFX_U16("data/tilesets/primary/general_late_glacial/palettes/07.pal", ".gbapal"),
+    INCGFX_U16("data/tilesets/primary/general_late_glacial/palettes/08.pal", ".gbapal"),
+    INCGFX_U16("data/tilesets/primary/general_late_glacial/palettes/09.pal", ".gbapal"),
+    INCGFX_U16("data/tilesets/primary/general_late_glacial/palettes/10.pal", ".gbapal"),
+    INCGFX_U16("data/tilesets/primary/general_late_glacial/palettes/11.pal", ".gbapal"),
+    INCGFX_U16("data/tilesets/primary/general_late_glacial/palettes/12.pal", ".gbapal"),
+    INCGFX_U16("data/tilesets/primary/general_late_glacial/palettes/13.pal", ".gbapal"),
+    INCGFX_U16("data/tilesets/primary/general_late_glacial/palettes/14.pal", ".gbapal"),
+    INCGFX_U16("data/tilesets/primary/general_late_glacial/palettes/15.pal", ".gbapal"),
+};
+
+const struct Tileset gTileset_GeneralLateGlacial =
+{
+    .isCompressed = TRUE,
+    .isSecondary = FALSE,
+    .tiles = gTilesetTiles_General,
+    .palettes = gTilesetPalettes_GeneralLateGlacial,
+    .metatiles = gMetatiles_General,
+    .metatileAttributes = gMetatileAttributes_General,
+    .callback = InitTilesetAnim_General,
+};
+
+const u16 ALIGNED(4) gTilesetPalettes_MauvilleLateGlacial[][16] =
+{
+    INCGFX_U16("data/tilesets/secondary/mauville_late_glacial/palettes/00.pal", ".gbapal"),
+    INCGFX_U16("data/tilesets/secondary/mauville_late_glacial/palettes/01.pal", ".gbapal"),
+    INCGFX_U16("data/tilesets/secondary/mauville_late_glacial/palettes/02.pal", ".gbapal"),
+    INCGFX_U16("data/tilesets/secondary/mauville_late_glacial/palettes/03.pal", ".gbapal"),
+    INCGFX_U16("data/tilesets/secondary/mauville_late_glacial/palettes/04.pal", ".gbapal"),
+    INCGFX_U16("data/tilesets/secondary/mauville_late_glacial/palettes/05.pal", ".gbapal"),
+    INCGFX_U16("data/tilesets/secondary/mauville_late_glacial/palettes/06.pal", ".gbapal"),
+    INCGFX_U16("data/tilesets/secondary/mauville_late_glacial/palettes/07.pal", ".gbapal"),
+    INCGFX_U16("data/tilesets/secondary/mauville_late_glacial/palettes/08.pal", ".gbapal"),
+    INCGFX_U16("data/tilesets/secondary/mauville_late_glacial/palettes/09.pal", ".gbapal"),
+    INCGFX_U16("data/tilesets/secondary/mauville_late_glacial/palettes/10.pal", ".gbapal"),
+    INCGFX_U16("data/tilesets/secondary/mauville_late_glacial/palettes/11.pal", ".gbapal"),
+    INCGFX_U16("data/tilesets/secondary/mauville_late_glacial/palettes/12.pal", ".gbapal"),
+    INCGFX_U16("data/tilesets/secondary/mauville_late_glacial/palettes/13.pal", ".gbapal"),
+    INCGFX_U16("data/tilesets/secondary/mauville_late_glacial/palettes/14.pal", ".gbapal"),
+    INCGFX_U16("data/tilesets/secondary/mauville_late_glacial/palettes/15.pal", ".gbapal"),
+};
+
+const struct Tileset gTileset_MauvilleLateGlacial =
+{
+    .isCompressed = TRUE,
+    .isSecondary = TRUE,
+    .tiles = gTilesetTiles_Mauville,
+    .palettes = gTilesetPalettes_MauvilleLateGlacial,
+    .metatiles = gMetatiles_Mauville,
+    .metatileAttributes = gMetatileAttributes_Mauville,
+    .callback = InitTilesetAnim_Mauville,
+};
+
+const u16 ALIGNED(4) gTilesetPalettes_GeneralPrairie[][16] =
+{
+    INCGFX_U16("data/tilesets/primary/general_prairie/palettes/00.pal", ".gbapal"),
+    INCGFX_U16("data/tilesets/primary/general_prairie/palettes/01.pal", ".gbapal"),
+    INCGFX_U16("data/tilesets/primary/general_prairie/palettes/02.pal", ".gbapal"),
+    INCGFX_U16("data/tilesets/primary/general_prairie/palettes/03.pal", ".gbapal"),
+    INCGFX_U16("data/tilesets/primary/general_prairie/palettes/04.pal", ".gbapal"),
+    INCGFX_U16("data/tilesets/primary/general_prairie/palettes/05.pal", ".gbapal"),
+    INCGFX_U16("data/tilesets/primary/general_prairie/palettes/06.pal", ".gbapal"),
+    INCGFX_U16("data/tilesets/primary/general_prairie/palettes/07.pal", ".gbapal"),
+    INCGFX_U16("data/tilesets/primary/general_prairie/palettes/08.pal", ".gbapal"),
+    INCGFX_U16("data/tilesets/primary/general_prairie/palettes/09.pal", ".gbapal"),
+    INCGFX_U16("data/tilesets/primary/general_prairie/palettes/10.pal", ".gbapal"),
+    INCGFX_U16("data/tilesets/primary/general_prairie/palettes/11.pal", ".gbapal"),
+    INCGFX_U16("data/tilesets/primary/general_prairie/palettes/12.pal", ".gbapal"),
+    INCGFX_U16("data/tilesets/primary/general_prairie/palettes/13.pal", ".gbapal"),
+    INCGFX_U16("data/tilesets/primary/general_prairie/palettes/14.pal", ".gbapal"),
+    INCGFX_U16("data/tilesets/primary/general_prairie/palettes/15.pal", ".gbapal"),
+};
+
+const struct Tileset gTileset_GeneralPrairie =
+{
+    .isCompressed = TRUE,
+    .isSecondary = FALSE,
+    .tiles = gTilesetTiles_General,
+    .palettes = gTilesetPalettes_GeneralPrairie,
+    .metatiles = gMetatiles_General,
+    .metatileAttributes = gMetatileAttributes_General,
+    .callback = InitTilesetAnim_General,
+};
+
+const u16 ALIGNED(4) gTilesetPalettes_PetalburgPrairie[][16] =
+{
+    INCGFX_U16("data/tilesets/secondary/petalburg_prairie/palettes/00.pal", ".gbapal"),
+    INCGFX_U16("data/tilesets/secondary/petalburg_prairie/palettes/01.pal", ".gbapal"),
+    INCGFX_U16("data/tilesets/secondary/petalburg_prairie/palettes/02.pal", ".gbapal"),
+    INCGFX_U16("data/tilesets/secondary/petalburg_prairie/palettes/03.pal", ".gbapal"),
+    INCGFX_U16("data/tilesets/secondary/petalburg_prairie/palettes/04.pal", ".gbapal"),
+    INCGFX_U16("data/tilesets/secondary/petalburg_prairie/palettes/05.pal", ".gbapal"),
+    INCGFX_U16("data/tilesets/secondary/petalburg_prairie/palettes/06.pal", ".gbapal"),
+    INCGFX_U16("data/tilesets/secondary/petalburg_prairie/palettes/07.pal", ".gbapal"),
+    INCGFX_U16("data/tilesets/secondary/petalburg_prairie/palettes/08.pal", ".gbapal"),
+    INCGFX_U16("data/tilesets/secondary/petalburg_prairie/palettes/09.pal", ".gbapal"),
+    INCGFX_U16("data/tilesets/secondary/petalburg_prairie/palettes/10.pal", ".gbapal"),
+    INCGFX_U16("data/tilesets/secondary/petalburg_prairie/palettes/11.pal", ".gbapal"),
+    INCGFX_U16("data/tilesets/secondary/petalburg_prairie/palettes/12.pal", ".gbapal"),
+    INCGFX_U16("data/tilesets/secondary/petalburg_prairie/palettes/13.pal", ".gbapal"),
+    INCGFX_U16("data/tilesets/secondary/petalburg_prairie/palettes/14.pal", ".gbapal"),
+    INCGFX_U16("data/tilesets/secondary/petalburg_prairie/palettes/15.pal", ".gbapal"),
+};
+
+const struct Tileset gTileset_PetalburgPrairie =
+{
+    .isCompressed = TRUE,
+    .isSecondary = TRUE,
+    .tiles = gTilesetTiles_Petalburg,
+    .palettes = gTilesetPalettes_PetalburgPrairie,
+    .metatiles = gMetatiles_Petalburg,
+    .metatileAttributes = gMetatileAttributes_Petalburg,
+    .callback = InitTilesetAnim_Petalburg,
+};
+
+const u16 ALIGNED(4) gTilesetPalettes_FallarborPrairie[][16] =
+{
+    INCGFX_U16("data/tilesets/secondary/fallarbor_prairie/palettes/00.pal", ".gbapal"),
+    INCGFX_U16("data/tilesets/secondary/fallarbor_prairie/palettes/01.pal", ".gbapal"),
+    INCGFX_U16("data/tilesets/secondary/fallarbor_prairie/palettes/02.pal", ".gbapal"),
+    INCGFX_U16("data/tilesets/secondary/fallarbor_prairie/palettes/03.pal", ".gbapal"),
+    INCGFX_U16("data/tilesets/secondary/fallarbor_prairie/palettes/04.pal", ".gbapal"),
+    INCGFX_U16("data/tilesets/secondary/fallarbor_prairie/palettes/05.pal", ".gbapal"),
+    INCGFX_U16("data/tilesets/secondary/fallarbor_prairie/palettes/06.pal", ".gbapal"),
+    INCGFX_U16("data/tilesets/secondary/fallarbor_prairie/palettes/07.pal", ".gbapal"),
+    INCGFX_U16("data/tilesets/secondary/fallarbor_prairie/palettes/08.pal", ".gbapal"),
+    INCGFX_U16("data/tilesets/secondary/fallarbor_prairie/palettes/09.pal", ".gbapal"),
+    INCGFX_U16("data/tilesets/secondary/fallarbor_prairie/palettes/10.pal", ".gbapal"),
+    INCGFX_U16("data/tilesets/secondary/fallarbor_prairie/palettes/11.pal", ".gbapal"),
+    INCGFX_U16("data/tilesets/secondary/fallarbor_prairie/palettes/12.pal", ".gbapal"),
+    INCGFX_U16("data/tilesets/secondary/fallarbor_prairie/palettes/13.pal", ".gbapal"),
+    INCGFX_U16("data/tilesets/secondary/fallarbor_prairie/palettes/14.pal", ".gbapal"),
+    INCGFX_U16("data/tilesets/secondary/fallarbor_prairie/palettes/15.pal", ".gbapal"),
+};
+
+const struct Tileset gTileset_FallarborPrairie =
+{
+    .isCompressed = TRUE,
+    .isSecondary = TRUE,
+    .tiles = gTilesetTiles_Fallarbor,
+    .palettes = gTilesetPalettes_FallarborPrairie,
+    .metatiles = gMetatiles_Fallarbor,
+    .metatileAttributes = gMetatileAttributes_Fallarbor,
+    .callback = InitTilesetAnim_Fallarbor,
+};
+
+const u16 ALIGNED(4) gTilesetPalettes_LavaridgePrairie[][16] =
+{
+    INCGFX_U16("data/tilesets/secondary/lavaridge_prairie/palettes/00.pal", ".gbapal"),
+    INCGFX_U16("data/tilesets/secondary/lavaridge_prairie/palettes/01.pal", ".gbapal"),
+    INCGFX_U16("data/tilesets/secondary/lavaridge_prairie/palettes/02.pal", ".gbapal"),
+    INCGFX_U16("data/tilesets/secondary/lavaridge_prairie/palettes/03.pal", ".gbapal"),
+    INCGFX_U16("data/tilesets/secondary/lavaridge_prairie/palettes/04.pal", ".gbapal"),
+    INCGFX_U16("data/tilesets/secondary/lavaridge_prairie/palettes/05.pal", ".gbapal"),
+    INCGFX_U16("data/tilesets/secondary/lavaridge_prairie/palettes/06.pal", ".gbapal"),
+    INCGFX_U16("data/tilesets/secondary/lavaridge_prairie/palettes/07.pal", ".gbapal"),
+    INCGFX_U16("data/tilesets/secondary/lavaridge_prairie/palettes/08.pal", ".gbapal"),
+    INCGFX_U16("data/tilesets/secondary/lavaridge_prairie/palettes/09.pal", ".gbapal"),
+    INCGFX_U16("data/tilesets/secondary/lavaridge_prairie/palettes/10.pal", ".gbapal"),
+    INCGFX_U16("data/tilesets/secondary/lavaridge_prairie/palettes/11.pal", ".gbapal"),
+    INCGFX_U16("data/tilesets/secondary/lavaridge_prairie/palettes/12.pal", ".gbapal"),
+    INCGFX_U16("data/tilesets/secondary/lavaridge_prairie/palettes/13.pal", ".gbapal"),
+    INCGFX_U16("data/tilesets/secondary/lavaridge_prairie/palettes/14.pal", ".gbapal"),
+    INCGFX_U16("data/tilesets/secondary/lavaridge_prairie/palettes/15.pal", ".gbapal"),
+};
+
+const struct Tileset gTileset_LavaridgePrairie =
+{
+    .isCompressed = TRUE,
+    .isSecondary = TRUE,
+    .tiles = gTilesetTiles_Lavaridge,
+    .palettes = gTilesetPalettes_LavaridgePrairie,
+    .metatiles = gMetatiles_Lavaridge,
+    .metatileAttributes = gMetatileAttributes_Lavaridge,
+    .callback = InitTilesetAnim_Lavaridge,
+};
+
+const u16 ALIGNED(4) gTilesetPalettes_MauvillePrairie[][16] =
+{
+    INCGFX_U16("data/tilesets/secondary/mauville_prairie/palettes/00.pal", ".gbapal"),
+    INCGFX_U16("data/tilesets/secondary/mauville_prairie/palettes/01.pal", ".gbapal"),
+    INCGFX_U16("data/tilesets/secondary/mauville_prairie/palettes/02.pal", ".gbapal"),
+    INCGFX_U16("data/tilesets/secondary/mauville_prairie/palettes/03.pal", ".gbapal"),
+    INCGFX_U16("data/tilesets/secondary/mauville_prairie/palettes/04.pal", ".gbapal"),
+    INCGFX_U16("data/tilesets/secondary/mauville_prairie/palettes/05.pal", ".gbapal"),
+    INCGFX_U16("data/tilesets/secondary/mauville_prairie/palettes/06.pal", ".gbapal"),
+    INCGFX_U16("data/tilesets/secondary/mauville_prairie/palettes/07.pal", ".gbapal"),
+    INCGFX_U16("data/tilesets/secondary/mauville_prairie/palettes/08.pal", ".gbapal"),
+    INCGFX_U16("data/tilesets/secondary/mauville_prairie/palettes/09.pal", ".gbapal"),
+    INCGFX_U16("data/tilesets/secondary/mauville_prairie/palettes/10.pal", ".gbapal"),
+    INCGFX_U16("data/tilesets/secondary/mauville_prairie/palettes/11.pal", ".gbapal"),
+    INCGFX_U16("data/tilesets/secondary/mauville_prairie/palettes/12.pal", ".gbapal"),
+    INCGFX_U16("data/tilesets/secondary/mauville_prairie/palettes/13.pal", ".gbapal"),
+    INCGFX_U16("data/tilesets/secondary/mauville_prairie/palettes/14.pal", ".gbapal"),
+    INCGFX_U16("data/tilesets/secondary/mauville_prairie/palettes/15.pal", ".gbapal"),
+};
+
+const struct Tileset gTileset_MauvillePrairie =
+{
+    .isCompressed = TRUE,
+    .isSecondary = TRUE,
+    .tiles = gTilesetTiles_Mauville,
+    .palettes = gTilesetPalettes_MauvillePrairie,
+    .metatiles = gMetatiles_Mauville,
+    .metatileAttributes = gMetatileAttributes_Mauville,
+    .callback = InitTilesetAnim_Mauville,
+};

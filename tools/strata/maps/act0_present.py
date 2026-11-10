@@ -32,6 +32,12 @@ HEAL_LOCATIONS = [
          respawn_map="MAP_STRATA_FIELD_STATION", respawn_npc="LOCALID_STRATA_MENTOR"),
 ]
 
+# The present-day palettes of the outdoor hub maps (gen_tilesets.py `prairie`: Hoenn's greens
+# dried to sage and straw, as in the epilogue prairie). Their battle and grass art follow
+# through MAP_ART in gen_tilesets.py.
+PRAIRIE_MAUVILLE = ("gTileset_GeneralPrairie", "gTileset_MauvillePrairie")    # Route 111 and 117 crops
+PRAIRIE_FALLARBOR = ("gTileset_GeneralPrairie", "gTileset_FallarborPrairie")   # Fallarbor Town crop (Jordan)
+
 # General primary tileset: the wooden signpost. A field-note sign on open ground gets
 # this metatile, so the player can see there is something to read.
 SIGNPOST = 0x01B
@@ -84,7 +90,7 @@ MAPS = [
     dict(
         id="MAP_STRATA_FIELD_CAMP", name="StrataFieldCamp",
         habitat=None, light="dns",
-        crop=dict(**{"from": "LAYOUT_ROUTE111"}, rect=(0, 0, 40, 34)),
+        crop=dict(**{"from": "LAYOUT_ROUTE111"}, rect=(0, 0, 40, 34), tilesets=PRAIRIE_MAUVILLE),
         patches=[
             dict(rect=(17, 5, 8, 2), metatile=0x001, elevation=3),    # two berry-soil plots -> grass
             dict(rect=(29, 16, 3, 3), metatile=0x001, elevation=3),   # the house's pale lawn -> grass
@@ -162,7 +168,7 @@ MAPS = [
     dict(
         id="MAP_STRATA_BADLANDS", name="StrataBadlands",
         habitat="open", light="dns",
-        crop=dict(**{"from": "LAYOUT_ROUTE111"}, rect=(0, 34, 40, 40)),
+        crop=dict(**{"from": "LAYOUT_ROUTE111"}, rect=(0, 34, 40, 40), tilesets=PRAIRIE_MAUVILLE),
         patches=[
             dict(rect=(17, 17, 5, 9), like=(24, 49)),  # Mirage Tower -> sand
         ] + [p for p, _ in _BADLANDS_NOTES + _DIG_STAKES],
@@ -186,7 +192,7 @@ MAPS = [
     # ------------------------------------------------------------------
     dict(
         id="MAP_STRATA_JORDAN", name="StrataJordan",
-        crop=dict(**{"from": "LAYOUT_FALLARBOR_TOWN"}, rect=(0, 0, 20, 20)),
+        crop=dict(**{"from": "LAYOUT_FALLARBOR_TOWN"}, rect=(0, 0, 20, 20), tilesets=PRAIRIE_FALLARBOR),
         patches=[
             # The Battle Tent: cliff behind, plain ground in front.
             dict(rect=(4, 3, 7, 2), like=(8, 2)),
@@ -275,7 +281,7 @@ MAPS = [
     # ------------------------------------------------------------------
     dict(
         id="MAP_STRATA_LINDQVIST_RANCH", name="StrataLindqvistRanch",
-        crop=dict(**{"from": "LAYOUT_ROUTE117"}, rect=(0, 0, 60, 20)),
+        crop=dict(**{"from": "LAYOUT_ROUTE117"}, rect=(0, 0, 60, 20), tilesets=PRAIRIE_MAUVILLE),
         music="MUS_ROUTE110", weather="WEATHER_SUNNY", map_type="MAP_TYPE_ROUTE",
         mapsec="MAPSEC_STRATA_LINDQVIST_RANCH",
         connections=[connection("left", "MAP_STRATA_JORDAN"),
@@ -319,7 +325,7 @@ MAPS = [
     # ------------------------------------------------------------------
     dict(
         id="MAP_STRATA_SAND_ARROYO", name="StrataSandArroyo",
-        crop=dict(**{"from": "LAYOUT_ROUTE111"}, rect=(0, 74, 40, 27)),
+        crop=dict(**{"from": "LAYOUT_ROUTE111"}, rect=(0, 74, 40, 27), tilesets=PRAIRIE_MAUVILLE),
         patches=[
             # The Desert Ruins door stays as the poached pit, but nothing walks into it.
             dict(at=(29, 13), tiles=[[0x0A7]], collision=1),

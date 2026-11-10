@@ -62,6 +62,9 @@ Text baked into images (not redrawn): `graphics/pokedex/hgss/tileset_menu_search
 ("POKéDEX" title), `graphics/pokedex/menu.png`, `graphics/pokedex/search_menu.png`,
 FRLG intro/title/credits art, `graphics/pokenav/*`.
 If one becomes reachable, redraw it and add the file to this list's "done" side in the commit.
+Done: the truck interior (`data/maps/InsideOfTruck`, reachable since the new game starts there:
+its stock logo-box text is now a field-gear crate; the three box sprites and the tileset
+carry no logo; width-tested in `test/strata_truck.c`, which also scans for "POK").
 Done: the credits (`src/credits.c` is Strata's roll up the column, S3: printed text only, so
 `graphics/credits/the_end_copyright.png` and the bike-scene art are no longer drawn).
 

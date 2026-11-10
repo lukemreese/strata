@@ -61,7 +61,8 @@ def settle(g):
 # ---------------------------------------------------------------------------
 @scenario
 def new_game_smoke(g, args):
-    """Full new game: title, intro, naming, the field station, starter choice, gear gift."""
+    """Full new game: title, intro, naming, the truck arrival and the camp, the field station, starter
+    choice, gear gift."""
     g.boot()
     g.screenshot("title")
     screens = set()
@@ -69,7 +70,15 @@ def new_game_smoke(g, args):
     boxes = 0
     idle = 0
     starter_done = False
+    maps = []           # the maps the new game visits, in order (the truck, the camp, the station)
+    truck_shots = set()
     while True:
+        if g.cb2() == "CB2_Overworld" and (not maps or maps[-1] != g.map_name()):
+            maps.append(g.map_name())
+            g.log(f"map {maps[-1]}")
+            if maps[-1] == "MAP_STRATA_FIELD_CAMP":
+                g.wait(40)
+                g.screenshot("camp_arrival")
         if g.frame - start > 60 * 60 * 8:
             raise TestFailure("new game did not reach the free overworld with the starter in 8 game minutes")
         cb2 = g.cb2()
@@ -90,10 +99,22 @@ def new_game_smoke(g, args):
         if cb2 == "CB2_Overworld" and g.st["magic"] and not g.st["scriptActive"] and not g.st["fieldLocked"] \
                 and not g.text_active() and g.st["story"] >= 1:
             break
+        in_truck = cb2 == "CB2_Overworld" and g.map_name() == "MAP_INSIDE_OF_TRUCK"
+        if in_truck and g.st["magic"] and not g.st["scriptActive"] and not g.st["fieldLocked"] \
+                and not g.text_active():
+            # The door is open and the player has control: step out (the exit is the column at x=4).
+            if "truck_open" not in truck_shots:
+                truck_shots.add("truck_open")
+                g.screenshot("truck_open")
+            g.walk("right", 3)
+            continue
         if g.text_waiting():
             idle = 0
             boxes += 1
-            if boxes % 4 == 1:
+            if in_truck and "truck_text" not in truck_shots:
+                truck_shots.add("truck_text")
+                g.screenshot("truck_text")
+            elif boxes % 4 == 1:
                 g.screenshot(f"text_{boxes:03d}")
             g.press("A", 2, 4)
             continue
@@ -115,6 +136,9 @@ def new_game_smoke(g, args):
         g.step(4, 0)
     g.screenshot("after_intro")
     g.expect_map("MAP_STRATA_FIELD_STATION")
+    g.check(maps == ["MAP_INSIDE_OF_TRUCK", "MAP_STRATA_FIELD_CAMP", "MAP_STRATA_FIELD_STATION"],
+            f"the new game went truck -> camp -> station (got {maps})")
+    g.check("truck_open" in truck_shots and "truck_text" in truck_shots, "the truck door opened and the arrival text showed")
     g.expect_var("VAR_STRATA_STORY", 1)
     party = g.party()
     g.log(f"party {party}")
