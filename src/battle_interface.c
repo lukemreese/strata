@@ -2772,7 +2772,9 @@ static void SpriteCb_AbilityPopUp(struct Sprite *sprite)
     }
     case APU_STATE_END:
     {
-        if (sIsMain)
+        // Strata: a pop-up still sliding out when the battle ends (Run Away on
+        // escape) reaches here after FreeBattleResources set gBattleStruct NULL.
+        if (sIsMain && gBattleStruct != NULL)
             gBattleStruct->battlerState[sBattlerId].activeAbilityPopUps = FALSE;
 
         DestroySprite(sprite);

@@ -1086,6 +1086,11 @@ static void SpriteCB_Underscore(struct Sprite *sprite)
     const s16 y[] = {2, 3, 2, 1};
     u8 pos;
 
+    // Strata: MainState_Exit frees sNamingScreen inside RunTasks, and
+    // CB2_NamingScreen then still calls AnimateSprites once (a NULL read).
+    if (sNamingScreen == NULL)
+        return;
+
     pos = GetTextEntryPosition();
     if (pos != (u8)sprite->sId)
     {

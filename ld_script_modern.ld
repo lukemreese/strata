@@ -132,6 +132,9 @@ SECTIONS {
 
     /* DWARF 5*/
     .debug_line_str     0 : { *(.debug_line_str) }
+    /* Strata: without these two /DISCARD/ drops them and addr2line gives ??:? */
+    .debug_rnglists     0 : { *(.debug_rnglists) }
+    .debug_loclists     0 : { *(.debug_loclists) }
 
     /* Discard everything not specifically mentioned above. */
     /DISCARD/ :

@@ -28,6 +28,16 @@ import scenarios  # noqa: E402
 
 DEFAULT_OUT = "/mnt/c/Projects/pokemon-custom/build/harness"
 
+# A "Bad memory Load/Store" the emulator logs fails an otherwise passing scenario,
+# unless a substring of the log line (usually the function, e.g. "(SomeFunc+") is
+# listed here for that scenario ("*" = every scenario). Keep it empty: fix the read.
+BAD_MEMORY_OK = {}
+
+
+def unexpected_bad_memory(name, errors):
+    ok = BAD_MEMORY_OK.get(name, []) + BAD_MEMORY_OK.get("*", [])
+    return [e for e in errors if "Bad memory" in e and not any(s in e for s in ok)]
+
 
 def run_one(name, args):
     out = os.path.join(args.out, os.path.splitext(os.path.basename(name))[0])
@@ -58,6 +68,14 @@ def run_one(name, args):
             g.screenshot("failure")
         except Exception:
             pass
+    if status == "pass":
+        try:
+            g._drain_log()
+        except Exception:
+            pass
+        bad = unexpected_bad_memory(os.path.basename(name), g.errors)
+        if bad:
+            status, error = "fail", f"{len(bad)} bad memory access(es), first: {bad[0]}"
     res = g.close(status, error)
     res["out"] = out
     return res

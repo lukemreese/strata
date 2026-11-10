@@ -118,8 +118,13 @@ animations off; pass `encounters=True`, `collision=False`, `instant_text=False`,
 
 - **Freeze**: the game's main loop counter (`gStrataPlaytestStatus.frames`) stops for 600 frames
   -> `crash`, with PC/LR named from the ELF and `crash_last.png`.
-- **Crash**: mGBA's "Jumped to invalid address" -> `crash`. Other "Bad memory" lines are logged as
-  `EMU` with the function (`pc=... (Func+0x..)`) and listed in `result.json` (not fatal).
+- **Crash**: mGBA's "Jumped to invalid address" -> `crash`.
+- **Bad memory**: any other "Bad memory Load/Store" is logged as `EMU` with the function
+  (`pc=... (Func+0x..)`), listed in `result.json`, and **fails** an otherwise passing scenario
+  ("N bad memory access(es), first: ..."). `BAD_MEMORY_OK` in `run.py` is a per-scenario
+  allowlist (scenario name or `"*"` -> substrings of the line, e.g. `"(SomeFunc+"`); it is empty,
+  keep it so: fix the read instead. The log has the PC only (no LR); map it with addr2line
+  (below) and read the callers.
 - **Reset**: a SoftReset SWI -> `crash`.
 - **Frozen screen**: keys held but the picture unchanged for 600 frames -> warning + screenshot.
 - A scenario over 1.5 M frames fails (scenario bug guard). Every wait has a timeout.
@@ -195,3 +200,22 @@ animations off; pass `encounters=True`, `collision=False`, `instant_text=False`,
   `sNumStartMenuActions`/`sStartMenuCursorPos` (BAG is action 2), the bag pocket is byte 5 of
   `gBagPosition`. Static EWRAM symbols resolve like globals. `FLAG_STRATA_*` and `POCKET_*`
   resolve too (`constants/strata_act_flags.h`, `constants/item.h` are in `Constants.HEADERS`).
+
+## Reading a bad memory access
+
+- Map the PC: `arm-none-eabi-addr2line -f -i -e pokeemerald-playtest.elf 0x08xxxxxx` (file:line
+  needs the `.debug_rnglists`/`.debug_loclists` lines in `ld_script_modern.ld`; before they were
+  added it printed `??:?` with "can't find .debug_rnglists"). No LR is logged: read the callers.
+- Decode the address before reading code. Near 0 (`Store8: 0x000001E8`) = a NULL struct pointer
+  plus the field offset. `0x22xxxxxx` = an EWRAM array (`0x02xxxxxx`) indexed with -1 in
+  unsigned maths (0xFFFFFFFF/8 = 0x1FFFFFFF), e.g. `GetSetPokedexFlag(0)`. An ARM opcode as the address
+  (`Load8: 0xe3a02005`) = a pointer loaded from NULL: BIOS reads return the last BIOS opcode.
+- Bugs found this way (all fixed): the Codex list (`CreatePokedexList`, regional numerical order)
+  ran one past the regional dex and asked for dex number 0; `Task_HandleMonAnimation` wrote
+  `gBattleStruct->battlerKOAnimsRunning` outside battle (the intro's capsule release, evolution,
+  egg hatch) with `gBattleStruct` NULL; the naming screen's `SpriteCB_Underscore` ran once more
+  after `MainState_Exit` freed `sNamingScreen`; the Run Away ability pop-up
+  (`SpriteCb_AbilityPopUp`, `grass_battles`) finished sliding out after the battle freed
+  `gBattleStruct` and wrote NULL+4. Same patterns to look for: a sprite callback
+  outliving its screen's freed struct, battle globals used by shared field/menu code, loops
+  bounded by a `*_COUNT` that includes the NONE slot.

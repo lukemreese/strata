@@ -2162,6 +2162,11 @@ void CreatePokedexList(u8 dexMode, u8 order)
             if (temp_isHoennDex)
             {
                 temp_dexNum = RegionalToNationalOrder(i + 1);
+                // Strata: REGIONAL_DEX_COUNT counts the NONE slot, so the last
+                // pass asks for number REGIONAL_DEX_COUNT, which maps to 0, and
+                // GetSetPokedexFlag(0) reads 512 MB past dexSeen (open bus).
+                if (temp_dexNum == NATIONAL_DEX_NONE)
+                    continue;
             }
             else
             {
