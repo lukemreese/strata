@@ -189,6 +189,14 @@ animations off; pass `encounters=True`, `collision=False`, `instant_text=False`,
   `STRATA_Q2_ANIM=1`). The workarounds (`q2_assert_screen`, `q2_softlock`) and the `engine` column
   of fights.csv stay as a tripwire: any non-zero count is a new engine bug. A freeze at
   `CrashScreen` is an assert screen, not a hang.
+- The rig's descent scene (F3) is the stock evolution scene run from the station script: its
+  move YES/NO lives inside `Task_EvolutionScene` and the move list in the summary screen's
+  `Task_HandleReplaceMoveInput`, which `menu_open()` doesn't match. `talk()` answers them with A
+  (`g.in_descent_scene()`); a hand-written loop must too (`descent_smoke`). The intro message has
+  no `\p`, so read `gStringVar4` while in the scene, not only when text waits.
+- `EMU ... Bad memory Store8: 0x000001E8` in `Task_HandleMonAnimation` was the front-sprite
+  animation writing `gBattleStruct` (NULL outside battle); guarded in `src/pokemon_animation.c`.
+  The same address from another function is the same kind of NULL battle-struct write.
 - Several run.py processes can run at once with separate `--out` folders, but warm the
   constants cache (`pokeemerald-playtest.playtest_constants.json`) with one run first.
 - Menus by memory, not by guessing the cursor: the start menu is `sCurrentStartMenuActions`/

@@ -174,6 +174,8 @@ StrataFieldStation_EventScript_Rig::
 	goto_if_eq VAR_RESULT, NO, StrataFieldStation_EventScript_RigCancel
 	playse SE_M_EXPLOSION
 	special Strata_RigLoadNext
+	@ Descents first, each TEAM one as a scene (data/scripts/strata_descent.inc), then losses.
+	call Strata_EventScript_Descents
 	goto_if_eq VAR_0x8005, 0, StrataFieldStation_EventScript_NoLosses
 	@ Every lost animal and why (data/scripts/strata_fossils.inc).
 	call Strata_EventScript_ShowLosses

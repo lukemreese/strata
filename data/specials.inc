@@ -657,3 +657,6 @@ gSpecials::
 	def_special Strata_BufferFossil
 	def_special Strata_BufferHallCase
 	def_special Strata_RollCredits, waitstate=1
+	def_special Strata_GetDescentSceneCount
+	def_special Strata_StartDescentScenes, waitstate=1
+	def_special Strata_BufferPcDescents

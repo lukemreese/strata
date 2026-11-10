@@ -465,6 +465,15 @@ class Game:
             self.wait_until(self.text_waiting, timeout, "a text box waiting for A")
             self.press("A", 2, 2)
 
+    def in_descent_scene(self):
+        """The rig's descent scene (src/strata_descent.c) is the stock evolution scene, run from a
+        script: its move YES/NO and the summary screen's move list are not field menus, so talk()
+        answers them with A (learn the move, forget the first one)."""
+        if self.cb2() == "CB2_Overworld":
+            return False
+        return any(re.search(r"Task_EvolutionScene|Task_HandleReplaceMoveInput|Task_SetHandleReplaceMoveInput", t)
+                   for t in self.tasks())
+
     def talk(self, max_boxes=60, timeout=6000, stop_at_menu=True):
         """Press A through a script's text until the script ends (field unlocked) or a
         menu (YES/NO, multichoice) needs an answer. Returns 'done', 'menu' or 'battle'."""
@@ -478,6 +487,9 @@ class Game:
                 boxes += 1
                 if boxes > max_boxes:
                     raise TestFailure(f"more than {max_boxes} text boxes")
+                continue
+            if self.in_descent_scene() and not self.text_active():
+                self.press("A", 2, 8)
                 continue
             if stop_at_menu and self.menu_open() and not self.text_active():
                 return "menu"

@@ -9,6 +9,7 @@ bool32 Strata_IsTodayGated(void);
 const u8 *Strata_GetTodayGateText(void);
 u32 Strata_GetRigTargetEra(void);
 const u8 *Strata_GetLayerName(u32 era);
+u8 *Strata_BufferElapsedTime(u8 *dest, u32 fromEra, u32 toEra);
 void Strata_RigQuery(void);
 void Strata_RigLoadNext(void);
 void Strata_SpecialGetCurrentAct(void);

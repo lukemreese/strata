@@ -43,7 +43,11 @@ Because `ANIMAL` means the creature, don't reuse it for anything else: the meat-
    placeholders at their widest (7-char `W` name, `888` for a number) and measure each line
    (≤ 208 px, at most one `\n` per `\p` page): `test/strata_story.c` does this for the S1
    interludes, Halvorsen's lines (every story × subplot) and the 152 px field-log box.
-7. Menu text that must stay a fixed width uses `{CLEAR_TO n}` (battle menu `Battle Bag Team Run`);
+7. Text in the battle message window outside a battle (the descent scene, `src/strata_descent.c`)
+   is 208 px x 2 lines, and `\l` waits for A there (autoscroll is only for link, recorded and
+   test battles), so a 3-line message is two boxes. `test/strata_descent.c` measures it with the
+   12-`M` nickname and the widest Strata species name for every era step.
+8. Menu text that must stay a fixed width uses `{CLEAR_TO n}` (battle menu `Battle Bag Team Run`);
    keep those offsets.
 
 ## Species category
