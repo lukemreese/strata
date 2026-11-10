@@ -528,7 +528,8 @@ static void Task_HandleMonAnimation(u8 taskId)
         // but if the counter is non-zero then only KO animations are running.
         // This assumption is not checked.
         // Strata: outside battle (the intro's capsule release, evolution,
-        // egg hatch, Hall of Fame) gBattleStruct is NULL; don't write near 0.
+        // egg hatch, Hall of Fame,
+        // the rig's descent scene) gBattleStruct is NULL; don't write near 0.
         if (gBattleStruct != NULL && gBattleStruct->battlerKOAnimsRunning > 0)
             gBattleStruct->battlerKOAnimsRunning--;
         DestroyTask(taskId);

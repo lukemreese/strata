@@ -69,6 +69,13 @@ Read `docs/strata_outline.md` (plan per act, §2) and `docs/strata_design.md` (a
   is the edge-trigger var (badlands, Jordan), `VAR_TEMP_2..4` the subplot's.
 - Present-day (hub) content has no act of its own: its flags and vars are the "Hub" section at the end of
   `strata_act_flags.h` (`FLAG_STRATA_HUB_BASE` 0x2AC.., `VAR_STRATA_STIPEND_COUNT`). Add yours there.
+- A full-screen scene from a script (the descent scenes, `Strata_StartDescentScenes`): the
+  special does `LockPlayerFieldControls(); FadeScreen(FADE_TO_BLACK, 0);` and a task that waits
+  for the fade, calls `CleanupOverworldWindowsAndTilemaps()` and sets CB2; it comes back with
+  `CB2_ReturnToFieldContinueScriptPlayMapMusic`. Declare it `def_special X, waitstate=1`: the
+  `special` macro then adds the `waitstate`, so the special must reach `ScriptContext_Enable` on
+  every path. Ask first with a plain special (`Strata_GetDescentSceneCount`) and skip it when
+  there is nothing to show, or the script hangs.
 - Story values are set in boss scripts; keep `strata_boss_prep atk=1` / `strata_boss_done`
   around boss battles (smart AI + totem boost).
 - The present-day subplot is `VAR_STRATA_SUBPLOT` (0x40DC, `SUBPLOT_*` 0–10 in the "Story" section

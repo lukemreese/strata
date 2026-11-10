@@ -23,6 +23,7 @@
 #include "scanline_effect.h"
 #include "sound.h"
 #include "sprite.h"
+#include "strata_descent.h"
 #include "string_util.h"
 #include "strings.h"
 #include "task.h"
@@ -165,6 +166,7 @@ static void CB2_BeginEvolutionScene(void)
 #define tLearnMoveNoState   data[8]
 #define tEvoWasStopped      data[9]
 #define tPartyId            data[10]
+#define tIsDescent          data[11] // Strata's descent scene (src/strata_descent.c)
 
 #define TASK_BIT_CAN_STOP       (1 << 0)
 #define TASK_BIT_LEARN_MOVE     (1 << 7)
@@ -214,6 +216,8 @@ void EvolutionScene(struct Pokemon *mon, enum Species postEvoSpecies, bool32 can
     u32 personality;
     bool32 isShiny;
     u8 id;
+    // Strata: a descent has already changed the species; the scene shows the old one.
+    const struct DescentScene *descent = Descent_GetActiveScene();
 
     SetHBlankCallback(NULL);
     SetVBlankCallback(NULL);
@@ -258,6 +262,12 @@ void EvolutionScene(struct Pokemon *mon, enum Species postEvoSpecies, bool32 can
 
     // preEvo sprite
     currSpecies = GetMonData(mon, MON_DATA_SPECIES);
+    if (descent != NULL)
+    {
+        currSpecies = descent->preSpecies;
+        canStopEvo = FALSE;
+        Descent_BufferSceneVars(descent);
+    }
     isShiny = GetMonData(mon, MON_DATA_IS_SHINY);
     personality = GetMonData(mon, MON_DATA_PERSONALITY);
     LoadSpecialPokePic(gMonSpritesGfxPtr->spritesGfx[B_POSITION_OPPONENT_LEFT],
@@ -298,6 +308,7 @@ void EvolutionScene(struct Pokemon *mon, enum Species postEvoSpecies, bool32 can
     gTasks[id].tLearnsFirstMove = TRUE;
     gTasks[id].tEvoWasStopped = FALSE;
     gTasks[id].tPartyId = partyId;
+    gTasks[id].tIsDescent = (descent != NULL);
 
     memcpy(&sEvoStructPtr->savedPalette, &gPlttBufferUnfaded[BG_PLTT_ID(2)], sizeof(sEvoStructPtr->savedPalette));
 
@@ -659,7 +670,8 @@ static void Task_EvolutionScene(u8 taskId)
     if (gMain.heldKeys == B_BUTTON
         && gTasks[taskId].tState == EVOSTATE_WAIT_CYCLE_MON_SPRITE
         && gTasks[sEvoGraphicsTaskId].isActive
-        && gTasks[taskId].tBits & TASK_BIT_CAN_STOP)
+        && gTasks[taskId].tBits & TASK_BIT_CAN_STOP
+        && !gTasks[taskId].tIsDescent)
     {
         gTasks[taskId].tState = EVOSTATE_CANCEL;
         gSpecialVar_Result = EVO_EVENT_INTERRUPTED;
@@ -682,7 +694,7 @@ static void Task_EvolutionScene(u8 taskId)
     case EVOSTATE_INTRO_MSG:
         if (!gPaletteFade.active)
         {
-            StringExpandPlaceholders(gStringVar4, gText_PkmnIsEvolving);
+            StringExpandPlaceholders(gStringVar4, gTasks[taskId].tIsDescent ? gText_DescentIntro : gText_PkmnIsEvolving);
             BattlePutTextOnWindow(gStringVar4, B_WIN_MSG);
             gTasks[taskId].tState++;
         }
@@ -777,7 +789,15 @@ static void Task_EvolutionScene(u8 taskId)
         }
         break;
     case EVOSTATE_SET_MON_EVOLVED:
-        if (IsCryFinished())
+        if (IsCryFinished() && gTasks[taskId].tIsDescent)
+        {
+            // Strata: the lineage already changed the species, stats and name.
+            StringExpandPlaceholders(gStringVar4, gText_DescentDone);
+            BattlePutTextOnWindow(gStringVar4, B_WIN_MSG);
+            PlayBGM(MUS_EVOLVED);
+            gTasks[taskId].tState++;
+        }
+        else if (IsCryFinished())
         {
             u32 zero = 0;
             StringExpandPlaceholders(gStringVar4, gText_CongratsPkmnEvolved);
@@ -836,7 +856,7 @@ static void Task_EvolutionScene(u8 taskId)
 
             }
 
-            if (!gTasks[taskId].tEvoWasStopped)
+            if (!gTasks[taskId].tEvoWasStopped && !gTasks[taskId].tIsDescent)
                 CreateShedinja(gTasks[taskId].tPreEvoSpecies, gTasks[taskId].tPostEvoSpecies, mon);
 
             DestroyTask(taskId);

@@ -6,6 +6,7 @@
 #include "pokemon_storage_system.h"
 #include "random.h"
 #include "selection.h"
+#include "strata_descent.h"
 #include "strata_fossils.h"
 #include "string_util.h"
 #include "text.h"
@@ -339,11 +340,18 @@ static void ApplyExtinctions(enum StrataEra era)
         struct Pokemon *mon = &gParties[B_TRAINER_PLAYER][i];
         enum Species before = GetMonData(mon, MON_DATA_SPECIES);
         if (FilterBoxMon(&mon->box, era, TRUE))
+        {
             ZeroMonData(mon);
+            Descent_NoteTeamLost(i);
+        }
         else if (GetMonData(mon, MON_DATA_SPECIES) != before)
+        {
             CalculateMonStats(mon);
+            Descent_NoteTeamReplaced(i);
+        }
     }
     CompactPartySlots();
+    Descent_CompactTeam();
     CalculatePlayerPartyCount();
 
     for (boxId = 0; boxId < TOTAL_BOXES_COUNT; boxId++)
@@ -364,24 +372,28 @@ static void ApplyExtinctions(enum StrataEra era)
 // era). Resilience is applied with the descent, before the filter: a lineage the
 // filter removes loses it anyway, and one replaced in Gentle Deep Time keeps it.
 // Box mons get their stats recalculated when withdrawn. Returns the number of
-// descents that happened; see Lineage_GetExtinctionCount for the losses.
+// descents that happened; see Lineage_GetExtinctionCount for the losses. The TEAM's
+// descents are recorded for the descent scene (src/strata_descent.c).
 u32 Lineage_AdvanceToEra(enum StrataEra targetEra)
 {
-    u32 era, i, boxId, boxPos, count = 0;
+    u32 era, i, boxId, boxPos, count = 0, fromEra = VarGet(VAR_STRATA_ERA);
 
     sExtinctionCount = 0;
     sFirstExtinctSpecies = SPECIES_NONE;
     Fossil_ResetLosses();
+    Descent_BeginAdvance();
     if (targetEra >= ERA_COUNT)
         targetEra = ERA_COUNT - 1;
 
-    for (era = VarGet(VAR_STRATA_ERA) + 1; era <= targetEra; era++)
+    for (era = fromEra + 1; era <= targetEra; era++)
     {
         for (i = 0; i < PARTY_SIZE; i++)
         {
             struct Pokemon *mon = &gParties[B_TRAINER_PLAYER][i];
             bool32 descended = Lineage_DescendMon(mon, era);
             count += descended;
+            if (descended)
+                Descent_NoteTeamDescent(i, GetMonData(mon, MON_DATA_SPECIES));
             if (GetMonData(mon, MON_DATA_SANITY_HAS_SPECIES))
             {
                 Lineage_ApplyResilience(&mon->box, descended);
@@ -396,6 +408,8 @@ u32 Lineage_AdvanceToEra(enum StrataEra targetEra)
                 struct BoxPokemon *boxMon = GetBoxedMonPtr(boxId, boxPos);
                 bool32 descended = Lineage_DescendBoxMon(boxMon, era);
                 count += descended;
+                if (descended)
+                    Descent_NotePcDescent();
                 Lineage_ApplyResilience(boxMon, descended);
             }
         }
@@ -403,6 +417,7 @@ u32 Lineage_AdvanceToEra(enum StrataEra targetEra)
         ApplyLevelFloor(era);
         VarSet(VAR_STRATA_ERA, era);
     }
+    Descent_EndAdvance(fromEra, VarGet(VAR_STRATA_ERA));
     return count;
 }
 

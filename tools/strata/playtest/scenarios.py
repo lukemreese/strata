@@ -29,7 +29,7 @@ def expand(name):
     if name == "all":
         return ["watchdog_selftest", "new_game_smoke", "battle_smoke", "forecast_smoke", "pressure_chart_smoke",
                 "peer_review_smoke", "act_tour", "extinction_smoke", "story_interludes"] \
-            + [f"boss_{a}" for a in range(1, 9)] + ["colby_gate", "ending_smoke", "codex_pages", "starter_run_smoke"]
+            + [f"boss_{a}" for a in range(1, 9)] + ["colby_gate", "ending_smoke", "codex_pages", "starter_run_smoke", "descent_smoke"]
     if name in REGISTRY or name.endswith(".txt") or re.fullmatch(r"boss_[1-8]", name):
         return [name]
     raise SystemExit(f"unknown scenario {name} (try --list)")
@@ -1837,3 +1837,101 @@ def q3_notes(g, args):
         msgs = read_messages(g, script.split("_")[-1], lambda: g.frame - start > 30 and not g.st["scriptActive"])
         g.check(len(msgs) >= 1, f"{script} shows its text")
         g.wait_overworld()
+
+
+# ---------------------------------------------------------------------------
+# F3: the descent scene (src/strata_descent.c).
+
+@scenario
+def descent_smoke(g, args):
+    """The rig after act 2 with a Cimolestes in the TEAM and another in the PC: the load plays
+    the descent scene (B pressed through the morph must not stop it), then the PC line, and lands
+    in Corral Bluffs with a Protictis in the TEAM. Screenshots: descent_intro, descent_morph_N,
+    descent_done_N."""
+    level = world.ACT_LEVEL[2]
+    team = [("SPECIES_CIMOLESTES", level)] + [("SPECIES_LEPISOSTEUS", level)] * 5
+    # Story 5 = STORY_ACT_DONE(2): the rig offers the next layer (RIG_NEXT).
+    g.quickstart("MAP_STRATA_FIELD_STATION", *RIG_STAND, story=5, era="ERA_IMPACT_WINTER", party=team)
+    g.give_mon("SPECIES_CIMOLESTES", level)  # the TEAM is full: to the PC
+    g.face("up")
+    g.press("A")
+    g.talk()
+    g.wait_until(lambda: "Task_RigForecast" in g.tasks(), 120, "the forecast window")
+    for _ in range(20):
+        g.wait(10)
+        g.press("A", 4, 10)
+        if "Task_RigForecast" not in g.tasks():
+            break
+    r = g.talk()
+    g.check(r == "menu" and any("YesNo" in t for t in g.tasks()), f"the load YES/NO follows (tasks={g.tasks()})")
+    g.press("A", 4, 10)  # YES
+
+    seen, morph_shots, b_presses, last_shot, scene_frames, done_shots = [], 0, 0, 0, 0, 0
+    t0 = g.frame
+
+    def note(msg):
+        if msg and (not seen or seen[-1] != msg):
+            seen.append(msg)
+            g.log(f"message: {msg!r}")
+            return True
+        return False
+
+    while True:
+        if g.frame - t0 > 60 * 60 * 5:
+            raise TestFailure(f"the load did not finish (cb2={g.cb2()}, tasks={g.tasks()}, seen={seen})")
+        in_scene = g.in_descent_scene()
+        if in_scene:
+            scene_frames += 1
+            if note(g.read_text("gStringVar4")) and "Deep time" in seen[-1]:
+                g.wait_until(lambda: not g.text_active(), 600, "the intro text")
+                g.screenshot("descent_intro")
+            elif seen and "became" in seen[-1] and g.text_waiting() and done_shots < 2:
+                # Two boxes: the message scrolls (\l) to its last line.
+                g.screenshot(f"descent_done_{done_shots}")
+                done_shots += 1
+        if g.text_waiting():
+            msg = g.read_text("gStringVar4")
+            if note(msg) and not in_scene:
+                g.screenshot(f"text_{len(seen):02d}")
+            g.press("A", 2, 4)
+            continue
+        if in_scene and not g.text_active():
+            intro = any("Deep time" in m for m in seen)
+            done = any("became" in m for m in seen)
+            if intro and not done:
+                # The morph: B stops a stock evolution, never a descent.
+                if morph_shots < 5 and g.frame - last_shot > 240:
+                    g.screenshot(f"descent_morph_{morph_shots}")
+                    morph_shots += 1
+                    last_shot = g.frame
+                g.press("B", 2, 4)
+                b_presses += 1
+            else:
+                g.press("A", 2, 8)
+            continue
+        if g.menu_open() and not g.text_active():
+            g.press("A", 4, 20)
+            continue
+        if not g.st["scriptActive"] and not g.st["fieldLocked"] and g.cb2() == "CB2_Overworld" \
+                and not g.st["fadeActive"] and not g.text_active():
+            break
+        g.step(2, 0)
+
+    g.wait_overworld()
+    g.screenshot("after_load")
+    g.log(f"messages {seen}")
+    g.check(scene_frames > 0, "the descent scene played")
+    g.check(b_presses > 0, f"B was pressed during the morph ({b_presses} times)")
+    g.check(not any("stopped" in m.lower() for m in seen), "the descent was not stopped")
+    done = [m for m in seen if "became" in m]
+    g.check(len(done) == 1, f"one descent scene, for the one TEAM descent ({len(done)})")
+    g.check(done and "500,000 years" in done[0] and "lineage of" in done[0] and "PROTICTIS" in done[0].upper(),
+            f"the scene tells the time and the new species ({done})")
+    g.check(any("In the PC, one more lineage" in m for m in seen), "one line for the PC descent")
+    g.expect_map("MAP_STRATA_PALM_FOREST")
+    g.expect_var("VAR_STRATA_ERA", 3)
+    party = g.party()
+    g.log(f"TEAM after the load {[(m['species'], m['level']) for m in party]}")
+    g.check(len(party) == 6, f"the whole TEAM is still there ({len(party)})")
+    g.check(party[0]["species"] == g.const("SPECIES_PROTICTIS"), "the Cimolestes is a Protictis")
+    g.check(all(m["species"] == g.const("SPECIES_LEPISOSTEUS") for m in party[1:]), "the gars stay gars")

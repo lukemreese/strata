@@ -28,6 +28,22 @@ static const u8 *const sLayerNames[ERA_COUNT] =
     [ERA_EPILOGUE]      = COMPOUND_STRING("Today"),
 };
 
+// The same layers' ages in years before present (the middle of a range), for the time a
+// lineage took to change between two of them (Strata_BufferElapsedTime, the descent scene).
+static const u32 sLayerAgeYears[ERA_COUNT] =
+{
+    [ERA_PRESENT_DIG]   = 0,
+    [ERA_HELL_CREEK]    = 66040000,
+    [ERA_IMPACT_WINTER] = 66040000 - 1,
+    [ERA_CORRAL_BLUFFS] = 65550000,
+    [ERA_BIGHORN_PETM]  = 56000000,
+    [ERA_GREEN_RIVER]   = 50000000,
+    [ERA_WHITE_RIVER]   = 32000000,
+    [ERA_ASHFALL]       = 11900000,
+    [ERA_TRAP_CAVE]     = 20000,
+    [ERA_EPILOGUE]      = 0,
+};
+
 // ---------------------------------------------------------------------------
 // Dr. Halvorsen (S2). Talking to her in the field station gives two parts:
 //   1. the science of the layer, by VAR_STRATA_STORY (sMentorLines, the Tyrannosaurus variant);
@@ -397,6 +413,39 @@ const u8 *Strata_GetLayerName(u32 era)
     if (era >= ERA_COUNT || sLayerNames[era] == NULL)
         return gText_EmptyString2;
     return sLayerNames[era];
+}
+
+// The time between two layers, hedged and rounded for the descent scene (F3): "about 10 million
+// years", "about 500,000 years" (one significant figure below a million), "about a year".
+// Writes it to dest and returns the end of the string.
+u8 *Strata_BufferElapsedTime(u8 *dest, u32 fromEra, u32 toEra)
+{
+    u32 years = 0, unit;
+
+    if (fromEra < ERA_COUNT && toEra < ERA_COUNT && sLayerAgeYears[fromEra] > sLayerAgeYears[toEra])
+        years = sLayerAgeYears[fromEra] - sLayerAgeYears[toEra];
+    if (years < 1000)
+    {
+        if (years <= 1)
+            return StringCopy(dest, COMPOUND_STRING("about a year"));
+        dest = StringCopy(dest, COMPOUND_STRING("about "));
+        dest = ConvertIntToDecimalStringN(dest, years, STR_CONV_MODE_LEFT_ALIGN, 3);
+        return StringCopy(dest, COMPOUND_STRING(" years"));
+    }
+    if (years < 1000000)
+    {
+        for (unit = 1000; years >= unit * 10; unit *= 10)
+            ;
+        years = (years + unit / 2) / unit * unit; // 489,999 -> 500,000
+    }
+    dest = StringCopy(dest, COMPOUND_STRING("about "));
+    if (years >= 1000000)
+    {
+        dest = ConvertIntToDecimalStringN(dest, (years + 500000) / 1000000, STR_CONV_MODE_LEFT_ALIGN, 3);
+        return StringCopy(dest, COMPOUND_STRING(" million years"));
+    }
+    dest = ConvertIntToDecimalStringN(dest, years / 1000, STR_CONV_MODE_LEFT_ALIGN, 3);
+    return StringCopy(dest, COMPOUND_STRING(",000 years"));
 }
 
 // special Strata_RigQuery
