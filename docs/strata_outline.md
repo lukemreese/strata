@@ -488,7 +488,7 @@ peer review comes after the boss, at the review level):
 |---|---|---|---|---|---|---|
 | 0 | none | Theo #0 (Lv 4–5) | none | 5 | 0 (starter Lv 5) | Theo 4–5 |
 | 1 | 3–10 | Acheroraptor pair (double, 11/11) | T. rex 20 (survival) | 12 / 14 / 15 | 0 | Arlo 13 |
-| 2 | 10–16 | none | gauntlet 17/18/19 | 17 / 19 / 20 | 10 | Priya 17 |
+| 2 | 10–16 | none | gauntlet 17/18/18 (the last with +1 Atk) | 17 / 19 / 20 | 10 | Priya 17 |
 | 3 | 14–21 | Taeniolabis 22 | Eoconodon 25 | 22 / 23 / 24 | 14 | Tomas 20, Theo 21 |
 | 4 | 20–27 | Oxyaena 28 | Coryphodon 28 + calf 21 | 26 / 28 / 28 | 20 | Ingrid 26 |
 | 5 | 26–33 | Patriofelis 32 | Uintatherium 34 | 30 / 31 / 31 | 26 | Keola 30 |

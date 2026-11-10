@@ -24,7 +24,7 @@ StrataBackswampWinter_EventScript_Gauntlet::
 	playmoncry SPECIES_BOREALOSUCH, CRY_MODE_ENCOUNTER
 	waitmoncry
 	strata_boss_prep atk=1
-	setwildbattle SPECIES_BOREALOSUCH, 19
+	setwildbattle SPECIES_BOREALOSUCH, 18
 	dowildbattle
 	call StrataBackswampWinter_EventScript_CheckFled
 	strata_boss_done
