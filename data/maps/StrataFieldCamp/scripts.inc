@@ -5,7 +5,37 @@
 @ researchers (the ornithologist after act 1, the mammalogist after act 3) are here.
 StrataFieldCamp_MapScripts::
 	map_script MAP_SCRIPT_ON_TRANSITION, StrataFieldCamp_OnTransition
+	map_script MAP_SCRIPT_ON_FRAME_TABLE, StrataFieldCamp_OnFrame
 	.byte 0
+
+@ The new game's arrival (docs/strata_outline.md, Act 0): the truck (data/maps/InsideOfTruck) lets
+@ the player out in front of the station at story 0. Halvorsen calls from the door and the script
+@ walks them in, so nobody wanders off before the starter is chosen (the station's intro script,
+@ unchanged, is the next thing that happens).
+StrataFieldCamp_OnFrame:
+	map_script_2 VAR_STRATA_STORY, 0, StrataFieldCamp_EventScript_Arrival
+	.2byte 0
+
+StrataFieldCamp_EventScript_Arrival::
+	lockall
+	delay 20
+	msgbox StrataFieldCamp_Text_Arrival, MSGBOX_DEFAULT
+	applymovement OBJ_EVENT_ID_PLAYER, StrataFieldCamp_Movement_ToStation
+	waitmovement 0
+	@ By coordinates (just inside the door), not by warp id: a one-argument `warp` writes the dummy
+	@ x = -1 and ScrCmd_warp then VarGets 0xFFFF, a read past gSpecialVars.
+	warp MAP_STRATA_FIELD_STATION, 6, 11
+	waitstate
+	end
+
+StrataFieldCamp_Movement_ToStation:
+	walk_up
+	walk_up
+	step_end
+
+StrataFieldCamp_Text_Arrival::
+	.string "DR. HALVORSEN: {PLAYER}! Over here!\n"
+	.string "Come in to the station.$"
 
 StrataFieldCamp_OnTransition:
 	special Strata_HideLockedReviewers

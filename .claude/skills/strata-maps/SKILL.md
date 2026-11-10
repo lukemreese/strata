@@ -23,7 +23,19 @@ Read `docs/strata_outline.md` (plan per act, §2) and `docs/strata_design.md` (a
   (`gen_era_tiles.py`, docs/strata_art.md "Era ground cover"); behaviours are unchanged, so
   place encounter areas with the usual grass metatiles. A new secondary tileset in those acts
   needs a `<base>_<ground>` variant (palette-only is enough unless it has its own grass).
-  Acts 6-8 keep grass (Oligocene/Miocene/ice-age palette variants).
+  Acts 6-8 keep grass (Oligocene/Miocene/ice-age palette variants; Colby uses `late_glacial`).
+- **Palette variants beyond the era table** (A1): the outdoor present-day maps (epilogue and the
+  Act 0 hub: Camp, Badlands, Jordan, Ranch, Sand Arroyo) use the `prairie` tilesets
+  (`PRAIRIE_*` in `epilogue.py`/`act0_present.py`), Colby the `late_glacial` ones. A tileset
+  variant is not enough for a map's battle and grass-overlay colours: those come from
+  `src/strata_art.c`, which checks the per-map table `MAP_ART` (gen_tilesets.py) before the
+  map's era. A map that gets a new palette needs its `MAP_ART` line (or its era in `ERA_ART`),
+  or battles and tall grass keep the old colours. The hub's era is `ERA_COUNT` (no era art), so
+  the hub maps are listed in `MAP_ART`. Each base tileset a map uses needs its own variant
+  (`VARIANTS`: General plus Mauville/Petalburg/Fallarbor/Lavaridge...); look the pair up in
+  `layouts.json` for the crop's source layout. Render before and after with
+  `maprender.py map LAYOUT_STRATA_X out.png` after `gen_tilesets.py` + `gen_maps.py` (palette
+  tuning loop), and `gen_tilesets.py --preview DIR` for the battle backgrounds.
 - Scripts are hand-written: `data/maps/<Map>/scripts.inc`. `gen_maps.py` adds the
   `event_scripts.s` include for new maps.
 - Tools: `maprender.py map LAYOUT_ID out.png`, `maprender.py catalog <primary> <secondary> out.png`,
@@ -68,6 +80,29 @@ Read `docs/strata_outline.md` (plan per act, §2) and `docs/strata_design.md` (a
   `act0_present.py`); a map's on-transition sets them and clears the ones its due beat needs. A new
   hub map with people in the subplot needs the same on-transition lines. Don't gate the rig on a
   beat; the start-menu field log (`Story_QuestLine`) needs a line for any new state.
+
+## The new game: truck -> camp -> station
+
+`NewGameInitData` (`src/new_game.c` `WarpToTruck`) warps to the stock `InsideOfTruck` (5x5, hand
+edited in `data/maps/InsideOfTruck/`, not generated), and `CB2_NewGame` runs the stock truck
+sequence (black, rumble, door opens, field unlocks). Before this change the sequence ran on the
+field station's map (about ten black seconds), because `gFieldCallback` is set unconditionally.
+The truck's frame script (guard: the stock `VAR_LITTLEROOT_INTRO_STATE`, 0 on a new game, which
+nothing else in Strata reads: no save flag needed) shows the arrival text and sets the exit's
+`setdynamicwarp` to the camp at (26, 20). The camp's frame script at story 0 says Halvorsen's
+line, walks the player up to the station door and warps in, so nobody roams with no animal
+(encounters with an empty TEAM); the station's own story-0 frame script (`..._Intro`) is
+unchanged. Any new gate at story 0 belongs on the camp or the station, not the truck.
+- **`warp MAP, <warp id>` (one argument) reads past `gSpecialVars`**: the macro writes the dummy
+  x = -1 and `ScrCmd_warp` does `VarGet(0xFFFF)`, which mGBA logs as "Bad memory Load16:
+  0xFD01FD00" in `VarGet`. Use `warp MAP, x, y` (two coordinates) in new scripts. Existing
+  one-argument warps (`StrataFieldStation_EventScript_Warp*`, the rig's arrival ids) still do
+  it: harmless but noisy. The harness listed it as `pc=0A119xxx` (the 0x0A... ROM mirror is not
+  symbolised: subtract 0x02000000 and look it up, here `VarGet`).
+- Finding who called a bad `VarGet` without a debugger: patch `GetVarPointer`/`VarGet` to record
+  `id` and `__builtin_return_address(0)` in globals when the pointer is outside 0x02..0x03
+  space, run the scenario (`make -j8 playtest`), read the globals with `g.read`, look the LR
+  up with `nm -n`. Revert the patch.
 
 ## Object graphics (crash risk)
 

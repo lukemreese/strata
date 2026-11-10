@@ -54,7 +54,7 @@ checks, screenshots with map and position, emulator errors, warnings, crash PC/L
 
 | Scenario | Does |
 |---|---|
-| `new_game_smoke` | Real intro from the title: name, field station, starter choice, gear; asserts story 1, one Lv 5 starter, Exp. Share flag, waders, 5 capsules |
+| `new_game_smoke` | Real intro from the title: name, the truck (door opens, arrival text, steps out), the camp (Halvorsen's line, walked to the station), field station, starter choice, gear; asserts the maps visited in order (truck, camp, station), story 1, one Lv 5 starter, Exp. Share flag, waders, 5 capsules. Shots: `truck_text`, `truck_open`, `camp_arrival` |
 | `battle_smoke` | Levee tall grass with encounters on: wild battle, capsule throws (R = last used ball), Codex registration page; asserts the catch |
 | `grass_battles` | One map per era with encounter grass (Acts 1-5: ferns, palms, herbs, horsetails; `--map` to pick): the overlay around the legs, the battle's entry wall (`_battle_intro`) and background, then run |
 | `act_tour` | Every Strata map: arrival, each `OBJ_EVENT_GFX_SPECIES` creature up close, every edge (a tile walkable on both sides of the seam) and warp; asserts each lands on the right map |
@@ -126,6 +126,9 @@ animations off; pass `encounters=True`, `collision=False`, `instant_text=False`,
 
 ## Limits and traps
 
+- Story 0 has frame scripts now: the truck (`InsideOfTruck`) and the camp (`StrataFieldCamp`, walks
+  the player into the station) at story 0, the station's intro at story 0. A quick-start at story
+  0 on those maps stalls `quickstart`; start at story >= 1, or take the real flow (`new_game_smoke`).
 - Quick-start state is "new game + vars": no rig extinctions or descents are applied, and earlier
   acts' flags aren't set unless you pass them. Use the real flow (new game, rig) to test those.
 - Objects hidden by their own flag until a trigger (e.g. the Uintatherium) don't show on the tour.
