@@ -9,7 +9,8 @@
 Needs the playtest ROM (`make playtest` -> pokeemerald-playtest.gba/.elf) and the
 runner (tools/strata/playtest/runner/build_runner.sh). Each scenario writes
 <out>/<scenario>/ with numbered PNGs, log.txt and result.json, and <out>/summary.json
-lists them all. Default out: /mnt/c/Projects/pokemon-custom/build/harness
+lists them all. Default out: $STRATA_HARNESS_OUT, else /mnt/c/Projects/pokemon-custom/build/harness if that
+workspace exists, else build/harness
 (Windows: C:\\Projects\\pokemon-custom\\build\\harness).
 """
 
@@ -26,7 +27,11 @@ sys.path.insert(0, HERE)
 import harness  # noqa: E402
 import scenarios  # noqa: E402
 
-DEFAULT_OUT = "/mnt/c/Projects/pokemon-custom/build/harness"
+# The Windows workspace when it exists (so the PNGs open from Windows), else build/harness in the repo.
+_WINDOWS_OUT = "/mnt/c/Projects/pokemon-custom/build"
+DEFAULT_OUT = os.environ.get("STRATA_HARNESS_OUT") or (
+    os.path.join(_WINDOWS_OUT, "harness") if os.path.isdir(_WINDOWS_OUT)
+    else os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "..", "build", "harness")))
 
 
 def run_one(name, args):
