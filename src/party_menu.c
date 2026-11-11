@@ -6551,7 +6551,9 @@ static void DeleteInvalidFusionMoves(struct Pokemon *mon, enum Species species)
     }
 }
 
-#if P_FUSION_FORMS
+// Only the Kyurem fusions call this, so it needs the same guards as its callers:
+// with those families off (Strata) it would be an unused static function.
+#if P_FUSION_FORMS && P_FAMILY_KYUREM && (P_FAMILY_RESHIRAM || P_FAMILY_ZEKROM)
 static void SwapFusionMonMoves(struct Pokemon *mon, const u16 moveTable[][2], u32 mode)
 {
     u32 oldMoveIndex, newMoveIndex;
@@ -6580,7 +6582,7 @@ static void SwapFusionMonMoves(struct Pokemon *mon, const u16 moveTable[][2], u3
     }
 
 }
-#endif //P_FUSION_FORMS
+#endif //P_FUSION_FORMS && P_FAMILY_KYUREM && (P_FAMILY_RESHIRAM || P_FAMILY_ZEKROM)
 
 static void Task_TryItemUseFusionChange(u8 taskId)
 {

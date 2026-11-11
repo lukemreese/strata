@@ -1,5 +1,8 @@
 # Strata skills
 
+The rules every agent follows, whatever its model, are in `AGENTS.md` at the repo root (short,
+imperative, written so a small local model can follow it). Skills hold the detail per task.
+
 Claude Code skills capturing how to work on Strata. They're canonical here, in the repo. The
 Windows workspace (`C:\Projects\pokemon-custom`) mirrors them in `.claude/skills/` so they load in
 sessions started there. After editing, sync with:
@@ -22,3 +25,4 @@ actionable.
 | `strata-autotest` | Scripted headless playtests (preferred): playtest ROM, scenarios, DSL, results |
 | `strata-playtest` | Manual mGBA GUI testing, debug menu, crash hunting |
 | `strata-parallel-agents` | Splitting work across subagents and merging it |
+| `strata-local-model` | The desktop GPU: sprite blind-ID, fact-check worklist, screenshot triage, what a weak model may do |

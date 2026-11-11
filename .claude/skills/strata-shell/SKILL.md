@@ -5,6 +5,10 @@ description: How to run commands in the Strata repo (WSL ~/projects/strata) from
 
 # Running commands in the Strata repo
 
+**Only for a Windows-side session driving WSL.** A session that runs inside WSL, or a cloud
+session, runs commands directly from the repo root and can skip this skill (cloud toolchain
+note: `CLAUDE.md`).
+
 The repo lives in WSL Ubuntu at `~/projects/strata` (branch `strata`, remote `origin` =
 github.com/lukemreese/strata). The Claude session runs on Windows. Files are readable and
 editable from Windows at `\\wsl$\Ubuntu\home\lreese\projects\strata\...` with Read/Edit/Write.
