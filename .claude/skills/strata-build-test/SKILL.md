@@ -22,6 +22,12 @@ Order: `gen_species.py`, `gen_tilesets.py`, `gen_maps.py`. Then `python3 tools/s
 the EXP model of a normal player's level, and with `--playtest <out>` the headless starter runs).
 After a merge, rerun all three; a clean tree afterwards means generated files are consistent.
 
+`python3 tools/strata/check.py` does all of that in one command (unit tests of the tooling, own-art
+check, mapcheck, and `drift`: every generator rerun, tree must stay clean); `--fast` skips drift.
+CI runs it. A roster edit that changes `mass` also changes that species' overworld sprite and cry
+(both scale with mass), so rerun `gen_sprite.py` and `gen_cry.py` too, not just `gen_species.py`:
+five species shipped stale for that reason before `drift` existed.
+
 ## Build and test
 
 - `make -j16` builds `pokeemerald.gba` (use `-j6`..`-j8` when other agents build too).

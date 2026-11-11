@@ -1,69 +1,60 @@
 # Strata
 
-> A science-grounded GBA romhack set in the North American West, running from the
-> last days of the dinosaurs to the present. Every creature is a real, fossil-documented
-> animal. You are a field paleontologist climbing a stratigraphic column: each act is a
-> rock layer you reconstruct before entering it.
->
-> **This is a playable game.** Build with `make -j$(nproc) all`, or grab the
-> `pokeemerald-release.gba` artifact from a green CI run on `strata`.
->
-> Built on RHH’s [pokeemerald-expansion](https://github.com/rh-hideout/pokeemerald-expansion),
-> which is built on [pret’s pokeemerald](https://github.com/pret/pokeemerald).
+> A science-grounded GBA game set in the North American West, running from the last days of
+> the dinosaurs to the present. Every creature is a real, fossil-documented animal. You are a
+> field paleontologist climbing a stratigraphic column: each act is a rock layer you reconstruct
+> before entering it.
+
+Strata is complete and playable: nine acts from Hell Creek (66 Ma) to the Montana prairie
+today, 87 animals with original generated sprites and cries, lineages that descend or die out
+at each layer according to the pressures you put them under, and a present-day story about a
+fossil that might be sold out of the ground.
 
 | | |
 |---|---|
-| [Game design](docs/strata_design.md) | pillars, vocabulary, acts |
-| [Master outline](docs/strata_outline.md) | the plan and what is done |
-| [Art pipeline](docs/strata_art.md) | how the creatures are drawn |
+| [Game design](docs/strata_design.md) | pillars, vocabulary, acts, systems |
+| [Master outline](docs/strata_outline.md) | the plan, what is done, the fact-check list |
+| [Art pipeline](docs/strata_art.md) | how the creatures, tiles and cries are generated |
+| [Agent rules](AGENTS.md) | the rules and the edit, generate, check loop |
 
+## Play
 
-![Gif that shows debugging functionality that is unique to pokeemerald-expansion such as rerolling Trainer ID, Cheat Start, PC from Debug Menu, Debug PC Fill, Pokémon Sprite Visualizer, Debug Warp to Map, and Battle Debug Menu](https://github.com/user-attachments/assets/cf9dfbee-4c6b-4bca-8e0a-07f116ef891c) ![Gif that shows overworld functionality that is unique to pokeemerald-expansion such as indoor running, BW2 style map popups, overworld followers, DNA Splicers, Gen 1 style fishing, OW Item descriptions, Quick Run from Battle, Use Last Ball, Wild Double Battles, and Catch from EXP](https://github.com/user-attachments/assets/383af243-0904-4d41-bced-721492fbc48e) ![Gif that shows off a number of modern Pokémon battle mechanics happening in the pokeemerald-expansion engine: 2 vs 1 battles, modern Pokémon, items, moves, abilities, fully customizable opponents and partners, Trainer Slides, and generational gimmicks](https://github.com/user-attachments/assets/50c576bc-415e-4d66-a38f-ad712f3316be)
+Grab the `strata` artifact (`pokeemerald-release.gba`) from a green CI run on the `strata`
+branch, or build it. Any GBA emulator runs it; mGBA is the one it is tested on.
 
-<!-- If you want to re-record or change these gifs, here are some notes that I used: https://files.catbox.moe/05001g.md -->
+## Build
 
-**`pokeemerald-expansion`** is a GBA ROM hack base that equips developers with a comprehensive toolkit for creating Pokémon ROM hacks. **`pokeemerald-expansion`** is built on top of [pret's `pokeemerald`](https://github.com/pret/pokeemerald) decompilation project. Strata is a complete, playable game built on this base.
+Toolchain: `gcc-arm-none-eabi`, `binutils-arm-none-eabi`, `libnewlib-arm-none-eabi`,
+`libpng-dev`, `python3` (details per platform in [INSTALL.md](INSTALL.md)).
 
-# [Features](FEATURES.md)
+```bash
+make -j$(nproc)            # pokeemerald.gba
+make -j$(nproc) check      # the test suite: 0 FAILED required
+make -j$(nproc) release    # pokeemerald-release.gba, asserts off
+```
 
-**`pokeemerald-expansion`** offers hundreds of features from various [core series Pokémon games](https://bulbapedia.bulbagarden.net/wiki/Core_series), along with popular quality-of-life enhancements designed to streamline development and improve the player experience. A full list of those features can be found in [`FEATURES.md`](FEATURES.md).
+## Work on it
 
-# [Credits](CREDITS.md)
+Species, sprites, cries, maps and tilesets are generated from Python sources in
+`tools/strata/`; the outputs are committed and never edited by hand. The loop and the table of
+sources are in [AGENTS.md](AGENTS.md).
 
-If you use **`pokeemerald-expansion`**, please credit **RHH (Rom Hacking Hideout)**. Optionally, include the version number for clarity.
+```bash
+python3 tools/strata/check.py                      # tooling tests, art, maps, generator drift
+make -j8 playtest && python3 tools/strata/playtest/run.py all --quiet   # scripted headless playtests
+python3 tools/strata/local_model.py doctor         # optional: batch review on a local GPU model
+```
+
+How to do each kind of work is written down as skills in [`.claude/skills/`](.claude/skills/README.md).
+
+## Credits
+
+Strata is built on RHH's [pokeemerald-expansion](https://github.com/rh-hideout/pokeemerald-expansion)
+1.17.1, which is built on pret's [pokeemerald](https://github.com/pret/pokeemerald). The engine's
+features are listed in [FEATURES.md](FEATURES.md), its contributors in [CREDITS.md](CREDITS.md)
+and its documentation at the
+[pokeemerald-expansion documentation page](https://rh-hideout.github.io/pokeemerald-expansion/).
 
 ```
 Based off RHH's pokeemerald-expansion 1.17.1 https://github.com/rh-hideout/pokeemerald-expansion/
 ```
-
-Please consider [crediting all contributors](CREDITS.md) involved in the project!
-
-# Choosing `pokeemerald` or **`pokeemerald-expansion`**
-
-- **`pokeemerald-expansion`** supports multiplayer functionality with other games built on **`pokeemerald-expansion`**. It is not compatible with official Pokémon games.
-- If compatibility with official games is important, use [`pokeemerald`](https://github.com/pret/pokeemerald). Otherwise, we recommend using **`pokeemerald-expansion`**.
-- **`pokeemerald-expansion`** incorporates regular updates from `pokeemerald`, including bug fixes and documentation improvements.
-
-# [Getting Started](INSTALL.md)
-
-❗❗ **Important**: Do not use GitHub's "Download Zip" option as it will not include commit history. This is necessary if you want to update or merge other feature branches.
-
-If you're new to git and GitHub, [Team Aqua's Asset Repo](https://github.com/Pawkkie/Team-Aquas-Asset-Repo/) has a [guide to forking and cloning the repository](https://github.com/Pawkkie/Team-Aquas-Asset-Repo/wiki/The-Basics-of-GitHub). Then you can follow one of the following guides:
-
-## 📥 [Installing **`pokeemerald-expansion`**](INSTALL.md)
-## 🏗️ [Building **`pokeemerald-expansion`**](INSTALL.md#Building-pokeemerald-expansion)
-## 🚚 [Migrating from **`pokeemerald`**](INSTALL.md#Migrating-from-pokeemerald)
-## 🚀 [Updating **`pokeemerald-expansion`**](INSTALL.md#Updating-pokeemerald-expansion)
-
-# [Documentation](https://rh-hideout.github.io/pokeemerald-expansion/)
-
-For detailed documentation, visit the [pokeemerald-expansion documentation page](https://rh-hideout.github.io/pokeemerald-expansion/).
-
-# [Contributions](CONTRIBUTING.md)
-If you are looking to [report a bug](CONTRIBUTING.md#Bug-Report), [open a pull request](CONTRIBUTING.md#Pull-Requests), or [request a feature](CONTRIBUTING.md#Feature-Request), our [`CONTRIBUTING.md`](CONTRIBUTING.md) has guides for each.
-
-# [Community](https://discord.gg/6CzjAG6GZk)
-
-[![](https://dcbadge.limes.pink/api/server/6CzjAG6GZk)](https://discord.gg/6CzjAG6GZk)
-
-Our community uses the [ROM Hacking Hideout (RHH) Discord server](https://discord.gg/6CzjAG6GZk) to communicate and organize. Most of our discussions take place there, and we welcome anybody to join us!

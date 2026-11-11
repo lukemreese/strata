@@ -251,8 +251,8 @@ original (*Cries*, below).
 ### Borrowed art (strict mode)
 
 - `gen_sprite.py --borrowed` prints, per plan, own vs borrowed, stub vs template,
-  specs without output, and overworld sheets that are side-only. Today: **85 of 87
-  borrowed** (own: Knightia, Mesodma). `--strict` exits 1 while any remain.
+  specs without output, and overworld sheets that are side-only. Today: **0 of 87
+  borrowed**. `--strict` exits 1 while any remain.
 - `strata_families.h` states the count in its header comment.
 - `gen_species.py --strict-art` (one run) or `ART_STRICT = True` (permanent) makes
   every borrowed species an `#error` in `strata_families.h` and fails the script.

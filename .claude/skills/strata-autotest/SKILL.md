@@ -46,8 +46,9 @@ python3 tools/strata/playtest/run.py all --quiet               # everything, ~1 
 python3 tools/strata/playtest/run.py tools/strata/playtest/examples/levee_walk.txt
 ```
 
-Results: `C:\Projects\pokemon-custom\build\harness\<scenario>\` (`/mnt/c/...` from WSL;
-`--out` to change). Each holds `NNN_<name>.png`, `log.txt` (every action, check, battle message,
+Results: `C:\Projects\pokemon-custom\build\harness\<scenario>\` (`/mnt/c/...` from WSL) when that
+workspace exists, else `build/harness/<scenario>/` in the repo (`--out` or `STRATA_HARNESS_OUT` to
+change). To sort the PNGs before reading them: `local_model.py shots <out>` (strata-local-model skill). Each holds `NNN_<name>.png`, `log.txt` (every action, check, battle message,
 emulator error with the function name) and `result.json` (status pass/fail/crash/error,
 checks, screenshots with map and position, emulator errors, warnings, crash PC/LR).
 `summary.json` lists the last run. Exit code is non-zero if anything failed. Read the PNGs.

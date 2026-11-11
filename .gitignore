@@ -71,3 +71,7 @@ __pycache__
 # Strata playtest harness (tools/strata/playtest): the runner binary and the constants cache
 tools/strata/playtest/runner/strata-runner
 *.playtest_constants.json
+
+# Agent worktrees and the local-model answer cache
+.claude/worktrees/
+.cache/
