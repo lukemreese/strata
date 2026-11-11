@@ -55,7 +55,6 @@ static void ResolveOxyaena(u8 outcome)
 
 TEST("Beating or catching the Oxyaena ends the set piece and removes it")
 {
-    u32 i = 0;
     u8 outcome = 0;
     PARAMETRIZE { outcome = B_OUTCOME_WON; }
     PARAMETRIZE { outcome = B_OUTCOME_CAUGHT; }
@@ -67,7 +66,6 @@ TEST("Beating or catching the Oxyaena ends the set piece and removes it")
 
 TEST("Running from the Oxyaena stops the stalking but leaves it to fight again")
 {
-    u32 i = 0;
     u8 outcome = 0;
     PARAMETRIZE { outcome = B_OUTCOME_RAN; }
     PARAMETRIZE { outcome = B_OUTCOME_PLAYER_TELEPORTED; }
